@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{98b71ce2-f0d6-44a9-9303-d6d15168d40f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{5629abfd-ab11-4634-be4b-a489be0b5a5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\Device">
+      <UniqueIdentifier>{984ac115-1aba-4574-86f0-0f55ba065316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\TextureMgr">
+      <UniqueIdentifier>{6c1249dd-07ec-4c5e-9319-a352930a0725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\TextureMgr\Textrue">
+      <UniqueIdentifier>{ab4700d1-5496-436e-9e70-5002705b0196}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\TextureMgr\Textrue\Single">
+      <UniqueIdentifier>{c2f9ba17-a916-4944-a3d6-32e9214be877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\TextureMgr\Textrue\Multi">
+      <UniqueIdentifier>{4c116de0-8da6-4f4d-9fd3-9d7c15a7d06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View">
+      <UniqueIdentifier>{c4302ac1-c242-4fb2-b103-da5a78c34a70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\MainView">
+      <UniqueIdentifier>{ece89869-eeba-45ff-a26c-eadb95f8bd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\MiniView">
+      <UniqueIdentifier>{e21ab11b-0f06-4870-b40f-f98f27f7efe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\FormView">
+      <UniqueIdentifier>{5592b4e9-ae0c-4396-936a-f1a98a5ef14a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainFrm">
+      <UniqueIdentifier>{8003cfea-03a1-4b83-9850-af498f594dfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\FormView\Sheet">
+      <UniqueIdentifier>{a8a43ec6-d066-4b72-b8e9-90ccd665e70c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\FormView\Sheet\Page1">
+      <UniqueIdentifier>{25fbbcb6-0d86-4b6d-a890-96be58bce32b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\FormView\Sheet\Page2">
+      <UniqueIdentifier>{2de4dbed-29b3-4e28-97d8-05688f8336e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\FormView\Sheet\Page3">
+      <UniqueIdentifier>{017849de-5c10-4f3c-bb6f-50aea710b72b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\FormView\Sheet\Page4">
+      <UniqueIdentifier>{0527b2e2-fb0e-45e7-8ee2-7e1667002ff8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="MFC_000.reg" />
+    <None Include="UserImages.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\MFC_000.rc2">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\MFC_000Doc.ico">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\MFC_000.ico">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\Toolbar.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="res\Toolbar256.bmp">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MFC_000.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MFC_000Doc.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Manager\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureMgr.h">
+      <Filter>Manager\TextureMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Manager\TextureMgr\Textrue</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTexture.h">
+      <Filter>Manager\TextureMgr\Textrue\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiTexture.h">
+      <Filter>Manager\TextureMgr\Textrue\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="MFC_000View.h">
+      <Filter>View\MainView</Filter>
+    </ClInclude>
+    <ClInclude Include="MyForm.h">
+      <Filter>View\FormView</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniView.h">
+      <Filter>View\MiniView</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>MainFrm</Filter>
+    </ClInclude>
+    <ClInclude Include="MySheet.h">
+      <Filter>View\FormView\Sheet</Filter>
+    </ClInclude>
+    <ClInclude Include="Page1.h">
+      <Filter>View\FormView\Sheet\Page1</Filter>
+    </ClInclude>
+    <ClInclude Include="Page2.h">
+      <Filter>View\FormView\Sheet\Page2</Filter>
+    </ClInclude>
+    <ClInclude Include="Page3.h">
+      <Filter>View\FormView\Sheet\Page3</Filter>
+    </ClInclude>
+    <ClInclude Include="Page4.h">
+      <Filter>View\FormView\Sheet\Page4</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MFC_000.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MFC_000Doc.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Manager\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureMgr.cpp">
+      <Filter>Manager\TextureMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Manager\TextureMgr\Textrue</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleTexture.cpp">
+      <Filter>Manager\TextureMgr\Textrue\Single</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiTexture.cpp">
+      <Filter>Manager\TextureMgr\Textrue\Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="MFC_000View.cpp">
+      <Filter>View\MainView</Filter>
+    </ClCompile>
+    <ClCompile Include="MyForm.cpp">
+      <Filter>View\FormView</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniView.cpp">
+      <Filter>View\MiniView</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>MainFrm</Filter>
+    </ClCompile>
+    <ClCompile Include="MySheet.cpp">
+      <Filter>View\FormView\Sheet</Filter>
+    </ClCompile>
+    <ClCompile Include="Page1.cpp">
+      <Filter>View\FormView\Sheet\Page1</Filter>
+    </ClCompile>
+    <ClCompile Include="Page2.cpp">
+      <Filter>View\FormView\Sheet\Page2</Filter>
+    </ClCompile>
+    <ClCompile Include="Page3.cpp">
+      <Filter>View\FormView\Sheet\Page3</Filter>
+    </ClCompile>
+    <ClCompile Include="Page4.cpp">
+      <Filter>View\FormView\Sheet\Page4</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MFC_000.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

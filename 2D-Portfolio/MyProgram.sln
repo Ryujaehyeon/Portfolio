@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFC_000", "MFC_000\MFC_000.vcxproj", "{D4E5C170-21C9-4847-BA59-C8A9C2B194EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Headers", "Headers", "{F09FE17B-9266-4BC1-973A-066FB7D00CD1}"
+	ProjectSection(SolutionItems) = preProject
+		Headers\Constant.h = Headers\Constant.h
+		Headers\Defines.h = Headers\Defines.h
+		Headers\Function.h = Headers\Function.h
+		Headers\Include.h = Headers\Include.h
+		Headers\Macro.h = Headers\Macro.h
+		Headers\Struct.h = Headers\Struct.h
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcxproj", "{093185F8-2056-41CA-9FAC-3B24E5B05B7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4E5C170-21C9-4847-BA59-C8A9C2B194EF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D4E5C170-21C9-4847-BA59-C8A9C2B194EF}.Debug|Win32.Build.0 = Debug|Win32
+		{D4E5C170-21C9-4847-BA59-C8A9C2B194EF}.Release|Win32.ActiveCfg = Release|Win32
+		{D4E5C170-21C9-4847-BA59-C8A9C2B194EF}.Release|Win32.Build.0 = Release|Win32
+		{093185F8-2056-41CA-9FAC-3B24E5B05B7E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{093185F8-2056-41CA-9FAC-3B24E5B05B7E}.Debug|Win32.Build.0 = Debug|Win32
+		{093185F8-2056-41CA-9FAC-3B24E5B05B7E}.Release|Win32.ActiveCfg = Release|Win32
+		{093185F8-2056-41CA-9FAC-3B24E5B05B7E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
