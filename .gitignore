@@ -1,8 +1,6 @@
 *.cd
 *.aps
 *.ico
-*.rc
-*.rc2
 *.obj
 *.tlog
 *.pch
