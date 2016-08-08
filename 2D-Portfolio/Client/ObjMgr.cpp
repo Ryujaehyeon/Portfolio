@@ -86,8 +86,10 @@ SCENEID CObjMgr::Progress()
 			case SCENEID_STAGE2:
 			case SCENEID_STAGE3:
 				ObjInteraction((*iter2));
+
 				// 몬스터 삭제시 
-				MonsterRelease(/*&iter, (*iter)->second*/);
+				MonsterRelease();
+
 				// 삭제된 데이터의 리스트 삭제;
 				if(*iter2 == NULL)
 				{
@@ -125,16 +127,27 @@ void CObjMgr::ObjInteraction( CObj* pSour )
 		for(list<CObj*>::iterator iter2 = iter->second.begin();
 			iter2 != iter->second.end(); ++iter2)
 		{
+			if(pSour == (*iter2))
+				continue;
+
+			// 플레이어 혹은 몬스터가 아니면 반복문 처음으로 
+			if((*iter2)->GetObjType() != OBJ_PLAYER &&
+				(*iter2)->GetObjType() != OBJ_MONSTER)
+				continue;
+
+			// 
 			switch(pSour->GetObjType()) 
 			{
 				// 플레이어면
 			case OBJ_PLAYER:
-			//case OBJ_MONSTER:
 				CrashAndSlide((*iter2), pSour);
 				AbilityTointeract((*iter2), pSour);
+
 				break;
+				// 몬스터면
 			case OBJ_MONSTER:
 				CrashAndSlide((*iter2), pSour);
+				AbilityTointeract((*iter2), pSour);
 				break;
 			};
 		}
@@ -144,50 +157,66 @@ void CObjMgr::ObjInteraction( CObj* pSour )
 void CObjMgr::AbilityTointeract(CObj* _pDest, CObj* _pSour)
 {
 	D3DXVECTOR3 InfoDir;
+
+	// 비교할 대상이 있는 방향을 정하고
+	InfoDir = _pDest->GetInfoPos().vPos - _pSour->GetInfoPos().vPos;
+	// 거리를 구한다.
+	float fDistance = ((_pSour->GetInfoPos().fCX *0.5f) +
+		(_pDest->GetInfoPos().fCX)*0.5f);
+	// 실제 거리, 객체간의 중심점간의 거리
+	float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
+
 	// 비교하려는 대상의 타입
 	switch(_pSour->GetObjType()) 
 	{
-		// 플레이어면
+	// 플레이어면
 	case OBJ_PLAYER:
 		{
-			// 비교할 객체가 자신이 아니면
-			if(_pDest->GetInfoPos().vPos != _pSour->GetInfoPos().vPos)
+			// 대상이 몬스터일때 
+			if(_pDest->GetObjType() == OBJ_MONSTER)
 			{
-				// 비교할 대상이 있는 방향을 정하고
-				InfoDir = _pDest->GetInfoPos().vPos - _pSour->GetInfoPos().vPos;
-				// 거리를 구한다.
-				float fDistance = ((_pSour->GetInfoPos().fCX * 0.5f) +
-									(_pDest->GetInfoPos().fCX * 0.5f))+10.f;
-				// 실제 거리, 객체간의 중심점간의 거리
-				float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
-				// 거리가 20 이하일때
-				if(fDistance > fRealDistance)
+				// 거리가 25 이하일때
+				if (fDistance > fRealDistance)
 				{
-					// 비교될 대상이 몬스터일때 
-					if (_pDest->GetObjType() == OBJ_MONSTER)
-					{
-						if (PtInRect(&_pDest->RealRect(), MouseInfo()))
-						{
-							_pDest->SetCrash() == true;
-							// 몬스터와 마우스가 충돌하고, 클릭 중일때
-							if(GetAsyncKeyState(VK_LBUTTON)&0x8000)
-								AttackFunc(_pDest, _pSour);
-						}
-					}
+					if (PtInRect(&_pDest->RealRect(), MouseInfo()))
+						_pDest->SetCrash(true);
+					else
+						_pDest->SetCrash(false);
+
+					// 몬스터와 마우스가 충돌하고, 클릭 중일때
+					if(GetAsyncKeyState(VK_LBUTTON)&0x8000 
+						&& PtInRect(&_pDest->RealRect(), MouseInfo()))
+						AttackFunc(_pDest, _pSour);
 				}
-				else
-					_pDest->SetCrash() == false;
 			}
 			break;
 		}
 	case OBJ_MONSTER:
+		{
+			// 대상이 플레이어 일때
+			if(_pDest->GetObjType() == OBJ_PLAYER)
+			{
+				// 거리가 20 이하일때
+				if (fDistance > fRealDistance)
+				{
+					AttackFunc(_pDest, _pSour);
+				}
+			}
+		}
 		break;
 	};
 }
 
 void CObjMgr::AttackFunc( CObj* _pDest, CObj* _pSour )
 {
-	if (int(_pSour->GetFrame().fStart) >= _pSour->GetFrame().fLast/2)
+	if( _pSour->GetObjType() == _pDest->GetObjType())
+		return;
+	
+	// 0808 09:00 에러
+	//else if (_pSour->GetObjType() == OBJ_MONSTER)
+	//	_pSour->SetMotion(ATTACK);
+
+	if (_pSour->GetFrame().fStart >= _pSour->GetFrame().fLast-3)
 	{
 		if(_pDest->GetStatasInfo().fDefence >= _pSour->GetStatasInfo().fAttack)
 			_pDest->SetStatasInfo()->fHealthPoint -= 1;
@@ -199,11 +228,16 @@ void CObjMgr::AttackFunc( CObj* _pDest, CObj* _pSour )
 
 void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 {
+	// 0808 09:30 몬스터가 몬스터를 밀때 밀리는 몬스터는 정지해야함
+	//			  몬스터가 플레이어를 밀땐 밀지말고 공격
+	//			  플레이어가 몬스터를 밀땐 몬스터는 정지하고 공격
+	//			  플레이어가 플레이어를 밀땐 정지하고 밀림
+	
 	if(_pDest->GetObjType() == OBJ_PLAYER)
 		return;
 
 	// 비교할 객체가 자신이 아니면
-	if(_pSour != _pDest && _pDest->GetObjType() == OBJ_MONSTER)
+	if(_pDest->GetObjType() == OBJ_MONSTER && _pSour->GetpMotion() == RUN)
 	{
 		// 비교할 대상이 있는 방향을 정하고
 		_pSour->Setinfo()->vDir = _pDest->GetInfoPos().vPos - _pSour->GetInfoPos().vPos;

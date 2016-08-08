@@ -249,6 +249,7 @@ bool CPlayer::VecterInRect( D3DXVECTOR3& _Taget )
 
 void CPlayer::DirectAction( TCHAR* _pObjStatas )
 {
+	// 0808 09:00 m_pMotion만 바꾸고 _pObjStatas바꾸지 않아서 에러
 	m_pMotion = _pObjStatas;
 	// 서있기
 	if(_pObjStatas == STAND)

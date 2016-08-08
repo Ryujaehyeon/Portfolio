@@ -59,7 +59,8 @@ public:
 	//Set
 	virtual OBJINFO* Setinfo(){return &m_Info;};
 	virtual INFO* SetStatasInfo() {return &m_sPlayInfo;}
-	virtual bool SetCrash(){return m_Crash;}
+	virtual void SetCrash(bool _bCrash){m_Crash = _bCrash;}
+	virtual void SetMotion(TCHAR* _pMotion) {m_pMotion = _pMotion;}
 
 	//Get
 	virtual const OBJINFO& GetInfoPos() const {return m_Info;}

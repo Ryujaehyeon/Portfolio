@@ -22,7 +22,7 @@ public:
 	// 공격시 상태 변화
 	void AttackFunc(CObj* _pDest, CObj* _pSour);
 
-	void MonsterRelease(/*map<wstring, list<CObj*>>* _firstIter, map<wstring, list<CObj*>>* _secondIter*/);
+	void MonsterRelease();
 public:
 	virtual POINT MouseInfo();
 	virtual D3DXVECTOR3 MouseInfoDX();

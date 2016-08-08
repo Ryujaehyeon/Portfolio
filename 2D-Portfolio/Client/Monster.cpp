@@ -218,14 +218,14 @@ void CMonster::CheckKey()
 		m_Info.vDir = m_vTagetInfo - m_Info.vPos;
 	}
 
-	// 움직일 목표위치에 도달했는지
+	// 움직일 목표위치에 도달했을때
 	if ( m_vTagetInfo == m_Info.vPos )
 	{
 		// 도달했을 시 서있는 상태
 		m_pMotion = STAND;
 		if( m_pMotion == ATTACK ) 
 		{
-			// 마우스를 바라보는 방향
+			// 바라보는 방향
 			m_Info.vDir = m_vMovePoint - m_Info.vPos; 
 			// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
 			m_fChaterDirect = m_iDegree;
@@ -239,7 +239,7 @@ void CMonster::CheckKey()
 		// 공격시
 		if( m_pMotion == ATTACK ) 
 		{
-			// 마우스를 바라보는 방향
+			// 바라보는 방향
 			m_Info.vDir = m_vMovePoint - m_Info.vPos; 
 			// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
 			m_fChaterDirect = m_iDegree;
@@ -252,9 +252,18 @@ void CMonster::CheckKey()
 			// 공격 중이 아닐때 
 			m_pMotion = RUN;
 	}
-
+	//0808 09:30 몬스터가 공격시 엉뚱한 방향을 봄
 	if (m_Crash == true)
-		m_pMotion = STAND;
+	{	
+		//바라보는 방향
+		m_Info.vDir = m_vMovePoint - m_Info.vPos;
+		// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다.
+		m_fChaterDirect = m_iDegree;
+		// 취할 모션이미지를 바꿈
+		m_pMotion = ATTACK;
+		// 이동 중 공격시 이동을 멈춤
+		m_vTagetInfo = m_Info.vPos;
+	}
 	if(int(m_sPlayInfo.fHealthPoint) <= 0)
 	{
 		m_pMotion = DEATH;
