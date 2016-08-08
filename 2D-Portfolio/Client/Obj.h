@@ -29,6 +29,8 @@ protected:
 	bool m_bSelect;
 	// 뛰거나 걷거나의 여부
 	bool m_bRun;
+	// 충돌여부 충돌 true, 충돌 안함 false
+	bool m_Crash;
 protected:
 	SORTLAYER m_eLayer;
 
@@ -57,6 +59,7 @@ public:
 	//Set
 	virtual OBJINFO* Setinfo(){return &m_Info;};
 	virtual INFO* SetStatasInfo() {return &m_sPlayInfo;}
+	virtual bool SetCrash(){return m_Crash;}
 
 	//Get
 	virtual const OBJINFO& GetInfoPos() const {return m_Info;}

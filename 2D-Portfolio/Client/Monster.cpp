@@ -204,6 +204,7 @@ void CMonster::CheckKey()
 		m_vMovePoint.y <= 0 || m_vMovePoint.y >= WINSIZEY)
 		m_vMovePoint = m_Info.vPos;
 
+
 	if( m_pMotion == STAND) 
 	{	
 		// 이동할 지점을 가져옴
@@ -251,6 +252,9 @@ void CMonster::CheckKey()
 			// 공격 중이 아닐때 
 			m_pMotion = RUN;
 	}
+
+	if (m_Crash == true)
+		m_pMotion = STAND;
 	if(int(m_sPlayInfo.fHealthPoint) <= 0)
 	{
 		m_pMotion = DEATH;

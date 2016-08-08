@@ -129,9 +129,12 @@ void CObjMgr::ObjInteraction( CObj* pSour )
 			{
 				// 플레이어면
 			case OBJ_PLAYER:
-			case OBJ_MONSTER:
+			//case OBJ_MONSTER:
 				CrashAndSlide((*iter2), pSour);
 				AbilityTointeract((*iter2), pSour);
+				break;
+			case OBJ_MONSTER:
+				CrashAndSlide((*iter2), pSour);
 				break;
 			};
 		}
@@ -163,12 +166,17 @@ void CObjMgr::AbilityTointeract(CObj* _pDest, CObj* _pSour)
 					// 비교될 대상이 몬스터일때 
 					if (_pDest->GetObjType() == OBJ_MONSTER)
 					{
-						// 몬스터와 마우스가 충돌하고, 클릭 중일때
-						if(PtInRect(&_pDest->RealRect(), MouseInfo())
-							&& GetAsyncKeyState(VK_LBUTTON)&0x8000)
-							AttackFunc(_pDest, _pSour);
+						if (PtInRect(&_pDest->RealRect(), MouseInfo()))
+						{
+							_pDest->SetCrash() == true;
+							// 몬스터와 마우스가 충돌하고, 클릭 중일때
+							if(GetAsyncKeyState(VK_LBUTTON)&0x8000)
+								AttackFunc(_pDest, _pSour);
+						}
 					}
 				}
+				else
+					_pDest->SetCrash() == false;
 			}
 			break;
 		}
@@ -191,8 +199,11 @@ void CObjMgr::AttackFunc( CObj* _pDest, CObj* _pSour )
 
 void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 {
+	if(_pDest->GetObjType() == OBJ_PLAYER)
+		return;
+
 	// 비교할 객체가 자신이 아니면
-	if(_pSour != _pDest)
+	if(_pSour != _pDest && _pDest->GetObjType() == OBJ_MONSTER)
 	{
 		// 비교할 대상이 있는 방향을 정하고
 		_pSour->Setinfo()->vDir = _pDest->GetInfoPos().vPos - _pSour->GetInfoPos().vPos;
@@ -212,18 +223,33 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 		{
 			// 0806 충돌시 밀어내거나 멈춤
 			// 외적을 구함
+			// 시계방향으로 밀려나게
 			D3DXVec3Cross(&_pDest->Setinfo()->vDir, 
 						  &_pSour->GetInfoPos().vDir, 
 						  &D3DXVECTOR3(0.f, 0.f, -1.f));
+			// 반시계방향으로 밀려나게
+			//D3DXVec3Cross(&_pDest->Setinfo()->vDir, 
+			//	&D3DXVECTOR3(0.f, 0.f, -1.f), 
+			//	&_pSour->GetInfoPos().vDir);
 
+			D3DXVECTOR3 fPushRange = 
+				D3DXVECTOR3(fDistance- fRealDistance, fDistance - fRealDistance, 0);
+
+			D3DXVec3Normalize(&fPushRange, 
+							  &fPushRange);
 			// 정규화
 			D3DXVec3Normalize(&_pDest->Setinfo()->vDir, 
 							  &_pDest->Setinfo()->vDir);
 
-			// 0808 조건을 바꿔서 겹친거리만 측정해서 밀게.
-			_pDest->Setinfo()->vPos += _pDest->GetInfoPos().vDir /** 
-							((_pDest->GetStatasInfo().fSpeed + 
-							(_pDest->GetStatasInfo().fDexterity * 3.0f))*0.001f)*/;
+			// 0808 조건을 바꿔서 겹친거리만 측정해서 밀게할 예정
+			// += 는 D3DXVec3Cross 로 구한 정방향, -= 는 반대방향
+			// 
+			if((_pSour->GetInfoPos().vPos.y) > (_pDest->GetInfoPos().vPos.y))
+				_pDest->SetTagetInfo() = _pDest->Setinfo()->vPos += (_pDest->GetInfoPos().vDir - fPushRange);
+			else if((_pSour->GetInfoPos().vPos.y) < (_pDest->GetInfoPos().vPos.y))
+				_pDest->SetTagetInfo() = _pDest->Setinfo()->vPos += (_pDest->GetInfoPos().vDir + fPushRange);/*
+			else if((_pSour->GetInfoPos().vPos.x) < (_pDest->GetInfoPos().vPos.x))
+				_pDest->SetTagetInfo() = _pDest->Setinfo()->vPos -= (_pDest->GetInfoPos().vDir - fPushRange);*/
 
 		}
 	}
