@@ -142,64 +142,82 @@ void CMonster::CheckKey()
 	int icount = (int)fTime%10;
 	// 방향
 	
-	// 3초에 한번 방향과 이동을 정함
-	if( icount == 5)
+	// 3초에 한번 방향과 이동을 정함, 충돌하지 않았을때
+	if(m_Crash == false)
 	{
-		m_iDir = rand()%16;
-		switch(m_iDir/2)
+		if(icount == 5 )
 		{
-			//  방향을 정함
-		case 0:
-			// RD
-			m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y + moveLength, 0);
-			/*if(m_tFrame.fStart >= m_tFrame.fLast)
+			m_iDir = rand()%16;
+			switch(m_iDir)
+			{
+				//  방향을 정함
+			case 0:
+				// RD
+				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y + moveLength, 0);
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
 				m_iDir = rand()%8;*/
-			break;												   
-		case 1:	
-			// RU
-			m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y - moveLength, 0);
-			/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				break;												   
+			case 1:	
+				// RU
+				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y - moveLength, 0);
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
 				m_iDir = rand()%8;*/
-			break;												   
-		case 2:	
-			// LD
-			m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y + moveLength, 0);
-			/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				break;												   
+			case 2:	
+				// LD
+				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y + moveLength, 0);
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
 				m_iDir = rand()%8;*/
-			break;													 		
-		case 3:	
-			// LU
-			m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y - moveLength, 0);
-			/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				break;													 		
+			case 3:	
+				// LU
+				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y - moveLength, 0);
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
 				m_iDir = rand()%8;*/
-			break;
-		case 4:	
-			// L
-			m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y, 0);
-			/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				break;
+			case 4:	
+				// L
+				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y, 0);
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
 				m_iDir = rand()%8;*/
-			break;
-		case 5:	
-			// R
-			m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y, 0);
-			/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				break;
+			case 5:	
+				// R
+				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y, 0);
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
 				m_iDir = rand()%8;*/
-			break;
-		case 6:	
-			// U
-			m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y - moveLength, 0);
-			/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				break;
+			case 6:	
+				// U
+				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y - moveLength, 0);
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
 				m_iDir = rand()%8;*/
-			break;
-		case 7:	
-			// D
-			m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y + moveLength, 0);
-			if(m_tFrame.fStart >= m_tFrame.fLast)
-				m_iDir = rand()%8;
-			break;
+				break;
+			case 7:	
+				// D
+				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y + moveLength, 0);
+				//if(m_tFrame.fStart >= m_tFrame.fLast)
+				//	m_iDir = rand()%8;
+				break;
+			default:
+				break;
+			}
 		}
+	}
+	else if(m_Crash == true)
+	{
+		// 충돌했을때
+		// 바라보는 방향
+		m_Info.vDir = m_pPlayerPos - m_Info.vPos;
+		// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다.
+		m_fChaterDirect = m_iDegree;
+		// 취할 모션이미지를 바꿈
+		m_pMotion = ATTACK;
+		// 이동 중 공격시 이동을 멈춤
+		m_vTagetInfo = m_Info.vPos;
 
 	}
+
 	if (m_vMovePoint.x <= 0 || m_vMovePoint.x >= WINSIZEX ||
 		m_vMovePoint.y <= 0 || m_vMovePoint.y >= WINSIZEY)
 		m_vMovePoint = m_Info.vPos;
@@ -252,18 +270,7 @@ void CMonster::CheckKey()
 			// 공격 중이 아닐때 
 			m_pMotion = RUN;
 	}
-	//0808 09:30 몬스터가 공격시 엉뚱한 방향을 봄
-	if (m_Crash == true)
-	{	
-		//바라보는 방향
-		m_Info.vDir = m_vMovePoint - m_Info.vPos;
-		// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다.
-		m_fChaterDirect = m_iDegree;
-		// 취할 모션이미지를 바꿈
-		m_pMotion = ATTACK;
-		// 이동 중 공격시 이동을 멈춤
-		m_vTagetInfo = m_Info.vPos;
-	}
+
 	if(int(m_sPlayInfo.fHealthPoint) <= 0)
 	{
 		m_pMotion = DEATH;

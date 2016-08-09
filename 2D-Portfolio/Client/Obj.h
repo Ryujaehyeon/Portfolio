@@ -8,6 +8,8 @@ protected:
 	OBJINFO m_Info;
 	INFO m_sPlayInfo;
 	OBJ_TYPE m_ObjType;
+	
+	D3DXVECTOR3 m_pPlayerPos;
 protected:
 	// 오브젝트의 이름
 	TCHAR* m_pObjName;
@@ -60,6 +62,7 @@ public:
 	virtual OBJINFO* Setinfo(){return &m_Info;};
 	virtual INFO* SetStatasInfo() {return &m_sPlayInfo;}
 	virtual void SetCrash(bool _bCrash){m_Crash = _bCrash;}
+	virtual void SetPlayerInfoMonster(D3DXVECTOR3 _bPlayerInfo){m_pPlayerPos = _bPlayerInfo;}
 	virtual void SetMotion(TCHAR* _pMotion) {m_pMotion = _pMotion;}
 
 	//Get

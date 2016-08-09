@@ -136,17 +136,19 @@ void CObjMgr::ObjInteraction( CObj* pSour )
 				continue;
 
 			// 
+			CrashAndSlide((*iter2), pSour);
 			switch(pSour->GetObjType()) 
 			{
+				
 				// 플레이어면
 			case OBJ_PLAYER:
-				CrashAndSlide((*iter2), pSour);
+				
 				AbilityTointeract((*iter2), pSour);
 
 				break;
 				// 몬스터면
 			case OBJ_MONSTER:
-				CrashAndSlide((*iter2), pSour);
+				
 				AbilityTointeract((*iter2), pSour);
 				break;
 			};
@@ -233,15 +235,15 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 	//			  플레이어가 몬스터를 밀땐 몬스터는 정지하고 공격
 	//			  플레이어가 플레이어를 밀땐 정지하고 밀림
 	
-	if(_pDest->GetObjType() == OBJ_PLAYER)
-		return;
-
-	// 비교할 객체가 자신이 아니면
-	if(_pDest->GetObjType() == OBJ_MONSTER && _pSour->GetpMotion() == RUN)
+	if(_pDest->GetObjType() == OBJ_MONSTER 
+		|| _pDest->GetObjType() == OBJ_PLAYER)
 	{
+		if(_pSour->GetObjType() == OBJ_PLAYER)
+			_pDest->SetPlayerInfoMonster(_pSour->GetInfoPos().vPos);
+	
 		// 비교할 대상이 있는 방향을 정하고
 		_pSour->Setinfo()->vDir = _pDest->GetInfoPos().vPos - _pSour->GetInfoPos().vPos;
-		
+
 		// 대상체끼리의 표면좌표 더하면 충돌했을때의 거리.
 		float fDistance = ((_pSour->GetInfoPos().fCX * 0.5f) +
 			(_pDest->GetInfoPos().fCX * 0.5f));
@@ -255,38 +257,22 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 		// fDistance 보다 작으면 충돌
 		if(fDistance > fRealDistance)
 		{
-			// 0806 충돌시 밀어내거나 멈춤
-			// 외적을 구함
-			// 시계방향으로 밀려나게
+			// 외적을 구한다
 			D3DXVec3Cross(&_pDest->Setinfo()->vDir, 
 						  &_pSour->GetInfoPos().vDir, 
 						  &D3DXVECTOR3(0.f, 0.f, -1.f));
-			// 반시계방향으로 밀려나게
-			//D3DXVec3Cross(&_pDest->Setinfo()->vDir, 
-			//	&D3DXVECTOR3(0.f, 0.f, -1.f), 
-			//	&_pSour->GetInfoPos().vDir);
 
-			D3DXVECTOR3 fPushRange = 
-				D3DXVECTOR3(fDistance- fRealDistance, fDistance - fRealDistance, 0);
+			float fPushRange = fDistance- fRealDistance;
 
-			D3DXVec3Normalize(&fPushRange, 
-							  &fPushRange);
 			// 정규화
-			D3DXVec3Normalize(&_pDest->Setinfo()->vDir, 
-							  &_pDest->Setinfo()->vDir);
-
-			// 0808 조건을 바꿔서 겹친거리만 측정해서 밀게할 예정
-			// += 는 D3DXVec3Cross 로 구한 정방향, -= 는 반대방향
-			// 
-			if((_pSour->GetInfoPos().vPos.y) > (_pDest->GetInfoPos().vPos.y))
-				_pDest->SetTagetInfo() = _pDest->Setinfo()->vPos += (_pDest->GetInfoPos().vDir - fPushRange);
-			else if((_pSour->GetInfoPos().vPos.y) < (_pDest->GetInfoPos().vPos.y))
-				_pDest->SetTagetInfo() = _pDest->Setinfo()->vPos += (_pDest->GetInfoPos().vDir + fPushRange);/*
-			else if((_pSour->GetInfoPos().vPos.x) < (_pDest->GetInfoPos().vPos.x))
-				_pDest->SetTagetInfo() = _pDest->Setinfo()->vPos -= (_pDest->GetInfoPos().vDir - fPushRange);*/
-
+			D3DXVec3Normalize(&_pSour->Setinfo()->vDir, 
+				&_pSour->Setinfo()->vDir);
+			
+			// 미는 방향대로 밀리게끔
+			_pDest->SetTagetInfo() = _pDest->Setinfo()->vPos += (_pSour->Setinfo()->vDir * fPushRange);
 		}
 	}
+
 }
 
 POINT CObjMgr::MouseInfo()
