@@ -9,8 +9,7 @@ protected:
 	INFO m_sPlayInfo;
 	OBJ_TYPE m_ObjType;
 	
-	// 충돌시 몬스터가 가질 플레이어의 좌표
-	CObj* m_pTagetObj;
+	D3DXVECTOR3 m_pPlayerPos;
 protected:
 	// 오브젝트의 이름
 	TCHAR* m_pObjName;
@@ -61,15 +60,14 @@ public:
 public:
 	//Set
 	virtual OBJINFO* Setinfo(){return &m_Info;};
-	virtual INFO* SetStatas() {return &m_sPlayInfo;}
+	virtual INFO* SetStatasInfo() {return &m_sPlayInfo;}
 	virtual void SetCrash(bool _bCrash){m_Crash = _bCrash;}
-	virtual void SetTagetObj(CObj* _pTagetObj){ m_pTagetObj = _pTagetObj;}
-	virtual void SetMotion(TCHAR* _pMotion) { if(m_pMotion != DEATH) m_pMotion = _pMotion; }
+	virtual void SetPlayerInfoMonster(D3DXVECTOR3 _bPlayerInfo){m_pPlayerPos = _bPlayerInfo;}
+	virtual void SetMotion(TCHAR* _pMotion) {m_pMotion = _pMotion;}
 
 	//Get
-	virtual const bool GetCrash() const {return m_Crash;}
-	virtual const OBJINFO& GetInfo() const {return m_Info;}
-	virtual const INFO& GetStatas() const {return m_sPlayInfo;}
+	virtual const OBJINFO& GetInfoPos() const {return m_Info;}
+	virtual const INFO& GetStatasInfo() const {return m_sPlayInfo;}
 	virtual const FRAME& GetFrame() const {return m_tFrame;}
 	virtual const TCHAR* GetpMotion() const {return m_pMotion;}
 public:

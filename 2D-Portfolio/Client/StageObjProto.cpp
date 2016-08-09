@@ -22,14 +22,9 @@ HRESULT CStageObjProto::InitProtoInstance()
 	objInfo.vDir = D3DXVECTOR3(0, 0, 0);
 	objInfo.vLook = D3DXVECTOR3(1, 0, 0);
 
-
-
 	// ¿øÇü °´Ã¼¸¦ »ý¼ºÇØ¼­ »ðÀÔÇØÁÜ
 	m_MapProto.insert(make_pair(L"StageBack"
 		, new CStageBackGround(objInfo, OBJ_BUILDING)));
-
-	m_MapProto.insert(make_pair(L"0StatusBar"
-		, new CBall(objInfo, OBJ_UI)));
 
 	m_MapProto.insert(make_pair(L"StageObj"
 		, new CBuildObj(objInfo, OBJ_BUILDING)));

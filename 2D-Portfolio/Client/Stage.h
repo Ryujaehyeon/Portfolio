@@ -4,7 +4,7 @@
 
 class CStage : public CSceneObj
 {
-	
+private:
 public:
 	
 public:

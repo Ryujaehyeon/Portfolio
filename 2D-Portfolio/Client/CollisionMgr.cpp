@@ -17,15 +17,15 @@ bool CCollisionMgr::CircleCol( CObj* pTemp, CObj* pDest)
 
 	//대상체 중심점부터 표면까지의 길이와 대상체 중심점부터 표면까지의 길이의 합
 	float fDistance = float(
-		(pDest->GetInfo().fCX * 0.5f /*사거리 - 30 */)+
-		(pTemp->GetInfo().fCX * 0.5f /*사거리 - 30 */));
+		(pDest->GetInfoPos().fCX * 0.5f /*사거리 - 30 */)+
+		(pTemp->GetInfoPos().fCX * 0.5f /*사거리 - 30 */));
 
 	//대상체와 대상체의 실제 가로 거리
-	float fWidth = float(pDest->GetInfo().fX - pTemp->GetInfo().fX);
+	float fWidth = float(pDest->GetInfoPos().fX - pTemp->GetInfoPos().fX);
 		//+ CGameScene::g_tScroll.x; // 캐릭터가 이동한 만큼 변경된 스크롤값을 더함
 
 	//대상체와 대상체의 실제 세로 거리									   
-	float fHeight = float(pDest->GetInfo().fY - pTemp->GetInfo().fY);
+	float fHeight = float(pDest->GetInfoPos().fY - pTemp->GetInfoPos().fY);
 		//+ CGameScene::g_tScroll.y; // 캐릭터가 이동한 만큼 변경된 스크롤값을 더함
 
 	float fRealDistance = 

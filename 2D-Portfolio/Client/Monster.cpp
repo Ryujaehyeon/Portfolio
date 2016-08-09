@@ -50,7 +50,7 @@ HRESULT CMonster::Initialize()
 	m_vMovePoint = m_Info.vPos;
 	m_pStateKey = L"FieldStand_D";
 	m_pMotion = L"FieldStand";
-	m_Crash = false;
+	
 	m_iDir = rand()%8;
 
 	return S_OK;
@@ -93,7 +93,7 @@ SCENEID CMonster::Progress()
 	m_fChaterDirect = m_iDegree;
 
 	// 이동거리
-	if ( m_pMotion == RUN)
+	if ( m_pMotion != DEATH)
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.001f);
 
 	// 자신의 위치에서 목표지점거리보다 이동거리가 크면 자신의 위치를 목표지점으로 지정
@@ -134,13 +134,10 @@ void CMonster::CheckKey()
 	// 제어할 캐릭터 선택
 	static float fTime = 0.0f;
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
-
-	// 서있을때 몇초후 걷게할지
-	static float fWaitTime = 0.f;
-	fWaitTime += GET_SINGLE(CTimeMgr)->DeltaTime();
+	
 
 	// 이동할 거리
-	float moveLength = rand()%100+1;
+	float moveLength = rand()%30+1;
 	// 몇초에 한번 이동할지
 	int icount = (int)fTime%10;
 	// 방향
@@ -148,143 +145,138 @@ void CMonster::CheckKey()
 	// 3초에 한번 방향과 이동을 정함, 충돌하지 않았을때
 	if(m_Crash == false)
 	{
-		if(icount == 8 )
+		if(icount == 5 )
 		{
+			m_iDir = rand()%16;
 			switch(m_iDir)
 			{
 				//  방향을 정함
 			case 0:
 				// RD
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y + moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				m_iDir = rand()%8;*/
 				break;												   
 			case 1:	
 				// RU
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y - moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				m_iDir = rand()%8;*/
 				break;												   
 			case 2:	
 				// LD
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y + moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				m_iDir = rand()%8;*/
 				break;													 		
 			case 3:	
 				// LU
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y - moveLength, 0);
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				m_iDir = rand()%8;*/
 				break;
 			case 4:	
 				// L
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				m_iDir = rand()%8;*/
 				break;
 			case 5:	
 				// R
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				m_iDir = rand()%8;*/
 				break;
 			case 6:	
 				// U
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y - moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
+				/*if(m_tFrame.fStart >= m_tFrame.fLast)
+				m_iDir = rand()%8;*/
 				break;
 			case 7:	
 				// D
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y + moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
+				//if(m_tFrame.fStart >= m_tFrame.fLast)
+				//	m_iDir = rand()%8;
+				break;
+			default:
 				break;
 			}
 		}
-		// 서기
-		if( m_pMotion == STAND) 
-		{	
-			// 이동할 지점을 가져옴
-			m_vTagetInfo = m_vMovePoint;
-
-			// 이동할 지점을 바라보는 방향
-			m_Info.vDir = m_vTagetInfo - m_Info.vPos;
-
-			if (int(fWaitTime) > rand()%3)
-				m_pMotion = RUN;
-		}
-		// 걷기
-		if( m_pMotion == RUN )
-		{
-			m_vTagetInfo = m_vMovePoint;
-			m_Info.vDir = m_vTagetInfo - m_Info.vPos;
-			if ( m_vTagetInfo == m_Info.vPos )
-			{
-				// 도달했을 시 서있는 상태
-				fWaitTime = 0.0f;
-				m_pMotion = STAND;
-			}
-		}
-		// 공격중
-		if (m_pMotion == ATTACK)
-		{
-			if(m_tFrame.fStart > m_tFrame.fLast-1)
-				m_pMotion = STAND;
-		}
 	}
-	else if( m_Crash == true )
+	else if(m_Crash == true)
 	{
 		// 충돌했을때
-		if(int(m_sPlayInfo.fHealthPoint) <= 0)
-			m_pMotion = DEATH;
-		// 봐야할 적을 타겟으로 잡고
-		m_vTagetInfo = m_pTagetObj->Setinfo()->vPos;
-
 		// 바라보는 방향
-		m_Info.vDir = m_vTagetInfo - m_Info.vPos;
+		m_Info.vDir = m_pPlayerPos - m_Info.vPos;
+		// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다.
+		m_fChaterDirect = m_iDegree;
+		// 취할 모션이미지를 바꿈
+		m_pMotion = ATTACK;
+		// 이동 중 공격시 이동을 멈춤
+		m_vTagetInfo = m_Info.vPos;
 
-		float fRealDistance = (m_pTagetObj->Setinfo()->fCX * 0.5f) +
-						  (m_Info.fCX * 0.5f);
-
-		float fDistance = D3DXVec3Length(&m_Info.vDir);
-
-		if(fDistance < fRealDistance+20)
-		{
-			m_pMotion = ATTACK;
-			if(int(m_tFrame.fStart) == int(m_tFrame.fLast-1))
-				FuncAttack(m_pTagetObj, this);
-		}
-		else if(fDistance < fRealDistance*3.f)
-			m_pMotion = STAND;
-		else 
-			m_pMotion = RUN;
-
-		if(fWaitTime > 5.f)
-			m_Crash = false;
 	}
 
 	if (m_vMovePoint.x <= 0 || m_vMovePoint.x >= WINSIZEX ||
 		m_vMovePoint.y <= 0 || m_vMovePoint.y >= WINSIZEY)
-		m_iDir = rand()%8;
-}
+		m_vMovePoint = m_Info.vPos;
 
-void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
-{
-	if( _pSour->GetObjType() == _pDest->GetObjType())
-		return;
 
-	if(_pSour->GetpMotion() == ATTACK)
-		if (_pSour->GetFrame().fStart >= _pSour->GetFrame().fLast-3)
+	if( m_pMotion == STAND) 
+	{	
+		// 이동할 지점을 가져옴
+		m_vTagetInfo = m_vMovePoint;
+		// 이동할 지점을 바라보는 방향
+		m_Info.vDir = m_vTagetInfo - m_Info.vPos;
+	}
+	else if( m_pMotion == RUN )
+	{
+		//m_vTagetInfo = m_vMovePoint;
+		m_Info.vDir = m_vTagetInfo - m_Info.vPos;
+	}
+
+	// 움직일 목표위치에 도달했을때
+	if ( m_vTagetInfo == m_Info.vPos )
+	{
+		// 도달했을 시 서있는 상태
+		m_pMotion = STAND;
+		if( m_pMotion == ATTACK ) 
 		{
-			if(_pDest->GetStatas().fDefence >= _pSour->GetStatas().fAttack)
-				_pDest->SetStatas()->fHealthPoint -= 1;
-			else if(_pDest->GetStatas().fDefence < _pSour->GetStatas().fAttack)
-				_pDest->SetStatas()->fHealthPoint -= 
-				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
+			// 바라보는 방향
+			m_Info.vDir = m_vMovePoint - m_Info.vPos; 
+			// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
+			m_fChaterDirect = m_iDegree;
+			// 취할 모션이미지를 바꿈
+			m_pMotion = ATTACK;
 		}
+	}
+	// 목표위치에 도달하지 못했을때
+	else if ( m_vTagetInfo != m_Info.vPos )
+	{
+		// 공격시
+		if( m_pMotion == ATTACK ) 
+		{
+			// 바라보는 방향
+			m_Info.vDir = m_vMovePoint - m_Info.vPos; 
+			// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
+			m_fChaterDirect = m_iDegree;
+			// 취할 모션이미지를 바꿈
+			m_pMotion = ATTACK;
+			// 이동 중 공격시 이동을 멈춤
+			m_vTagetInfo = m_Info.vPos;
+		}
+		else
+			// 공격 중이 아닐때 
+			m_pMotion = RUN;
+	}
+
+	if(int(m_sPlayInfo.fHealthPoint) <= 0)
+	{
+		m_pMotion = DEATH;
+		m_vTagetInfo = m_Info.vPos; 
+	}
 }
-
-
 void CMonster::Release()
 {
 
@@ -558,4 +550,3 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 		}
 	}
 }
-
