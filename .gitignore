@@ -16,3 +16,5 @@
 *.idb
 *.sdf
 2D-Portfolio/Debug/MFC_000.exe
+2D-Portfolio/Client/Debug/Client_manifest.rc
+2D-Portfolio/MFC_000/Debug/MFC_000_manifest.rc
