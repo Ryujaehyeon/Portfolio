@@ -20,11 +20,11 @@ void CSortMgr::SetLayer( CObj* pObj )
 
 void CSortMgr::Render()
 {
-	// y 축에 따라 먼저 그려지고 늦게 그려지게 정렬
+	//// y 축에 따라 먼저 그려지고 늦게 그려지게 정렬
 	//for (list<CObj*>::iterator iter = m_SortLayer[i].begin();
 	//	iter != m_SortLayer[i].end(); ++iter)
 	//{
-	//	(*iter)->GetInfoPos().vPos.y;
+	//	(*iter)->GetInfo().vPos.y;
 	//}
 	for (int i = 0 ; i < LAYER_END ; ++i)
 	{

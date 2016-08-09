@@ -5,6 +5,7 @@
 class CPrototype;
 class CSceneObj
 {
+	static D3DXVECTOR3 g_tScroll;
 protected:
 	CPrototype* m_pPrototype;
 public:

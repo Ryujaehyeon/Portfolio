@@ -61,7 +61,6 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 	return S_OK;
 }
 
-
 SCENEID CObjMgr::Progress()
 {
 	//if(m_monsterList == NULL)
@@ -77,14 +76,12 @@ SCENEID CObjMgr::Progress()
 		for(list<CObj*>::iterator iter2 = iter->second.begin();
 			iter2 != iter->second.end(); ++iter2)
 		{
-			
 			int iScene = (*iter2)->Progress();
-			switch(iScene)
+
+			switch((*iter2)->GetObjType())
 			{
-			case SCENEID_NONPASS:
-			case SCENEID_STAGE:
-			case SCENEID_STAGE2:
-			case SCENEID_STAGE3:
+			case OBJ_PLAYER:
+			case OBJ_MONSTER:
 				ObjInteraction((*iter2));
 
 				// 몬스터 삭제시 
@@ -129,124 +126,64 @@ void CObjMgr::ObjInteraction( CObj* pSour )
 		{
 			if(pSour == (*iter2))
 				continue;
-
-			// 플레이어 혹은 몬스터가 아니면 반복문 처음으로 
-			if((*iter2)->GetObjType() != OBJ_PLAYER &&
-				(*iter2)->GetObjType() != OBJ_MONSTER)
-				continue;
-
-			// 
+			
 			CrashAndSlide((*iter2), pSour);
-			switch(pSour->GetObjType()) 
-			{
-				
-				// 플레이어면
-			case OBJ_PLAYER:
-				
-				AbilityTointeract((*iter2), pSour);
-
-				break;
-				// 몬스터면
-			case OBJ_MONSTER:
-				
-				AbilityTointeract((*iter2), pSour);
-				break;
-			};
+			AbilityTointeract((*iter2), pSour);
 		}
 	}
 }
 
 void CObjMgr::AbilityTointeract(CObj* _pDest, CObj* _pSour)
 {
-	D3DXVECTOR3 InfoDir;
 
-	// 비교할 대상이 있는 방향을 정하고
-	InfoDir = _pDest->GetInfoPos().vPos - _pSour->GetInfoPos().vPos;
-	// 거리를 구한다.
-	float fDistance = ((_pSour->GetInfoPos().fCX *0.5f) +
-		(_pDest->GetInfoPos().fCX)*0.5f);
-	// 실제 거리, 객체간의 중심점간의 거리
-	float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
-
-	// 비교하려는 대상의 타입
-	switch(_pSour->GetObjType()) 
-	{
-	// 플레이어면
-	case OBJ_PLAYER:
-		{
-			// 대상이 몬스터일때 
-			if(_pDest->GetObjType() == OBJ_MONSTER)
-			{
-				// 거리가 25 이하일때
-				if (fDistance > fRealDistance)
-				{
-					if (PtInRect(&_pDest->RealRect(), MouseInfo()))
-						_pDest->SetCrash(true);
-					else
-						_pDest->SetCrash(false);
-
-					// 몬스터와 마우스가 충돌하고, 클릭 중일때
-					if(GetAsyncKeyState(VK_LBUTTON)&0x8000 
-						&& PtInRect(&_pDest->RealRect(), MouseInfo()))
-						AttackFunc(_pDest, _pSour);
-				}
-			}
-			break;
-		}
-	case OBJ_MONSTER:
-		{
-			// 대상이 플레이어 일때
-			if(_pDest->GetObjType() == OBJ_PLAYER)
-			{
-				// 거리가 20 이하일때
-				if (fDistance > fRealDistance)
-				{
-					AttackFunc(_pDest, _pSour);
-				}
-			}
-		}
-		break;
-	};
 }
 
-void CObjMgr::AttackFunc( CObj* _pDest, CObj* _pSour )
+void CObjMgr::AttackFunc(CObj* _pDest, CObj* _pSour)
 {
 	if( _pSour->GetObjType() == _pDest->GetObjType())
 		return;
-	
-	// 0808 09:00 에러
-	//else if (_pSour->GetObjType() == OBJ_MONSTER)
-	//	_pSour->SetMotion(ATTACK);
 
-	if (_pSour->GetFrame().fStart >= _pSour->GetFrame().fLast-3)
+	if(_pSour->GetpMotion() == ATTACK)
 	{
-		if(_pDest->GetStatasInfo().fDefence >= _pSour->GetStatasInfo().fAttack)
-			_pDest->SetStatasInfo()->fHealthPoint -= 1;
-		else if(_pDest->GetStatasInfo().fDefence < _pSour->GetStatasInfo().fAttack)
-			_pDest->SetStatasInfo()->fHealthPoint -= 
-				_pSour->GetStatasInfo().fAttack - _pDest->GetStatasInfo().fDefence;
+		if (_pSour->GetFrame().fStart >= _pSour->GetFrame().fLast-3)
+		{
+			if(_pDest->GetStatas().fDefence >= _pSour->GetStatas().fAttack)
+				_pDest->SetStatas()->fHealthPoint -= 1;
+			else if(_pDest->GetStatas().fDefence < _pSour->GetStatas().fAttack)
+				_pDest->SetStatas()->fHealthPoint -= 
+				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
+		}
 	}
 }
 
 void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 {
-	// 0808 09:30 몬스터가 몬스터를 밀때 밀리는 몬스터는 정지해야함
-	//			  몬스터가 플레이어를 밀땐 밀지말고 공격
-	//			  플레이어가 몬스터를 밀땐 몬스터는 정지하고 공격
-	//			  플레이어가 플레이어를 밀땐 정지하고 밀림
-	
-	if(_pDest->GetObjType() == OBJ_MONSTER 
-		|| _pDest->GetObjType() == OBJ_PLAYER)
-	{
-		if(_pSour->GetObjType() == OBJ_PLAYER)
-			_pDest->SetPlayerInfoMonster(_pSour->GetInfoPos().vPos);
-	
 		// 비교할 대상이 있는 방향을 정하고
-		_pSour->Setinfo()->vDir = _pDest->GetInfoPos().vPos - _pSour->GetInfoPos().vPos;
+		_pSour->Setinfo()->vDir = _pDest->GetInfo().vPos - _pSour->GetInfo().vPos;
 
-		// 대상체끼리의 표면좌표 더하면 충돌했을때의 거리.
-		float fDistance = ((_pSour->GetInfoPos().fCX * 0.5f) +
-			(_pDest->GetInfoPos().fCX * 0.5f));
+		{
+			// 실제 크기에 따른 충돌
+			float fDistance = ((_pSour->GetInfo().fCX * 0.6f) +
+				(_pDest->GetInfo().fCX * 0.6f));
+
+			// 실제 거리, 객체간의 중심점간의 거리
+			float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
+			if(fDistance > fRealDistance)
+			{
+				if(_pSour->GetObjType() != _pDest->GetObjType())
+				{
+					_pSour->SetCrash(true);
+					_pDest->SetCrash(true);
+					_pSour->SetTagetObj(_pDest);
+					_pDest->SetTagetObj(_pSour);
+
+				}
+			}
+		}
+		
+		// 충돌체크를 위한 거리
+		float fDistance = ((_pSour->GetInfo().fCX * 0.4f) +
+			(_pDest->GetInfo().fCX * 0.4f));
 
 		// 실제 거리, 객체간의 중심점간의 거리
 		float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
@@ -255,23 +192,25 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 		// 표면에서 "[충돌했을때!]의 중심점간(fDistance)"의 거리는 표면의 합계이다.
 		// 이때 중심점끼리의 거리(fRealDistance)는 fDistance 보다 크면 충돌하지 않음
 		// fDistance 보다 작으면 충돌
+		
 		if(fDistance > fRealDistance)
 		{
 			// 외적을 구한다
+			// 밀고있는 대상의 방향의 옆으로 밀리는 대상의 방향을 잡아줌
 			D3DXVec3Cross(&_pDest->Setinfo()->vDir, 
-						  &_pSour->GetInfoPos().vDir, 
+						  &_pSour->GetInfo().vDir, 
 						  &D3DXVECTOR3(0.f, 0.f, -1.f));
 
-			float fPushRange = fDistance- fRealDistance;
+			// 충돌해서 겹친만큼 밀어주기 위해 겹친 거리를 구함
+			float fPushRange = fDistance - fRealDistance;
 
-			// 정규화
+			// 정규화 , 
 			D3DXVec3Normalize(&_pSour->Setinfo()->vDir, 
-				&_pSour->Setinfo()->vDir);
+							  &_pSour->Setinfo()->vDir);
 			
 			// 미는 방향대로 밀리게끔
-			_pDest->SetTagetInfo() = _pDest->Setinfo()->vPos += (_pSour->Setinfo()->vDir * fPushRange);
+			_pDest->Setinfo()->vPos += (_pSour->Setinfo()->vDir * fPushRange);
 		}
-	}
 
 }
 
@@ -340,7 +279,7 @@ void CObjMgr::MonsterRelease()
 			{
 				// 체력체크 후
 				if((*iter2)->GetpMotion() == DEATH && 
-					(*iter2)->GetFrame().fStart > (*iter2)->GetFrame().fLast-1)
+					(*iter2)->GetFrame().fStart >= (*iter2)->GetFrame().fLast-1)
 				{
 					// 할당된 몬스터 객체 삭제
 					SAFE_DELETE<CObj>(&(*iter2));

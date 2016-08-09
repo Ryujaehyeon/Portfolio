@@ -2,6 +2,8 @@
 #include "Stage.h"
 #include "Include.h"
 
+D3DXVECTOR3 CStage::g_tScroll = D3DXVECTOR3(0.f, 0.f, 0.f);
+
 CStage::CStage(void)
 {}
 
@@ -37,6 +39,7 @@ HRESULT CStage::Initialize()
 		ERR_MSG(g_hWnd, L"객체 생성 실패");
 		return E_FAIL;
 	}
+	// 캐릭터
 	for ( int i= 0 ; i < 3 ; ++i)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
@@ -47,6 +50,7 @@ HRESULT CStage::Initialize()
 		}
 	}
 
+	// 몬스터
 	for(int i = 0; i < 5; ++i)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
@@ -57,6 +61,22 @@ HRESULT CStage::Initialize()
 		}
 	}
 
+	//// UI 객체 생성
+	//if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+	//	, L"0StatusBar")))
+	//{
+	//	ERR_MSG(g_hWnd, L"객체 생성 실패");
+	//	return E_FAIL;
+	//}
+	//// UI 이미지
+	//if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+	//	L"../Resource/Texture/UI/0StatusBar.png"
+	//	, L"0StatusBar", TEXTYPE_SINGLE)))
+	//{
+	//	ERR_MSG(g_hWnd, L"텍스쳐 읽어오기 실패");
+	//	return E_FAIL;
+	//}
+
 	// 타일 불러오기
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Tile/Tile%d.png",
@@ -65,6 +85,9 @@ HRESULT CStage::Initialize()
 		ERR_MSG(g_hWnd, L"TileTexture 로드 실패");
 		return E_FAIL;
 	}
+
+
+
 	// Player
 #pragma region Player
 

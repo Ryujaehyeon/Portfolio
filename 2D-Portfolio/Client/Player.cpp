@@ -115,7 +115,7 @@ void CPlayer::Render()
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, m_pStateKey, int(m_tFrame.fStart));
 	// 프레임 값이 저장한 이미지 벡터크기를 벗어난 값이 들어가면 에러
-
+	
 	if(pTexInfo == NULL)
 		return;
 
@@ -166,6 +166,8 @@ void CPlayer::CheckKey()
 				m_fChaterDirect = m_iDegree;
 				// 취할 모션이미지를 바꿈
 				m_pMotion = ATTACK;
+				if (int(m_tFrame.fStart) == int(m_tFrame.fLast-1))
+					FuncAttack(m_pTagetObj, this);
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -208,7 +210,21 @@ void CPlayer::CheckKey()
 	}
 	return;
 }
+void CPlayer::FuncAttack(CObj* _pDest, CObj* _pSour)
+{
+	if( _pSour->GetObjType() == _pDest->GetObjType())
+		return;
 
+	if(_pSour->GetpMotion() == ATTACK)
+		if (_pSour->GetFrame().fStart >= _pSour->GetFrame().fLast-3)
+		{
+			if(_pDest->GetStatas().fDefence >= _pSour->GetStatas().fAttack)
+				_pDest->SetStatas()->fHealthPoint -= 1;
+			else if(_pDest->GetStatas().fDefence < _pSour->GetStatas().fAttack)
+				_pDest->SetStatas()->fHealthPoint -= 
+				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
+		}
+}
 POINT CPlayer::MouseInfo()
 {
 	POINT pt;

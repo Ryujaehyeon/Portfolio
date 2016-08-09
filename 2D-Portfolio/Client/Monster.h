@@ -18,6 +18,7 @@ public:
 	void SetMotionDirect(TCHAR* _MotionDirect);
 	// 취할 행동의 키값을 넣으면 _pObjKey를 m_pObjKey에 넣는다.
 	void DirectAction( TCHAR* _pObjStatas );
+	void FuncAttack(CObj* _pDest, CObj* _pSour);
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();
