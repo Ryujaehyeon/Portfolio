@@ -143,8 +143,18 @@ void CMonster::CheckKey()
 	float moveLength = rand()%100+1;
 	// 몇초에 한번 이동할지
 	int icount = (int)fTime%10;
-	// 방향
 	
+	//
+	if(m_sPlayInfo.fHealthPoint <= 0)
+	{
+		m_pMotion = DEATH;
+		// 봐야할 적을 타겟으로 잡고
+		m_vTagetInfo = m_pTagetObj->Setinfo()->vPos;
+
+		// 바라보는 방향
+		m_Info.vDir = m_vTagetInfo - m_Info.vPos;
+		return;
+	}
 	// 3초에 한번 방향과 이동을 정함, 충돌하지 않았을때
 	if(m_Crash == false)
 	{
@@ -248,19 +258,25 @@ void CMonster::CheckKey()
 
 		float fDistance = D3DXVec3Length(&m_Info.vDir);
 
+		// 0810 오전 AI 수정해야함
 		if(fDistance < fRealDistance+20)
 		{
+			fWaitTime = 0.f;
 			m_pMotion = ATTACK;
-			if(int(m_tFrame.fStart) == int(m_tFrame.fLast-1))
-				FuncAttack(m_pTagetObj, this);
+			FuncAttack(m_pTagetObj, this);
 		}
 		else if(fDistance < fRealDistance*3.f)
-			m_pMotion = STAND;
-		else 
-			m_pMotion = RUN;
-
-		if(fWaitTime > 5.f)
+		{
+			if(m_tFrame.fStart > m_tFrame.fLast)
+				m_pMotion = RUN;
+		}
+		else if(fWaitTime > 5.f)
+		{
+			if(int(m_tFrame.fStart) == int(m_tFrame.fLast))
+				m_pMotion = STAND;
 			m_Crash = false;
+			m_pTagetObj = NULL;
+		}
 	}
 
 	if (m_vMovePoint.x <= 0 || m_vMovePoint.x >= WINSIZEX ||
@@ -274,7 +290,8 @@ void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 		return;
 
 	if(_pSour->GetpMotion() == ATTACK)
-		if (_pSour->GetFrame().fStart >= _pSour->GetFrame().fLast-3)
+	{
+		if (_pSour->GetFrame().fStart <= 0.f)
 		{
 			if(_pDest->GetStatas().fDefence >= _pSour->GetStatas().fAttack)
 				_pDest->SetStatas()->fHealthPoint -= 1;
@@ -282,6 +299,10 @@ void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 				_pDest->SetStatas()->fHealthPoint -= 
 				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
 		}
+	}
+
+	if(_pDest->SetStatas()->fHealthPoint <= 0.f)
+		m_pTagetObj = NULL;
 }
 
 

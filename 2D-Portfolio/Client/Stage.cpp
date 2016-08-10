@@ -61,21 +61,21 @@ HRESULT CStage::Initialize()
 		}
 	}
 
-	//// UI 객체 생성
-	//if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
-	//	, L"0StatusBar")))
-	//{
-	//	ERR_MSG(g_hWnd, L"객체 생성 실패");
-	//	return E_FAIL;
-	//}
-	//// UI 이미지
-	//if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-	//	L"../Resource/Texture/UI/0StatusBar.png"
-	//	, L"0StatusBar", TEXTYPE_SINGLE)))
-	//{
-	//	ERR_MSG(g_hWnd, L"텍스쳐 읽어오기 실패");
-	//	return E_FAIL;
-	//}
+	// UI 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"0StatusBar")))
+	{
+		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		return E_FAIL;
+	}
+	// UI 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/0StatusBar.png"
+		, L"0StatusBar", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
 
 	// 타일 불러오기
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(

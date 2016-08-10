@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include "Client.h"
 #include "MainGame.h"
+#include "Include.h"
+#pragma comment(lib, "Debug.lib")
 
 #define MAX_LOADSTRING 100
 
@@ -43,6 +45,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return FALSE;
 	}
 
+	CreateConsole();
+
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
 	if(SUCCEEDED(MainGame.Initialize()))
@@ -70,7 +74,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			}
 		}
 	}
-
+	DestroyConsole();
 	return (int) msg.wParam;
 }
 

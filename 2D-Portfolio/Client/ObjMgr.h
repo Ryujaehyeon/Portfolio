@@ -19,8 +19,6 @@ public:
 	// 능력에 따른 교환
 	void AbilityTointeract(CObj* _pDest, CObj* _pSour);
 	// 상호작용 
-	// 공격시 상태 변화
-	void AttackFunc(CObj* _pDest, CObj* _pSour);
 	float DegreeMon( CObj* _pDest, CObj* _pSour );
 	float DegreeMouse(CObj* _pSour );
 	void MonsterRelease();

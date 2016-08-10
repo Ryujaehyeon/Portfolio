@@ -50,6 +50,7 @@ HRESULT CPlayer::Initialize()
 	m_pStateKey = L"FieldStand_D";
 	m_pMotion = L"FieldStand";
 	m_fAngle = D3DXToRadian(280.f);
+	m_pTagetObj = NULL;
 	return S_OK;
 }
 
@@ -116,6 +117,12 @@ void CPlayer::Render()
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, m_pStateKey, int(m_tFrame.fStart));
 	// 프레임 값이 저장한 이미지 벡터크기를 벗어난 값이 들어가면 에러
 	
+	TCHAR info[128];
+
+	//wsprintf(info,)
+
+	//DebugMsg(L"%d",);
+
 	if(pTexInfo == NULL)
 		return;
 
@@ -133,6 +140,9 @@ void CPlayer::CheckKey()
 	// 제어할 캐릭터 선택
 	CharacterSelect();
 	m_vMousePos = MouseInfoDX();
+
+	//if( m_Crash == false )
+	//	m_pTagetObj = this;
 
 	if (GetAsyncKeyState(VK_TAB) & 0x8000 && m_bSelect == true)
 	{
@@ -166,8 +176,10 @@ void CPlayer::CheckKey()
 				m_fChaterDirect = m_iDegree;
 				// 취할 모션이미지를 바꿈
 				m_pMotion = ATTACK;
-				if (int(m_tFrame.fStart) == int(m_tFrame.fLast-1))
+				if(m_pTagetObj != NULL)
 					FuncAttack(m_pTagetObj, this);
+				// 공격이 끝나면 타겟을 한번 지워줌
+				m_pTagetObj = NULL;
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -216,7 +228,8 @@ void CPlayer::FuncAttack(CObj* _pDest, CObj* _pSour)
 		return;
 
 	if(_pSour->GetpMotion() == ATTACK)
-		if (_pSour->GetFrame().fStart >= _pSour->GetFrame().fLast-3)
+	{
+		if (_pSour->GetFrame().fStart >= PLAYER_ATTACK-0.5f)
 		{
 			if(_pDest->GetStatas().fDefence >= _pSour->GetStatas().fAttack)
 				_pDest->SetStatas()->fHealthPoint -= 1;
@@ -224,6 +237,7 @@ void CPlayer::FuncAttack(CObj* _pDest, CObj* _pSour)
 				_pDest->SetStatas()->fHealthPoint -= 
 				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
 		}
+	}
 }
 POINT CPlayer::MouseInfo()
 {

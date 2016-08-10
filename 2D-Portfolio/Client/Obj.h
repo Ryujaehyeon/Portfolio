@@ -63,7 +63,7 @@ public:
 	virtual OBJINFO* Setinfo(){return &m_Info;};
 	virtual INFO* SetStatas() {return &m_sPlayInfo;}
 	virtual void SetCrash(bool _bCrash){m_Crash = _bCrash;}
-	virtual void SetTagetObj(CObj* _pTagetObj){ m_pTagetObj = _pTagetObj;}
+	virtual void SetTagetObj(CObj* _pTagetObj);
 	virtual void SetMotion(TCHAR* _pMotion) { if(m_pMotion != DEATH) m_pMotion = _pMotion; }
 
 	//Get
@@ -72,6 +72,9 @@ public:
 	virtual const INFO& GetStatas() const {return m_sPlayInfo;}
 	virtual const FRAME& GetFrame() const {return m_tFrame;}
 	virtual const TCHAR* GetpMotion() const {return m_pMotion;}
+	
+	//etc
+	virtual void TagetObjCheck();
 public:
 	void FrameMove(const float& fCnt, const float& fMax);
 	int GetTileIndex(const D3DXVECTOR3& vPos);

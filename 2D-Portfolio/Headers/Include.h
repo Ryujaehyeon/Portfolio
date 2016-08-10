@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Debug.h"
 //===========Manager Header==============//
 #include "Device.h"
 #include "TextureMgr.h"

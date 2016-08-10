@@ -125,3 +125,14 @@ bool CObj::CollisionMouseToTile( const D3DXVECTOR3& vPos, const TILE* pTileInfo 
 	return false;
 }
 
+void CObj::SetTagetObj( CObj* _pTagetObj )
+{
+	m_pTagetObj = _pTagetObj;
+}
+
+void CObj::TagetObjCheck()
+{
+	if(m_pTagetObj == NULL);
+		//ZeroMemory(m_pTagetObj, sizeof(CObj));
+}
+

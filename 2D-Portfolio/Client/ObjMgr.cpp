@@ -77,13 +77,14 @@ SCENEID CObjMgr::Progress()
 			iter2 != iter->second.end(); ++iter2)
 		{
 			int iScene = (*iter2)->Progress();
+			
+			
 
 			switch((*iter2)->GetObjType())
 			{
 			case OBJ_PLAYER:
 			case OBJ_MONSTER:
 				ObjInteraction((*iter2));
-
 				// 몬스터 삭제시 
 				MonsterRelease();
 
@@ -138,33 +139,19 @@ void CObjMgr::AbilityTointeract(CObj* _pDest, CObj* _pSour)
 
 }
 
-void CObjMgr::AttackFunc(CObj* _pDest, CObj* _pSour)
-{
-	if( _pSour->GetObjType() == _pDest->GetObjType())
-		return;
 
-	if(_pSour->GetpMotion() == ATTACK)
-	{
-		if (_pSour->GetFrame().fStart >= _pSour->GetFrame().fLast-3)
-		{
-			if(_pDest->GetStatas().fDefence >= _pSour->GetStatas().fAttack)
-				_pDest->SetStatas()->fHealthPoint -= 1;
-			else if(_pDest->GetStatas().fDefence < _pSour->GetStatas().fAttack)
-				_pDest->SetStatas()->fHealthPoint -= 
-				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
-		}
-	}
-}
 
 void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 {
 		// 비교할 대상이 있는 방향을 정하고
 		_pSour->Setinfo()->vDir = _pDest->GetInfo().vPos - _pSour->GetInfo().vPos;
 
+
+		// 타겟을 정하기 위한 거리
 		{
 			// 실제 크기에 따른 충돌
-			float fDistance = ((_pSour->GetInfo().fCX * 0.6f) +
-				(_pDest->GetInfo().fCX * 0.6f));
+			float fDistance = ((_pSour->GetInfo().fCX * 0.7f) +
+				(_pDest->GetInfo().fCX * 0.7f));
 
 			// 실제 거리, 객체간의 중심점간의 거리
 			float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
@@ -172,16 +159,18 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 			{
 				if(_pSour->GetObjType() != _pDest->GetObjType())
 				{
+					// 충돌 여부
 					_pSour->SetCrash(true);
 					_pDest->SetCrash(true);
+					// 타겟 설정
 					_pSour->SetTagetObj(_pDest);
 					_pDest->SetTagetObj(_pSour);
-
 				}
 			}
 		}
 		
-		// 충돌체크를 위한 거리
+		// 충돌시 밀어주기 위한 거리
+		// 충돌 거리
 		float fDistance = ((_pSour->GetInfo().fCX * 0.4f) +
 			(_pDest->GetInfo().fCX * 0.4f));
 
@@ -277,7 +266,7 @@ void CObjMgr::MonsterRelease()
 			// 몬스터면
 			if((*iter2)->GetObjType() == OBJ_MONSTER)
 			{
-				// 체력체크 후
+				// 죽었는지 상태체크 후
 				if((*iter2)->GetpMotion() == DEATH && 
 					(*iter2)->GetFrame().fStart >= (*iter2)->GetFrame().fLast-1)
 				{
