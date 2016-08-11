@@ -40,24 +40,38 @@ SCENEID CMenuButton::Progress()
 
 	m_Info.matWorld =  matTrans;
 
+	SCENEID iScene;
 	// &RealRect() 실제 충돌하는 좌표를 체크
 	if(PtInRect(&RealRect(), MouseInfo()))
 	{
 		m_bMouseOver = true;
 		if ( m_pObjKey == L"MenuButton_Start" && 
 			GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-			return SCENEID_STAGE;
-		else if (m_pObjKey == L"MenuButton_Exit"  && 
+		{
+			iScene = SCENEID_STAGE;
+			return  SCENEID_STAGE;
+		}
+		else 
+			 iScene = SCENEID_NONPASS;
+		if (m_pObjKey == L"MenuButton_Exit"  && 
 			GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-			return SCENEID_END;
+		{
+			iScene = SCENEID_END;
+			return  SCENEID_END;
+		}
 	}
-	else if (m_bMouseOver = true)
+	else
 	{
+		// 버튼을 마우스가 올라가지 않은 이미지로 바꿈
 		m_bMouseOver = false;
+		iScene = SCENEID_NONPASS;
 	}
-	
+
 	// 씬을 넘기지 않는다.
-	return SCENEID_NONPASS;
+
+
+	return iScene;
+
 }
 
 void CMenuButton::Render()

@@ -33,6 +33,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	MSG msg;
 	HACCEL hAccelTable;
 	CMainGame MainGame;
+	static SCENEID iScene;
 	srand(time(0));
 	// 전역 문자열을 초기화합니다.
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -66,7 +67,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			else
 			{
 				// MainGame 시작
-				SCENEID iScene = MainGame.Progress();
+				iScene = MainGame.Progress();
 				MainGame.Render();
 				
 				if (iScene == SCENEID_END)

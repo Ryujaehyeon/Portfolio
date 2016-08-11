@@ -28,11 +28,23 @@ HRESULT CStageObjProto::InitProtoInstance()
 	m_MapProto.insert(make_pair(L"StageBack"
 		, new CStageBackGround(objInfo, OBJ_BUILDING)));
 
-	m_MapProto.insert(make_pair(L"0StatusBar"
-		, new CBall(objInfo, OBJ_UI)));
+	m_MapProto.insert(make_pair(L"StatusBar"
+		, new CUIObj(objInfo, L"StatusBar", OBJ_UI)));
 
-	m_MapProto.insert(make_pair(L"StageObj"
-		, new CBuildObj(objInfo, OBJ_BUILDING)));
+	m_MapProto.insert(make_pair(L"HP"
+		, new CUIObj(objInfo, L"HP", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"MP"
+		, new CUIObj(objInfo, L"MP", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"Stamina"
+		, new CUIObj(objInfo, L"Stamina", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"Run"
+		, new CUIObj(objInfo, L"Run", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"SkillPoint"
+		, new CUIObj(objInfo, L"SkillPoint", OBJ_UI)));
 
 	// 플레이어
 	m_MapProto.insert(make_pair(L"Player"

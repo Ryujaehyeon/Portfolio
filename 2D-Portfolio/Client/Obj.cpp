@@ -5,33 +5,45 @@
 CObj::CObj(void)
 	:m_pObjKey(NULL)
 	, m_pStateKey(NULL)
-	, m_fFrame(0)
 	, m_tFrame()
 	, m_fAngle(0.0f)
 {
 }
 
 CObj::CObj(const OBJINFO& Info, const OBJ_TYPE _ObjType)
-	:m_Info(Info)
+	: m_Info(Info)
+	, m_sPlayInfo()
+	, m_ObjType(_ObjType)
+	, m_pTagetObj(NULL)
 	, m_pObjKey(NULL)
 	, m_pStateKey(NULL)
-	, m_fFrame(0)
-	, m_ObjType(_ObjType)
 	, m_tFrame(0,0)
+	, m_pMotion(STAND)
+	, m_fAngle(0)
+	, m_iDegree(0)
+	, m_fChaterDirect(0)
+	, m_bSelect(false)
 	, m_bRun(true)
+	, m_Crash(false)
 {
 }
 
 
 CObj::CObj(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType)
-	:m_Info(Info)
+	: m_Info(Info)
+	, m_sPlayInfo()
+	, m_ObjType(_ObjType)
+	, m_pTagetObj(NULL)
 	, m_pObjKey(NULL)
 	, m_pStateKey(NULL)
-	, m_fFrame(0)
-	, m_ObjType(_ObjType)
 	, m_tFrame(0,0)
+	, m_pMotion(STAND)
+	, m_fAngle(0)
+	, m_iDegree(0)
+	, m_fChaterDirect(0)
+	, m_bSelect(false)
 	, m_bRun(true)
-	, m_pObjName(_ObjName)
+	, m_Crash(false)
 {
 	wcscpy_s(m_sPlayInfo.szName, _ObjName);
 }
@@ -42,7 +54,6 @@ CObj::~CObj(void)
 
 void CObj::FrameMove( const float& fCnt, const float& fMax )
 {
-	m_fFrame += fCnt * GET_SINGLE(CTimeMgr)->DeltaTime();
 	m_tFrame.fStart += fCnt * GET_SINGLE(CTimeMgr)->DeltaTime();
 	m_tFrame.fLast = fMax;
 
@@ -50,8 +61,6 @@ void CObj::FrameMove( const float& fCnt, const float& fMax )
 	// 디버그 모드 시 브레이크로 정지 후 다시 진행할때 
 	// 들어오는 타임값이 max값을 초과해 프레임값으로 인해 에러가 나지 않게
 	// 초기화
-	if (m_fFrame > fMax)
-		m_fFrame = 0;
 	if (m_tFrame.fStart > fMax)
 		m_tFrame.fStart = 0;
 #else
@@ -128,11 +137,5 @@ bool CObj::CollisionMouseToTile( const D3DXVECTOR3& vPos, const TILE* pTileInfo 
 void CObj::SetTagetObj( CObj* _pTagetObj )
 {
 	m_pTagetObj = _pTagetObj;
-}
-
-void CObj::TagetObjCheck()
-{
-	if(m_pTagetObj == NULL);
-		//ZeroMemory(m_pTagetObj, sizeof(CObj));
 }
 

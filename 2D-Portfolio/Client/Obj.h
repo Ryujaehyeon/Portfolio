@@ -37,9 +37,6 @@ protected:
 protected:
 	SORTLAYER m_eLayer;
 
-	// 프레임
-	float m_fFrame;
-
 	// 프레임 구조체 시작프레임과 끝프레임을 관리함
 	FRAME m_tFrame;
 
@@ -74,7 +71,6 @@ public:
 	virtual const TCHAR* GetpMotion() const {return m_pMotion;}
 	
 	//etc
-	virtual void TagetObjCheck();
 public:
 	void FrameMove(const float& fCnt, const float& fMax);
 	int GetTileIndex(const D3DXVECTOR3& vPos);

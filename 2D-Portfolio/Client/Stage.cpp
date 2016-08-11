@@ -63,19 +63,103 @@ HRESULT CStage::Initialize()
 
 	// UI 객체 생성
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
-		, L"0StatusBar")))
+		, L"StatusBar")))
+	{
+		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		return E_FAIL;
+	}
+	// HP 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"HP")))
+	{
+		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		return E_FAIL;
+	}
+	// MP 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"MP")))
+	{
+		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		return E_FAIL;
+	}
+
+	// Stamina 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"Stamina")))
+	{
+		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		return E_FAIL;
+	}
+	// Run 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"Run")))
+	{
+		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		return E_FAIL;
+	}
+	// SkillPoint 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"SkillPoint")))
 	{
 		ERR_MSG(g_hWnd, L"객체 생성 실패");
 		return E_FAIL;
 	}
 	// UI 이미지
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/UI/0StatusBar.png"
-		, L"0StatusBar", TEXTYPE_SINGLE)))
+		L"../Resource/Texture/UI/StatusBar.png"
+		, L"StatusBar", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"텍스쳐 읽어오기 실패");
+		ERR_MSG(g_hWnd, L"StatusBar 텍스쳐 읽어오기 실패");
 		return E_FAIL;
 	}
+
+	// HP 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/HP.png"
+		, L"HP", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"HP 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// MP 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/MP.png"
+		, L"MP", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"MP 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// Stamina 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Stamina.png"
+		, L"Stamina", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"Stamina 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// RUN 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Run.png"
+		, L"Run", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"Run 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// SkillPoint 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/SkillPoint_%d.png",
+		L"SkillPoint", TEXTYPE_MULTI, L"SkillPoint", 2)))
+	{
+		ERR_MSG(g_hWnd, L"%d Stand D 로드 실패" , L"SkillPoint");
+		return E_FAIL;
+	}
+
+
+
+
+
+
+
 
 	// 타일 불러오기
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
@@ -715,18 +799,15 @@ HRESULT CStage::Initialize()
 
 SCENEID CStage::Progress()
 {
-	TCHAR* Charter[3] = {L"Player", 
-		L"Fellow_First",
-		L"Fellow_Second"};
-
 	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
-
 
 	// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화
 	if(iScene > SCENEID_NONPASS)
-		GET_SINGLE(CSceneMgr)->InitScene((SCENEID)iScene);
+		GET_SINGLE(CSceneMgr)->InitScene(iScene);
+
 	if (iScene == SCENEID_END)
 		return SCENEID_END;
+	return iScene;
 }
 
 void CStage::Render()

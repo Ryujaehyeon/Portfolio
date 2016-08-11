@@ -106,6 +106,7 @@ typedef struct tagItem
 	float fHealthPoint;
 	// 마력
 	float fMagikaPoint;
+	int  iSKillPoint;
 	int  iGold;
 	int  iCnt;
 	int  iType;
@@ -145,6 +146,8 @@ typedef struct tagInfo
 	float fMagikaPoint;
 	// 최대 마력
 	float fMagikaPointMAX;
+	// 스킬 포인트
+	int  iSKillPoint;
 	// 성별
 	int iGenderIdx;
 	// 소지금

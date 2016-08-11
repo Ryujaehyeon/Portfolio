@@ -267,7 +267,6 @@ void CMonster::CheckKey()
 		}
 		else if(fDistance < fRealDistance*3.f)
 		{
-			if(m_tFrame.fStart > m_tFrame.fLast)
 				m_pMotion = RUN;
 		}
 		else if(fWaitTime > 5.f)

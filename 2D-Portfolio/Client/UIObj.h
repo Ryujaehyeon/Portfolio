@@ -1,6 +1,6 @@
 #pragma once
 #include "stagestatic.h"
-class CBuildObj :
+class CUIObj :
 	public CStageStatic
 {
 public:
@@ -13,8 +13,9 @@ public:
 	virtual POINT MouseInfo();
 	virtual D3DXVECTOR3 MouseInfoDX();
 public:
-	CBuildObj(void);
-	CBuildObj(const OBJINFO& Info, const OBJ_TYPE _ObjType);
-	virtual ~CBuildObj(void);
+	CUIObj(void);
+	CUIObj(const OBJINFO& Info, const OBJ_TYPE _ObjType);
+	CUIObj( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType );
+	virtual ~CUIObj(void);
 };
 

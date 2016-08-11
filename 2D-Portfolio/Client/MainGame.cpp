@@ -35,6 +35,7 @@ SCENEID CMainGame::Progress()
 	SCENEID iScene = GET_SINGLE(CSceneMgr)->Progress();
 	if (iScene == SCENEID_END)
 		return SCENEID_END;
+	return iScene;
 }
 
 void CMainGame::Render()

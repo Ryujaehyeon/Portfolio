@@ -61,8 +61,7 @@ SCENEID CLogo::Progress()
 	//// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화
 	//if(iScene > -1)
 	//	GET_SINGLE(CSceneMgr)->InitScene((SCENEID)iScene);
-
-
+	
 	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
 	
 	// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화

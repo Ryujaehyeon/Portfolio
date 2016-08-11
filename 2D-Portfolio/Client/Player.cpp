@@ -36,7 +36,7 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel * 50 + m_sPlayInfo.iLevel * 25;
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 5;
-	
+	m_sPlayInfo.iSKillPoint = 0;
 	m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 100);
 	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
 	m_sPlayInfo.iGold = 0;
@@ -116,15 +116,10 @@ void CPlayer::Render()
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, m_pStateKey, int(m_tFrame.fStart));
 	// 프레임 값이 저장한 이미지 벡터크기를 벗어난 값이 들어가면 에러
-	
-	TCHAR info[128];
-
-	//wsprintf(info,)
-
-	//DebugMsg(L"%d",);
 
 	if(pTexInfo == NULL)
 		return;
+
 
 	m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 		pTexInfo->ImgInfo.Height * 0.5, 0);

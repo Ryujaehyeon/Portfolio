@@ -91,9 +91,6 @@
     <Filter Include="94. Algorithm">
       <UniqueIdentifier>{f0cb20fc-8037-4411-8aaf-7e9c10890656}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sort">
-      <UniqueIdentifier>{4b5bf779-2932-4561-8f32-ea14e052bc9a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Object\Menu">
       <UniqueIdentifier>{65504e72-072b-4410-b4c6-80238c5f0190}</UniqueIdentifier>
     </Filter>
@@ -156,6 +153,9 @@
     </Filter>
     <Filter Include="94. Algorithm\AI">
       <UniqueIdentifier>{afe13717-7b22-4965-a719-99cf2cb8815f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\Sort">
+      <UniqueIdentifier>{4b5bf779-2932-4561-8f32-ea14e052bc9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -253,7 +253,7 @@
       <Filter>02.Object\Stage\Dynamic\Player</Filter>
     </ClInclude>
     <ClInclude Include="SortMgr.h">
-      <Filter>Sort</Filter>
+      <Filter>98.Manager\Sort</Filter>
     </ClInclude>
     <ClInclude Include="MenuObjProto.h">
       <Filter>97.Design\Prototype\Object\Menu</Filter>
@@ -291,11 +291,11 @@
     <ClInclude Include="NonPlayer.h">
       <Filter>02.Object\Stage\Dynamic\NPC</Filter>
     </ClInclude>
-    <ClInclude Include="BuildObj.h">
-      <Filter>02.Object\Stage\Static\building</Filter>
-    </ClInclude>
     <ClInclude Include="AStar.h">
       <Filter>94. Algorithm\AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="UIObj.h">
+      <Filter>02.Object\Stage\Static\building</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -375,7 +375,7 @@
       <Filter>02.Object\Stage\Dynamic\Player</Filter>
     </ClCompile>
     <ClCompile Include="SortMgr.cpp">
-      <Filter>Sort</Filter>
+      <Filter>98.Manager\Sort</Filter>
     </ClCompile>
     <ClCompile Include="MenuObjProto.cpp">
       <Filter>97.Design\Prototype\Object\Menu</Filter>
@@ -416,11 +416,11 @@
     <ClCompile Include="NonPlayer.cpp">
       <Filter>02.Object\Stage\Dynamic\NPC</Filter>
     </ClCompile>
-    <ClCompile Include="BuildObj.cpp">
-      <Filter>02.Object\Stage\Static\building</Filter>
-    </ClCompile>
     <ClCompile Include="AStar.cpp">
       <Filter>94. Algorithm\AStar</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObj.cpp">
+      <Filter>02.Object\Stage\Static\building</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

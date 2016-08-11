@@ -48,8 +48,11 @@ SCENEID CSceneMgr::Progress()
 {
 	SCENEID iScene = m_pSceneObj->Progress();
 
+
+
 	if (iScene == SCENEID_END)
 		return SCENEID_END;
+	return iScene;
 }
 
 void CSceneMgr::Render()

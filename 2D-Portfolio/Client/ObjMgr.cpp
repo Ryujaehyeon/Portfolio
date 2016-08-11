@@ -70,15 +70,14 @@ SCENEID CObjMgr::Progress()
 
 	//	m_monsterList = &iter->second;
 	//}
+	SCENEID iScene;
 	for(map<wstring, list<CObj*>>::iterator iter
 		= m_MapObject.begin(); iter != m_MapObject.end(); ++iter)
 	{
 		for(list<CObj*>::iterator iter2 = iter->second.begin();
 			iter2 != iter->second.end(); ++iter2)
 		{
-			int iScene = (*iter2)->Progress();
-			
-			
+			iScene = (*iter2)->Progress();
 
 			switch((*iter2)->GetObjType())
 			{
@@ -100,8 +99,8 @@ SCENEID CObjMgr::Progress()
 			if(iter2 == iter->second.end())
 				break;
 
-			if(iScene > -1)
-				return (SCENEID)iScene;
+			if(iScene > SCENEID_NONPASS)
+				return iScene;
 
 			if ((SCENEID)iScene == SCENEID_END)
 			{
@@ -112,7 +111,7 @@ SCENEID CObjMgr::Progress()
 		}
 	}
 	
-	return SCENEID_NONPASS;
+	return iScene;
 }
 
 

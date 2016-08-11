@@ -29,13 +29,13 @@
 #include "MenuBackground.h"
 #include "StageBackground.h"
 #include "MenuButton.h"
-#include "BuildObj.h"
+#include "UIObj.h"
 #include "Ball.h"
 
 #include "Player.h"
 #include "Monster.h"
 #include "NonPlayer.h"
-#include "BuildObj.h"
+#include "UIObj.h"
 
 //===========Prototype Header==============//
 #include "LogoObjProto.h"
