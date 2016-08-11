@@ -28,11 +28,14 @@ HRESULT CStageObjProto::InitProtoInstance()
 	m_MapProto.insert(make_pair(L"StageBack"
 		, new CStageBackGround(objInfo, OBJ_BUILDING)));
 
-	m_MapProto.insert(make_pair(L"StatusBar"
-		, new CUIObj(objInfo, L"StatusBar", OBJ_UI)));
-
 	m_MapProto.insert(make_pair(L"HP"
 		, new CUIObj(objInfo, L"HP", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"HPBarBack"
+		, new CUIObj(objInfo, L"HPBarBack", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"HPBar"
+		, new CUIObj(objInfo, L"HPBar", OBJ_UI)));
 
 	m_MapProto.insert(make_pair(L"MP"
 		, new CUIObj(objInfo, L"MP", OBJ_UI)));
@@ -43,9 +46,26 @@ HRESULT CStageObjProto::InitProtoInstance()
 	m_MapProto.insert(make_pair(L"Run"
 		, new CUIObj(objInfo, L"Run", OBJ_UI)));
 
-	m_MapProto.insert(make_pair(L"SkillPoint"
-		, new CUIObj(objInfo, L"SkillPoint", OBJ_UI)));
+	m_MapProto.insert(make_pair(L"SkillPointTrue"
+		, new CUIObj(objInfo, L"SkillPointTrue", OBJ_UI)));
 
+	m_MapProto.insert(make_pair(L"SkillPointFalse"
+		, new CUIObj(objInfo, L"SkillPointFalse", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"StatPointTrue"
+		, new CUIObj(objInfo, L"StatPointTrue", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"StatPointFalse"
+		, new CUIObj(objInfo, L"StatPointFalse", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"StatusBar"
+		, new CUIObj(objInfo, L"StatusBar", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"ExpBar"
+		, new CUIObj(objInfo, L"ExpBar", OBJ_UI)));
+
+
+	//------------------------------------------------------------//
 	// 플레이어
 	m_MapProto.insert(make_pair(L"Player"
 		, new CPlayer(objInfo, L"Player", OBJ_PLAYER)));

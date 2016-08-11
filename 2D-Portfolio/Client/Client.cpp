@@ -46,7 +46,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return FALSE;
 	}
 
-	CreateConsole();
+	CREATE_DEBUG_CONSOLE;
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
@@ -75,7 +75,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			}
 		}
 	}
-	DestroyConsole();
+	DESTROY_DEBUG_CONSOLE;
 	return (int) msg.wParam;
 }
 

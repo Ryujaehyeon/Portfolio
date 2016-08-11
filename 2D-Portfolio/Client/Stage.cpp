@@ -14,6 +14,7 @@ CStage::~CStage(void)
 
 HRESULT CStage::Initialize()
 {
+	
 	TCHAR* Charter[] = {L"Player", 
 		L"Fellow_First",
 		L"Fellow_Second"};
@@ -45,7 +46,7 @@ HRESULT CStage::Initialize()
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 			, Charter[i])))
 		{
-			ERR_MSG(g_hWnd, L"%d 객체 생성 실패", Charter[i]);
+			ERR_MSG(g_hWnd, L"%s 캐릭터 객체 생성 실패", Charter[i]);
 			return E_FAIL;
 		}
 	}
@@ -54,32 +55,52 @@ HRESULT CStage::Initialize()
 	for(int i = 0; i < 5; ++i)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
-			, L"Skeleton")))
+			, Monster[0])))
 		{
-			ERR_MSG(g_hWnd, L"%d 객체 생성 실패", L"Skeleton");
+			ERR_MSG(g_hWnd, L"%s 몬스터 객체 생성 실패", Monster[0]);
 			return E_FAIL;
 		}
 	}
 
+
+
+	///////////////////////////////////////////////////////////////
 	// UI 객체 생성
+
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"StatusBar")))
 	{
-		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		ERR_MSG(g_hWnd, L"StatusBar 객체 생성 실패");
 		return E_FAIL;
 	}
 	// HP 객체 생성
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"HP")))
 	{
-		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		ERR_MSG(g_hWnd, L"HP 객체 생성 실패");
+		return E_FAIL;
+	}
+
+	// HPBarBack 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"HPBarBack")))
+	{
+		ERR_MSG(g_hWnd, L"HPBarBack 객체 생성 실패");
+		return E_FAIL;
+	}
+
+	// HPBar 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"HPBar")))
+	{
+		ERR_MSG(g_hWnd, L"HPBar 객체 생성 실패");
 		return E_FAIL;
 	}
 	// MP 객체 생성
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"MP")))
 	{
-		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		ERR_MSG(g_hWnd, L"MP 객체 생성 실패");
 		return E_FAIL;
 	}
 
@@ -87,23 +108,53 @@ HRESULT CStage::Initialize()
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Stamina")))
 	{
-		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		ERR_MSG(g_hWnd, L"Stamina 객체 생성 실패");
 		return E_FAIL;
 	}
 	// Run 객체 생성
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Run")))
 	{
-		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		ERR_MSG(g_hWnd, L"Run객체 생성 실패");
 		return E_FAIL;
 	}
 	// SkillPoint 객체 생성
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
-		, L"SkillPoint")))
+		, L"SkillPointTrue")))
 	{
-		ERR_MSG(g_hWnd, L"객체 생성 실패");
+		ERR_MSG(g_hWnd, L"SkillPointTrue 객체 생성 실패");
 		return E_FAIL;
 	}
+
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"SkillPointFalse")))
+	{
+		ERR_MSG(g_hWnd, L"SkillPointFalse 객체 생성 실패");
+		return E_FAIL;
+	}
+
+	// SkillPoint 객체 생성
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"StatPointTrue")))
+	{
+		ERR_MSG(g_hWnd, L"StatPointTrue 객체 생성 실패");
+		return E_FAIL;
+	}
+
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"StatPointFalse")))
+	{
+		ERR_MSG(g_hWnd, L"StatPointFalse 객체 생성 실패");
+		return E_FAIL;
+	}
+
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"ExpBar")))
+	{
+		ERR_MSG(g_hWnd, L"ExpBar 객체 생성 실패");
+		return E_FAIL;
+	}
+	/////////////////////////////////////////////////////////
 	// UI 이미지
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/StatusBar.png"
@@ -121,6 +172,23 @@ HRESULT CStage::Initialize()
 		ERR_MSG(g_hWnd, L"HP 텍스쳐 읽어오기 실패");
 		return E_FAIL;
 	}
+	// HPBar 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/HPBar/HPBar.png"
+		, L"HPBar", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"HPBar 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// HPBarBack 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/HPbar/HPBarBack.png"
+		, L"HPBarBack", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"HPBarBack 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+
 	// MP 이미지
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/MP.png"
@@ -147,20 +215,47 @@ HRESULT CStage::Initialize()
 	}
 	// SkillPoint 이미지
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/UI/SkillPoint_%d.png",
-		L"SkillPoint", TEXTYPE_MULTI, L"SkillPoint", 2)))
+		L"../Resource/Texture/UI/PointFalse.png"
+		, L"SkillPointFalse", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"%d Stand D 로드 실패" , L"SkillPoint");
+		ERR_MSG(g_hWnd, L"SkillPointFalse 텍스쳐 읽어오기 실패");
 		return E_FAIL;
 	}
 
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/PointTrue.png"
+		, L"SkillPointTrue", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"SkillPointTrue 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// StatPoint 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/PointFalse.png"
+		, L"StatPointFalse", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"StatPointFalse 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
 
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/PointTrue.png"
+		, L"StatPointTrue", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"StatPointTrue 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
 
+	//ExpBar
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/ExpBar.png"
+		, L"ExpBar", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"ExpBar 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
 
-
-
-
-
+	//-------------------------------------------------------------//
 	// 타일 불러오기
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Tile/Tile%d.png",

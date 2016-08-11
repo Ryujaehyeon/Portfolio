@@ -142,7 +142,6 @@ void CMonster::CheckKey()
 	// 이동할 거리
 	float moveLength = rand()%100+1;
 	// 몇초에 한번 이동할지
-	int icount = (int)fTime%10;
 	
 	//
 	if(m_sPlayInfo.fHealthPoint <= 0)
@@ -158,59 +157,48 @@ void CMonster::CheckKey()
 	// 3초에 한번 방향과 이동을 정함, 충돌하지 않았을때
 	if(m_Crash == false)
 	{
-		if(icount == 8 )
+		if (m_tFrame.fStart <= 0)
+			m_iDir = rand()%8;
+
+		DebugLog(L"%d", m_iDir);
+
+		switch(m_iDir)
 		{
-			switch(m_iDir)
-			{
-				//  방향을 정함
-			case 0:
-				// RD
+			//  방향을 정함
+		case 0:
+			// RD
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y + moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
-				break;												   
-			case 1:	
-				// RU
+			break;												   
+		case 1:	
+			// RU
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y - moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
-				break;												   
-			case 2:	
-				// LD
+			break;												   
+		case 2:	
+			// LD
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y + moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
-				break;													 		
-			case 3:	
-				// LU
+			break;													 		
+		case 3:	
+			// LU
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y - moveLength, 0);
-				break;
-			case 4:	
-				// L
+			break;
+		case 4:	
+			// L
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
-				break;
-			case 5:	
-				// R
+			break;
+		case 5:	
+			// R
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
-				break;
-			case 6:	
-				// U
+			break;
+		case 6:	
+			// U
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y - moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
-				break;
-			case 7:	
-				// D
+			break;
+		case 7:	
+			// D
 				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y + moveLength, 0);
-				if(int(m_tFrame.fStart) == m_tFrame.fLast-1)
-					m_iDir = rand()%8;
-				break;
-			}
+			break;
 		}
+		
 		// 서기
 		if( m_pMotion == STAND) 
 		{	

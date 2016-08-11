@@ -142,9 +142,6 @@
     <Filter Include="02.Object\Stage\Dynamic\NPC">
       <UniqueIdentifier>{48352adb-7ad3-4dbe-bfa4-4cfe96d1ac0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Object\Stage\Static\building">
-      <UniqueIdentifier>{9236707c-0ef8-423a-934d-32c4da0113b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Object\Stage\Static\BackGround">
       <UniqueIdentifier>{24fd2701-9b57-49a5-8025-656654688e45}</UniqueIdentifier>
     </Filter>
@@ -156,6 +153,9 @@
     </Filter>
     <Filter Include="98.Manager\Sort">
       <UniqueIdentifier>{4b5bf779-2932-4561-8f32-ea14e052bc9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Stage\Static\UI">
+      <UniqueIdentifier>{9236707c-0ef8-423a-934d-32c4da0113b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -295,7 +295,7 @@
       <Filter>94. Algorithm\AStar</Filter>
     </ClInclude>
     <ClInclude Include="UIObj.h">
-      <Filter>02.Object\Stage\Static\building</Filter>
+      <Filter>02.Object\Stage\Static\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -420,7 +420,7 @@
       <Filter>94. Algorithm\AStar</Filter>
     </ClCompile>
     <ClCompile Include="UIObj.cpp">
-      <Filter>02.Object\Stage\Static\building</Filter>
+      <Filter>02.Object\Stage\Static\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
