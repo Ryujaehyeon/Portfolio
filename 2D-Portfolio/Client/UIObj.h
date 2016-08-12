@@ -13,18 +13,28 @@ public:
 	virtual void Release();
 	virtual CObj* Clone();
 public:
-	RECT GetRect()
+	//RECT GetRect()
+	//{
+	//	RECT rc =
+	//	{
+	//		float(0), 
+	//		float(m_Info.fCY - (m_Info.fCY * VelueToPercentage(m_pObjKey))),
+	//		float(m_Info.fCX), 
+	//		float(m_Info.fCY)
+	//	};
+	//	return rc;
+	//}
+	RECT RealRect()
 	{
 		RECT rc =
 		{
-			int(0), 
-			int( m_Info.fCY - m_Info.fCY * VelueToPercentage(m_pObjKey)),
-			int( m_Info.fCX ), 
-			int( m_Info.fCY )
+			int(m_Info.vPos.x - (m_Info.fCX * 0.5f)), 
+			int(m_Info.vPos.y - (m_Info.fCY * 0.5f)),
+			int(m_Info.vPos.x + (m_Info.fCX * 0.5f)), 
+			int(m_Info.vPos.y + (m_Info.fCY * 0.5f))
 		};
 		return rc;
 	}
-
 	virtual void Setlist(list<CObj*>* _Player);
 
 	virtual float VelueToPercentage(TCHAR* VelueName);

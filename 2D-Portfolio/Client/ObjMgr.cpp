@@ -215,7 +215,7 @@ SCENEID CObjMgr::Progress()
 				MonsterRelease();
 
 				// 삭제된 데이터의 리스트 삭제;
-				if(*iter2 == NULL)
+				if(*iter2 == nullptr)
 				{
 					iter2 = iter->second.erase(iter2);
 					if (iter2 == iter->second.end())
@@ -300,6 +300,7 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 				_pSour->SetCrash(true);
 				_pDest->SetCrash(true);
 				// 타겟 설정
+				
 				_pSour->SetTagetObj(_pDest);
 				_pDest->SetTagetObj(_pSour);
 			}

@@ -29,7 +29,7 @@ HRESULT CMonster::Initialize()
 
 	m_sPlayInfo.iLevel = 1;
 	m_sPlayInfo.fExp = m_sPlayInfo.fMaxExp = 0;
-	m_sPlayInfo.fAttack = 10;
+	m_sPlayInfo.fAttack = 20;
 	m_sPlayInfo.fDefence = 5;
 	m_sPlayInfo.fMight = 5;
 	m_sPlayInfo.fDexterity = 5;
@@ -159,9 +159,7 @@ void CMonster::CheckKey()
 	{
 		if (m_tFrame.fStart <= 0)
 			m_iDir = rand()%8;
-
-		DebugLog(L"%d", m_iDir);
-
+				
 		switch(m_iDir)
 		{
 			//  방향을 정함
@@ -273,7 +271,7 @@ void CMonster::CheckKey()
 void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 {
 	if( (_pSour->GetObjType() == _pDest->GetObjType()) ||
-		_pDest->GetObjType() != OBJ_MONSTER ||
+		_pDest->GetObjType() != OBJ_MONSTER &&
 		_pDest->GetObjType() != OBJ_PLAYER )
 		return;
 

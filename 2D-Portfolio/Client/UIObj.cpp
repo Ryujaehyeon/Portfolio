@@ -51,9 +51,9 @@ HRESULT CUIObj::Initialize()
 	}
 	if(m_pObjKey == UI[1])
 	{
-		m_Info.vPos  = D3DXVECTOR3(70.f, 570.f, 0.f);
-		m_Info.fCX = 80.f;
-		m_Info.fCY = 80.f;
+		m_Info.vPos  = D3DXVECTOR3(93.f, 635.f, 0.f);
+		m_Info.fCX = 128.f;
+		m_Info.fCY = 128.f;
 	}
 	if(m_pObjKey == UI[2])
 	{
@@ -69,9 +69,9 @@ HRESULT CUIObj::Initialize()
 	}
 	if(m_pObjKey == UI[4])
 	{
-		m_Info.vPos  = D3DXVECTOR3(755.f, 570.f, 0.f);
-		m_Info.fCX = 80.f;
-		m_Info.fCY = 80.f;
+		m_Info.vPos  = D3DXVECTOR3(755.f, 635.f, 0.f);
+		m_Info.fCX = 128.f;
+		m_Info.fCY = 128.f;
 	}
 	if(m_pObjKey == UI[5])
 	{	
@@ -112,8 +112,8 @@ HRESULT CUIObj::Initialize()
 	if(m_pObjKey == UI[11])				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(316, 564.f, 0.f);
-		m_Info.fCX = 64.f;
-		m_Info.fCY = 64.f;
+		m_Info.fCX = 120.f;
+		m_Info.fCY = 3.f;
 	}
 
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
@@ -126,6 +126,9 @@ HRESULT CUIObj::Initialize()
 SCENEID CUIObj::Progress()
 {
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
+
+	D3DXVec3Normalize(&m_Info.vDir, &m_Info.vDir);
+
 	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x
 		, m_Info.vPos.y, m_Info.vPos.z);
 
@@ -139,32 +142,29 @@ void CUIObj::Render()
 	// 이미 Initialize에서 정해진 오브젝트의 이름으로 구해온다.
 	D3DXVECTOR3 Mouse = MouseInfoDX();
 
-	//list<CObj*>::iterator iter = m_PlayerData->begin();
-	//for (iter; iter != m_PlayerData->end(); ++iter)
-	//{
-	//	if((*iter)->GetSelect())
-	//	{
-	//		if(SelectCount < 3)
-	//			++SelectCount;
-	//		else
-	//			SelectCount = 3;
-	//		m_pTagetObj = (*iter);
-	//	}
-	//	else
-	//		--SelectCount;
-
-	//}
-	//if (SelectCount == 3)
-	//{
-	//	m_pTagetObj = (*m_PlayerData->begin());
-	//}
+	list<CObj*>::iterator iter = m_PlayerData->begin();
+	for (iter; iter != m_PlayerData->end(); ++iter)
+	{
+		if((*iter)->GetSelect())
+		{
+			if(SelectCount < 3)
+				++SelectCount;
+			else
+				SelectCount = 3;
+			m_pTagetObj = (*iter);
+		}
+		else
+			--SelectCount;
+	}
+	if (SelectCount == 3)
+	{
+		m_pTagetObj = (*m_PlayerData->begin());
+	}
 	
-	m_pTagetObj = (*m_PlayerData->begin());
+	//m_pTagetObj = (*m_PlayerData->begin());
 
 	//DebugLogClear;
-	DebugLog(L"UI : %10s -> Mouse[X:%d Y:%d], vPos[X:%d Y:%d]",
-		m_pObjKey, int(Mouse.x), int(Mouse.y), int(m_Info.vPos.x), int(m_Info.vPos.y));
-
+	
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
 
@@ -192,12 +192,36 @@ void CUIObj::Render()
 
 	//// &GetRect() 그리는 이미지의 좌표
 
-	if(m_pObjKey == L"HP")
+	if(m_pObjKey == L"HP" ||m_pObjKey == L"MP" )
 	{
+		RECT rc = {
+					float(0), 
+					float(m_Info.fCY - (m_Info.fCY * VelueToPercentage(m_pObjKey))),
+					float(m_Info.fCX), 
+					float(m_Info.fCY)
+					};
+
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-			pTexInfo->ImgInfo.Height * 0.5f + (GetRect().top*0.5f), 0);
+			pTexInfo->ImgInfo.Height * VelueToPercentage(m_pObjKey), 0);
+
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			&GetRect(), &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+	else if ( m_pObjKey == L"ExpBar" )
+	{
+		RECT rc = {
+			float(0), 
+			float(0),
+			float(m_Info.fCX * VelueToPercentage(m_pObjKey)), 
+			float(m_Info.fCY)
+		};
+		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+			pTexInfo->ImgInfo.Height*0.5f, 0);
+		
+		
+
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	else
 	{
@@ -240,11 +264,13 @@ void CUIObj::Setlist( list<CObj*>* _Player )
 
 float CUIObj::VelueToPercentage(TCHAR* VelueName)
 {
-	float HP = m_pTagetObj->GetStatas().fHealthPoint/m_pTagetObj->GetStatas().fHealthPointMAX;
 	if(L"HP" == VelueName)
-		return HP;
+		return m_pTagetObj->GetStatas().fHealthPoint/m_pTagetObj->GetStatas().fHealthPointMAX;
 
-	if (L"MP")
+	if (L"MP" == VelueName)
 		return m_pTagetObj->GetStatas().fMagikaPoint/m_pTagetObj->GetStatas().fMagikaPointMAX;
+
+	if (L"ExpBar" == VelueName)
+		return m_pTagetObj->GetStatas().fExp/m_pTagetObj->GetStatas().fMaxExp;
 }
 

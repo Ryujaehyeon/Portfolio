@@ -16,6 +16,8 @@ public:
 	void DirectAction( TCHAR* _pObjStatas );
 	void CharacterSelect();
 	void FuncAttack(CObj* _pDest, CObj* _pSour);
+	void RegenTime();
+	void ExpAcquired();
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

@@ -33,7 +33,8 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fConstitution = 5;
 	m_sPlayInfo.fResolve = 5;
 	m_sPlayInfo.fPerception = 5;
-	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel * 50 + m_sPlayInfo.iLevel * 25;
+	m_sPlayInfo.fExp = 80;
+	m_sPlayInfo.fMaxExp = 100;
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 5;
 	m_sPlayInfo.iSKillPoint = 0;
@@ -52,7 +53,7 @@ HRESULT CPlayer::Initialize()
 	m_pStateKey = L"FieldStand_D";
 	m_pMotion = L"FieldStand";
 	m_fAngle = D3DXToRadian(280.f);
-	m_pTagetObj = NULL;
+	m_pTagetObj = nullptr;
 	return S_OK;
 }
 
@@ -62,11 +63,10 @@ SCENEID CPlayer::Progress()
 	static float fTime = 0.0f;
 	// 시간값 누적
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
-	
-	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
-	if (m_sPlayInfo.fHealthPoint <= m_sPlayInfo.fHealthPointMAX)
-		++m_sPlayInfo.fHealthPoint;
 
+	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
+
+	RegenTime();
 	// 입력받는 키를 체크해 상태를 변경
 	CheckKey();
 
@@ -111,7 +111,10 @@ SCENEID CPlayer::Progress()
 
 	//첫번째 인자값은 초당 몇프레임을 출력할건지, 두번째는 최대 장수
 	FrameStatas();
-
+	DebugLog(L"Level : %d, HP : %8.3f,%8.3f, Exp : %8.3f/%8.3f",
+		m_sPlayInfo.iLevel, 
+		m_sPlayInfo.fHealthPoint, m_sPlayInfo.fHealthPointMAX, 
+		m_sPlayInfo.fExp, m_sPlayInfo.fMaxExp);
 	return SCENEID_NONPASS;
 }
 
@@ -174,10 +177,10 @@ void CPlayer::CheckKey()
 				m_fChaterDirect = m_iDegree;
 				// 취할 모션이미지를 바꿈
 				m_pMotion = ATTACK;
-				if(m_pTagetObj != NULL)
+				if(m_pTagetObj != nullptr)
 					FuncAttack(m_pTagetObj, this);
 				// 공격이 끝나면 타겟을 한번 지워줌
-				m_pTagetObj = NULL;
+				m_pTagetObj = nullptr;
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -235,6 +238,8 @@ void CPlayer::FuncAttack(CObj* _pDest, CObj* _pSour)
 				_pDest->SetStatas()->fHealthPoint -= 
 				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
 		}
+		//if(m_pTagetObj != NULL);
+		//	ExpAcquired();
 	}
 }
 POINT CPlayer::MouseInfo()
@@ -550,4 +555,34 @@ void CPlayer::Release()
 CObj* CPlayer::Clone()
 {
 	return new CPlayer(*this);
+}
+
+void CPlayer::RegenTime()
+{
+	static float i = 0.f;
+	i += GET_SINGLE(CTimeMgr)->DeltaTime();
+	if ( i*10 > 1)
+	{
+		if (m_sPlayInfo.fHealthPoint < m_sPlayInfo.fHealthPointMAX)
+			m_sPlayInfo.fHealthPoint += 0.5f;
+		if (m_sPlayInfo.fMagikaPoint < m_sPlayInfo.fMagikaPointMAX)
+			m_sPlayInfo.fMagikaPoint += 0.5f;
+		i = 0.f;
+	}
+}
+
+void CPlayer::ExpAcquired()
+{
+	if (m_pTagetObj == nullptr)
+		return;
+	else
+		if (m_pTagetObj->GetStatas().fHealthPoint <= 0.f)
+		{
+			m_sPlayInfo.fExp += m_pTagetObj->GetStatas().fExp;
+			if (m_sPlayInfo.fExp >= m_sPlayInfo.fMaxExp)
+			{
+				++m_sPlayInfo.iLevel;
+				m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel * 10; 
+			}
+		}
 }
