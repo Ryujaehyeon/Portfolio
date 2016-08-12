@@ -222,12 +222,14 @@ SCENEID CObjMgr::Progress()
 						break;
 					continue;
 				}
+				break;
 			case OBJ_UI:
 				{
-					list<CObj*> iterPLAYER = m_MapObject.find(PLAYER)->second;
-					//for (;;)
-					//{
-					//}
+					//map<wstring, list<CObj*>> finditer = m_MapObject.find(PLAYER);
+					//list<CObj*> iterPLAYER = finditer->second;
+					//if(iterPLAYER != iterPLAYER)
+					// 혹시 모를 예외처리가 필요할듯 함 
+						static_cast<CUIObj*>(*iter2)->Setlist(&m_MapObject.find(PLAYER)->second);
 				}
 			}
 			if(iter2 == iter->second.end())
@@ -276,9 +278,11 @@ void CObjMgr::AbilityTointeract(CObj* _pDest, CObj* _pSour)
 
 void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 {
+	if(_pDest->GetObjType() != OBJ_PLAYER 
+		&& _pDest->GetObjType() != OBJ_MONSTER) 
+		return;
 	// 비교할 대상이 있는 방향을 정하고
 	_pSour->Setinfo()->vDir = _pDest->GetInfo().vPos - _pSour->GetInfo().vPos;
-
 
 	// 타겟을 정하기 위한 거리
 	{

@@ -226,8 +226,7 @@ void CMonster::CheckKey()
 		// °ø°ÝÁß
 		if (m_pMotion == ATTACK)
 		{
-			if(m_tFrame.fStart > m_tFrame.fLast-1)
-				m_pMotion = STAND;
+			m_pMotion = STAND;
 		}
 	}
 	else if( m_Crash == true )
@@ -273,7 +272,9 @@ void CMonster::CheckKey()
 
 void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 {
-	if( _pSour->GetObjType() == _pDest->GetObjType())
+	if( (_pSour->GetObjType() == _pDest->GetObjType()) ||
+		_pDest->GetObjType() != OBJ_MONSTER ||
+		_pDest->GetObjType() != OBJ_PLAYER )
 		return;
 
 	if(_pSour->GetpMotion() == ATTACK)

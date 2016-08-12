@@ -37,8 +37,10 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 5;
 	m_sPlayInfo.iSKillPoint = 0;
-	m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 100);
-	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
+	m_sPlayInfo.fHealthPoint = 250;
+	m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 100);
+	m_sPlayInfo.fMagikaPoint = 250;
+	m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
 	m_sPlayInfo.iGold = 0;
 	m_sPlayInfo.fSpeed = 100.0f;
 
@@ -62,6 +64,8 @@ SCENEID CPlayer::Progress()
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 	
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
+	if (m_sPlayInfo.fHealthPoint <= m_sPlayInfo.fHealthPointMAX)
+		++m_sPlayInfo.fHealthPoint;
 
 	// 입력받는 키를 체크해 상태를 변경
 	CheckKey();
@@ -119,7 +123,6 @@ void CPlayer::Render()
 
 	if(pTexInfo == NULL)
 		return;
-
 
 	m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 		pTexInfo->ImgInfo.Height * 0.5, 0);

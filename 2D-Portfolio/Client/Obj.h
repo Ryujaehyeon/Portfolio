@@ -43,6 +43,17 @@ protected:
 public:
 	SORTLAYER GetLayer() const {return m_eLayer;}
 	OBJ_TYPE GetObjType() const {return m_ObjType;}
+	RECT GetRect()
+	{
+		RECT rc =
+		{
+			int(m_Info.vPos.x - (m_Info.fCX * 0.5f)), 
+			int(m_Info.vPos.y - (m_Info.fCY * 0.5f)),
+			int(m_Info.vPos.x + (m_Info.fCX * 0.5f)), 
+			int(m_Info.vPos.y + (m_Info.fCY * 0.5f))
+		};
+		return rc;
+	}
 	RECT RealRect()
 	{
 		RECT rc =
@@ -69,7 +80,7 @@ public:
 	virtual const INFO& GetStatas() const {return m_sPlayInfo;}
 	virtual const FRAME& GetFrame() const {return m_tFrame;}
 	virtual const TCHAR* GetpMotion() const {return m_pMotion;}
-	
+	virtual const bool GetSelect() const { return m_bSelect; }
 	//etc
 public:
 	void FrameMove(const float& fCnt, const float& fMax);

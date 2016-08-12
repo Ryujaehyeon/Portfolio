@@ -7,13 +7,15 @@ CUIObj::CUIObj(void)
 }
 
 CUIObj::CUIObj( const OBJINFO& Info, const OBJ_TYPE _ObjType )
-	:CStageStatic(Info, _ObjType)
+	:CStageStatic(Info, _ObjType),
+	SelectCount(0)
 {
 
 }
 
 CUIObj::CUIObj( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
-	:CStageStatic(Info, _ObjType)
+	:CStageStatic(Info, _ObjType),
+	SelectCount(0)
 {
 	m_pObjKey = _ObjName;
 }
@@ -42,29 +44,77 @@ HRESULT CUIObj::Initialize()
 	};
 
 	if(m_pObjKey == UI[0])
+	{
 		m_Info.vPos  = D3DXVECTOR3(512.f, 512.f, 0.f);
+		m_Info.fCX = 1024.f;
+		m_Info.fCY = 1024.f;
+	}
 	if(m_pObjKey == UI[1])
-		m_Info.vPos  = D3DXVECTOR3(93.f, 570.f, 0.f);
+	{
+		m_Info.vPos  = D3DXVECTOR3(70.f, 570.f, 0.f);
+		m_Info.fCX = 80.f;
+		m_Info.fCY = 80.f;
+	}
 	if(m_pObjKey == UI[2])
+	{
 		m_Info.vPos  = D3DXVECTOR3(400.f, 20.f, 0.f);
+		m_Info.fCX = 100.f;
+		m_Info.fCY = 15.f;
+	}
 	if(m_pObjKey == UI[3])
+	{
 		m_Info.vPos  = D3DXVECTOR3(400.f, 20.f, 0.f);
+		m_Info.fCX = 100.f;
+		m_Info.fCY = 15.f;
+	}
 	if(m_pObjKey == UI[4])
+	{
 		m_Info.vPos  = D3DXVECTOR3(755.f, 570.f, 0.f);
+		m_Info.fCX = 80.f;
+		m_Info.fCY = 80.f;
+	}
 	if(m_pObjKey == UI[5])
+	{	
 		m_Info.vPos  = D3DXVECTOR3(336.f, 589.f, 0.f);
+		m_Info.fCX = 128.f;
+		m_Info.fCY = 32.f;
+	}
 	if(m_pObjKey == UI[6])
+	{	
 		m_Info.vPos  = D3DXVECTOR3(263.f, 581.f, 0.f);
+		m_Info.fCX = 32.f;
+		m_Info.fCY = 32.f;
+	}
 	if(m_pObjKey == UI[7])
+	{	
 		m_Info.vPos  = D3DXVECTOR3(578.f, 578.f, 0.f);
+		m_Info.fCX = 64.f;
+		m_Info.fCY = 64.f;
+	}
 	if(m_pObjKey == UI[8])	
+	{	
 		m_Info.vPos  = D3DXVECTOR3(578.f, 578.f, 0.f);
+		m_Info.fCX = 64.f;
+		m_Info.fCY = 64.f;
+	}
 	if(m_pObjKey == UI[9])				 
+	{	
 		m_Info.vPos  = D3DXVECTOR3(221.f, 577.f, 0.f);
+		m_Info.fCX = 64.f;
+		m_Info.fCY = 64.f;
+	}
 	if(m_pObjKey == UI[10])				 
+	{	
 		m_Info.vPos  = D3DXVECTOR3(221.f, 577.f, 0.f);
+		m_Info.fCX = 64.f;
+		m_Info.fCY = 64.f;
+	}
 	if(m_pObjKey == UI[11])				 
+	{
 		m_Info.vPos  = D3DXVECTOR3(316, 564.f, 0.f);
+		m_Info.fCX = 64.f;
+		m_Info.fCY = 64.f;
+	}
 
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
@@ -89,6 +139,28 @@ void CUIObj::Render()
 	// 이미 Initialize에서 정해진 오브젝트의 이름으로 구해온다.
 	D3DXVECTOR3 Mouse = MouseInfoDX();
 
+	//list<CObj*>::iterator iter = m_PlayerData->begin();
+	//for (iter; iter != m_PlayerData->end(); ++iter)
+	//{
+	//	if((*iter)->GetSelect())
+	//	{
+	//		if(SelectCount < 3)
+	//			++SelectCount;
+	//		else
+	//			SelectCount = 3;
+	//		m_pTagetObj = (*iter);
+	//	}
+	//	else
+	//		--SelectCount;
+
+	//}
+	//if (SelectCount == 3)
+	//{
+	//	m_pTagetObj = (*m_PlayerData->begin());
+	//}
+	
+	m_pTagetObj = (*m_PlayerData->begin());
+
 	//DebugLogClear;
 	DebugLog(L"UI : %10s -> Mouse[X:%d Y:%d], vPos[X:%d Y:%d]",
 		m_pObjKey, int(Mouse.x), int(Mouse.y), int(m_Info.vPos.x), int(m_Info.vPos.y));
@@ -111,15 +183,27 @@ void CUIObj::Render()
 	// 해당 라인을 지났는지
 	// DEBUG_LINE;
 
+
 	// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
 	m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 		pTexInfo->ImgInfo.Height * 0.5f, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 
-	// &GetRect() 그리는 이미지의 좌표
-	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+	//// &GetRect() 그리는 이미지의 좌표
+
+	if(m_pObjKey == L"HP")
+	{
+		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+			pTexInfo->ImgInfo.Height * 0.5f + (GetRect().top*0.5f), 0);
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			&GetRect(), &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+	else
+	{
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 }
 
 void CUIObj::Release()
@@ -148,3 +232,19 @@ D3DXVECTOR3 CUIObj::MouseInfoDX()
 	ScreenToClient(g_hWnd, &pt);
 	return D3DXVECTOR3(pt.x , pt.y , 0);
 }
+
+void CUIObj::Setlist( list<CObj*>* _Player )
+{
+	m_PlayerData = _Player;
+}
+
+float CUIObj::VelueToPercentage(TCHAR* VelueName)
+{
+	float HP = m_pTagetObj->GetStatas().fHealthPoint/m_pTagetObj->GetStatas().fHealthPointMAX;
+	if(L"HP" == VelueName)
+		return HP;
+
+	if (L"MP")
+		return m_pTagetObj->GetStatas().fMagikaPoint/m_pTagetObj->GetStatas().fMagikaPointMAX;
+}
+
