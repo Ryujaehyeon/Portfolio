@@ -5,7 +5,9 @@ class CUIObj :
 {
 protected:
 	list<CObj*>* m_PlayerData;
+	list<CObj*>* m_MonsterData;
 	int SelectCount;
+	CObj* m_PlayerObj;
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();
@@ -35,7 +37,7 @@ public:
 		};
 		return rc;
 	}
-	virtual void Setlist(list<CObj*>* _Player);
+	virtual void Setlist(list<CObj*>* _list);
 
 	virtual float VelueToPercentage(TCHAR* VelueName);
 	virtual POINT MouseInfo();

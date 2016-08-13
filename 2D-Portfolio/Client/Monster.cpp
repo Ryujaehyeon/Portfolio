@@ -28,7 +28,7 @@ HRESULT CMonster::Initialize()
 	m_Info.fCY = 75.f;
 
 	m_sPlayInfo.iLevel = 1;
-	m_sPlayInfo.fExp = m_sPlayInfo.fMaxExp = 0;
+	m_sPlayInfo.fExp = m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*10 + rand()%1000+1;
 	m_sPlayInfo.fAttack = 20;
 	m_sPlayInfo.fDefence = 5;
 	m_sPlayInfo.fMight = 5;
@@ -38,7 +38,7 @@ HRESULT CMonster::Initialize()
 	m_sPlayInfo.fResolve = 5;
 	m_sPlayInfo.fPerception = 5;
 	m_sPlayInfo.fHealthPoint = 1;
-	m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 100);
+	m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 10);
 	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
 	m_sPlayInfo.iGold = 0;
 	m_sPlayInfo.fSpeed = (100.0f) + (m_sPlayInfo.fDexterity * 3.0f);
@@ -63,6 +63,8 @@ SCENEID CMonster::Progress()
 	static float fTime = 0.0f;
 	// 시간값 누적
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
+
+	RegenTime();
 
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
@@ -291,6 +293,26 @@ void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 		m_pTagetObj = NULL;
 }
 
+void CMonster::RegenTime()
+{
+	if (m_sPlayInfo.fHealthPoint <= 0)
+	{
+		m_sPlayInfo.fHealthPoint = 0;
+		m_pMotion = DEATH;
+		return;
+	}
+
+	static float i = 0.f;
+	i += GET_SINGLE(CTimeMgr)->DeltaTime();
+	if ( i*3 > 1)
+	{
+		if (m_sPlayInfo.fHealthPoint < m_sPlayInfo.fHealthPointMAX)
+			m_sPlayInfo.fHealthPoint += 0.5f;
+		if (m_sPlayInfo.fMagikaPoint < m_sPlayInfo.fMagikaPointMAX)
+			m_sPlayInfo.fMagikaPoint += 0.5f;
+		i = 0.f;
+	}
+}
 
 void CMonster::Release()
 {
@@ -566,3 +588,7 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	}
 }
 
+void CMonster::Setlist( list<CObj*>* _Player )
+{
+	m_pTagetList = _Player;
+}

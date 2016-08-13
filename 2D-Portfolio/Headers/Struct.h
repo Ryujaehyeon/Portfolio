@@ -148,6 +148,8 @@ typedef struct tagInfo
 	float fMagikaPointMAX;
 	// 스킬 포인트
 	int  iSKillPoint;
+	// 스텟 포인트
+	int  iStatPoint;
 	// 성별
 	int iGenderIdx;
 	// 소지금

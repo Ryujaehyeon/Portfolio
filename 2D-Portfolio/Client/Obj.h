@@ -9,8 +9,11 @@ protected:
 	INFO m_sPlayInfo;
 	OBJ_TYPE m_ObjType;
 	
-	// 충돌시 몬스터가 가질 플레이어의 좌표
+	// 대상이 되는 객체
 	CObj* m_pTagetObj;
+
+	// 대상이되는 리스트
+	list<CObj*>* m_pTagetList;
 protected:
 	// 오브젝트의 이름
 	TCHAR* m_pObjName;
@@ -81,6 +84,8 @@ public:
 	virtual const FRAME& GetFrame() const {return m_tFrame;}
 	virtual const TCHAR* GetpMotion() const {return m_pMotion;}
 	virtual const bool GetSelect() const { return m_bSelect; }
+	virtual const TCHAR* GetName() const { return m_pObjName; }
+	virtual const CObj* GetTagetObj() const { if(m_pTagetObj != NULL) return m_pTagetObj; }
 	//etc
 public:
 	void FrameMove(const float& fCnt, const float& fMax);

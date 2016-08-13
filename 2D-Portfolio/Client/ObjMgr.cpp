@@ -206,10 +206,39 @@ SCENEID CObjMgr::Progress()
 		{
 			iScene = (*iter2)->Progress();
 
+			map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
+			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
+			
+			if((*iter2)->GetName() == PLAYER)
+				DebugLog(L"레벨 : %d \n체력 : %8.3f,%8.3f \n경험치 : %8.3f/%8.3f \n공격력 : %8.2f \n방어력 : %8.2f \n힘 : %8.2f \n체질 : %8.2f \n민첩 : %8.2f \n통찰 : %8.2f \n지능 : %8.2f \n결의 %8.2f \n능력포인트 : %d \n기술포인트 : %d",
+				(*iter2)->GetStatas().iLevel, 
+				(*iter2)->GetStatas().fHealthPoint, (*iter2)->GetStatas().fHealthPointMAX, 
+				(*iter2)->GetStatas().fExp,(*iter2)->GetStatas().fMaxExp,
+				(*iter2)->GetStatas().fAttack,(*iter2)->GetStatas().fDefence, 
+				(*iter2)->GetStatas().fMight, 
+				(*iter2)->GetStatas().fConstitution, 
+				(*iter2)->GetStatas().fDexterity, 
+				(*iter2)->GetStatas().fPerception, 
+				(*iter2)->GetStatas().fIntellect, 
+				(*iter2)->GetStatas().fResolve,
+				(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);
+
 			switch((*iter2)->GetObjType())
 			{
 			case OBJ_PLAYER:
 			case OBJ_MONSTER:
+				if ((*iter2)->GetObjType() == OBJ_PLAYER)
+				{
+					if(iterMonster != m_MapObject.end())
+						static_cast<CMonster*>(*iter2)->Setlist(
+						&m_MapObject.find(MONSTER)->second);
+				}
+				else if ((*iter2)->GetObjType() == OBJ_MONSTER)
+				{
+					if(iterPlayer != m_MapObject.end())
+						static_cast<CPlayer*>(*iter2)->Setlist(
+						&m_MapObject.find(PLAYER)->second);
+				}
 				ObjInteraction((*iter2));
 				// 몬스터 삭제시 
 				MonsterRelease();
@@ -225,11 +254,19 @@ SCENEID CObjMgr::Progress()
 				break;
 			case OBJ_UI:
 				{
-					//map<wstring, list<CObj*>> finditer = m_MapObject.find(PLAYER);
-					//list<CObj*> iterPLAYER = finditer->second;
-					//if(iterPLAYER != iterPLAYER)
-					// 혹시 모를 예외처리가 필요할듯 함 
-						static_cast<CUIObj*>(*iter2)->Setlist(&m_MapObject.find(PLAYER)->second);
+					// 플레이어 정보
+					if(iterPlayer != m_MapObject.end())
+					{
+						static_cast<CPlayer*>(*iter2)->Setlist(
+							&m_MapObject.find(PLAYER)->second);
+					}
+
+					// 몬스터 정보
+					if(iterMonster != m_MapObject.end())
+					{
+						static_cast<CMonster*>(*iter2)->Setlist(
+							&m_MapObject.find(MONSTER)->second);
+					}
 				}
 			}
 			if(iter2 == iter->second.end())

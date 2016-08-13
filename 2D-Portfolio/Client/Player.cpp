@@ -10,6 +10,7 @@ CPlayer::CPlayer( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType 
 	:CStageDynamic(Info, _ObjName, _ObjType)
 {
 	m_pObjKey = _ObjName;
+	m_pObjName = _ObjName;
 }
 
 CPlayer::~CPlayer(void)
@@ -33,8 +34,8 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fConstitution = 5;
 	m_sPlayInfo.fResolve = 5;
 	m_sPlayInfo.fPerception = 5;
-	m_sPlayInfo.fExp = 80;
-	m_sPlayInfo.fMaxExp = 100;
+	m_sPlayInfo.fExp = 0;
+	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*20;
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 5;
 	m_sPlayInfo.iSKillPoint = 0;
@@ -66,7 +67,7 @@ SCENEID CPlayer::Progress()
 
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
-	RegenTime();
+	StatesChange();
 	// 입력받는 키를 체크해 상태를 변경
 	CheckKey();
 
@@ -111,10 +112,7 @@ SCENEID CPlayer::Progress()
 
 	//첫번째 인자값은 초당 몇프레임을 출력할건지, 두번째는 최대 장수
 	FrameStatas();
-	DebugLog(L"Level : %d, HP : %8.3f,%8.3f, Exp : %8.3f/%8.3f",
-		m_sPlayInfo.iLevel, 
-		m_sPlayInfo.fHealthPoint, m_sPlayInfo.fHealthPointMAX, 
-		m_sPlayInfo.fExp, m_sPlayInfo.fMaxExp);
+
 	return SCENEID_NONPASS;
 }
 
@@ -169,6 +167,7 @@ void CPlayer::CheckKey()
 		{
 			// 도달했을 시 서있는 상태
 			m_pMotion = STAND;
+			// 클릭 누르고 있을때
 			if( GetAsyncKeyState(VK_LBUTTON) & 0x8000 ) 
 			{
 				// 마우스를 바라보는 방향
@@ -177,10 +176,8 @@ void CPlayer::CheckKey()
 				m_fChaterDirect = m_iDegree;
 				// 취할 모션이미지를 바꿈
 				m_pMotion = ATTACK;
-				if(m_pTagetObj != nullptr)
-					FuncAttack(m_pTagetObj, this);
-				// 공격이 끝나면 타겟을 한번 지워줌
-				m_pTagetObj = nullptr;
+				//
+				FuncAttack();
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -223,23 +220,36 @@ void CPlayer::CheckKey()
 	}
 	return;
 }
-void CPlayer::FuncAttack(CObj* _pDest, CObj* _pSour)
+void CPlayer::FuncAttack()
 {
-	if( _pSour->GetObjType() == _pDest->GetObjType())
-		return;
-
-	if(_pSour->GetpMotion() == ATTACK)
+	list<CObj*>::iterator iter = m_pTagetList->begin();
+	for (;iter != m_pTagetList->end(); ++iter)
 	{
-		if (_pSour->GetFrame().fStart >= PLAYER_ATTACK-0.5f)
+		// 리스트 내에 충돌하고 마우스가 몬스터 위에 있을때
+		if (PtInRect(&(*iter)->RealRect(), MouseInfo())
+			&& (*iter)->GetCrash() == true)
 		{
-			if(_pDest->GetStatas().fDefence >= _pSour->GetStatas().fAttack)
-				_pDest->SetStatas()->fHealthPoint -= 1;
-			else if(_pDest->GetStatas().fDefence < _pSour->GetStatas().fAttack)
-				_pDest->SetStatas()->fHealthPoint -= 
-				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
+			// 해당 몬스터의 객체를 타겟팅
+			this->m_pTagetObj = (*iter);
+			// 공격 모션 프레임이 끝날때 데미지가 적용
+			if (m_tFrame.fStart >= PLAYER_ATTACK-0.5f)
+			{
+				// 몬스터 방어력이 플레이어 공격력보다 크면 데미지 1
+				if((*iter)->GetStatas().fDefence >= m_sPlayInfo.fAttack)
+					(*iter)->SetStatas()->fHealthPoint -= 1;
+				// 플레이어 공격력이 더 크면 몬스터 방어력을 뺀 나머지 만큼의 데미지만 적용 
+				else if((*iter)->GetStatas().fDefence < m_sPlayInfo.fAttack)
+					(*iter)->SetStatas()->fHealthPoint -= 
+					m_sPlayInfo.fAttack - (*iter)->GetStatas().fDefence;
+
+				// 몬스터가 죽으면 타겟팅 해제
+				if ((*iter)->GetStatas().fHealthPoint <= 0)
+				{
+					this->m_pTagetObj = nullptr;
+					m_sPlayInfo.fExp += (*iter)->GetStatas().fExp;
+				}
+			}
 		}
-		//if(m_pTagetObj != NULL);
-		//	ExpAcquired();
 	}
 }
 POINT CPlayer::MouseInfo()
@@ -557,8 +567,11 @@ CObj* CPlayer::Clone()
 	return new CPlayer(*this);
 }
 
-void CPlayer::RegenTime()
+void CPlayer::StatesChange()
 {
+	if (m_sPlayInfo.fHealthPoint < 0)
+		m_sPlayInfo.fHealthPoint = 0;
+
 	static float i = 0.f;
 	i += GET_SINGLE(CTimeMgr)->DeltaTime();
 	if ( i*10 > 1)
@@ -568,6 +581,35 @@ void CPlayer::RegenTime()
 		if (m_sPlayInfo.fMagikaPoint < m_sPlayInfo.fMagikaPointMAX)
 			m_sPlayInfo.fMagikaPoint += 0.5f;
 		i = 0.f;
+	}
+
+
+	if(m_sPlayInfo.fConstitution < 20)
+		m_sPlayInfo.fHealthPointMAX = 
+		(m_sPlayInfo.fConstitution * 100);
+	else
+		m_sPlayInfo.fHealthPointMAX = 
+		(m_sPlayInfo.fConstitution * 100) *  
+		( 1.f + (m_sPlayInfo.fConstitution-20 * 0.05f));
+
+	// 레벨업에 필요한 경험치 달성 시
+	if (m_sPlayInfo.iLevel < 100 && 
+		m_sPlayInfo.fExp >= m_sPlayInfo.fMaxExp)
+	{
+		// 레벨업
+		++m_sPlayInfo.iLevel;
+		// 경험치
+		m_sPlayInfo.fExp = 0;
+		// 필요경험치
+		m_sPlayInfo.fMaxExp = (m_sPlayInfo.iLevel * 20) + ((m_sPlayInfo.iLevel * 20) * 0.1); 
+		// 스킬 포인트
+		++m_sPlayInfo.iSKillPoint;
+		// 스텟 포인트
+		m_sPlayInfo.iStatPoint += 5;
+		// 체력 초기화
+		m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX;
+		// 마력 초기화
+		m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX;
 	}
 }
 
@@ -585,4 +627,8 @@ void CPlayer::ExpAcquired()
 				m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel * 10; 
 			}
 		}
+}
+void CPlayer::Setlist( list<CObj*>* _Monster )
+{
+	m_pTagetList = _Monster;
 }

@@ -59,13 +59,13 @@ HRESULT CUIObj::Initialize()
 	{
 		m_Info.vPos  = D3DXVECTOR3(400.f, 20.f, 0.f);
 		m_Info.fCX = 100.f;
-		m_Info.fCY = 15.f;
+		m_Info.fCY = 10.f;
 	}
 	if(m_pObjKey == UI[3])
 	{
 		m_Info.vPos  = D3DXVECTOR3(400.f, 20.f, 0.f);
 		m_Info.fCX = 100.f;
-		m_Info.fCY = 15.f;
+		m_Info.fCY = 10.f;
 	}
 	if(m_pObjKey == UI[4])
 	{
@@ -151,19 +151,17 @@ void CUIObj::Render()
 				++SelectCount;
 			else
 				SelectCount = 3;
-			m_pTagetObj = (*iter);
+			m_PlayerObj = (*iter);
 		}
 		else
 			--SelectCount;
 	}
 	if (SelectCount == 3)
 	{
-		m_pTagetObj = (*m_PlayerData->begin());
+		m_PlayerObj = (*m_PlayerData->begin());
 	}
 	
-	//m_pTagetObj = (*m_PlayerData->begin());
 
-	//DebugLogClear;
 	
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
@@ -184,9 +182,7 @@ void CUIObj::Render()
 	// DEBUG_LINE;
 
 
-	// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
-	m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-		pTexInfo->ImgInfo.Height * 0.5f, 0);
+
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 
@@ -217,14 +213,47 @@ void CUIObj::Render()
 		};
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height*0.5f, 0);
-		
-		
 
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
+	else if ( m_pObjKey == L"HPBar" )
+	{
+		RECT rc = {
+			float(0), 
+			float(0),
+			float(m_Info.fCX * VelueToPercentage(m_pObjKey)), 
+			float(m_Info.fCY)
+		};
+		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+			pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+		if( VelueToPercentage(m_pObjKey) >= 0.f && m_pObjKey == L"HPBar")
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	}
+	else if (m_pObjKey == L"HPBarBack")
+	{
+		RECT rc = {
+			float(0), 
+			float(0),
+			float(m_Info.fCX), 
+			float(m_Info.fCY)
+		};
+		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+			pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+		if (VelueToPercentage(L"HPBar")>= 0.f)
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 	else
 	{
+		// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+			pTexInfo->ImgInfo.Height * 0.5f, 0);
+
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
@@ -257,20 +286,41 @@ D3DXVECTOR3 CUIObj::MouseInfoDX()
 	return D3DXVECTOR3(pt.x , pt.y , 0);
 }
 
-void CUIObj::Setlist( list<CObj*>* _Player )
+void CUIObj::Setlist( list<CObj*>* _list )
 {
-	m_PlayerData = _Player;
+	list<CObj*>::iterator iter = _list->begin();
+	if(iter != _list->end() && (*iter)->GetObjType() == OBJ_PLAYER)
+		m_PlayerData = _list;
+	else if (iter != _list->end() && (*iter)->GetObjType() == OBJ_MONSTER)
+		m_MonsterData = _list;
 }
 
 float CUIObj::VelueToPercentage(TCHAR* VelueName)
 {
 	if(L"HP" == VelueName)
-		return m_pTagetObj->GetStatas().fHealthPoint/m_pTagetObj->GetStatas().fHealthPointMAX;
+		return m_PlayerObj->GetStatas().fHealthPoint/m_PlayerObj->GetStatas().fHealthPointMAX;
 
 	if (L"MP" == VelueName)
-		return m_pTagetObj->GetStatas().fMagikaPoint/m_pTagetObj->GetStatas().fMagikaPointMAX;
+		return m_PlayerObj->GetStatas().fMagikaPoint/m_PlayerObj->GetStatas().fMagikaPointMAX;
 
 	if (L"ExpBar" == VelueName)
-		return m_pTagetObj->GetStatas().fExp/m_pTagetObj->GetStatas().fMaxExp;
+		return m_PlayerObj->GetStatas().fExp/m_PlayerObj->GetStatas().fMaxExp;
+
+	if (L"HPBar" == VelueName )
+	{
+		list<CObj*>::iterator iter = m_MonsterData->begin();
+		for (; iter != m_MonsterData->end(); ++iter)
+		{
+			if(PtInRect(&(*iter)->RealRect(), MouseInfo()) &&
+				(*iter)->GetCrash() == true)
+			{
+				return (*iter)->GetStatas().fHealthPoint/
+						(*iter)->GetStatas().fHealthPointMAX;
+			}
+		}
+	}
+	//if (L"HPBar" == VelueName )
+	//	return m_PlayerObj->GetTagetObj()->GetStatas().fHealthPoint/
+	//		   m_PlayerObj->GetTagetObj()->GetStatas().fHealthPointMAX;
 }
 

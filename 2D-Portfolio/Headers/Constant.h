@@ -130,3 +130,5 @@ TCHAR* const SUMMON					= L"SUMMON";
 TCHAR* const PLAYER					= L"Player";
 TCHAR* const FELLOW_1ST				= L"Fellow_First";
 TCHAR* const FELLOW_2ND				= L"Fellow_Second";
+
+TCHAR* const MONSTER				= L"Monster";
