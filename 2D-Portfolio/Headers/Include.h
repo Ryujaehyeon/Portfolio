@@ -2,17 +2,18 @@
 #include "Debug.h"
 #include "Debug.hpp"
 
-//===========Manager Header==============//
+
+//===========Manager Header============//
 #include "Device.h"
 #include "TextureMgr.h"
 
-//===========ETC Header==============//
+//=============ETC Header==============//
 #include "SingleTexture.h"
 #include "MultiTexture.h"
 
 #ifdef __CLIENT__EXEC__
 
-//===========Manager Header==============//
+//===========Manager Header============//
 #include "SceneMgr.h"
 #include "ObjMgr.h"
 #include "TimeMgr.h"
@@ -26,7 +27,7 @@
 #include "Stage2.h"
 #include "Stage3.h"
 
-//===========Object Header==============//
+//===========Object Header=============//
 #include "LogoBackGround.h"
 #include "MenuBackground.h"
 #include "StageBackground.h"
@@ -39,9 +40,12 @@
 #include "NonPlayer.h"
 #include "UIObj.h"
 
-//===========Prototype Header==============//
+//==========Prototype Header============//
 #include "LogoObjProto.h"
 #include "MenuObjProto.h"
 #include "StageObjProto.h"
 
+//================ETC===================//
+#include "GameSound.hpp"
+#include "FullModeMgr.h"
 #endif

@@ -46,6 +46,15 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return FALSE;
 	}
 
+	// 화면 모드 전환
+	ModeSetter Setter;
+	Setter->SetMode(g_hWnd, 800, 600);
+	Setter->ModeChange(WINDOW_WINMODE);
+
+
+	// 사운드
+	GameSound Sound;
+
 	CREATE_DEBUG_CONSOLE;
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
@@ -75,6 +84,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			}
 		}
 	}
+	Setter->Destroy();
+	Sound->Close();
 	DESTROY_DEBUG_CONSOLE;
 	return (int) msg.wParam;
 }
@@ -128,10 +139,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    HWND hWnd;
+   RECT rc = {0, 0, WINSIZEX, WINSIZEY};
 
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   RECT rc = {0, 0, WINSIZEX, WINSIZEY};
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
    g_hWnd = hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
@@ -163,9 +174,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	int wmId, wmEvent;
 	PAINTSTRUCT ps;
 	HDC hdc;
+	RECT rc = {0,0,800,600};
 
 	switch (message)
 	{
+	case WM_CHAR:
+		ModeSetter i;
+		if (i->GetMode() == WINDOW_FULLMODE)
+			i->ModeChange(WINDOW_WINMODE);
+		else
+			i->ModeChange(WINDOW_FULLMODE);
+		break;
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
@@ -186,6 +205,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: 여기에 그리기 코드를 추가합니다.
 		EndPaint(hWnd, &ps);
+		break;
+	case WM_GETMINMAXINFO:
+		ModeSetter Setter;
+		if(Setter->GetMode() & WINDOW_FULLMODE)
+			AdjustWindowRect(&rc, WS_POPUP, false);
+		else if(Setter->GetMode() & WINDOW_WINMODE)
+			AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
+		else break;
+		((MINMAXINFO*)lParam)->ptMaxTrackSize.x = rc.right - rc.left;
+		((MINMAXINFO*)lParam)->ptMaxTrackSize.y = rc.bottom - rc.top;
+		((MINMAXINFO*)lParam)->ptMinTrackSize.x = rc.right - rc.left;
+		((MINMAXINFO*)lParam)->ptMinTrackSize.y = rc.bottom - rc.top;
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);

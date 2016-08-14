@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Headers", "Headers", "{F09F
 		Headers\Debug.hpp = Headers\Debug.hpp
 		Headers\Defines.h = Headers\Defines.h
 		Headers\Function.h = Headers\Function.h
+		Client\GameSound.hpp = Client\GameSound.hpp
 		Headers\Include.h = Headers\Include.h
 		Headers\Macro.h = Headers\Macro.h
 		Headers\MathDef.hpp = Headers\MathDef.hpp

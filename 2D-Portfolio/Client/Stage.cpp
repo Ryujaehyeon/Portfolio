@@ -5,7 +5,14 @@
 D3DXVECTOR3 CStage::g_tScroll = D3DXVECTOR3(0.f, 0.f, 0.f);
 
 CStage::CStage(void)
-{}
+{
+	GameSound Sound;
+	Sound->Stop(L"Wilderness");
+	Sound->Init(40);
+	Sound->LoadSound(L"Tristram", L"Tristram.mp3", true);
+	Sound->SetVolume(10);
+	Sound->Play(L"Tristram");       //»ç¿îµå
+}
 
 CStage::~CStage(void)
 {
@@ -14,7 +21,8 @@ CStage::~CStage(void)
 
 HRESULT CStage::Initialize()
 {
-	
+
+
 	TCHAR* Charter[] = {L"Player", 
 		L"Fellow_First",
 		L"Fellow_Second"};

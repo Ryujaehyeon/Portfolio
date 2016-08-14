@@ -4,6 +4,11 @@
 
 CMenuD2::CMenuD2(void)
 {
+	GameSound Sound;
+	Sound->Init(40);
+	Sound->LoadSound(L"Wilderness", L"Wilderness.mp3", true);
+	Sound->SetVolume(10);
+	Sound->Play(L"Wilderness");       //»ç¿îµå
 }
 
 
@@ -89,6 +94,7 @@ void CMenuD2::Render()
 
 void CMenuD2::Release()
 {
+	
 	DESTROY_SINGLE(CTextureMgr);
 	GET_SINGLE(CObjMgr)->DestroyInstance();
 	SAFE_DELETE<CPrototype>(&m_pPrototype);

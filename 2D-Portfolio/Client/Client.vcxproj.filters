@@ -157,6 +157,9 @@
     <Filter Include="02.Object\Stage\Static\UI">
       <UniqueIdentifier>{9236707c-0ef8-423a-934d-32c4da0113b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98.Manager\FullModeMgr">
+      <UniqueIdentifier>{d9ea3d29-c536-4520-a723-01f80e10a013}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -297,6 +300,9 @@
     <ClInclude Include="UIObj.h">
       <Filter>02.Object\Stage\Static\UI</Filter>
     </ClInclude>
+    <ClInclude Include="FullModeMgr.h">
+      <Filter>98.Manager\FullModeMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -421,6 +427,9 @@
     </ClCompile>
     <ClCompile Include="UIObj.cpp">
       <Filter>02.Object\Stage\Static\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FullModeMgr.cpp">
+      <Filter>98.Manager\FullModeMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

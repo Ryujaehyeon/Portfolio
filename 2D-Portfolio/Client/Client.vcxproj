@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClInclude Include="AStar.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="FullModeMgr.h" />
     <ClInclude Include="UIObj.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CollisionMgr.h" />
@@ -131,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="FullModeMgr.cpp" />
     <ClCompile Include="UIObj.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
