@@ -162,6 +162,14 @@ HRESULT CStage::Initialize()
 		ERR_MSG(g_hWnd, L"ExpBar 객체 생성 실패");
 		return E_FAIL;
 	}
+
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"Inven")))
+	{
+		ERR_MSG(g_hWnd, L"Inven 객체 생성 실패");
+		return E_FAIL;
+	}
+
 	/////////////////////////////////////////////////////////
 	// UI 이미지
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
@@ -258,6 +266,14 @@ HRESULT CStage::Initialize()
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/ExpBar.png"
 		, L"ExpBar", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"ExpBar 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Inven/Inven.png"
+		, L"Inven", TEXTYPE_SINGLE)))
 	{
 		ERR_MSG(g_hWnd, L"ExpBar 텍스쳐 읽어오기 실패");
 		return E_FAIL;
@@ -902,6 +918,7 @@ HRESULT CStage::Initialize()
 
 SCENEID CStage::Progress()
 {
+	
 	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
 
 	// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화

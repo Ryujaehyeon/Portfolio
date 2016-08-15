@@ -67,6 +67,13 @@ void CStageBackGround::Render()
 {
 	D3DXMATRIX matTrans;
 	int iSize = m_vecTile.size();
+
+	//DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", 
+	//	CStage::g_tScroll.x, 
+	//	CStage::g_tScroll.y, 
+	//	m_vecTile[0]->vPos.x, 
+	//	m_vecTile[0]->vPos.y);
+
 	for(int i = 0; i < iSize; ++i)
 	{
 		const TEXINFO* pTexInfo = 
@@ -74,8 +81,10 @@ void CStageBackGround::Render()
 			, m_pStateKey, m_vecTile[i]->byDrawID);
 		if(pTexInfo == NULL)
 			return;
+
 		D3DXMatrixTranslation(&matTrans,
-			m_vecTile[i]->vPos.x, m_vecTile[i]->vPos.y,
+			m_vecTile[i]->vPos.x - CStage::g_tScroll.x, 
+			m_vecTile[i]->vPos.y - CStage::g_tScroll.y,
 			m_vecTile[i]->vPos.z);
 
 		m_Info.vCenter = D3DXVECTOR3(65, 34, 0);

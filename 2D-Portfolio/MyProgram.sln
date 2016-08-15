@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Headers", "Headers", "{F09F
 		Headers\Macro.h = Headers\Macro.h
 		Headers\MathDef.hpp = Headers\MathDef.hpp
 		Headers\Struct.h = Headers\Struct.h
+		Client\Value.h = Client\Value.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcxproj", "{093185F8-2056-41CA-9FAC-3B24E5B05B7E}"

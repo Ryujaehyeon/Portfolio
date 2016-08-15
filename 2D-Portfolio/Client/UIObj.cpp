@@ -15,7 +15,8 @@ CUIObj::CUIObj( const OBJINFO& Info, const OBJ_TYPE _ObjType )
 
 CUIObj::CUIObj( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
 	:CStageStatic(Info, _ObjType),
-	SelectCount(0)
+	SelectCount(0),
+	m_InvenKey(false)
 {
 	m_pObjKey = _ObjName;
 }
@@ -27,7 +28,7 @@ CUIObj::~CUIObj(void)
 
 HRESULT CUIObj::Initialize()
 {
-	TCHAR* UI[12]=
+	TCHAR* UI[13]=
 	{
 		L"StatusBar",
 		L"HP",
@@ -40,7 +41,8 @@ HRESULT CUIObj::Initialize()
 		L"SkillPointFalse",
 		L"StatPointTrue",
 		L"StatPointFalse",
-		L"ExpBar"
+		L"ExpBar",
+		L"Inven"
 	};
 
 	if(m_pObjKey == UI[0])
@@ -115,6 +117,12 @@ HRESULT CUIObj::Initialize()
 		m_Info.fCX = 120.f;
 		m_Info.fCY = 3.f;
 	}
+	if(m_pObjKey == UI[12])				 
+	{
+		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
+		m_Info.fCX = 1024.f;
+		m_Info.fCY = 1024.f;
+	}
 
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
@@ -125,6 +133,9 @@ HRESULT CUIObj::Initialize()
 
 SCENEID CUIObj::Progress()
 {
+	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
+	CheckKey();
+
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
 	D3DXVec3Normalize(&m_Info.vDir, &m_Info.vDir);
@@ -161,8 +172,6 @@ void CUIObj::Render()
 		m_PlayerObj = (*m_PlayerData->begin());
 	}
 	
-
-	
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
 
@@ -180,9 +189,6 @@ void CUIObj::Render()
 	// DEBUG_ENTRY_EXIT;
 	// 해당 라인을 지났는지
 	// DEBUG_LINE;
-
-
-
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 
@@ -212,7 +218,7 @@ void CUIObj::Render()
 			float(m_Info.fCY)
 		};
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-			pTexInfo->ImgInfo.Height*0.5f, 0);
+			pTexInfo->ImgInfo.Height * 0.5f, 0);
 
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
@@ -247,6 +253,18 @@ void CUIObj::Render()
 		if (VelueToPercentage(L"HPBar")>= 0.f)
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+	else if (m_pObjKey == L"Inven")
+	{
+		if(m_InvenKey == true)
+		{
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
 	}
 	else
 	{
@@ -319,8 +337,13 @@ float CUIObj::VelueToPercentage(TCHAR* VelueName)
 			}
 		}
 	}
-	//if (L"HPBar" == VelueName )
-	//	return m_PlayerObj->GetTagetObj()->GetStatas().fHealthPoint/
-	//		   m_PlayerObj->GetTagetObj()->GetStatas().fHealthPointMAX;
+}
+
+void CUIObj::CheckKey()
+{
+	if ( m_dwKey & KEY_I )
+	{
+		m_InvenKey = !m_InvenKey;
+	}
 }
 

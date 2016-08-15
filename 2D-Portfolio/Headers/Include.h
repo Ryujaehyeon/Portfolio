@@ -48,4 +48,7 @@
 //================ETC===================//
 #include "GameSound.hpp"
 #include "FullModeMgr.h"
+#include "KeyMgr.h"
+#include "Value.h"
+
 #endif

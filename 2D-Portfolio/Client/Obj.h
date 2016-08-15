@@ -5,6 +5,7 @@
 class CObj
 {
 protected:
+
 	OBJINFO m_Info;
 	INFO m_sPlayInfo;
 	OBJ_TYPE m_ObjType;
@@ -14,6 +15,8 @@ protected:
 
 	// 대상이되는 리스트
 	list<CObj*>* m_pTagetList;
+	// 키입력
+	DWORD m_dwKey;
 protected:
 	// 오브젝트의 이름
 	TCHAR* m_pObjName;
@@ -85,7 +88,7 @@ public:
 	virtual const TCHAR* GetpMotion() const {return m_pMotion;}
 	virtual const bool GetSelect() const { return m_bSelect; }
 	virtual const TCHAR* GetName() const { return m_pObjName; }
-	virtual const CObj* GetTagetObj() const { if(m_pTagetObj != NULL) return m_pTagetObj; }
+	virtual const CObj* GetTagetObj() const { if(m_pTagetObj != NULL) return m_pTagetObj; else return nullptr; }
 	//etc
 public:
 	void FrameMove(const float& fCnt, const float& fMax);

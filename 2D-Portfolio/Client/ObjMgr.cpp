@@ -209,19 +209,20 @@ SCENEID CObjMgr::Progress()
 			map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
 			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
 			
-			if((*iter2)->GetName() == PLAYER)
-				DebugLog(L"레벨 : %d \n체력 : %8.3f,%8.3f \n경험치 : %8.3f/%8.3f \n공격력 : %8.2f \n방어력 : %8.2f \n힘 : %8.2f \n체질 : %8.2f \n민첩 : %8.2f \n통찰 : %8.2f \n지능 : %8.2f \n결의 %8.2f \n능력포인트 : %d \n기술포인트 : %d",
-				(*iter2)->GetStatas().iLevel, 
-				(*iter2)->GetStatas().fHealthPoint, (*iter2)->GetStatas().fHealthPointMAX, 
-				(*iter2)->GetStatas().fExp,(*iter2)->GetStatas().fMaxExp,
-				(*iter2)->GetStatas().fAttack,(*iter2)->GetStatas().fDefence, 
-				(*iter2)->GetStatas().fMight, 
-				(*iter2)->GetStatas().fConstitution, 
-				(*iter2)->GetStatas().fDexterity, 
-				(*iter2)->GetStatas().fPerception, 
-				(*iter2)->GetStatas().fIntellect, 
-				(*iter2)->GetStatas().fResolve,
-				(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);
+			// 플레이어 정보를 보기 위함
+			/*if((*iter2)->GetName() == PLAYER)
+			DebugLog(L"레벨 : %d \n체력 : %8.3f,%8.3f \n경험치 : %8.3f/%8.3f \n공격력 : %8.2f \n방어력 : %8.2f \n힘 : %8.2f \n체질 : %8.2f \n민첩 : %8.2f \n통찰 : %8.2f \n지능 : %8.2f \n결의 %8.2f \n능력포인트 : %d \n기술포인트 : %d",
+			(*iter2)->GetStatas().iLevel, 
+			(*iter2)->GetStatas().fHealthPoint, (*iter2)->GetStatas().fHealthPointMAX, 
+			(*iter2)->GetStatas().fExp,(*iter2)->GetStatas().fMaxExp,
+			(*iter2)->GetStatas().fAttack,(*iter2)->GetStatas().fDefence, 
+			(*iter2)->GetStatas().fMight, 
+			(*iter2)->GetStatas().fConstitution, 
+			(*iter2)->GetStatas().fDexterity, 
+			(*iter2)->GetStatas().fPerception, 
+			(*iter2)->GetStatas().fIntellect, 
+			(*iter2)->GetStatas().fResolve,
+			(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);*/
 
 			switch((*iter2)->GetObjType())
 			{
@@ -320,7 +321,7 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 		return;
 	// 비교할 대상이 있는 방향을 정하고
 	_pSour->Setinfo()->vDir = _pDest->GetInfo().vPos - _pSour->GetInfo().vPos;
-
+	
 	// 타겟을 정하기 위한 거리
 	{
 		// 실제 크기에 따른 충돌
@@ -375,7 +376,6 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 		// 미는 방향대로 밀리게끔
 		_pDest->Setinfo()->vPos += (_pSour->Setinfo()->vDir * fPushRange);
 	}
-
 }
 
 POINT CObjMgr::MouseInfo()

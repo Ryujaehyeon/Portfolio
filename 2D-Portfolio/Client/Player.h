@@ -19,6 +19,7 @@ public:
 	void StatesChange();
 	void ExpAcquired();
 	virtual void Setlist(list<CObj*>* _Monster);
+	virtual void ScrollChange();
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

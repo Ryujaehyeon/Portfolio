@@ -85,9 +85,6 @@
     <Filter Include="97.Design\Prototype\Object\Stage">
       <UniqueIdentifier>{64e5f778-03c4-48a1-8d8a-9261cd27cca8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="98.Manager\Mouse">
-      <UniqueIdentifier>{5bc760a3-4758-4d33-b85e-823404fa0904}</UniqueIdentifier>
-    </Filter>
     <Filter Include="94. Algorithm">
       <UniqueIdentifier>{f0cb20fc-8037-4411-8aaf-7e9c10890656}</UniqueIdentifier>
     </Filter>
@@ -159,6 +156,9 @@
     </Filter>
     <Filter Include="98.Manager\FullModeMgr">
       <UniqueIdentifier>{d9ea3d29-c536-4520-a723-01f80e10a013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Manager\KeyMgr">
+      <UniqueIdentifier>{ec836594-1fde-4fcc-9b95-d8809972b1b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +303,9 @@
     <ClInclude Include="FullModeMgr.h">
       <Filter>98.Manager\FullModeMgr</Filter>
     </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>98.Manager\KeyMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -331,9 +334,6 @@
     </ClCompile>
     <ClCompile Include="SceneObj.cpp">
       <Filter>01.Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Logo.cpp">
-      <Filter>01.Scene\Logo</Filter>
     </ClCompile>
     <ClCompile Include="SceneMgr.cpp">
       <Filter>98.Manager\Scene</Filter>
@@ -430,6 +430,12 @@
     </ClCompile>
     <ClCompile Include="FullModeMgr.cpp">
       <Filter>98.Manager\FullModeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>98.Manager\KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>01.Scene\Logo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

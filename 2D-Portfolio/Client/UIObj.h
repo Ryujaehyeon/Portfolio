@@ -8,6 +8,9 @@ protected:
 	list<CObj*>* m_MonsterData;
 	int SelectCount;
 	CObj* m_PlayerObj;
+	bool m_InvenKey;
+public:
+	void CheckKey();
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

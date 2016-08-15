@@ -178,13 +178,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
-	case WM_CHAR:
-		ModeSetter i;
-		if (i->GetMode() == WINDOW_FULLMODE)
-			i->ModeChange(WINDOW_WINMODE);
-		else
-			i->ModeChange(WINDOW_FULLMODE);
-		break;
+	//case WM_CHAR:
+	//	ModeSetter i;
+	//	if (i->GetMode() == WINDOW_FULLMODE)
+	//		i->ModeChange(WINDOW_WINMODE);
+	//	else
+	//		i->ModeChange(WINDOW_FULLMODE);
+	//	break;
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);

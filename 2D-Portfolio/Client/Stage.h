@@ -6,7 +6,7 @@ class CStage : public CSceneObj
 {
 	
 public:
-	
+	static D3DXVECTOR3 g_tScroll;
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

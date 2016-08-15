@@ -27,7 +27,7 @@ HRESULT CStageObjProto::InitProtoInstance()
 	// 원형 객체를 생성해서 삽입해줌
 	m_MapProto.insert(make_pair(L"StageBack"
 		, new CStageBackGround(objInfo, OBJ_BUILDING)));
-
+	
 	m_MapProto.insert(make_pair(L"HP"
 		, new CUIObj(objInfo, L"HP", OBJ_UI)));
 
@@ -64,6 +64,14 @@ HRESULT CStageObjProto::InitProtoInstance()
 	m_MapProto.insert(make_pair(L"ExpBar"
 		, new CUIObj(objInfo, L"ExpBar", OBJ_UI)));
 
+	m_MapProto.insert(make_pair(L"Inven"
+		, new CUIObj(objInfo, L"Inven", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"ItemInfoRect"
+		, new CUIObj(objInfo, L"ItemInfoRect", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"TownStorage"
+		, new CUIObj(objInfo, L"TownStorage", OBJ_UI)));
 
 	//------------------------------------------------------------//
 	// 플레이어

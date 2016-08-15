@@ -31,6 +31,7 @@ HRESULT CMainGame::Initialize()
 
 SCENEID CMainGame::Progress()
 {
+	GET_SINGLE(CKeyMgr)->CheckKey();
 	GET_SINGLE(CTimeMgr)->SetTime();
 	SCENEID iScene = GET_SINGLE(CSceneMgr)->Progress();
 	if (iScene == SCENEID_END)

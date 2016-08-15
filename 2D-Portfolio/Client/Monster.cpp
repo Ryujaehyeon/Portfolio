@@ -63,6 +63,8 @@ SCENEID CMonster::Progress()
 	static float fTime = 0.0f;
 	// 시간값 누적
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
+	
+	CStage::g_tScroll;
 
 	RegenTime();
 
@@ -124,8 +126,8 @@ void CMonster::Render()
 	if(pTexInfo == NULL)
 		return;
 
-	m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-		pTexInfo->ImgInfo.Height * 0.6, 0);
+	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CStage::g_tScroll.x,
+		(pTexInfo->ImgInfo.Height * 0.5)+CStage::g_tScroll.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,

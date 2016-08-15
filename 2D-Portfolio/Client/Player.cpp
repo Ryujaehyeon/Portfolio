@@ -60,6 +60,7 @@ HRESULT CPlayer::Initialize()
 
 SCENEID CPlayer::Progress()
 {
+	
 	// 시간
 	static float fTime = 0.0f;
 	// 시간값 누적
@@ -90,6 +91,10 @@ SCENEID CPlayer::Progress()
 	}
 	// 각도의 라디안 값을 디그리값(0~360)으로 변경
 	m_iDegree = D3DXToDegree(m_fAngle);
+
+
+	ScrollChange();
+	DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
 
 	// 이동거리
 	// Run 또는 Walk 상태일때만 
@@ -125,8 +130,8 @@ void CPlayer::Render()
 	if(pTexInfo == NULL)
 		return;
 
-	m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-		pTexInfo->ImgInfo.Height * 0.5, 0);
+	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CStage::g_tScroll.x,
+		(pTexInfo->ImgInfo.Height * 0.5)+CStage::g_tScroll.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -138,16 +143,17 @@ void CPlayer::CheckKey()
 {
 	// 제어할 캐릭터 선택
 	CharacterSelect();
+
 	m_vMousePos = MouseInfoDX();
 
-	//if( m_Crash == false )
-	//	m_pTagetObj = this;
+	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
 
-	if (GetAsyncKeyState(VK_TAB) & 0x8000 && m_bSelect == true)
+
+	if (m_dwKey & KEY_TAB && m_bSelect == true)
 	{
 		m_bRun = !m_bRun;
 	}
-	if( GetAsyncKeyState(VK_RBUTTON) & 0x8000 && m_bSelect == true) 
+	if( m_dwKey & KEY_RBUTTON && m_bSelect == true) 
 	{	
 		// 우클릭시 클릭된 지점을 가져옴
 		m_vTagetInfo = m_vMousePos;
@@ -168,7 +174,7 @@ void CPlayer::CheckKey()
 			// 도달했을 시 서있는 상태
 			m_pMotion = STAND;
 			// 클릭 누르고 있을때
-			if( GetAsyncKeyState(VK_LBUTTON) & 0x8000 ) 
+			if( m_dwKey & KEY_LBUTTON ) 
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
@@ -183,7 +189,7 @@ void CPlayer::CheckKey()
 		// 목표위치에 도달하지 못했을때
 		else if ( m_vTagetInfo != m_Info.vPos )
 		{
-			if( GetAsyncKeyState(VK_LBUTTON) & 0x8000 ) 
+			if( m_dwKey & KEY_LBUTTON ) 
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
@@ -257,6 +263,8 @@ POINT CPlayer::MouseInfo()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
+	pt.x = (pt.x + CStage::g_tScroll.x);
+	pt.y = (pt.y + CStage::g_tScroll.y);
 	return pt;
 	//return D3DXVECTOR3(pt.x , pt.y , 0);
 }
@@ -266,7 +274,7 @@ D3DXVECTOR3 CPlayer::MouseInfoDX()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3(pt.x , pt.y , 0);
+	return D3DXVECTOR3((pt.x + CStage::g_tScroll.x) , ( pt.y + CStage::g_tScroll.y) , 0);
 }
 
 void CPlayer::FrameStatas()
@@ -522,37 +530,37 @@ void CPlayer::CharacterSelect()
 {
 	if (m_pObjKey == PLAYER)
 	{
-		if(GetAsyncKeyState(VK_F1) & 0x8000)
+		if(m_dwKey & KEY_F1)
 			m_bSelect = true;
-		if(GetAsyncKeyState(VK_F2) & 0x8000)
+		if(m_dwKey & KEY_F2)
 			m_bSelect = false;
-		if(GetAsyncKeyState(VK_F3) & 0x8000)
+		if(m_dwKey & KEY_F3)
 			m_bSelect = false;
-		if(GetAsyncKeyState(VK_F4) & 0x8000)
+		if(m_dwKey & KEY_F4)
 			m_bSelect = true;
 		return;
 	}
 	else if (m_pObjKey == FELLOW_1ST)
 	{
-		if(GetAsyncKeyState(VK_F1) & 0x8000)
+		if(m_dwKey & KEY_F1)
 			m_bSelect = false;
-		if(GetAsyncKeyState(VK_F2) & 0x8000)
+		if(m_dwKey & KEY_F2)
 			m_bSelect = true;
-		if(GetAsyncKeyState(VK_F3) & 0x8000)
+		if(m_dwKey & KEY_F3)
 			m_bSelect = false;
-		if(GetAsyncKeyState(VK_F4) & 0x8000)
+		if(m_dwKey & KEY_F4)
 			m_bSelect = true;
 		return;
 	}
 	else if (m_pObjKey == FELLOW_2ND)
 	{
-		if(GetAsyncKeyState(VK_F1) & 0x8000)
+		if(m_dwKey & KEY_F1)
 			m_bSelect = false;
-		if(GetAsyncKeyState(VK_F2) & 0x8000)
+		if(m_dwKey & KEY_F2)
 			m_bSelect = false;
-		if(GetAsyncKeyState(VK_F3) & 0x8000)
+		if(m_dwKey & KEY_F3)
 			m_bSelect = true;
-		if(GetAsyncKeyState(VK_F4) & 0x8000)
+		if(m_dwKey & KEY_F4)
 			m_bSelect = true;
 		return;
 	}
@@ -631,4 +639,32 @@ void CPlayer::ExpAcquired()
 void CPlayer::Setlist( list<CObj*>* _Monster )
 {
 	m_pTagetList = _Monster;
+}
+
+void CPlayer::ScrollChange()
+{
+
+	if(m_pMotion != ATTACK && m_pObjName == PLAYER)
+	{
+		CStage::g_tScroll += m_Info.vDir;
+		if(CStage::g_tScroll.x < 0)
+			CStage::g_tScroll.x -= m_Info.vDir.x;
+		if (CStage::g_tScroll.y < 0)
+			CStage::g_tScroll.y -= m_Info.vDir.y;
+		if(CStage::g_tScroll.x > 1730)
+			CStage::g_tScroll.x -= m_Info.vDir.x;
+		if (CStage::g_tScroll.y > 732)
+			CStage::g_tScroll.y -= m_Info.vDir.y;
+
+		DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
+
+		//if(CStage::g_tScroll.x > 0.f)
+		//	CStage::g_tScroll.x += m_Info.vDir.x;
+		// if(CStage::g_tScroll.x < 1730.f)
+		//	CStage::g_tScroll.x -= m_Info.vDir.x;
+		// if (CStage::g_tScroll.y > 0.f )
+		//	CStage::g_tScroll.y += m_Info.vDir.y;
+		// if(CStage::g_tScroll.y < 1730.f)
+		//	CStage::g_tScroll.y -= m_Info.vDir.y;
+	}
 }

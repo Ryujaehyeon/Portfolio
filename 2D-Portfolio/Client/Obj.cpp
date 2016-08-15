@@ -7,6 +7,7 @@ CObj::CObj(void)
 	, m_pStateKey(NULL)
 	, m_tFrame()
 	, m_fAngle(0.0f)
+	, m_dwKey(0)
 {
 }
 
@@ -25,6 +26,7 @@ CObj::CObj(const OBJINFO& Info, const OBJ_TYPE _ObjType)
 	, m_bSelect(false)
 	, m_bRun(true)
 	, m_Crash(false)
+	, m_dwKey(0)
 {
 }
 
