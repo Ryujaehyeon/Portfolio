@@ -44,6 +44,8 @@ void CKeyMgr::CheckKey()
 			m_dwKey |= KEY_K;
 		if (GetAsyncKeyState(VK_TAB) & 0x8000)
 			m_dwKey |= KEY_TAB;
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			m_dwKey |= KEY_SPACE;
 }
 
 DWORD CKeyMgr::PushKey(DWORD dwKey)

@@ -44,10 +44,15 @@
 #include "LogoObjProto.h"
 #include "MenuObjProto.h"
 #include "StageObjProto.h"
+#include "SkillProto.h"
 
 //================Skill=================//
 #include "Skill.h"
 #include "SkillTree.h"
+#include "BoneSpear.h"
+#include "FireWall.h"
+#include "Blizzard.h"
+
 //================ETC===================//
 #include "GameSound.hpp"
 #include "FullModeMgr.h"

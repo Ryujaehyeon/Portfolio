@@ -187,6 +187,9 @@
     <Filter Include="02.Object\SkillTree">
       <UniqueIdentifier>{9ab6c811-969f-4696-b69a-474605030953}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.Design\Prototype\Object\Skill">
+      <UniqueIdentifier>{91930e38-611d-40c6-af27-3c3eca3fda1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -348,6 +351,9 @@
     <ClInclude Include="Blizzard.h">
       <Filter>02.Object\Skill\AttackSkill\Extensive</Filter>
     </ClInclude>
+    <ClInclude Include="SkillProto.h">
+      <Filter>97.Design\Prototype\Object\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -493,6 +499,9 @@
     </ClCompile>
     <ClCompile Include="Blizzard.cpp">
       <Filter>02.Object\Skill\AttackSkill\Extensive</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillProto.cpp">
+      <Filter>97.Design\Prototype\Object\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

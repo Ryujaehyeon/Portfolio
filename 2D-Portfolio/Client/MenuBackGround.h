@@ -4,9 +4,6 @@ class CMenuBackGround :
 	public CMenuStatic
 {
 public:
-	virtual POINT MouseInfo();
-	virtual D3DXVECTOR3 MouseInfoDX();
-public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();
 	virtual void Render();

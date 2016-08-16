@@ -61,20 +61,3 @@ CObj* CLogoBackGround::Clone()
 {
 	return new CLogoBackGround(*this);
 }
-
-POINT CLogoBackGround::MouseInfo()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return pt;
-	//return D3DXVECTOR3(pt.x , pt.y , 0);
-}
-
-D3DXVECTOR3 CLogoBackGround::MouseInfoDX()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3(pt.x , pt.y , 0);
-}

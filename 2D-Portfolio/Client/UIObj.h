@@ -46,8 +46,6 @@ public:
 	virtual void Setlist(list<CObj*>* _list);
 
 	virtual float VelueToPercentage(TCHAR* VelueName);
-	virtual POINT MouseInfo();
-	virtual D3DXVECTOR3 MouseInfoDX();
 public:
 	CUIObj(void);
 	CUIObj(const OBJINFO& Info, const OBJ_TYPE _ObjType);

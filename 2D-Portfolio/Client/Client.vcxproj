@@ -92,6 +92,7 @@
     <ClInclude Include="FullModeMgr.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillProto.h" />
     <ClInclude Include="SkillTree.h" />
     <ClInclude Include="UIObj.h" />
     <ClInclude Include="Client.h" />
@@ -144,6 +145,7 @@
     <ClCompile Include="FullModeMgr.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillProto.cpp" />
     <ClCompile Include="SkillTree.cpp" />
     <ClCompile Include="UIObj.cpp" />
     <ClCompile Include="Client.cpp" />

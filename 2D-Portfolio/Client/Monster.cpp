@@ -12,7 +12,6 @@ CMonster::CMonster( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjTyp
 		m_pObjKey = _ObjName;
 }
 
-
 CMonster::~CMonster(void)
 {
 }
@@ -151,11 +150,13 @@ void CMonster::CheckKey()
 	if(m_sPlayInfo.fHealthPoint <= 0)
 	{
 		m_pMotion = DEATH;
+
 		// 봐야할 적을 타겟으로 잡고
-		m_vTagetInfo = m_pTagetObj->Setinfo()->vPos;
+		Tageting();
 
 		// 바라보는 방향
-		m_Info.vDir = m_vTagetInfo - m_Info.vPos;
+		if(m_pTagetObj != NULL)
+			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 		return;
 	}
 	// 3초에 한번 방향과 이동을 정함, 충돌하지 않았을때
@@ -236,11 +237,11 @@ void CMonster::CheckKey()
 		// 충돌했을때
 		if(int(m_sPlayInfo.fHealthPoint) <= 0)
 			m_pMotion = DEATH;
-		// 봐야할 적을 타겟으로 잡고
-		m_vTagetInfo = m_pTagetObj->Setinfo()->vPos;
+
+		Tageting();
 
 		// 바라보는 방향
-		m_Info.vDir = m_vTagetInfo - m_Info.vPos;
+		m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 
 		float fRealDistance = (m_pTagetObj->Setinfo()->fCX * 0.5f) +
 						  (m_Info.fCX * 0.5f);
@@ -306,12 +307,12 @@ void CMonster::RegenTime()
 
 	static float i = 0.f;
 	i += GET_SINGLE(CTimeMgr)->DeltaTime();
-	if ( i*3 > 1)
+	if ( i > 1)
 	{
 		if (m_sPlayInfo.fHealthPoint < m_sPlayInfo.fHealthPointMAX)
-			m_sPlayInfo.fHealthPoint += 0.5f;
+			m_sPlayInfo.fHealthPoint += 0.1f;
 		if (m_sPlayInfo.fMagikaPoint < m_sPlayInfo.fMagikaPointMAX)
-			m_sPlayInfo.fMagikaPoint += 0.5f;
+			m_sPlayInfo.fMagikaPoint += 0.1f;
 		i = 0.f;
 	}
 }
@@ -325,24 +326,6 @@ CObj* CMonster::Clone()
 {
 	return new CMonster(*this);
 }
-
-POINT CMonster::MouseInfo()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return pt;
-	//return D3DXVECTOR3(pt.x , pt.y , 0);
-}
-
-D3DXVECTOR3 CMonster::MouseInfoDX()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3(pt.x , pt.y , 0);
-}
-
 
 void CMonster::FrameStatas()
 {
@@ -593,4 +576,18 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 void CMonster::Setlist( list<CObj*>* _Player )
 {
 	m_pTagetList = _Player;
+}
+
+void CMonster::Tageting()
+{
+	// 봐야할 적을 타겟으로 잡고
+	list<CObj*>::iterator iter = m_pTagetList->begin();
+	for (;iter != m_pTagetList->end(); ++iter)
+	{
+		// 리스트 내에 충돌하고 마우스가 몬스터 위에 있을때
+		if ((*iter)!= nullptr && (*iter)->GetCrash() == true)
+		{
+			m_pTagetObj = (*iter);
+		}
+	}
 }

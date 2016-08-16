@@ -95,6 +95,9 @@ const float RRD			= 337.5f;
 const float RRD_START	= 326.25f;
 const float RRD_END		= 348.75f;
 
+// 
+#define PI 3.1415926535897932384626433832795f
+
 // 타일 옵션 종류
 const BYTE TILE_OPTION_NONE		 = 0x00; // 0000 0001
 const BYTE TILE_OPTION_DONT_MOVE = 0x01; // 0000 0001
@@ -105,8 +108,12 @@ const float PLAYER_STAND				= 8.0f;
 const float PLAYER_WALK					= 8.0f;
 const float PLAYER_RUN					= 8.0f;
 const float PLAYER_ATTACK				= 19.0f;
+const float PLAYER_CAST					= 16.0f;
+
 const float PLAYER_BoneSpear_Missile	= 6.0f;
 const float PLAYER_BoneSpear_Tail		= 9.0f;
+const float PLAYER_FireWall				= 7.0f;
+const float PLAYER_Blizzard				= 8.0f;
 
 const float SKELETON_STAND			= 8.0f;
 const float SKELETON_RUN			= 8.0f;
@@ -135,3 +142,12 @@ TCHAR* const FELLOW_1ST				= L"Fellow_First";
 TCHAR* const FELLOW_2ND				= L"Fellow_Second";
 
 TCHAR* const MONSTER				= L"Monster";
+TCHAR* const BUTTON					= L"Button";
+TCHAR* const SKILL					= L"Skill";
+
+TCHAR* const BONESPEAR				= L"BoneSpear";
+TCHAR* const FIREWALL				= L"FireWall";
+TCHAR* const BLIZZARD				= L"Blizzard";
+TCHAR* const HEAL					= L"Heal";
+TCHAR* const AURA					= L"Aura";
+TCHAR* const RIVIVE					= L"Rivive";

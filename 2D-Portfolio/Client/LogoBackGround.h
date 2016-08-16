@@ -4,10 +4,6 @@
 
 class CLogoBackGround : public CLogoStatic
 {
-
-public:
-	virtual POINT MouseInfo();
-	virtual D3DXVECTOR3 MouseInfoDX();
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

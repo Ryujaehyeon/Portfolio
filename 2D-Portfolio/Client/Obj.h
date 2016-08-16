@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Defines.h"
-
+class CPrototype;
 class CObj
 {
 protected:
@@ -37,6 +37,8 @@ protected:
 	bool m_bRun;
 	// 충돌여부 충돌 true, 충돌 안함 false
 	bool m_Crash;
+	// 스킬
+	CPrototype* m_pSkillPrototype;
 protected:
 	// 키입력
 	DWORD m_dwKey;
@@ -75,10 +77,13 @@ public:
 public:
 	//Set
 	virtual OBJINFO* Setinfo(){return &m_Info;};
+	virtual void SetInfoPos(float _x, float _y){m_Info.vPos.x = _x; m_Info.vPos.y = _y; }
 	virtual INFO* SetStatas() {return &m_sPlayInfo;}
 	virtual void SetCrash(bool _bCrash){m_Crash = _bCrash;}
 	virtual void SetTagetObj(CObj* _pTagetObj);
 	virtual void SetMotion(TCHAR* _pMotion) { if(m_pMotion != DEATH) m_pMotion = _pMotion; }
+	virtual void SetAngle(float _Angle){m_fAngle = _Angle;}
+
 
 	//Get
 	virtual SORTLAYER GetLayer() const {return m_eLayer;}
@@ -96,8 +101,8 @@ public:
 	void FrameMove(const float& fCnt, const float& fMax);
 	int GetTileIndex(const D3DXVECTOR3& vPos);
 	bool CollisionMouseToTile(const D3DXVECTOR3& vPos, const TILE* pTileInfo);
-	virtual POINT MouseInfo()PURE;
-	virtual D3DXVECTOR3 MouseInfoDX()PURE;
+	virtual POINT MouseInfo();
+	virtual D3DXVECTOR3 MouseInfoDX();
 public:
 	virtual HRESULT Initialize()PURE;
 	virtual SCENEID Progress()PURE;

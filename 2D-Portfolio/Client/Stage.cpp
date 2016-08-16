@@ -20,6 +20,8 @@ CStage::~CStage(void)
 
 HRESULT CStage::Initialize()
 {
+	int PlayerCount = 1;
+	int MonsterCount = 5;
 	TCHAR* Charter[] = {L"Player", 
 		L"Fellow_First",
 		L"Fellow_Second"};
@@ -33,11 +35,18 @@ HRESULT CStage::Initialize()
 		L"Diablo"
 	};
 	m_pPrototype = new CStageObjProto;
+	m_pSkillPrototype = new CSkillProto;
+
 	if(FAILED(m_pPrototype->InitProtoInstance()))
 	{
 		ERR_MSG(g_hWnd, L"원형 객체 생성 실패");
 		return E_FAIL;
 	}
+
+
+#pragma region StageProto
+#pragma region AddObj
+
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"StageBack")))
@@ -46,7 +55,7 @@ HRESULT CStage::Initialize()
 		return E_FAIL;
 	}
 	// 캐릭터
-	for ( int i= 0 ; i < 3 ; ++i)
+	for ( int i= 0 ; i < PlayerCount; ++i)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 			, Charter[i])))
@@ -57,7 +66,7 @@ HRESULT CStage::Initialize()
 	}
 
 	// 몬스터
-	for(int i = 0; i < 5; ++i)
+	for(int i = 0; i < MonsterCount; ++i)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 			, Monster[0])))
@@ -185,6 +194,8 @@ HRESULT CStage::Initialize()
 		ERR_MSG(g_hWnd, L"Character 객체 생성 실패");
 		return E_FAIL;
 	}
+#pragma endregion AddObj
+#pragma region AddTexture
 
 	/////////////////////////////////////////////////////////
 	// UI 이미지
@@ -319,15 +330,6 @@ HRESULT CStage::Initialize()
 		return E_FAIL;
 	}
 
-	//------------------------Skill--------------------------------//
-
-	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/Tile/Tile%d.png",
-		L"StageBack", TEXTYPE_MULTI, L"Tile", 38)))
-	{
-		ERR_MSG(g_hWnd, L"TileTexture 로드 실패");
-		return E_FAIL;
-	}
 	//-------------------------------------------------------------//
 	// 타일 불러오기
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
@@ -343,7 +345,7 @@ HRESULT CStage::Initialize()
 	// Player
 #pragma region Player
 
-	for (int i = 0 ; i < 3 ; ++i)
+	for (int i = 0 ; i < PlayerCount ; ++i)
 	{
 #pragma region Stand
 
@@ -651,11 +653,83 @@ HRESULT CStage::Initialize()
 		}
 
 #pragma endregion Attack
-#pragma region Skill
+#pragma region Cast
+		//////////////////////////////////////////////////////////////////////
+		//								Cast								//
+		//////////////////////////////////////////////////////////////////////
+		// 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Player/Cast/D/Cast_D_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Cast_D", PLAYER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"%d Cast D 로드 실패" , Charter[i]);
+			return E_FAIL;
+		}
 
-#pragma endregion Skill
+		// 왼쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Player/Cast/LD/Cast_LD_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Cast_LD", PLAYER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"%d Walk LD 로드 실패" , Charter[i]);
+			return E_FAIL;
+		}
+
+		// 오른쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Player/Cast/RD/Cast_RD_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Cast_RD", PLAYER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"%d Walk RD 로드 실패" , Charter[i]);
+			return E_FAIL;
+		}
+
+		// 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Player/Cast/U/Cast_U_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Cast_U", PLAYER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"%d Walk U 로드 실패" , Charter[i]);
+			return E_FAIL;
+		}
+
+		// 왼쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Player/Cast/LU/Cast_LU_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Cast_LU", PLAYER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"%d Walk LU 로드 실패" , Charter[i]);
+			return E_FAIL;
+		}
+
+		// 오른쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Player/Cast/RU/Cast_RU_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Cast_RU", PLAYER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"%d Walk RU 로드 실패" , Charter[i]);
+			return E_FAIL;
+		}
+
+		// 왼쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Player/Cast/L/Cast_L_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Cast_L", PLAYER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"%d Walk L 로드 실패" , Charter[i]);
+			return E_FAIL;
+		}
+
+		// 오른쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Player/Cast/R/Cast_R_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Cast_R", PLAYER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"%d Walk R 로드 실패" , Charter[i]);
+			return E_FAIL;
+		}
+#pragma endregion Cast
 	}
-
 #pragma endregion Player
 #pragma region Monster
 
@@ -965,12 +1039,169 @@ HRESULT CStage::Initialize()
 #pragma endregion Death
 	}
 #pragma endregion Monster
+
+#pragma endregion AddTexture
+
+#pragma endregion StageProto
+
+
+#pragma region SkillProto
+	{/*
+#pragma region AddObj
+		{
+			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+				, BONESPEAR)))
+			{
+				ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+				return E_FAIL;
+			}
+			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+				, FIREWALL)))
+			{
+				ERR_MSG(g_hWnd, L"FireWall 객체 생성 실패");
+				return E_FAIL;
+			}
+			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+				, BLIZZARD)))
+			{
+				ERR_MSG(g_hWnd, L"Blizzard 객체 생성 실패");
+				return E_FAIL;
+			}
+			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+				, HEAL)))
+			{
+				ERR_MSG(g_hWnd, L"Heal 객체 생성 실패");
+				return E_FAIL;
+			}
+			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+				, AURA)))
+			{
+				ERR_MSG(g_hWnd, L"Aura 객체 생성 실패");
+				return E_FAIL;
+			}
+			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+				, RIVIVE)))
+			{
+				ERR_MSG(g_hWnd, L"Rivive 객체 생성 실패");
+				return E_FAIL;
+			}
+		}
+#pragma endregion AddObj*/
+#pragma region AddTexture
+		{	
+#pragma region BoneSpear
+			{
+				//------------------------Skill--------------------------------//
+
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/BoneSpear/Missile/D/Missile_D_%02d.png",
+					SKILL, TEXTYPE_MULTI, L"BoneSpear_D", PLAYER_BoneSpear_Missile)))
+				{
+					ERR_MSG(g_hWnd, L"%d BoneSpear D 로드 실패" , BONESPEAR);
+					return E_FAIL;
+				}
+
+				// 왼쪽 아래
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/BoneSpear/Missile/LD/Missile_LD_%02d.png",
+					SKILL, TEXTYPE_MULTI, L"BoneSpear_LD", PLAYER_BoneSpear_Missile)))
+				{
+					ERR_MSG(g_hWnd, L"%d BoneSpear LD 로드 실패" , BONESPEAR);
+					return E_FAIL;
+				}
+
+				// 오른쪽 아래
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/BoneSpear/Missile/RD/Missile_RD_%02d.png",
+					SKILL, TEXTYPE_MULTI, L"BoneSpear_RD", PLAYER_BoneSpear_Missile)))
+				{
+					ERR_MSG(g_hWnd, L"%d BoneSpear RD 로드 실패" , BONESPEAR);
+					return E_FAIL;
+				}
+
+				// 위
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/BoneSpear/Missile/U/Missile_U_%02d.png",
+					SKILL, TEXTYPE_MULTI, L"BoneSpear_U", PLAYER_BoneSpear_Missile)))
+				{
+					ERR_MSG(g_hWnd, L"%d BoneSpear U 로드 실패" , BONESPEAR);
+					return E_FAIL;
+				}
+
+				// 왼쪽 위
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/BoneSpear/Missile/LU/Missile_LU_%02d.png",
+					SKILL, TEXTYPE_MULTI, L"BoneSpear_LU", PLAYER_BoneSpear_Missile)))
+				{
+					ERR_MSG(g_hWnd, L"%d BoneSpear LU 로드 실패" , BONESPEAR);
+					return E_FAIL;
+				}
+
+				// 오른쪽 위
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/BoneSpear/Missile/RU/Missile_RU_%02d.png",
+					SKILL, TEXTYPE_MULTI, L"BoneSpear_RU", PLAYER_BoneSpear_Missile)))
+				{
+					ERR_MSG(g_hWnd, L"%d BoneSpear RU 로드 실패" , BONESPEAR);
+					return E_FAIL;
+				}
+
+				// 왼쪽
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/BoneSpear/Missile/L/Missile_L_%02d.png",
+					SKILL, TEXTYPE_MULTI, L"BoneSpear_L", PLAYER_BoneSpear_Missile)))
+				{
+					ERR_MSG(g_hWnd, L"%d BoneSpear L 로드 실패" , BONESPEAR);
+					return E_FAIL;
+				}
+
+				// 오른쪽
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/BoneSpear/Missile/R/Missile_R_%02d.png",
+					SKILL, TEXTYPE_MULTI, L"BoneSpear_R", PLAYER_BoneSpear_Missile)))
+				{
+					ERR_MSG(g_hWnd, L"%d BoneSpear R 로드 실패" , BONESPEAR);
+					return E_FAIL;
+				}
+
+				//-------------------------------------------------------------//
+			}
+#pragma endregion BoneSpear
+#pragma region FireWall
+			{
+				// FireWall
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/FireWall/FireWall_%02d.png",
+					SKILL, TEXTYPE_MULTI, FIREWALL, PLAYER_FireWall)))
+				{
+					ERR_MSG(g_hWnd, L"%d 로드 실패" , FIREWALL);
+					return E_FAIL;
+				}
+
+			}
+#pragma endregion FireWall
+#pragma region Blizzard
+			{
+				// Blizzard
+				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+					L"../Resource/Texture/Skill/Blizzard/Blizzard_%02d.png",
+					SKILL, TEXTYPE_MULTI, BLIZZARD, PLAYER_Blizzard)))
+				{
+					ERR_MSG(g_hWnd, L"%d 로드 실패" , BLIZZARD);
+					return E_FAIL;
+				}
+			}
+#pragma endregion Blizzard
+		}
+#pragma endregion AddTexture
+	}
+#pragma endregion SkillProto
+	
 	return S_OK;
 }
 
 SCENEID CStage::Progress()
 {
-	
 	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
 
 	// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화
@@ -992,4 +1223,5 @@ void CStage::Release()
 	DESTROY_SINGLE(CTextureMgr);
 	GET_SINGLE(CObjMgr)->DestroyInstance();
 	SAFE_DELETE<CPrototype>(&m_pPrototype);
+	SAFE_DELETE<CPrototype>(&m_pSkillPrototype);
 }

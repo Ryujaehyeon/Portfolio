@@ -221,10 +221,10 @@ void CUIObj::Render()
 	if(m_pObjKey == L"HP" ||m_pObjKey == L"MP" )
 	{
 		RECT rc = {
-					float(0), 
-					float(m_Info.fCY - (m_Info.fCY * VelueToPercentage(m_pObjKey))),
-					float(m_Info.fCX), 
-					float(m_Info.fCY)
+					int(0), 
+					int(m_Info.fCY - (m_Info.fCY * VelueToPercentage(m_pObjKey))),
+					int(m_Info.fCX), 
+					int(m_Info.fCY)
 					};
 
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
@@ -347,23 +347,6 @@ CObj* CUIObj::Clone()
 	return new CUIObj(*this);
 }
 
-POINT CUIObj::MouseInfo()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return pt;
-	//return D3DXVECTOR3(pt.x , pt.y , 0);
-}
-
-D3DXVECTOR3 CUIObj::MouseInfoDX()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3(pt.x , pt.y , 0);
-}
-
 void CUIObj::Setlist( list<CObj*>* _list )
 {
 	list<CObj*>::iterator iter = _list->begin();
@@ -389,8 +372,13 @@ float CUIObj::VelueToPercentage(TCHAR* VelueName)
 		list<CObj*>::iterator iter = m_MonsterData->begin();
 		for (; iter != m_MonsterData->end(); ++iter)
 		{
-			if(PtInRect(&(*iter)->RealRect(), MouseInfo()) &&
-				(*iter)->GetCrash() == true)
+			RECT rc = 
+			{   float(m_Info.vPos.x + CObj::g_tScroll.x), 
+				float(m_Info.vPos.y + CObj::g_tScroll.y),
+				float(m_Info.vPos.x + CObj::g_tScroll.x), 
+				float(m_Info.vPos.y + CObj::g_tScroll.y)
+			};
+			if(PtInRect(&(*iter)->RealRect(), MouseInfo()))
 			{
 				return (*iter)->GetStatas().fHealthPoint/
 						(*iter)->GetStatas().fHealthPointMAX;

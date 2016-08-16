@@ -121,20 +121,3 @@ CObj* CStageBackGround::Clone()
 {
 	return new CStageBackGround(*this);
 }
-
-POINT CStageBackGround::MouseInfo()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return pt;
-	//return D3DXVECTOR3(pt.x , pt.y , 0);
-}
-
-D3DXVECTOR3 CStageBackGround::MouseInfoDX()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3(pt.x , pt.y , 0);
-}

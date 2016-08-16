@@ -11,6 +11,7 @@ CPlayer::CPlayer( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType 
 {
 	m_pObjKey = _ObjName;
 	m_pObjName = _ObjName;
+	m_pTagetList = NULL;
 }
 
 CPlayer::~CPlayer(void)
@@ -20,6 +21,13 @@ CPlayer::~CPlayer(void)
 
 HRESULT CPlayer::Initialize()
 {
+	m_pSkillPrototype = new CSkillProto;
+	if(FAILED(m_pSkillPrototype->InitProtoInstance()))
+	{
+		ERR_MSG(g_hWnd, L"원형 객체 생성 실패");
+		return E_FAIL;
+	}
+
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_vTagetInfo = m_Info.vPos;
@@ -66,6 +74,12 @@ SCENEID CPlayer::Progress()
 	// 시간값 누적
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
+	list<CObj*>::iterator iter = m_SkillList.begin();
+	//for (;iter != m_SkillList.end(); ++iter)
+ //    		(*iter)->Progress();
+
+	//CCollisionMgr::ColCircle(&m_SkillList,m_pTagetList);
+
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
 	StatesChange();
@@ -94,6 +108,7 @@ SCENEID CPlayer::Progress()
 
 
 	ScrollChange();
+
 	DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
 
 	// 이동거리
@@ -123,6 +138,10 @@ SCENEID CPlayer::Progress()
 
 void CPlayer::Render()
 {
+	list<CObj*>::iterator iter = m_SkillList.begin();
+	for (;iter != m_SkillList.end();++iter)
+		(*iter)->Render();
+
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, m_pStateKey, int(m_tFrame.fStart));
 	// 프레임 값이 저장한 이미지 벡터크기를 벗어난 값이 들어가면 에러
@@ -141,6 +160,12 @@ void CPlayer::Render()
 
 void CPlayer::CheckKey()
 {
+
+	// 시간
+	static float fTime = 0.0f;
+	// 시간값 누적
+	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
+
 	// 제어할 캐릭터 선택
 	CharacterSelect();
 
@@ -174,7 +199,7 @@ void CPlayer::CheckKey()
 			// 도달했을 시 서있는 상태
 			m_pMotion = STAND;
 			// 클릭 누르고 있을때
-			if( m_dwKey & KEY_LBUTTON ) 
+			if(m_dwKey & KEY_SPACE) 
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
@@ -184,6 +209,36 @@ void CPlayer::CheckKey()
 				m_pMotion = ATTACK;
 				//
 				FuncAttack();
+			}
+			if(  m_dwKey & KEY_LBUTTON  )
+			{
+
+				fTime = 0.f;
+				// 마우스를 바라보는 방향
+				m_Info.vDir = m_vMousePos - m_Info.vPos; 
+				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
+				m_fChaterDirect = m_iDegree;
+				m_pMotion = CAST;
+				if (m_tFrame.fStart >= PLAYER_CAST-0.5f)
+				{
+					if (m_sPlayInfo.fMagikaPoint >= 5.f)
+					{
+						//m_sPlayInfo.fMagikaPoint -= 5.f;
+						//OBJINFO objInfo;
+						//ZeroMemory(&objInfo, sizeof(OBJINFO));
+						//CBoneSpear* pBoneSpear = new CBoneSpear(objInfo, L"BoneSpear", OBJ_SKILL);
+						//pBoneSpear->Initialize();
+						//pBoneSpear->SetInfoPos(m_Info.vPos.x, m_Info.vPos.y);
+						//pBoneSpear->SetAngle(m_fAngle);
+						//m_SkillList.push_back(pBoneSpear);
+						
+						if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+							, BONESPEAR)))
+						{
+							ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+						}
+					}
+				}
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -199,6 +254,32 @@ void CPlayer::CheckKey()
 				m_pMotion = ATTACK;
 				// 이동 중 공격시 이동을 멈춤
 				m_vTagetInfo = m_Info.vPos;
+
+			}
+			else if(GetAsyncKeyState(VK_SPACE) & 0x8000)
+			{
+
+				fTime = 0.f;
+				// 마우스를 바라보는 방향
+				m_Info.vDir = m_vMousePos - m_Info.vPos; 
+				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
+				m_fChaterDirect = m_iDegree;
+				m_pMotion = CAST;
+				m_vTagetInfo = m_Info.vPos;
+				if (m_tFrame.fStart >= PLAYER_CAST-0.5f)
+				{
+					if (m_sPlayInfo.fMagikaPoint >= 5.f)
+					{
+						//m_sPlayInfo.fMagikaPoint -= 5.f;
+						OBJINFO objInfo;
+						ZeroMemory(&objInfo, sizeof(OBJINFO));
+						CBoneSpear* pBoneSpear = new CBoneSpear(objInfo, L"BoneSpear", OBJ_SKILL);
+						pBoneSpear->Initialize();
+						pBoneSpear->SetInfoPos(m_Info.vPos.x, m_Info.vPos.y);
+						pBoneSpear->SetAngle(m_fAngle);
+						m_SkillList.push_back(pBoneSpear);
+					}
+				}
 			}
 			else
 			{
@@ -258,24 +339,6 @@ void CPlayer::FuncAttack()
 		}
 	}
 }
-POINT CPlayer::MouseInfo()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	pt.x = (pt.x + CObj::g_tScroll.x);
-	pt.y = (pt.y + CObj::g_tScroll.y);
-	return pt;
-	//return D3DXVECTOR3(pt.x , pt.y , 0);
-}
-
-D3DXVECTOR3 CPlayer::MouseInfoDX()
-{
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3((pt.x + CObj::g_tScroll.x) , ( pt.y + CObj::g_tScroll.y) , 0);
-}
 
 void CPlayer::FrameStatas()
 {
@@ -287,6 +350,8 @@ void CPlayer::FrameStatas()
 		FrameMove(PLAYER_WALK, PLAYER_WALK);
 	else if (m_pMotion == RUN)
 		FrameMove(PLAYER_RUN, PLAYER_RUN);
+	else if (m_pMotion == CAST)
+		FrameMove(PLAYER_CAST, PLAYER_CAST);
 }
 
 bool CPlayer::VecterInRect( D3DXVECTOR3& _Taget )
@@ -524,6 +589,50 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Attack_RU";
 		}
 	}
+	else if (_pObjStatas == CAST)
+	{
+		// 오른쪽 아래 RD
+		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
+		{
+			m_pStateKey = L"Cast_RD";
+		}
+		// 아래 D
+		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
+		{
+			m_pStateKey = L"Cast_D";
+		}
+		// 왼쪽 아래 LD
+		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
+		{
+			m_pStateKey = L"Cast_LD";
+		}
+		// 왼쪽 L
+		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
+		{
+			m_pStateKey = L"Cast_L";
+		}
+		// 왼쪽 위 LU
+		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
+		{
+			m_pStateKey = L"Cast_LU";
+		}
+		// 위 U
+		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
+		{
+			m_pStateKey = L"Cast_U";
+		}
+		// 오른쪽 R
+		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
+			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
+		{			
+			m_pStateKey = L"Cast_R";
+		}
+		// 오른쪽 위 RU
+		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
+		{
+			m_pStateKey = L"Cast_RU";
+		}
+	}
 }
 
 void CPlayer::CharacterSelect()
@@ -644,7 +753,7 @@ void CPlayer::Setlist( list<CObj*>* _Monster )
 void CPlayer::ScrollChange()
 {
 
-	if(m_pMotion != ATTACK && m_pObjName == PLAYER)
+	if(m_pMotion != ATTACK && m_pMotion != CAST && m_pObjName == PLAYER)
 	{
 		CObj::g_tScroll += m_Info.vDir;
 		if(CObj::g_tScroll.x < 0)

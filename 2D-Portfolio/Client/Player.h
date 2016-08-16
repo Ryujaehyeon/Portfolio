@@ -5,10 +5,8 @@ class CPlayer :
 {
 protected:
 	D3DXVECTOR3 m_vMousePos;
+	list<CObj*> m_SkillList;
 public:
-	virtual POINT MouseInfo();
-	virtual D3DXVECTOR3 MouseInfoDX();
-
 	void FrameStatas();
 	// D3DVector를 가져와 POINT변환 후 체크
 	bool VecterInRect(D3DXVECTOR3& _Taget);
@@ -20,6 +18,10 @@ public:
 	void ExpAcquired();
 	virtual void Setlist(list<CObj*>* _Monster);
 	virtual void ScrollChange();
+
+	//void SetSkillList(list<CObj*>* _pSkillList);
+	
+	list<CObj*>* GetSkillList(){ return &m_SkillList; }
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

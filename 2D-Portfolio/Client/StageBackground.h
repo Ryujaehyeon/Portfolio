@@ -16,9 +16,6 @@ public:
 	virtual void Release();
 	virtual CObj* Clone();
 public:
-	virtual POINT MouseInfo();
-	virtual D3DXVECTOR3 MouseInfoDX();
-public:
 	CStageBackGround(void);
 	CStageBackGround(const OBJINFO& Info, const OBJ_TYPE _ObjType);
 	virtual ~CStageBackGround(void);

@@ -8,6 +8,7 @@ class CSceneObj
 	static D3DXVECTOR3 g_tScroll;
 protected:
 	CPrototype* m_pPrototype;
+	CPrototype* m_pSkillPrototype;
 public:
 	virtual HRESULT Initialize()PURE;
 	virtual SCENEID Progress()PURE;

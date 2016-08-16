@@ -9,9 +9,6 @@ protected:
 	D3DXVECTOR3 m_vMovePoint;
 	int m_iDir;
 public:
-	virtual POINT MouseInfo();
-	virtual D3DXVECTOR3 MouseInfoDX();
-
 	void FrameStatas();
 	// D3DVector를 가져와 POINT변환 후 체크
 	bool VecterInRect(D3DXVECTOR3& _Taget);
@@ -21,6 +18,8 @@ public:
 	void FuncAttack(CObj* _pDest, CObj* _pSour);
 	virtual void Setlist(list<CObj*>* _Player);
 	virtual void RegenTime();
+	virtual void Tageting();
+
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

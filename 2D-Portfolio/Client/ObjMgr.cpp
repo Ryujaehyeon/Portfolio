@@ -40,7 +40,7 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 	case OBJ_PLAYER:
 		{
 			map<wstring, list<CObj*>>::iterator iterPLAYER = 
-				m_MapObject.find(L"Player");
+				m_MapObject.find(PLAYER);
 			// 키가 플레이어인 리스트가 없으면
 			if (iterPLAYER == m_MapObject.end())
 			{
@@ -49,17 +49,36 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 				// 리스트에 넣고
 				objlist.push_back(pProtoInst);
 				// 맵에 리스트를 넣음
-				m_MapObject.insert(make_pair(L"Player", objlist));
+				m_MapObject.insert(make_pair(PLAYER, objlist));
 			}
 			else
 				iterPLAYER->second.push_back(pProtoInst);
 
 			break;
 		}
+	case OBJ_SKILL:
+		{
+			map<wstring, list<CObj*>>::iterator iterSKILL = 
+				m_MapObject.find(SKILL);
+			// 키가 플레이어인 리스트가 없으면
+			if (iterSKILL == m_MapObject.end())
+			{
+				// 추가 생성 후
+				list<CObj*> objlist;
+				// 리스트에 넣고
+				objlist.push_back(pProtoInst);
+				// 맵에 리스트를 넣음
+				m_MapObject.insert(make_pair(SKILL, objlist));
+			}
+			else
+				iterSKILL->second.push_back(pProtoInst);
+
+			break;
+		}
 	case OBJ_MONSTER:
 		{
 			map<wstring, list<CObj*>>::iterator iterMonster = 
-				m_MapObject.find(L"Monster");
+				m_MapObject.find(MONSTER);
 			// 키가 플레이어인 리스트가 없으면
 			if (iterMonster == m_MapObject.end())
 			{
@@ -68,7 +87,7 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 				// 리스트에 넣고
 				objlist.push_back(pProtoInst);
 				// 맵에 리스트를 넣음
-				m_MapObject.insert(make_pair(L"Monster", objlist));
+				m_MapObject.insert(make_pair(MONSTER, objlist));
 			}
 			else
 				iterMonster->second.push_back(pProtoInst);
@@ -196,6 +215,9 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 
 SCENEID CObjMgr::Progress()
 {
+	map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
+	map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
+	map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
 
 	SCENEID iScene;
 	for(map<wstring, list<CObj*>>::iterator iter
@@ -205,9 +227,6 @@ SCENEID CObjMgr::Progress()
 			iter2 != iter->second.end(); ++iter2)
 		{
 			iScene = (*iter2)->Progress();
-
-			map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
-			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
 			
 			// 플레이어 정보를 보기 위함
 			/*if((*iter2)->GetName() == PLAYER)
@@ -227,23 +246,31 @@ SCENEID CObjMgr::Progress()
 			switch((*iter2)->GetObjType())
 			{
 			case OBJ_PLAYER:
+			case OBJ_SKILL:
+				if((*iter2)->GetObjType() == OBJ_SKILL)
+				{
+					if(iterSkill != m_MapObject.end())
+						CCollisionMgr::ColCircle(&iterSkill->second, &iterMonster->second);
+				}
 			case OBJ_MONSTER:
-				if ((*iter2)->GetObjType() == OBJ_PLAYER)
+				if((*iter2) != nullptr)
 				{
-					if(iterMonster != m_MapObject.end())
-						static_cast<CMonster*>(*iter2)->Setlist(
-						&m_MapObject.find(MONSTER)->second);
+					if ((*iter2)->GetObjType() == OBJ_PLAYER)
+					{
+						if(iterMonster != m_MapObject.end())
+							static_cast<CMonster*>(*iter2)->Setlist(
+							&m_MapObject.find(MONSTER)->second);
+					}
+					else if ((*iter2)->GetObjType() == OBJ_MONSTER)
+					{
+						if(iterPlayer != m_MapObject.end())
+							static_cast<CPlayer*>(*iter2)->Setlist(
+							&m_MapObject.find(PLAYER)->second);
+					}
+					ObjInteraction((*iter2));
+					// 몬스터 삭제시 
+					MonsterRelease();
 				}
-				else if ((*iter2)->GetObjType() == OBJ_MONSTER)
-				{
-					if(iterPlayer != m_MapObject.end())
-						static_cast<CPlayer*>(*iter2)->Setlist(
-						&m_MapObject.find(PLAYER)->second);
-				}
-				ObjInteraction((*iter2));
-				// 몬스터 삭제시 
-				MonsterRelease();
-
 				// 삭제된 데이터의 리스트 삭제;
 				if(*iter2 == nullptr)
 				{
@@ -268,6 +295,7 @@ SCENEID CObjMgr::Progress()
 						static_cast<CMonster*>(*iter2)->Setlist(
 							&m_MapObject.find(MONSTER)->second);
 					}
+					break;
 				}
 			}
 			if(iter2 == iter->second.end())
@@ -316,9 +344,19 @@ void CObjMgr::AbilityTointeract(CObj* _pDest, CObj* _pSour)
 
 void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 {
+	if(_pSour == nullptr || _pDest == nullptr)
+		return;
+
+	if (_pDest->GetObjType() == OBJ_SKILL 
+		|| _pDest->GetObjType() == OBJ_SKILL)
+		return;
+
 	if(_pDest->GetObjType() != OBJ_PLAYER 
 		&& _pDest->GetObjType() != OBJ_MONSTER) 
 		return;
+
+
+
 	// 비교할 대상이 있는 방향을 정하고
 	_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos + CObj::g_tScroll) - (_pSour->GetInfo().vPos + CObj::g_tScroll);
 
@@ -439,7 +477,7 @@ void CObjMgr::MonsterRelease()
 			iter2 != iter->second.end();)
 		{
 			// 몬스터면
-			if((*iter2)->GetObjType() == OBJ_MONSTER)
+			if((*iter2) != nullptr && (*iter2)->GetObjType() == OBJ_MONSTER)
 			{
 				// 죽었는지 상태체크 후
 				if((*iter2)->GetpMotion() == DEATH && 
@@ -457,6 +495,22 @@ void CObjMgr::MonsterRelease()
 				if (iter2 == iter->second.end())
 					break;
 			}
+			//if ((*iter2)->GetObjType() == OBJ_SKILL)
+			//{
+			//	if((*iter2)->GetpMotion() == DEATH)
+			//	{
+			//		// 할당된 스킬 객체 삭제
+			//		SAFE_DELETE<CObj>(&(*iter2));
+			//		// 다음 노드로
+			//		++iter2;
+			//	}
+			//	else
+			//		// 다음 노드로
+			//		++iter2;
+			//	// iter2가 노드의 끝이면 벗어남 
+			//	if (iter2 == iter->second.end())
+			//		break;
+			//}
 			else
 				// 몬스터가 아닌 노드면 다음 노드로
 				++iter2;
