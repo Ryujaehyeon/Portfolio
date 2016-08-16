@@ -66,6 +66,5 @@ void CStageDynamic::AStarMove()
 
 	if (fDistance < 5.f)
 		pBestList->pop_front();
-
 }
 

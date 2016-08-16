@@ -54,6 +54,8 @@ CObj::~CObj(void)
 {
 }
 
+D3DXVECTOR3 CObj::g_tScroll = D3DXVECTOR3(0.f, 0.f, 0.f);
+
 void CObj::FrameMove( const float& fCnt, const float& fMax )
 {
 	m_tFrame.fStart += fCnt * GET_SINGLE(CTimeMgr)->DeltaTime();
@@ -67,8 +69,6 @@ void CObj::FrameMove( const float& fCnt, const float& fMax )
 		m_tFrame.fStart = 0;
 #else
 	// 오차값을 줄이기 위해
-	if (m_fFrame > fMax)
-		m_fFrame -= fMax;
 	if (m_tFrame.fStart > fMax)
 		m_tFrame.fStart -= fMax;
 #endif

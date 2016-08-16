@@ -130,8 +130,8 @@ void CPlayer::Render()
 	if(pTexInfo == NULL)
 		return;
 
-	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CStage::g_tScroll.x,
-		(pTexInfo->ImgInfo.Height * 0.5)+CStage::g_tScroll.y, 0);
+	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
+		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -263,8 +263,8 @@ POINT CPlayer::MouseInfo()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
-	pt.x = (pt.x + CStage::g_tScroll.x);
-	pt.y = (pt.y + CStage::g_tScroll.y);
+	pt.x = (pt.x + CObj::g_tScroll.x);
+	pt.y = (pt.y + CObj::g_tScroll.y);
 	return pt;
 	//return D3DXVECTOR3(pt.x , pt.y , 0);
 }
@@ -274,7 +274,7 @@ D3DXVECTOR3 CPlayer::MouseInfoDX()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3((pt.x + CStage::g_tScroll.x) , ( pt.y + CStage::g_tScroll.y) , 0);
+	return D3DXVECTOR3((pt.x + CObj::g_tScroll.x) , ( pt.y + CObj::g_tScroll.y) , 0);
 }
 
 void CPlayer::FrameStatas()
@@ -646,25 +646,25 @@ void CPlayer::ScrollChange()
 
 	if(m_pMotion != ATTACK && m_pObjName == PLAYER)
 	{
-		CStage::g_tScroll += m_Info.vDir;
-		if(CStage::g_tScroll.x < 0)
-			CStage::g_tScroll.x -= m_Info.vDir.x;
-		if (CStage::g_tScroll.y < 0)
-			CStage::g_tScroll.y -= m_Info.vDir.y;
-		if(CStage::g_tScroll.x > 1730)
-			CStage::g_tScroll.x -= m_Info.vDir.x;
-		if (CStage::g_tScroll.y > 732)
-			CStage::g_tScroll.y -= m_Info.vDir.y;
+		CObj::g_tScroll += m_Info.vDir;
+		if(CObj::g_tScroll.x < 0)
+			CObj::g_tScroll.x -= m_Info.vDir.x;
+		if (CObj::g_tScroll.y < 0)
+			CObj::g_tScroll.y -= m_Info.vDir.y;
+		if(CObj::g_tScroll.x > 1730)
+			CObj::g_tScroll.x -= m_Info.vDir.x;
+		if (CObj::g_tScroll.y > 732)
+			CObj::g_tScroll.y -= m_Info.vDir.y;
 
-		DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
+		//DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
 
-		//if(CStage::g_tScroll.x > 0.f)
-		//	CStage::g_tScroll.x += m_Info.vDir.x;
-		// if(CStage::g_tScroll.x < 1730.f)
-		//	CStage::g_tScroll.x -= m_Info.vDir.x;
-		// if (CStage::g_tScroll.y > 0.f )
-		//	CStage::g_tScroll.y += m_Info.vDir.y;
-		// if(CStage::g_tScroll.y < 1730.f)
-		//	CStage::g_tScroll.y -= m_Info.vDir.y;
+		//if(CObj::g_tScroll.x > 0.f)
+		//	CObj::g_tScroll.x += m_Info.vDir.x;
+		// if(CObj::g_tScroll.x < 1730.f)
+		//	CObj::g_tScroll.x -= m_Info.vDir.x;
+		// if (CObj::g_tScroll.y > 0.f )
+		//	CObj::g_tScroll.y += m_Info.vDir.y;
+		// if(CObj::g_tScroll.y < 1730.f)
+		//	CObj::g_tScroll.y -= m_Info.vDir.y;
 	}
 }

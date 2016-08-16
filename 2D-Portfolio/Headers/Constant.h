@@ -101,10 +101,12 @@ const BYTE TILE_OPTION_DONT_MOVE = 0x01; // 0000 0001
 
 
 // 모션 프레임 매크로화
-const float PLAYER_STAND			= 8.0f;
-const float PLAYER_WALK				= 8.0f;
-const float PLAYER_RUN				= 8.0f;
-const float PLAYER_ATTACK			= 19.0f;
+const float PLAYER_STAND				= 8.0f;
+const float PLAYER_WALK					= 8.0f;
+const float PLAYER_RUN					= 8.0f;
+const float PLAYER_ATTACK				= 19.0f;
+const float PLAYER_BoneSpear_Missile	= 6.0f;
+const float PLAYER_BoneSpear_Tail		= 9.0f;
 
 const float SKELETON_STAND			= 8.0f;
 const float SKELETON_RUN			= 8.0f;
@@ -125,6 +127,7 @@ TCHAR* const DEATH					= L"Death";
 TCHAR* const ATTACKSKILL			= L"AttackSKill";
 TCHAR* const CAST					= L"CAST";
 TCHAR* const SUMMON					= L"SUMMON";
+
 
 // 플레이어 키워드
 TCHAR* const PLAYER					= L"Player";

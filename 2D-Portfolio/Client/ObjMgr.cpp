@@ -320,8 +320,8 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 		&& _pDest->GetObjType() != OBJ_MONSTER) 
 		return;
 	// 비교할 대상이 있는 방향을 정하고
-	_pSour->Setinfo()->vDir = _pDest->GetInfo().vPos - _pSour->GetInfo().vPos;
-	
+	_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos + CObj::g_tScroll) - (_pSour->GetInfo().vPos + CObj::g_tScroll);
+
 	// 타겟을 정하기 위한 거리
 	{
 		// 실제 크기에 따른 충돌

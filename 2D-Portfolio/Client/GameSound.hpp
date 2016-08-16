@@ -48,7 +48,7 @@ std::map<std::string,Channel*>::iterator citer=_channel.begin();
 bool _isplay;
 for(;citer!=_channel.end();++citer){
 _errcheck(citer->second->isPlaying(&_isplay));
-if(_isplay){
+if(!_isplay){
 _errcheck(citer->second->setPaused(true));
 _errcheck(citer->second->setVolume(_volume));
 _errcheck(citer->second->setPaused(false));

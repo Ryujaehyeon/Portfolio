@@ -9,6 +9,9 @@ protected:
 	int SelectCount;
 	CObj* m_PlayerObj;
 	bool m_InvenKey;
+	bool m_SkillTree;
+	bool m_Bank;
+	bool m_Character;
 public:
 	void CheckKey();
 public:

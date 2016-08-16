@@ -5,19 +5,16 @@
 class CObj
 {
 protected:
-
+	// 좌표를 모아놓은 구조체
 	OBJINFO m_Info;
+	// 플레이에 사용되는 스테이터스 구조체
 	INFO m_sPlayInfo;
+	// 객체 타입
 	OBJ_TYPE m_ObjType;
-	
 	// 대상이 되는 객체
 	CObj* m_pTagetObj;
-
 	// 대상이되는 리스트
 	list<CObj*>* m_pTagetList;
-	// 키입력
-	DWORD m_dwKey;
-protected:
 	// 오브젝트의 이름
 	TCHAR* m_pObjName;
 	// 오브젝트 이미지 키이름
@@ -41,14 +38,17 @@ protected:
 	// 충돌여부 충돌 true, 충돌 안함 false
 	bool m_Crash;
 protected:
+	// 키입력
+	DWORD m_dwKey;
+	// 레이어
 	SORTLAYER m_eLayer;
-
 	// 프레임 구조체 시작프레임과 끝프레임을 관리함
 	FRAME m_tFrame;
 
 public:
-	SORTLAYER GetLayer() const {return m_eLayer;}
-	OBJ_TYPE GetObjType() const {return m_ObjType;}
+	// 스크롤
+	static D3DXVECTOR3 g_tScroll;
+public:
 	RECT GetRect()
 	{
 		RECT rc =
@@ -81,6 +81,8 @@ public:
 	virtual void SetMotion(TCHAR* _pMotion) { if(m_pMotion != DEATH) m_pMotion = _pMotion; }
 
 	//Get
+	virtual SORTLAYER GetLayer() const {return m_eLayer;}
+	virtual OBJ_TYPE GetObjType() const {return m_ObjType;}
 	virtual const bool GetCrash() const {return m_Crash;}
 	virtual const OBJINFO& GetInfo() const {return m_Info;}
 	virtual const INFO& GetStatas() const {return m_sPlayInfo;}

@@ -69,8 +69,8 @@ void CStageBackGround::Render()
 	int iSize = m_vecTile.size();
 
 	//DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", 
-	//	CStage::g_tScroll.x, 
-	//	CStage::g_tScroll.y, 
+	//	CObj::g_tScroll.x, 
+	//	CObj::g_tScroll.y, 
 	//	m_vecTile[0]->vPos.x, 
 	//	m_vecTile[0]->vPos.y);
 
@@ -83,8 +83,8 @@ void CStageBackGround::Render()
 			return;
 
 		D3DXMatrixTranslation(&matTrans,
-			m_vecTile[i]->vPos.x - CStage::g_tScroll.x, 
-			m_vecTile[i]->vPos.y - CStage::g_tScroll.y,
+			m_vecTile[i]->vPos.x - CObj::g_tScroll.x, 
+			m_vecTile[i]->vPos.y - CObj::g_tScroll.y,
 			m_vecTile[i]->vPos.z);
 
 		m_Info.vCenter = D3DXVECTOR3(65, 34, 0);

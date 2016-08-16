@@ -49,18 +49,6 @@
     <Filter Include="02.Object">
       <UniqueIdentifier>{75f90fa2-e611-44f3-b15a-0b01c9238ccb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Object\Logo">
-      <UniqueIdentifier>{06f930e4-caeb-465a-a4a0-6415c397b5a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Logo\Dynamic">
-      <UniqueIdentifier>{e4fb4e36-4550-4bee-bd67-422d313046ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Logo\Static">
-      <UniqueIdentifier>{a2191e1d-d32b-4aed-9462-40383cb7e843}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Logo\Static\BackGround">
-      <UniqueIdentifier>{847f7cc2-89b6-42f9-8b2a-9148872df237}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.Design">
       <UniqueIdentifier>{a6558395-d0bd-4197-bed0-bc58b3d10c5f}</UniqueIdentifier>
     </Filter>
@@ -76,9 +64,6 @@
     <Filter Include="98.Manager\ObjMgr">
       <UniqueIdentifier>{aa1550c8-8f6b-4e5d-9af1-4c19c7aae4fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Object\Logo\Dynamic\Ball">
-      <UniqueIdentifier>{4d97e35b-cf29-413a-8431-76cf6b496a4d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98.Manager\Time">
       <UniqueIdentifier>{19b32522-a7f8-4aea-9133-7765830cffb0}</UniqueIdentifier>
     </Filter>
@@ -88,23 +73,8 @@
     <Filter Include="94. Algorithm">
       <UniqueIdentifier>{f0cb20fc-8037-4411-8aaf-7e9c10890656}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Object\Menu">
-      <UniqueIdentifier>{65504e72-072b-4410-b4c6-80238c5f0190}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Menu\Dynamic">
-      <UniqueIdentifier>{8aecff19-1bfa-42b4-8f7e-80bc93ce8e13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Menu\Static">
-      <UniqueIdentifier>{60f19b48-eb27-46f4-8380-240e2aee910d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.Design\Prototype\Object\Menu">
       <UniqueIdentifier>{66dc7b60-6f85-4adc-ac25-0f1f2acad5bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Menu\Static\BackGround">
-      <UniqueIdentifier>{dbe209ab-b055-4f2f-b71d-cdf8c82adc93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Menu\Dynamic\MenuBurton">
-      <UniqueIdentifier>{af110c61-5752-41d8-909e-6ec3aa3bdfdf}</UniqueIdentifier>
     </Filter>
     <Filter Include="01.Scene\Menu">
       <UniqueIdentifier>{32e3a569-4c00-42c2-9167-6d4183cca842}</UniqueIdentifier>
@@ -118,29 +88,8 @@
     <Filter Include="01.Scene\Stage\Stage3">
       <UniqueIdentifier>{37c1487a-d79f-49da-b71c-f5d009d502bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Object\Stage">
-      <UniqueIdentifier>{430ce11c-14e9-48a6-ab19-351f01bba461}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Stage\Static">
-      <UniqueIdentifier>{62a437ec-5a7a-4e9c-90e8-37fba9001914}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Stage\Dynamic">
-      <UniqueIdentifier>{0ea0184b-8009-4de2-a875-12a4ce94d920}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Stage\Dynamic\Player">
-      <UniqueIdentifier>{b94481ea-5537-4e7d-8e60-83726d0f622e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Stage\Dynamic\Moster">
-      <UniqueIdentifier>{64e9671f-2c2b-40f5-8ae5-d5f07cc55761}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98.Manager\Collision">
       <UniqueIdentifier>{d50cb565-d912-47ad-8da4-0af3e2520717}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Stage\Dynamic\NPC">
-      <UniqueIdentifier>{48352adb-7ad3-4dbe-bfa4-4cfe96d1ac0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\Stage\Static\BackGround">
-      <UniqueIdentifier>{24fd2701-9b57-49a5-8025-656654688e45}</UniqueIdentifier>
     </Filter>
     <Filter Include="94. Algorithm\AStar">
       <UniqueIdentifier>{7d22dbf4-7014-40e8-a4ae-91dd531c9d10}</UniqueIdentifier>
@@ -151,14 +100,92 @@
     <Filter Include="98.Manager\Sort">
       <UniqueIdentifier>{4b5bf779-2932-4561-8f32-ea14e052bc9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Object\Stage\Static\UI">
-      <UniqueIdentifier>{9236707c-0ef8-423a-934d-32c4da0113b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98.Manager\FullModeMgr">
       <UniqueIdentifier>{d9ea3d29-c536-4520-a723-01f80e10a013}</UniqueIdentifier>
     </Filter>
     <Filter Include="98.Manager\KeyMgr">
       <UniqueIdentifier>{ec836594-1fde-4fcc-9b95-d8809972b1b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Skill">
+      <UniqueIdentifier>{b6c01ee3-3f61-48bf-8dc5-cdad5473133a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\01. Logo">
+      <UniqueIdentifier>{06f930e4-caeb-465a-a4a0-6415c397b5a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\01. Logo\Dynamic">
+      <UniqueIdentifier>{e4fb4e36-4550-4bee-bd67-422d313046ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\01. Logo\Dynamic\Ball">
+      <UniqueIdentifier>{4d97e35b-cf29-413a-8431-76cf6b496a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\01. Logo\Static">
+      <UniqueIdentifier>{a2191e1d-d32b-4aed-9462-40383cb7e843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\01. Logo\Static\BackGround">
+      <UniqueIdentifier>{847f7cc2-89b6-42f9-8b2a-9148872df237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\02. Menu">
+      <UniqueIdentifier>{65504e72-072b-4410-b4c6-80238c5f0190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\02. Menu\Dynamic">
+      <UniqueIdentifier>{8aecff19-1bfa-42b4-8f7e-80bc93ce8e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\02. Menu\Dynamic\MenuBurton">
+      <UniqueIdentifier>{af110c61-5752-41d8-909e-6ec3aa3bdfdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\02. Menu\Static">
+      <UniqueIdentifier>{60f19b48-eb27-46f4-8380-240e2aee910d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\02. Menu\Static\BackGround">
+      <UniqueIdentifier>{dbe209ab-b055-4f2f-b71d-cdf8c82adc93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03. Stage">
+      <UniqueIdentifier>{430ce11c-14e9-48a6-ab19-351f01bba461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03. Stage\Static">
+      <UniqueIdentifier>{62a437ec-5a7a-4e9c-90e8-37fba9001914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03. Stage\Static\BackGround">
+      <UniqueIdentifier>{24fd2701-9b57-49a5-8025-656654688e45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03. Stage\Static\UI">
+      <UniqueIdentifier>{9236707c-0ef8-423a-934d-32c4da0113b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03. Stage\Dynamic">
+      <UniqueIdentifier>{0ea0184b-8009-4de2-a875-12a4ce94d920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03. Stage\Dynamic\Player">
+      <UniqueIdentifier>{b94481ea-5537-4e7d-8e60-83726d0f622e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03. Stage\Dynamic\Moster">
+      <UniqueIdentifier>{64e9671f-2c2b-40f5-8ae5-d5f07cc55761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\03. Stage\Dynamic\NPC">
+      <UniqueIdentifier>{48352adb-7ad3-4dbe-bfa4-4cfe96d1ac0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Skill\Buff">
+      <UniqueIdentifier>{b122edcf-74ab-49da-848c-15eb01bda9d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Skill\AttackSkill">
+      <UniqueIdentifier>{0c143b71-ab8a-441a-b4b4-c27a1b2ef627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Skill\AttackSkill\Missile">
+      <UniqueIdentifier>{b088b37a-67fb-4904-ab6f-cc1d027cc400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Skill\AttackSkill\Extensive">
+      <UniqueIdentifier>{410ffdd6-acac-432b-9e35-bf147d796028}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Skill\Buff\Heal">
+      <UniqueIdentifier>{c1d28569-bf6c-43cd-918e-13617a639c22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Skill\Buff\Revive">
+      <UniqueIdentifier>{507744ce-961b-45e0-a157-d7e7bcced30f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\Skill\Buff\Aura">
+      <UniqueIdentifier>{b536766f-c698-41c0-bf43-2de8e4a0c67d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Object\SkillTree">
+      <UniqueIdentifier>{9ab6c811-969f-4696-b69a-474605030953}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -214,10 +241,10 @@
       <Filter>02.Object</Filter>
     </ClInclude>
     <ClInclude Include="LogoStatic.h">
-      <Filter>02.Object\Logo\Static</Filter>
+      <Filter>02.Object\01. Logo\Static</Filter>
     </ClInclude>
     <ClInclude Include="LogoBackGround.h">
-      <Filter>02.Object\Logo\Static\BackGround</Filter>
+      <Filter>02.Object\01. Logo\Static\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="Prototype.h">
       <Filter>97.Design\Prototype</Filter>
@@ -232,28 +259,28 @@
       <Filter>98.Manager\ObjMgr</Filter>
     </ClInclude>
     <ClInclude Include="LogoDynamic.h">
-      <Filter>02.Object\Logo\Dynamic</Filter>
+      <Filter>02.Object\01. Logo\Dynamic</Filter>
     </ClInclude>
     <ClInclude Include="Ball.h">
-      <Filter>02.Object\Logo\Dynamic\Ball</Filter>
+      <Filter>02.Object\01. Logo\Dynamic\Ball</Filter>
     </ClInclude>
     <ClInclude Include="TimeMgr.h">
       <Filter>98.Manager\Time</Filter>
     </ClInclude>
     <ClInclude Include="StageStatic.h">
-      <Filter>02.Object\Stage\Static</Filter>
+      <Filter>02.Object\03. Stage\Static</Filter>
     </ClInclude>
     <ClInclude Include="StageDynamic.h">
-      <Filter>02.Object\Stage\Dynamic</Filter>
+      <Filter>02.Object\03. Stage\Dynamic</Filter>
     </ClInclude>
     <ClInclude Include="StageBackground.h">
-      <Filter>02.Object\Stage\Static\BackGround</Filter>
+      <Filter>02.Object\03. Stage\Static\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="StageObjProto.h">
       <Filter>97.Design\Prototype\Object\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>02.Object\Stage\Dynamic\Player</Filter>
+      <Filter>02.Object\03. Stage\Dynamic\Player</Filter>
     </ClInclude>
     <ClInclude Include="SortMgr.h">
       <Filter>98.Manager\Sort</Filter>
@@ -262,16 +289,16 @@
       <Filter>97.Design\Prototype\Object\Menu</Filter>
     </ClInclude>
     <ClInclude Include="MenuDynamic.h">
-      <Filter>02.Object\Menu\Dynamic</Filter>
+      <Filter>02.Object\02. Menu\Dynamic</Filter>
     </ClInclude>
     <ClInclude Include="MenuStatic.h">
-      <Filter>02.Object\Menu\Static</Filter>
+      <Filter>02.Object\02. Menu\Static</Filter>
     </ClInclude>
     <ClInclude Include="MenuD2.h">
       <Filter>01.Scene\Menu</Filter>
     </ClInclude>
     <ClInclude Include="MenuBackGround.h">
-      <Filter>02.Object\Menu\Static\BackGround</Filter>
+      <Filter>02.Object\02. Menu\Static\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>01.Scene\Stage\Stage1</Filter>
@@ -283,28 +310,43 @@
       <Filter>01.Scene\Stage\Stage3</Filter>
     </ClInclude>
     <ClInclude Include="MenuButton.h">
-      <Filter>02.Object\Menu\Dynamic\MenuBurton</Filter>
+      <Filter>02.Object\02. Menu\Dynamic\MenuBurton</Filter>
     </ClInclude>
     <ClInclude Include="CollisionMgr.h">
       <Filter>98.Manager\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>02.Object\Stage\Dynamic\Moster</Filter>
+      <Filter>02.Object\03. Stage\Dynamic\Moster</Filter>
     </ClInclude>
     <ClInclude Include="NonPlayer.h">
-      <Filter>02.Object\Stage\Dynamic\NPC</Filter>
+      <Filter>02.Object\03. Stage\Dynamic\NPC</Filter>
     </ClInclude>
     <ClInclude Include="AStar.h">
       <Filter>94. Algorithm\AStar</Filter>
     </ClInclude>
     <ClInclude Include="UIObj.h">
-      <Filter>02.Object\Stage\Static\UI</Filter>
+      <Filter>02.Object\03. Stage\Static\UI</Filter>
     </ClInclude>
     <ClInclude Include="FullModeMgr.h">
       <Filter>98.Manager\FullModeMgr</Filter>
     </ClInclude>
     <ClInclude Include="KeyMgr.h">
       <Filter>98.Manager\KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>02.Object\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillTree.h">
+      <Filter>02.Object\SkillTree</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneSpear.h">
+      <Filter>02.Object\Skill\AttackSkill\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="FireWall.h">
+      <Filter>02.Object\Skill\AttackSkill\Extensive</Filter>
+    </ClInclude>
+    <ClInclude Include="Blizzard.h">
+      <Filter>02.Object\Skill\AttackSkill\Extensive</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -342,7 +384,7 @@
       <Filter>02.Object</Filter>
     </ClCompile>
     <ClCompile Include="LogoStatic.cpp">
-      <Filter>02.Object\Logo\Static</Filter>
+      <Filter>02.Object\01. Logo\Static</Filter>
     </ClCompile>
     <ClCompile Include="Prototype.cpp">
       <Filter>97.Design\Prototype</Filter>
@@ -357,28 +399,28 @@
       <Filter>98.Manager\ObjMgr</Filter>
     </ClCompile>
     <ClCompile Include="LogoDynamic.cpp">
-      <Filter>02.Object\Logo\Dynamic</Filter>
+      <Filter>02.Object\01. Logo\Dynamic</Filter>
     </ClCompile>
     <ClCompile Include="Ball.cpp">
-      <Filter>02.Object\Logo\Dynamic\Ball</Filter>
+      <Filter>02.Object\01. Logo\Dynamic\Ball</Filter>
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
       <Filter>98.Manager\Time</Filter>
     </ClCompile>
     <ClCompile Include="StageStatic.cpp">
-      <Filter>02.Object\Stage\Static</Filter>
+      <Filter>02.Object\03. Stage\Static</Filter>
     </ClCompile>
     <ClCompile Include="StageDynamic.cpp">
-      <Filter>02.Object\Stage\Dynamic</Filter>
+      <Filter>02.Object\03. Stage\Dynamic</Filter>
     </ClCompile>
     <ClCompile Include="StageBackground.cpp">
-      <Filter>02.Object\Stage\Static\BackGround</Filter>
+      <Filter>02.Object\03. Stage\Static\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="StageObjProto.cpp">
       <Filter>97.Design\Prototype\Object\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>02.Object\Stage\Dynamic\Player</Filter>
+      <Filter>02.Object\03. Stage\Dynamic\Player</Filter>
     </ClCompile>
     <ClCompile Include="SortMgr.cpp">
       <Filter>98.Manager\Sort</Filter>
@@ -387,19 +429,19 @@
       <Filter>97.Design\Prototype\Object\Menu</Filter>
     </ClCompile>
     <ClCompile Include="LogoBackGround.cpp">
-      <Filter>02.Object\Logo\Static\BackGround</Filter>
+      <Filter>02.Object\01. Logo\Static\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="MenuDynamic.cpp">
-      <Filter>02.Object\Menu\Dynamic</Filter>
+      <Filter>02.Object\02. Menu\Dynamic</Filter>
     </ClCompile>
     <ClCompile Include="MenuStatic.cpp">
-      <Filter>02.Object\Menu\Static</Filter>
+      <Filter>02.Object\02. Menu\Static</Filter>
     </ClCompile>
     <ClCompile Include="MenuD2.cpp">
       <Filter>01.Scene\Menu</Filter>
     </ClCompile>
     <ClCompile Include="MenuBackGround.cpp">
-      <Filter>02.Object\Menu\Static\BackGround</Filter>
+      <Filter>02.Object\02. Menu\Static\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>01.Scene\Stage\Stage1</Filter>
@@ -411,22 +453,22 @@
       <Filter>01.Scene\Stage\Stage3</Filter>
     </ClCompile>
     <ClCompile Include="MenuButton.cpp">
-      <Filter>02.Object\Menu\Dynamic\MenuBurton</Filter>
+      <Filter>02.Object\02. Menu\Dynamic\MenuBurton</Filter>
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>98.Manager\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>02.Object\Stage\Dynamic\Moster</Filter>
+      <Filter>02.Object\03. Stage\Dynamic\Moster</Filter>
     </ClCompile>
     <ClCompile Include="NonPlayer.cpp">
-      <Filter>02.Object\Stage\Dynamic\NPC</Filter>
+      <Filter>02.Object\03. Stage\Dynamic\NPC</Filter>
     </ClCompile>
     <ClCompile Include="AStar.cpp">
       <Filter>94. Algorithm\AStar</Filter>
     </ClCompile>
     <ClCompile Include="UIObj.cpp">
-      <Filter>02.Object\Stage\Static\UI</Filter>
+      <Filter>02.Object\03. Stage\Static\UI</Filter>
     </ClCompile>
     <ClCompile Include="FullModeMgr.cpp">
       <Filter>98.Manager\FullModeMgr</Filter>
@@ -436,6 +478,21 @@
     </ClCompile>
     <ClCompile Include="Logo.cpp">
       <Filter>01.Scene\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>02.Object\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillTree.cpp">
+      <Filter>02.Object\SkillTree</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneSpear.cpp">
+      <Filter>02.Object\Skill\AttackSkill\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="FireWall.cpp">
+      <Filter>02.Object\Skill\AttackSkill\Extensive</Filter>
+    </ClCompile>
+    <ClCompile Include="Blizzard.cpp">
+      <Filter>02.Object\Skill\AttackSkill\Extensive</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,7 @@ CMonster::~CMonster(void)
 HRESULT CMonster::Initialize()
 {
 	
-	m_Info.vPos = D3DXVECTOR3((rand()%800), (rand()%600), 0.f);
+	m_Info.vPos = D3DXVECTOR3((rand()%1600), (rand()%800), 0.f);
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_vTagetInfo = m_Info.vPos;
@@ -64,7 +64,7 @@ SCENEID CMonster::Progress()
 	// 시간값 누적
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 	
-	CStage::g_tScroll;
+	//m_Info.vPos = m_Info.vPos + CObj::g_tScroll;
 
 	RegenTime();
 
@@ -126,8 +126,8 @@ void CMonster::Render()
 	if(pTexInfo == NULL)
 		return;
 
-	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CStage::g_tScroll.x,
-		(pTexInfo->ImgInfo.Height * 0.5)+CStage::g_tScroll.y, 0);
+	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
+		(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -267,9 +267,9 @@ void CMonster::CheckKey()
 		}
 	}
 
-	if (m_vMovePoint.x <= 0 || m_vMovePoint.x >= WINSIZEX ||
-		m_vMovePoint.y <= 0 || m_vMovePoint.y >= WINSIZEY)
-		m_iDir = rand()%8;
+	//if (m_vMovePoint.x <= 0 || m_vMovePoint.x >= WINSIZEX ||
+	//	m_vMovePoint.y <= 0 || m_vMovePoint.y >= WINSIZEY)
+	//	m_iDir = rand()%8;
 }
 
 void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)

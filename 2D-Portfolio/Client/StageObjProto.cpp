@@ -67,12 +67,18 @@ HRESULT CStageObjProto::InitProtoInstance()
 	m_MapProto.insert(make_pair(L"Inven"
 		, new CUIObj(objInfo, L"Inven", OBJ_UI)));
 
-	m_MapProto.insert(make_pair(L"ItemInfoRect"
-		, new CUIObj(objInfo, L"ItemInfoRect", OBJ_UI)));
+	m_MapProto.insert(make_pair(L"SkillTree"
+		, new CUIObj(objInfo, L"SkillTree", OBJ_UI)));
 
-	m_MapProto.insert(make_pair(L"TownStorage"
-		, new CUIObj(objInfo, L"TownStorage", OBJ_UI)));
+	m_MapProto.insert(make_pair(L"Bank"
+		, new CUIObj(objInfo, L"Bank", OBJ_UI)));
 
+	m_MapProto.insert(make_pair(L"Character"
+		, new CUIObj(objInfo, L"Character", OBJ_UI)));
+
+
+	//m_MapProto.insert(make_pair(L"ItemInfoRect"
+	//	, new CUIObj(objInfo, L"ItemInfoRect", OBJ_UI)));
 	//------------------------------------------------------------//
 	// 플레이어
 	m_MapProto.insert(make_pair(L"Player"

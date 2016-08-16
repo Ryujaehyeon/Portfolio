@@ -15,8 +15,11 @@ CUIObj::CUIObj( const OBJINFO& Info, const OBJ_TYPE _ObjType )
 
 CUIObj::CUIObj( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
 	:CStageStatic(Info, _ObjType),
-	SelectCount(0),
-	m_InvenKey(false)
+	SelectCount(0)
+	, m_InvenKey(false)
+	, m_SkillTree(false)
+	, m_Bank(false)
+	, m_Character(false)
 {
 	m_pObjKey = _ObjName;
 }
@@ -28,7 +31,7 @@ CUIObj::~CUIObj(void)
 
 HRESULT CUIObj::Initialize()
 {
-	TCHAR* UI[13]=
+	TCHAR* UI[16]=
 	{
 		L"StatusBar",
 		L"HP",
@@ -42,7 +45,10 @@ HRESULT CUIObj::Initialize()
 		L"StatPointTrue",
 		L"StatPointFalse",
 		L"ExpBar",
-		L"Inven"
+		L"Inven",
+		L"SkillTree",
+		L"Bank",
+		L"Character"
 	};
 
 	if(m_pObjKey == UI[0])
@@ -118,6 +124,24 @@ HRESULT CUIObj::Initialize()
 		m_Info.fCY = 3.f;
 	}
 	if(m_pObjKey == UI[12])				 
+	{
+		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
+		m_Info.fCX = 1024.f;
+		m_Info.fCY = 1024.f;
+	}
+	if(m_pObjKey == UI[13])				 
+	{
+		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
+		m_Info.fCX = 1024.f;
+		m_Info.fCY = 1024.f;
+	}
+	if(m_pObjKey == UI[14])				 
+	{
+		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
+		m_Info.fCX = 1024.f;
+		m_Info.fCY = 1024.f;
+	}
+	if(m_pObjKey == UI[15])				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
 		m_Info.fCX = 1024.f;
@@ -266,6 +290,42 @@ void CUIObj::Render()
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
+	else if (m_pObjKey == L"SkillTree")
+	{
+		if(m_SkillTree == true)
+		{
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+	}
+	else if (m_pObjKey == L"Bank")
+	{
+		if(m_Bank == true)
+		{
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+	}
+	else if (m_pObjKey == L"Character")
+	{
+		if(m_Character == true)
+		{
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+	}
 	else
 	{
 		// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
@@ -344,6 +404,18 @@ void CUIObj::CheckKey()
 	if ( m_dwKey & KEY_I )
 	{
 		m_InvenKey = !m_InvenKey;
+	}
+	if ( m_dwKey & KEY_K )
+	{
+		m_SkillTree = !m_SkillTree;
+	}
+	if ( m_dwKey & KEY_B )
+	{
+		m_Bank = !m_Bank;
+	}
+	if ( m_dwKey & KEY_C )
+	{
+		m_Character = !m_Character;
 	}
 }
 

@@ -45,6 +45,9 @@
 #include "MenuObjProto.h"
 #include "StageObjProto.h"
 
+//================Skill=================//
+#include "Skill.h"
+#include "SkillTree.h"
 //================ETC===================//
 #include "GameSound.hpp"
 #include "FullModeMgr.h"

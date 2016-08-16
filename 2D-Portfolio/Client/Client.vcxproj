@@ -86,8 +86,13 @@
   <ItemGroup>
     <ClInclude Include="AStar.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Blizzard.h" />
+    <ClInclude Include="BoneSpear.h" />
+    <ClInclude Include="FireWall.h" />
     <ClInclude Include="FullModeMgr.h" />
     <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillTree.h" />
     <ClInclude Include="UIObj.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CollisionMgr.h" />
@@ -133,8 +138,13 @@
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Blizzard.cpp" />
+    <ClCompile Include="BoneSpear.cpp" />
+    <ClCompile Include="FireWall.cpp" />
     <ClCompile Include="FullModeMgr.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillTree.cpp" />
     <ClCompile Include="UIObj.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />

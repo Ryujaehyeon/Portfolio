@@ -2,13 +2,12 @@
 #include "Stage.h"
 #include "Include.h"
 
-D3DXVECTOR3 CStage::g_tScroll = D3DXVECTOR3(0.f, 0.f, 0.f);
+
 
 CStage::CStage(void)
 {
 	GameSound Sound;
 	Sound->Stop(L"Wilderness");
-	Sound->Init(40);
 	Sound->LoadSound(L"Tristram", L"Tristram.mp3", true);
 	Sound->SetVolume(10);
 	Sound->Play(L"Tristram");       //사운드
@@ -21,8 +20,6 @@ CStage::~CStage(void)
 
 HRESULT CStage::Initialize()
 {
-
-
 	TCHAR* Charter[] = {L"Player", 
 		L"Fellow_First",
 		L"Fellow_Second"};
@@ -170,6 +167,25 @@ HRESULT CStage::Initialize()
 		return E_FAIL;
 	}
 
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"SkillTree")))
+	{
+		ERR_MSG(g_hWnd, L"SkillTree 객체 생성 실패");
+		return E_FAIL;
+	}
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"Bank")))
+	{
+		ERR_MSG(g_hWnd, L"Bank 객체 생성 실패");
+		return E_FAIL;
+	}
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"Character")))
+	{
+		ERR_MSG(g_hWnd, L"Character 객체 생성 실패");
+		return E_FAIL;
+	}
+
 	/////////////////////////////////////////////////////////
 	// UI 이미지
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
@@ -275,10 +291,43 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/Inven/Inven.png"
 		, L"Inven", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"ExpBar 텍스쳐 읽어오기 실패");
+		ERR_MSG(g_hWnd, L"Inven 텍스쳐 읽어오기 실패");
 		return E_FAIL;
 	}
 
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/SkillTree/PoisonBorn/SkillTree.png"
+		, L"SkillTree", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"SkillTree 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Inven/TownStorage.png"
+		, L"Bank", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"Bank 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Stat/StatBoard.png"
+		, L"Character", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"Character 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+
+	//------------------------Skill--------------------------------//
+
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/Tile/Tile%d.png",
+		L"StageBack", TEXTYPE_MULTI, L"Tile", 38)))
+	{
+		ERR_MSG(g_hWnd, L"TileTexture 로드 실패");
+		return E_FAIL;
+	}
 	//-------------------------------------------------------------//
 	// 타일 불러오기
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
@@ -602,6 +651,9 @@ HRESULT CStage::Initialize()
 		}
 
 #pragma endregion Attack
+#pragma region Skill
+
+#pragma endregion Skill
 	}
 
 #pragma endregion Player
