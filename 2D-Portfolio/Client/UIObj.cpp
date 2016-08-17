@@ -16,22 +16,25 @@ CUIObj::CUIObj( const OBJINFO& Info, const OBJ_TYPE _ObjType )
 CUIObj::CUIObj( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
 	:CStageStatic(Info, _ObjType),
 	SelectCount(0)
-	, m_InvenKey(false)
-	, m_SkillTree(false)
-	, m_Bank(false)
-	, m_Character(false)
 {
 	m_pObjKey = _ObjName;
+
 }
+
+bool CUIObj::m_InvenKey = false;
+bool CUIObj::m_SkillTree = false;
+bool CUIObj::m_Bank = false;
+bool CUIObj::m_Character = false;
 
 CUIObj::~CUIObj(void)
 {
 	Release();
 }
 
+
 HRESULT CUIObj::Initialize()
 {
-	TCHAR* UI[16]=
+	TCHAR* UI[]=
 	{
 		L"StatusBar",
 		L"HP",
@@ -48,7 +51,10 @@ HRESULT CUIObj::Initialize()
 		L"Inven",
 		L"SkillTree",
 		L"Bank",
-		L"Character"
+		L"Character",
+		L"BoneSpearButton",
+		L"FireWallButton",
+		L"BlizzardButton"
 	};
 
 	if(m_pObjKey == UI[0])
@@ -147,7 +153,24 @@ HRESULT CUIObj::Initialize()
 		m_Info.fCX = 1024.f;
 		m_Info.fCY = 1024.f;
 	}
-
+	if(m_pObjKey == UI[16])				 
+	{
+		m_Info.vPos  = D3DXVECTOR3(530.f, 45.f, 0.f);
+		m_Info.fCX = 64.f;
+		m_Info.fCY = 64.f;
+	}
+	if(m_pObjKey == UI[17])				 
+	{
+		m_Info.vPos  = D3DXVECTOR3(530.f, 135.f, 0.f);
+		m_Info.fCX = 64.f;
+		m_Info.fCY = 64.f;
+	}
+	if(m_pObjKey == UI[18])				 
+	{
+		m_Info.vPos  = D3DXVECTOR3(530.f, 310.f, 0.f);
+		m_Info.fCX = 64.f;
+		m_Info.fCY = 64.f;
+	}
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_pStateKey = NULL;
@@ -157,9 +180,86 @@ HRESULT CUIObj::Initialize()
 
 SCENEID CUIObj::Progress()
 {
-	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
+	// 시간
+	static float fTime = 0.0f;
+	// 시간값 누적
+	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
+	
 	CheckKey();
+	
+	if (m_SkillTree == true)
+	{
+		if (m_pObjKey == L"BoneSpearButton" && PtInRect(&RealRect(), MouseInfo()) )
+		{
+			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
+			{
+				fTime = 0;
+				for (list<CObj*>::iterator iter = m_PlayerData->begin();
+					iter != m_PlayerData->end(); ++iter)
+				{
+					if((*iter)->GetSelect() == true)
+						++((CPlayer*)(*iter))->SetSkillTree()->sBoneSpear.iLevel;
+					--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+				}
+			}
+		}
+		else if(m_pObjKey == L"FireWallButton" && PtInRect(&RealRect(), MouseInfo()) )
+		{
+			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
+			{
+				fTime = 0;
+				for (list<CObj*>::iterator iter = m_PlayerData->begin();
+					iter != m_PlayerData->end(); ++iter)
+				{
+					if(((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel > 
+						((CPlayer*)(*iter))->GetSkillTree().sFireWall.iMinLevel)
+					{
+						++((CPlayer*)(*iter))->SetSkillTree()->sFireWall.iLevel;
+						--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+					}
+				}
+			}
+		}
+		else if(m_pObjKey == L"BlizzardButton" && PtInRect(&RealRect(), MouseInfo()) )
+		{
+			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
+			{
+				fTime = 0;
+				for (list<CObj*>::iterator iter = m_PlayerData->begin();
+					iter != m_PlayerData->end(); ++iter)
+				{
+					if(((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel > 
+						((CPlayer*)(*iter))->GetSkillTree().sBlizzard.iMinLevel)
+					{
+						++((CPlayer*)(*iter))->SetSkillTree()->sBlizzard.iLevel;
+						--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+					}
+				}
+			}
+		}
+	}
 
+
+/*
+
+			else if (m_pObjKey == L"BlizzardButton" && PtInRect(&RealRect(), MouseInfo()) )
+			{
+				for (list<CObj*>::iterator iter = m_PlayerData->begin();
+					iter != m_PlayerData->end(); ++iter)
+				{
+					if((*iter)->GetSelect() == true)
+					{
+						if(((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel > 
+							((CPlayer*)(*iter))->GetSkillTree().sBlizzard.iMinLevel)
+							++((CPlayer*)(*iter))->SetSkillTree()->sBlizzard.iLevel;
+						--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+					}
+				}
+			}
+
+		}
+	}*/
+	
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
 	D3DXVec3Normalize(&m_Info.vDir, &m_Info.vDir);
@@ -177,8 +277,8 @@ void CUIObj::Render()
 	// 이미 Initialize에서 정해진 오브젝트의 이름으로 구해온다.
 	D3DXVECTOR3 Mouse = MouseInfoDX();
 
-	list<CObj*>::iterator iter = m_PlayerData->begin();
-	for (iter; iter != m_PlayerData->end(); ++iter)
+	for (list<CObj*>::iterator iter = m_PlayerData->begin();
+		iter != m_PlayerData->end(); ++iter)
 	{
 		if((*iter)->GetSelect())
 		{
@@ -195,6 +295,7 @@ void CUIObj::Render()
 	{
 		m_PlayerObj = (*m_PlayerData->begin());
 	}
+
 	
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
@@ -326,6 +427,42 @@ void CUIObj::Render()
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
+	else if (m_pObjKey == L"BoneSpearButton")
+	{
+		if(m_SkillTree == true)
+		{
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+	}
+	else if (m_pObjKey == L"FireWallButton")
+	{
+		if(m_SkillTree == true)
+		{
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+	}
+	else if (m_pObjKey == L"BlizzardButton")
+	{
+		if(m_SkillTree == true)
+		{
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
+
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+	}
 	else
 	{
 		// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
@@ -389,21 +526,43 @@ float CUIObj::VelueToPercentage(TCHAR* VelueName)
 
 void CUIObj::CheckKey()
 {
-	if ( m_dwKey & KEY_I )
+	// 시간
+	static float fTimeButton = 0.0f;
+
+	// 시간값 누적
+	fTimeButton += GET_SINGLE(CTimeMgr)->DeltaTime();
+
+	// 키매니저
+	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
+
+	if ( m_dwKey & KEY_I && fTimeButton > 1.f)
 	{
 		m_InvenKey = !m_InvenKey;
+		fTimeButton = 0.f;
 	}
-	if ( m_dwKey & KEY_K )
+	if ( m_dwKey & KEY_K && fTimeButton > 1.f)
 	{
 		m_SkillTree = !m_SkillTree;
+		fTimeButton = 0.f;
 	}
-	if ( m_dwKey & KEY_B )
+	if ( m_dwKey & KEY_B && fTimeButton > 1.f)
 	{
 		m_Bank = !m_Bank;
+		fTimeButton = 0.f;
 	}
-	if ( m_dwKey & KEY_C )
+	if ( m_dwKey & KEY_C && fTimeButton > 1.f)
 	{
 		m_Character = !m_Character;
+		fTimeButton = 0.f;
 	}
+}
+
+POINT CUIObj::MouseInfo()
+{
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hWnd, &pt);
+	return pt;
+	//return D3DXVECTOR3(pt.x , pt.y , 0);
 }
 

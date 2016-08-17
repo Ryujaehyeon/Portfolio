@@ -96,6 +96,7 @@ public:
 	virtual const bool GetSelect() const { return m_bSelect; }
 	virtual const TCHAR* GetName() const { return m_pObjName; }
 	virtual const CObj* GetTagetObj() const { if(m_pTagetObj != NULL) return m_pTagetObj; else return nullptr; }
+	virtual const CPrototype* GetSkillList() const { return m_pSkillPrototype; }
 	//etc
 public:
 	void FrameMove(const float& fCnt, const float& fMax);

@@ -5,9 +5,11 @@ class CFireWall :
 {
 protected:
 	D3DXVECTOR3 m_vMousePos;
+	float m_fTime;
 public:
 	void FrameStatas();
 	void DirectAction( TCHAR* _pObjStatas );
+	void StateSkill();
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

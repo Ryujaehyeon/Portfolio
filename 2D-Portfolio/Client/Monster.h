@@ -16,7 +16,7 @@ public:
 	// 취할 행동의 키값을 넣으면 _pObjKey를 m_pObjKey에 넣는다.
 	void DirectAction( TCHAR* _pObjStatas );
 	void FuncAttack(CObj* _pDest, CObj* _pSour);
-	
+	void ExpAcquired();
 	virtual void RegenTime();
 	virtual void Tageting();
 

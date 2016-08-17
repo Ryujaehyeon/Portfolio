@@ -161,6 +161,33 @@ typedef struct tagInfo
 }INFO;
 
 
+typedef struct tagBoneSpear
+{
+	int iLevel;
+	int iMinLevel;
+	int iLimitLevel;
+}BoneSpearSkill;
+
+typedef struct tagFireWall
+{
+	int iLevel;
+	int iMinLevel;
+	int iLimitLevel;
+}FireWallSkill;
+
+typedef struct tagBlizzard
+{
+	int iLevel;
+	int iMinLevel;
+	int iLimitLevel;
+}BlizzardSkill;
+
+typedef struct tagSkill
+{
+	BoneSpearSkill sBoneSpear;
+	FireWallSkill sFireWall;
+	BlizzardSkill sBlizzard;
+}SkillTree;
 
 enum OBJ_TYPE
 {

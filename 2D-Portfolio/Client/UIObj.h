@@ -3,15 +3,15 @@
 class CUIObj :
 	public CStageStatic
 {
+	static bool m_InvenKey;
+	static bool m_SkillTree;
+	static bool m_Bank;
+	static bool m_Character;
 protected:
 	list<CObj*>* m_PlayerData;
 	list<CObj*>* m_MonsterData;
 	int SelectCount;
 	CObj* m_PlayerObj;
-	bool m_InvenKey;
-	bool m_SkillTree;
-	bool m_Bank;
-	bool m_Character;
 public:
 	void CheckKey();
 public:
@@ -21,17 +21,7 @@ public:
 	virtual void Release();
 	virtual CObj* Clone();
 public:
-	//RECT GetRect()
-	//{
-	//	RECT rc =
-	//	{
-	//		float(0), 
-	//		float(m_Info.fCY - (m_Info.fCY * VelueToPercentage(m_pObjKey))),
-	//		float(m_Info.fCX), 
-	//		float(m_Info.fCY)
-	//	};
-	//	return rc;
-	//}
+	virtual POINT MouseInfo();
 	RECT RealRect()
 	{
 		RECT rc =

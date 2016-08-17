@@ -9,6 +9,7 @@ protected:
 public:
 	void FrameStatas();
 	void DirectAction( TCHAR* _pObjStatas );
+	void StateSkill();
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

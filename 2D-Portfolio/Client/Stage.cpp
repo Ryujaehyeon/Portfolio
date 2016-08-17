@@ -194,6 +194,25 @@ HRESULT CStage::Initialize()
 		ERR_MSG(g_hWnd, L"Character 객체 생성 실패");
 		return E_FAIL;
 	}
+	// 스킬 포인트 버튼
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"BoneSpearButton")))
+	{
+		ERR_MSG(g_hWnd, L"BoneSpearButton 객체 생성 실패");
+		return E_FAIL;
+	}
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"FireWallButton")))
+	{
+		ERR_MSG(g_hWnd, L"FireWallButton 객체 생성 실패");
+		return E_FAIL;
+	}
+	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+		, L"BlizzardButton")))
+	{
+		ERR_MSG(g_hWnd, L"BlizzardButton 객체 생성 실패");
+		return E_FAIL;
+	}
 #pragma endregion AddObj
 #pragma region AddTexture
 
@@ -327,6 +346,31 @@ HRESULT CStage::Initialize()
 		, L"Character", TEXTYPE_SINGLE)))
 	{
 		ERR_MSG(g_hWnd, L"Character 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+
+
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/SkillTree/PoisonBorn/BoneSpear.png"
+		, L"BoneSpearButton", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"BoneSpearButton 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/SkillTree/PoisonBorn/FireWall.png"
+		, L"FireWallButton", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"FireWallButton 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/SkillTree/PoisonBorn/Blizzard.png"
+		, L"BlizzardButton", TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"BlizzardButton 텍스쳐 읽어오기 실패");
 		return E_FAIL;
 	}
 
@@ -1046,7 +1090,8 @@ HRESULT CStage::Initialize()
 
 
 #pragma region SkillProto
-	{/*
+	{
+/*
 #pragma region AddObj
 		{
 			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
@@ -1086,7 +1131,8 @@ HRESULT CStage::Initialize()
 				return E_FAIL;
 			}
 		}
-#pragma endregion AddObj*/
+#pragma endregion AddObj
+*/
 #pragma region AddTexture
 		{	
 #pragma region BoneSpear

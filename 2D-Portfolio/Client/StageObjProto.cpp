@@ -74,6 +74,14 @@ HRESULT CStageObjProto::InitProtoInstance()
 	m_MapProto.insert(make_pair(L"Character"
 		, new CUIObj(objInfo, L"Character", OBJ_UI)));
 
+	m_MapProto.insert(make_pair(L"BoneSpearButton"
+		, new CUIObj(objInfo, L"BoneSpearButton", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"FireWallButton"
+		, new CUIObj(objInfo, L"FireWallButton", OBJ_UI)));
+
+	m_MapProto.insert(make_pair(L"BlizzardButton"
+		, new CUIObj(objInfo, L"BlizzardButton", OBJ_UI)));
 
 	//m_MapProto.insert(make_pair(L"ItemInfoRect"
 	//	, new CUIObj(objInfo, L"ItemInfoRect", OBJ_UI)));

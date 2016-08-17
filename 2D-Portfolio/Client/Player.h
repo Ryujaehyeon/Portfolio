@@ -5,6 +5,8 @@ class CPlayer :
 {
 protected:
 	D3DXVECTOR3 m_vMousePos;
+	SkillTree m_SkillTree;
+	TCHAR* m_SkillActiveName;
 public:
 	void FrameStatas();
 	// D3DVector를 가져와 POINT변환 후 체크
@@ -14,8 +16,13 @@ public:
 	void CharacterSelect();
 	void FuncAttack();
 	void StatesChange();
-	void ExpAcquired();
 	virtual void ScrollChange();
+	virtual void SkillActive(TCHAR* _SkillName);
+	virtual void SkillHotKey();
+	//
+	virtual SkillTree* SetSkillTree(){return &m_SkillTree;}
+	//
+	virtual SkillTree& GetSkillTree(){return m_SkillTree;}
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

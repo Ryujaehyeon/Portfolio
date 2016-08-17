@@ -28,6 +28,18 @@ HRESULT CPlayer::Initialize()
 		return E_FAIL;
 	}
 
+	m_SkillTree.sBoneSpear.iLevel = 0;
+	m_SkillTree.sBoneSpear.iMinLevel = 0;
+	m_SkillTree.sBoneSpear.iLimitLevel = 99;
+	
+	m_SkillTree.sFireWall.iLevel = 0;
+	m_SkillTree.sFireWall.iMinLevel = 3;
+	m_SkillTree.sFireWall.iLimitLevel = 99;
+
+	m_SkillTree.sBlizzard.iLevel = 0;
+	m_SkillTree.sBlizzard.iMinLevel = 5;
+	m_SkillTree.sBlizzard.iLimitLevel = 99;
+
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_vTagetInfo = m_Info.vPos;
@@ -46,7 +58,8 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*20;
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 5;
-	m_sPlayInfo.iSKillPoint = 0;
+	m_sPlayInfo.iSKillPoint = 100;
+	m_sPlayInfo.iStatPoint = 100;
 	m_sPlayInfo.fHealthPoint = 250;
 	m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 100);
 	m_sPlayInfo.fMagikaPoint = 250;
@@ -61,6 +74,7 @@ HRESULT CPlayer::Initialize()
 	m_bRun = true;
 	m_pStateKey = L"FieldStand_D";
 	m_pMotion = L"FieldStand";
+	m_SkillActiveName = NULL;
 	m_fAngle = D3DXToRadian(280.f);
 	m_pTagetObj = nullptr;
 	return S_OK;
@@ -68,13 +82,13 @@ HRESULT CPlayer::Initialize()
 
 SCENEID CPlayer::Progress()
 {
-	
+	//DebugLogClear;
+	//DebugLog(L"%d, %f, %f", m_sPlayInfo.iLevel, m_sPlayInfo.fExp, m_sPlayInfo.fMaxExp);
+	//DebugLog(L"%f, %f", MouseInfoDX().x, MouseInfoDX().y);
 	// 시간
 	static float fTime = 0.0f;
 	// 시간값 누적
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
-
-	//CCollisionMgr::ColCircle(&m_SkillList,m_pTagetList);
 
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
@@ -105,7 +119,7 @@ SCENEID CPlayer::Progress()
 
 	ScrollChange();
 
-	DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
+	//DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
 
 	// 이동거리
 	// Run 또는 Walk 상태일때만 
@@ -161,6 +175,8 @@ void CPlayer::CheckKey()
 	// 제어할 캐릭터 선택
 	CharacterSelect();
 
+	SkillHotKey();
+
 	m_vMousePos = MouseInfoDX();
 
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
@@ -170,7 +186,7 @@ void CPlayer::CheckKey()
 	{
 		m_bRun = !m_bRun;
 	}
-	if( m_dwKey & KEY_RBUTTON && m_bSelect == true) 
+	if( m_dwKey & KEY_LBUTTON && m_bSelect == true) 
 	{	
 		// 우클릭시 클릭된 지점을 가져옴
 		m_vTagetInfo = m_vMousePos;
@@ -193,44 +209,20 @@ void CPlayer::CheckKey()
 			// 클릭 누르고 있을때
 			if(m_dwKey & KEY_SPACE) 
 			{
-				// 마우스를 바라보는 방향
-				m_Info.vDir = m_vMousePos - m_Info.vPos; 
-				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
-				m_fChaterDirect = m_iDegree;
-				// 취할 모션이미지를 바꿈
-				m_pMotion = ATTACK;
-				//
 				FuncAttack();
 			}
-			if(  m_dwKey & KEY_LBUTTON )
+			if(  m_dwKey & KEY_RBUTTON )
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
 				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
 				m_fChaterDirect = m_iDegree;
 				m_pMotion = CAST;
-				if (m_tFrame.fStart >= PLAYER_CAST-0.5f)
-				{
-					if (m_sPlayInfo.fMagikaPoint >= 5.f)
-					{
-						fTime = 0.f;
-						//m_sPlayInfo.fMagikaPoint -= 5.f;
-						//OBJINFO objInfo;
-						//ZeroMemory(&objInfo, sizeof(OBJINFO));
-						//CBoneSpear* pBoneSpear = new CBoneSpear(objInfo, L"BoneSpear", OBJ_SKILL);
-						//pBoneSpear->Initialize();
-						//pBoneSpear->SetInfoPos(m_Info.vPos.x, m_Info.vPos.y);
-						//pBoneSpear->SetAngle(m_fAngle);
-						//m_SkillList.push_back(pBoneSpear);
-						
-						if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-							, BONESPEAR)))
-						{
-							ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
-						}
-					}
-				}
-				fTime = 0.f;
+				m_vTagetInfo = m_Info.vPos;
+
+				// 스킬 생성
+				if (m_tFrame.fStart <= 0)
+					SkillActive(m_SkillActiveName);
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -243,42 +235,22 @@ void CPlayer::CheckKey()
 				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
 				m_fChaterDirect = m_iDegree;
 				// 취할 모션이미지를 바꿈
-				m_pMotion = ATTACK;
+				m_pMotion = RUN;
 				// 이동 중 공격시 이동을 멈춤
 				m_vTagetInfo = m_Info.vPos;
 
 			}
-			else if(m_dwKey & KEY_SPACE)
+			else if(m_dwKey & KEY_RBUTTON )
 			{
-
-				fTime = 0.f;
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
 				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
 				m_fChaterDirect = m_iDegree;
 				m_pMotion = CAST;
 				m_vTagetInfo = m_Info.vPos;
-				if (m_tFrame.fStart >= PLAYER_CAST-0.5f)
-				{
-					if (m_sPlayInfo.fMagikaPoint >= 5.f)
-					{
-						//m_sPlayInfo.fMagikaPoint -= 5.f;
-						//OBJINFO objInfo;
-						//ZeroMemory(&objInfo, sizeof(OBJINFO));
-						//CBoneSpear* pBoneSpear = new CBoneSpear(objInfo, L"BoneSpear", OBJ_SKILL);
-						//pBoneSpear->Initialize();
-						//pBoneSpear->SetInfoPos(m_Info.vPos.x, m_Info.vPos.y);
-						//pBoneSpear->SetAngle(m_fAngle);
-						//m_SkillList.push_back(pBoneSpear);
 
-						m_pSkillPrototype;
-						if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-							, BONESPEAR)))
-						{
-							ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
-						}
-					}
-				}
+				if (m_tFrame.fStart <= 0)
+					SkillActive(m_SkillActiveName);
 			}
 			else
 			{
@@ -308,6 +280,13 @@ void CPlayer::CheckKey()
 }
 void CPlayer::FuncAttack()
 {
+	// 마우스를 바라보는 방향
+	m_Info.vDir = m_vMousePos - m_Info.vPos; 
+	// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
+	m_fChaterDirect = m_iDegree;
+	// 취할 모션이미지를 바꿈
+	m_pMotion = ATTACK;
+
 	list<CObj*>::iterator iter = m_pTagetList->begin();
 	for (;iter != m_pTagetList->end(); ++iter)
 	{
@@ -673,6 +652,7 @@ void CPlayer::CharacterSelect()
 		return;
 	}
 }
+
 void CPlayer::Release()
 {
 
@@ -698,7 +678,6 @@ void CPlayer::StatesChange()
 			m_sPlayInfo.fMagikaPoint += 0.5f;
 		i = 0.f;
 	}
-
 
 	if(m_sPlayInfo.fConstitution < 20)
 		m_sPlayInfo.fHealthPointMAX = 
@@ -729,21 +708,6 @@ void CPlayer::StatesChange()
 	}
 }
 
-void CPlayer::ExpAcquired()
-{
-	if (m_pTagetObj == nullptr)
-		return;
-	else
-		if (m_pTagetObj->GetStatas().fHealthPoint <= 0.f)
-		{
-			m_sPlayInfo.fExp += m_pTagetObj->GetStatas().fExp;
-			if (m_sPlayInfo.fExp >= m_sPlayInfo.fMaxExp)
-			{
-				++m_sPlayInfo.iLevel;
-				m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel * 10; 
-			}
-		}
-}
 void CPlayer::ScrollChange()
 {
 	if(m_pMotion != ATTACK && m_pMotion != CAST && m_pObjName == PLAYER)
@@ -769,4 +733,53 @@ void CPlayer::ScrollChange()
 		// if(CObj::g_tScroll.y < 1730.f)
 		//	CObj::g_tScroll.y -= m_Info.vDir.y;
 	}
+}
+
+void CPlayer::SkillActive(TCHAR* _SkillName)
+{
+
+	if(_SkillName != nullptr)
+	{
+		if( _SkillName == BONESPEAR && m_SkillTree.sBoneSpear.iLevel > 0 )
+		{
+
+			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+				, BONESPEAR)))
+			{
+				ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+			}
+		}
+		else if (_SkillName == FIREWALL && m_SkillTree.sFireWall.iLevel > 0 )
+		{
+			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+				, FIREWALL)))
+			{
+				ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+			}
+		}
+		else if (_SkillName == BLIZZARD && m_SkillTree.sBlizzard.iLevel > 0)
+		{
+			if (m_tFrame.fStart <= 0)
+			{
+				if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+					, BLIZZARD)))
+				{
+					ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+				}
+			}
+		}
+		else FuncAttack();
+	}
+	else FuncAttack();
+	
+}
+
+void CPlayer::SkillHotKey()
+{
+	if ( m_dwKey & KEY_1 )
+		m_SkillActiveName = BONESPEAR;
+	else if ( m_dwKey & KEY_2 )
+		m_SkillActiveName = FIREWALL;
+	else if ( m_dwKey & KEY_3 )
+		m_SkillActiveName = BLIZZARD;
 }

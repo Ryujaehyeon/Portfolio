@@ -32,21 +32,23 @@ HRESULT CBoneSpear::Initialize()
 	m_Info.fCX = 64;
 	m_Info.fCY = 64;
 
-	m_sPlayInfo.iLevel = 0;
 	m_sPlayInfo.fExp = 0;
-	m_sPlayInfo.fMight = 0;
-	m_sPlayInfo.fDexterity = 0;
-	m_sPlayInfo.fIntellect = 0;
-	m_sPlayInfo.fConstitution = 0;
-	m_sPlayInfo.fResolve = 0;
-	m_sPlayInfo.fPerception = 0;
-	m_sPlayInfo.fExp = m_sPlayInfo.fMaxExp = 0;
+	m_sPlayInfo.fMight = 5;
+	m_sPlayInfo.fDexterity = 5;
+	m_sPlayInfo.fIntellect = 5;
+	m_sPlayInfo.fConstitution = 5;
+	m_sPlayInfo.fResolve = 5;
+	m_sPlayInfo.fPerception = 5;
+	m_sPlayInfo.fExp = 0;
+	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*20;
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 0;
-	m_sPlayInfo.iSKillPoint = 1;
+	m_sPlayInfo.iSKillPoint = 0;
+	m_sPlayInfo.iStatPoint = 0;
 	m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX = 1;
-	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = 10;
-	m_sPlayInfo.fSpeed = 100.0f;
+	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = 1;
+	m_sPlayInfo.iGold = 0;
+	m_sPlayInfo.fSpeed = 300.0f;
 
 	m_fChaterDirect = 280.f;
 	m_bSelect = true;
@@ -58,30 +60,41 @@ HRESULT CBoneSpear::Initialize()
 	m_pTagetObj = nullptr;
 	m_fTime = 0.f;
 
-	// 마우스를 바라보는 방향
-	m_vMousePos = MouseInfoDX();
-	m_vTagetInfo = m_vMousePos;
 
+	m_vMousePos = D3DXVECTOR3(0.f, 0.f, 0.f);
+	// 마우스를 바라보는 방향
+	m_dwKey = 0;
 	return S_OK;
 }
 
 SCENEID CBoneSpear::Progress()
 {
+	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
+
+	if(m_dwKey & KEY_RBUTTON && m_fTime == 0)
+		m_vMousePos = MouseInfoDX();
 	// 시간
 	m_fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
 	if(m_sPlayInfo.fHealthPoint <= 0)
 		m_pMotion = DEATH;
-	if (m_fTime >= 3.f)
+
+	if (m_fTime >= 1.5f)
 		m_pMotion = DEATH;
-	if (m_vTagetInfo == (m_Info.vPos))
-		m_vTagetInfo =(m_Info.vPos);
-	
+
+	if (m_vTagetInfo == m_Info.vPos)
+		m_vTagetInfo = m_Info.vPos;
+
+	StateSkill();
+
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
-		
-	// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다.
-	
-	m_Info.vDir = m_vTagetInfo - (m_Info.vPos); 
+
+
+	m_vTagetInfo = m_vMousePos;
+
+	// 방향을 마우스가 있는 방향으로 넣는다.
+	m_Info.vDir = m_vTagetInfo - m_Info.vPos;
+
 	// 거리를 구한다.
 	float fDistance = D3DXVec3Length(&m_Info.vDir);
 
@@ -90,24 +103,28 @@ SCENEID CBoneSpear::Progress()
 
 	// 자신의 위치와 마우스의 위치가 같지 않을때, 
 	// 같으면 위를 보기 떄문 dir값이 0이되 90도인 위를 보기때문
-	if(m_Info.vPos != m_vMousePos)
+	if(m_Info.vPos != m_vTagetInfo)
 		// 각도값을 구한다
 		m_fAngle = acosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
 
 	// 내적을 구한다.
-	if (m_vMousePos.y > m_Info.vPos.y)
+	if (m_vTagetInfo.y > m_Info.vPos.y)
 	{
 		m_fAngle = 2 * D3DX_PI - m_fAngle;
 	}
 	// 각도의 라디안 값을 디그리값(0~360)으로 변경
 	m_iDegree = D3DXToDegree(m_fAngle);
 	m_fChaterDirect = m_iDegree;
-	//if (fDistance < 2.0f)
-	//	m_Info.vPos = m_vTagetInfo;
 
-    m_Info.vPos += m_Info.vDir * m_sPlayInfo.fSpeed * GET_SINGLE(CTimeMgr)->DeltaTime();
-	//m_Info.vPos.x += int(cosf((m_fAngle) * PI / 180.0f) * m_sPlayInfo.fSpeed);
-	//m_Info.vPos.y += int(-sinf((m_fAngle) * PI / 180.0f) * m_sPlayInfo.fSpeed);
+	if (fDistance < 10.0f)
+	{
+		m_Info.vPos = m_vTagetInfo;
+		m_pMotion = DEATH;
+		m_sPlayInfo.fHealthPoint = -1.f;
+	}
+
+	if(m_Info.vPos != m_vTagetInfo)
+		m_Info.vPos += m_Info.vDir * m_sPlayInfo.fSpeed * GET_SINGLE(CTimeMgr)->DeltaTime();
 
 	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, m_Info.vPos.z );
 	
@@ -122,7 +139,7 @@ SCENEID CBoneSpear::Progress()
 
 void CBoneSpear::Render()
 {
-	const TEXINFO* pTexInfo 
+	const TEXINFO* pTexInfo 	// first key == SKILL  // second key == m_pStateKey
 		= GET_SINGLE(CTextureMgr)->GetTexture(SKILL, m_pStateKey, int(m_tFrame.fStart));
 	// 프레임 값이 저장한 이미지 벡터크기를 벗어난 값이 들어가면 에러
 
@@ -203,4 +220,12 @@ void CBoneSpear::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"BoneSpear_RU";
 		}
 	}
+}
+
+void CBoneSpear::StateSkill()
+{
+	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
+	m_sPlayInfo.iSKillPoint = 1;
+	m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX = 1;
+	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.iLevel*1 * 0.1f);
 }

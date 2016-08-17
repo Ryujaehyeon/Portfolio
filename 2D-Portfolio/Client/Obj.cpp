@@ -66,7 +66,7 @@ void CObj::FrameMove( const float& fCnt, const float& fMax )
 	// 들어오는 타임값이 max값을 초과해 프레임값으로 인해 에러가 나지 않게
 	// 초기화
 	if (m_tFrame.fStart > fMax)
-		m_tFrame.fStart = 0;
+		m_tFrame.fStart = 0.f;
 #else
 	// 오차값을 줄이기 위해
 	if (m_tFrame.fStart > fMax)

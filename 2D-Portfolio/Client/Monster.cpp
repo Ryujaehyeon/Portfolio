@@ -113,6 +113,9 @@ SCENEID CMonster::Progress()
 	//첫번째 인자값은 초당 몇프레임을 출력할건지, 두번째는 최대 장수
 	FrameStatas();
 
+	// 플레이어에게 죽을때 경험치를 줌
+	ExpAcquired();
+
 	return SCENEID_NONPASS;
 }
 
@@ -247,7 +250,7 @@ void CMonster::CheckKey()
 		float fDistance = D3DXVec3Length(&m_Info.vDir);
 
 		// 0810 오전 AI 수정해야함
-		if(fDistance < fRealDistance+20)
+		if(fDistance < fRealDistance+20 && m_pMotion!=DEATH)
 		{
 			fWaitTime = 0.f;
 			m_pMotion = ATTACK;
@@ -269,6 +272,7 @@ void CMonster::CheckKey()
 	//if (m_vMovePoint.x <= 0 || m_vMovePoint.x >= WINSIZEX ||
 	//	m_vMovePoint.y <= 0 || m_vMovePoint.y >= WINSIZEY)
 	//	m_iDir = rand()%8;
+
 }
 
 void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
@@ -305,12 +309,8 @@ void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 
 void CMonster::RegenTime()
 {
-	if (m_sPlayInfo.fHealthPoint <= 0)
-	{
-		m_sPlayInfo.fHealthPoint = 0;
-		m_pMotion = DEATH;
+	if (m_pMotion == DEATH)
 		return;
-	}
 
 	static float i = 0.f;
 	i += GET_SINGLE(CTimeMgr)->DeltaTime();
@@ -537,7 +537,6 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	else if (_pObjStatas == DEATH)
 	{
 		// 오른쪽 아래 RD
-		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
 		{
 			m_pStateKey = L"Death_RD";
 		}
@@ -595,5 +594,17 @@ void CMonster::Tageting()
 		}
 		else 
 			m_pTagetObj = this;
+	}
+}
+
+void CMonster::ExpAcquired()
+{
+	if(m_pMotion == DEATH && m_tFrame.fStart <= 0)
+	{
+		for (list<CObj*>::iterator iter = m_pTagetList->begin();
+			iter != m_pTagetList->end(); ++iter)
+		{
+			(*iter)->SetStatas()->fExp += m_sPlayInfo.fExp;
+		}
 	}
 }

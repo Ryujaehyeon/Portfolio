@@ -58,6 +58,7 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 		}
 	case OBJ_SKILL:
 		{
+			
 			map<wstring, list<CObj*>>::iterator iterSKILL = 
 				m_MapObject.find(SKILL);
 			map<wstring, list<CObj*>>::iterator iterPLAYER = 
@@ -66,6 +67,21 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 
 			for (;iterPlayerList != iterPLAYER->second.end(); ++iterPlayerList)
 			{
+				// 플레이어 위치에서 스킬이 발사되게끔 함
+				// 플레이어 스테이터스에 따라 스킬의 위력이 다르게 변경 가능
+				if(pObjKey == BONESPEAR)
+				{
+					pProtoInst->SetStatas()->iLevel = ((CPlayer*)(*iterPlayerList))->GetSkillTree().sBoneSpear.iLevel;
+				}
+				else if(pObjKey == FIREWALL)
+				{
+					pProtoInst->SetStatas()->iLevel = ((CPlayer*)(*iterPlayerList))->GetSkillTree().sFireWall.iLevel;
+				}
+				else if (pObjKey == BLIZZARD)
+				{
+					pProtoInst->SetStatas()->iLevel = ((CPlayer*)(*iterPlayerList))->GetSkillTree().sBlizzard.iLevel;
+				}
+
 				if((*iterPlayerList)->GetSelect() == true)
 					pProtoInst->Setinfo()->vPos = (*iterPlayerList)->GetInfo().vPos;
 			}
@@ -236,11 +252,9 @@ SCENEID CObjMgr::Progress()
 			map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
 			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
 			map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
-
-			
-			
+						
 			// 플레이어 정보를 보기 위함
-			/*if((*iter2)->GetName() == PLAYER)
+			if((*iter2)->GetName() == PLAYER)
 			DebugLog(L"레벨 : %d \n체력 : %8.3f,%8.3f \n경험치 : %8.3f/%8.3f \n공격력 : %8.2f \n방어력 : %8.2f \n힘 : %8.2f \n체질 : %8.2f \n민첩 : %8.2f \n통찰 : %8.2f \n지능 : %8.2f \n결의 %8.2f \n능력포인트 : %d \n기술포인트 : %d",
 			(*iter2)->GetStatas().iLevel, 
 			(*iter2)->GetStatas().fHealthPoint, (*iter2)->GetStatas().fHealthPointMAX, 
@@ -252,7 +266,7 @@ SCENEID CObjMgr::Progress()
 			(*iter2)->GetStatas().fPerception, 
 			(*iter2)->GetStatas().fIntellect, 
 			(*iter2)->GetStatas().fResolve,
-			(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);*/
+			(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);
 			iScene = (*iter2)->Progress();
 			switch((*iter2)->GetObjType())
 			{
@@ -281,8 +295,6 @@ SCENEID CObjMgr::Progress()
 						iterSkill != m_MapObject.end())
 						ColCircle(&iterSkill->second, &iterMonster->second);
 				}
-			
-
 				ObjInteraction((*iter2));
 				// iter 삭제시 
 				IterRelease();
@@ -456,6 +468,7 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 
 				(*iter)->SetStatas()->fHealthPoint = -1.f;
 
+
 				//충돌시 데미지
 				//SAFE_DELETE(&(*iter));
 				//SAFE_DELETE(&(*iter2));
@@ -560,7 +573,7 @@ void CObjMgr::IterRelease()
 				// 죽었는지 상태체크 후
 				// 0817 오전 몬스터가 제대로 삭제되지 않음
 				if((*iter2)->GetpMotion() == DEATH && 
-					(*iter2)->GetFrame().fStart >= (*iter2)->GetFrame().fLast-1)
+					(*iter2)->GetFrame().fStart <= 0.f/*>= (*iter2)->GetFrame().fLast-2*/)
 				{
 					// 할당된 몬스터 객체 삭제
 					SAFE_DELETE<CObj>(&(*iter2));
@@ -574,7 +587,7 @@ void CObjMgr::IterRelease()
 				if (iter2 == iter->second.end())
 					break;
 			}
-			if ((*iter2)->GetObjType() == OBJ_SKILL)
+			else if ((*iter2)->GetObjType() == OBJ_SKILL)
 			{
 				if((*iter2)->GetpMotion() == DEATH)
 				{
