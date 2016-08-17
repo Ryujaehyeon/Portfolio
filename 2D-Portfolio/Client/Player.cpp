@@ -52,7 +52,7 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fMagikaPoint = 250;
 	m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
 	m_sPlayInfo.iGold = 0;
-	m_sPlayInfo.fSpeed = 100.0f;
+	m_sPlayInfo.fSpeed = 150.0f;
 
 	// 기본적으로 캐릭터는 아래를 보고있게 설정.
 	m_fChaterDirect = 280.f;
@@ -73,10 +73,6 @@ SCENEID CPlayer::Progress()
 	static float fTime = 0.0f;
 	// 시간값 누적
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
-
-	list<CObj*>::iterator iter = m_SkillList.begin();
-	//for (;iter != m_SkillList.end(); ++iter)
- //    		(*iter)->Progress();
 
 	//CCollisionMgr::ColCircle(&m_SkillList,m_pTagetList);
 
@@ -138,10 +134,6 @@ SCENEID CPlayer::Progress()
 
 void CPlayer::Render()
 {
-	list<CObj*>::iterator iter = m_SkillList.begin();
-	for (;iter != m_SkillList.end();++iter)
-		(*iter)->Render();
-
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, m_pStateKey, int(m_tFrame.fStart));
 	// 프레임 값이 저장한 이미지 벡터크기를 벗어난 값이 들어가면 에러
@@ -210,10 +202,8 @@ void CPlayer::CheckKey()
 				//
 				FuncAttack();
 			}
-			if(  m_dwKey & KEY_LBUTTON  )
+			if(  m_dwKey & KEY_LBUTTON )
 			{
-
-				fTime = 0.f;
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
 				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
@@ -223,6 +213,7 @@ void CPlayer::CheckKey()
 				{
 					if (m_sPlayInfo.fMagikaPoint >= 5.f)
 					{
+						fTime = 0.f;
 						//m_sPlayInfo.fMagikaPoint -= 5.f;
 						//OBJINFO objInfo;
 						//ZeroMemory(&objInfo, sizeof(OBJINFO));
@@ -239,6 +230,7 @@ void CPlayer::CheckKey()
 						}
 					}
 				}
+				fTime = 0.f;
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -256,7 +248,7 @@ void CPlayer::CheckKey()
 				m_vTagetInfo = m_Info.vPos;
 
 			}
-			else if(GetAsyncKeyState(VK_SPACE) & 0x8000)
+			else if(m_dwKey & KEY_SPACE)
 			{
 
 				fTime = 0.f;
@@ -271,13 +263,20 @@ void CPlayer::CheckKey()
 					if (m_sPlayInfo.fMagikaPoint >= 5.f)
 					{
 						//m_sPlayInfo.fMagikaPoint -= 5.f;
-						OBJINFO objInfo;
-						ZeroMemory(&objInfo, sizeof(OBJINFO));
-						CBoneSpear* pBoneSpear = new CBoneSpear(objInfo, L"BoneSpear", OBJ_SKILL);
-						pBoneSpear->Initialize();
-						pBoneSpear->SetInfoPos(m_Info.vPos.x, m_Info.vPos.y);
-						pBoneSpear->SetAngle(m_fAngle);
-						m_SkillList.push_back(pBoneSpear);
+						//OBJINFO objInfo;
+						//ZeroMemory(&objInfo, sizeof(OBJINFO));
+						//CBoneSpear* pBoneSpear = new CBoneSpear(objInfo, L"BoneSpear", OBJ_SKILL);
+						//pBoneSpear->Initialize();
+						//pBoneSpear->SetInfoPos(m_Info.vPos.x, m_Info.vPos.y);
+						//pBoneSpear->SetAngle(m_fAngle);
+						//m_SkillList.push_back(pBoneSpear);
+
+						m_pSkillPrototype;
+						if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+							, BONESPEAR)))
+						{
+							ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+						}
 					}
 				}
 			}
@@ -745,14 +744,8 @@ void CPlayer::ExpAcquired()
 			}
 		}
 }
-void CPlayer::Setlist( list<CObj*>* _Monster )
-{
-	m_pTagetList = _Monster;
-}
-
 void CPlayer::ScrollChange()
 {
-
 	if(m_pMotion != ATTACK && m_pMotion != CAST && m_pObjName == PLAYER)
 	{
 		CObj::g_tScroll += m_Info.vDir;

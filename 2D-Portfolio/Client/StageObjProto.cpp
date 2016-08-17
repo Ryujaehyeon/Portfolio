@@ -21,9 +21,7 @@ HRESULT CStageObjProto::InitProtoInstance()
 	objInfo.vPos = D3DXVECTOR3(400.f, 300.f, 0.f);
 	objInfo.vDir = D3DXVECTOR3(0, 0, 0);
 	objInfo.vLook = D3DXVECTOR3(1, 0, 0);
-
-
-
+	
 	// 원형 객체를 생성해서 삽입해줌
 	m_MapProto.insert(make_pair(L"StageBack"
 		, new CStageBackGround(objInfo, OBJ_BUILDING)));

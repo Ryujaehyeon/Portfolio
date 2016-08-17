@@ -237,12 +237,10 @@ void CMonster::CheckKey()
 		// 충돌했을때
 		if(int(m_sPlayInfo.fHealthPoint) <= 0)
 			m_pMotion = DEATH;
-
-		Tageting();
-
+		
 		// 바라보는 방향
-		m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
-
+		//m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
+		Tageting();
 		float fRealDistance = (m_pTagetObj->Setinfo()->fCX * 0.5f) +
 						  (m_Info.fCX * 0.5f);
 
@@ -275,25 +273,34 @@ void CMonster::CheckKey()
 
 void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 {
-	if( (_pSour->GetObjType() == _pDest->GetObjType()) ||
-		_pDest->GetObjType() != OBJ_MONSTER &&
-		_pDest->GetObjType() != OBJ_PLAYER )
-		return;
-
-	if(_pSour->GetpMotion() == ATTACK)
+	list<CObj*>::iterator iter = m_pTagetList->begin();
+	for (;iter != m_pTagetList->end(); ++iter)
 	{
-		if (_pSour->GetFrame().fStart <= 0.f)
+		// 리스트 내에 충돌한 녀석이 있을때
+		if ((*iter)->GetCrash() == true)
 		{
-			if(_pDest->GetStatas().fDefence >= _pSour->GetStatas().fAttack)
-				_pDest->SetStatas()->fHealthPoint -= 1;
-			else if(_pDest->GetStatas().fDefence < _pSour->GetStatas().fAttack)
-				_pDest->SetStatas()->fHealthPoint -= 
-				_pSour->GetStatas().fAttack - _pDest->GetStatas().fDefence;
+			// 해당 몬스터의 객체를 타겟팅
+			this->m_pTagetObj = (*iter);
+			// 공격 모션 프레임이 끝날때 데미지가 적용
+			if (m_tFrame.fStart >= PLAYER_ATTACK-0.5f)
+			{
+				// 몬스터 방어력이 플레이어 공격력보다 크면 데미지 1
+				if((*iter)->GetStatas().fDefence >= m_sPlayInfo.fAttack)
+					(*iter)->SetStatas()->fHealthPoint -= 1;
+				// 플레이어 공격력이 더 크면 몬스터 방어력을 뺀 나머지 만큼의 데미지만 적용 
+				else if((*iter)->GetStatas().fDefence < m_sPlayInfo.fAttack)
+					(*iter)->SetStatas()->fHealthPoint -= 
+					m_sPlayInfo.fAttack - (*iter)->GetStatas().fDefence;
+
+				// 대상이 죽으면 타겟팅 해제
+				if ((*iter)->GetStatas().fHealthPoint <= 0)
+				{
+					this->m_pTagetObj = nullptr;
+					m_sPlayInfo.fExp += (*iter)->GetStatas().fExp;
+				}
+			}
 		}
 	}
-
-	if(_pDest->SetStatas()->fHealthPoint <= 0.f)
-		m_pTagetObj = NULL;
 }
 
 void CMonster::RegenTime()
@@ -573,10 +580,6 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	}
 }
 
-void CMonster::Setlist( list<CObj*>* _Player )
-{
-	m_pTagetList = _Player;
-}
 
 void CMonster::Tageting()
 {
@@ -585,9 +588,12 @@ void CMonster::Tageting()
 	for (;iter != m_pTagetList->end(); ++iter)
 	{
 		// 리스트 내에 충돌하고 마우스가 몬스터 위에 있을때
-		if ((*iter)!= nullptr && (*iter)->GetCrash() == true)
+		if ((*iter)->GetCrash() == true)
 		{
 			m_pTagetObj = (*iter);
+			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 		}
+		else 
+			m_pTagetObj = this;
 	}
 }

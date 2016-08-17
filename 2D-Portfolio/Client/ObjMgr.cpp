@@ -60,6 +60,15 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 		{
 			map<wstring, list<CObj*>>::iterator iterSKILL = 
 				m_MapObject.find(SKILL);
+			map<wstring, list<CObj*>>::iterator iterPLAYER = 
+				m_MapObject.find(PLAYER);
+			list<CObj*>::iterator iterPlayerList = iterPLAYER->second.begin();
+
+			for (;iterPlayerList != iterPLAYER->second.end(); ++iterPlayerList)
+			{
+				if((*iterPlayerList)->GetSelect() == true)
+					pProtoInst->Setinfo()->vPos = (*iterPlayerList)->GetInfo().vPos;
+			}
 			// 키가 플레이어인 리스트가 없으면
 			if (iterSKILL == m_MapObject.end())
 			{
@@ -215,9 +224,7 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 
 SCENEID CObjMgr::Progress()
 {
-	map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
-	map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
-	map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
+
 
 	SCENEID iScene;
 	for(map<wstring, list<CObj*>>::iterator iter
@@ -226,7 +233,11 @@ SCENEID CObjMgr::Progress()
 		for(list<CObj*>::iterator iter2 = iter->second.begin();
 			iter2 != iter->second.end(); ++iter2)
 		{
-			iScene = (*iter2)->Progress();
+			map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
+			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
+			map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
+
+			
 			
 			// 플레이어 정보를 보기 위함
 			/*if((*iter2)->GetName() == PLAYER)
@@ -242,35 +253,39 @@ SCENEID CObjMgr::Progress()
 			(*iter2)->GetStatas().fIntellect, 
 			(*iter2)->GetStatas().fResolve,
 			(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);*/
-
+			iScene = (*iter2)->Progress();
 			switch((*iter2)->GetObjType())
 			{
 			case OBJ_PLAYER:
 			case OBJ_SKILL:
-				if((*iter2)->GetObjType() == OBJ_SKILL)
-				{
-					if(iterSkill != m_MapObject.end())
-						CCollisionMgr::ColCircle(&iterSkill->second, &iterMonster->second);
-				}
 			case OBJ_MONSTER:
-				if((*iter2) != nullptr)
+				if ((*iter2)->GetObjType() == OBJ_PLAYER)
 				{
-					if ((*iter2)->GetObjType() == OBJ_PLAYER)
-					{
-						if(iterMonster != m_MapObject.end())
-							static_cast<CMonster*>(*iter2)->Setlist(
-							&m_MapObject.find(MONSTER)->second);
-					}
-					else if ((*iter2)->GetObjType() == OBJ_MONSTER)
-					{
-						if(iterPlayer != m_MapObject.end())
-							static_cast<CPlayer*>(*iter2)->Setlist(
-							&m_MapObject.find(PLAYER)->second);
-					}
-					ObjInteraction((*iter2));
-					// 몬스터 삭제시 
-					MonsterRelease();
+					if(iterMonster != m_MapObject.end())
+						(*iter2)->Setlist(
+						&m_MapObject.find(MONSTER)->second);
 				}
+				else if ((*iter2)->GetObjType() == OBJ_MONSTER)
+				{
+					if(iterPlayer != m_MapObject.end())
+						(*iter2)->Setlist(
+						&m_MapObject.find(PLAYER)->second);
+				}
+				else if((*iter2)->GetObjType() == OBJ_SKILL)
+				{
+					if(iterPlayer != m_MapObject.end())
+						(*iter2)->Setlist(
+						&m_MapObject.find(PLAYER)->second);
+
+					if(iterMonster != m_MapObject.end() && 
+						iterSkill != m_MapObject.end())
+						ColCircle(&iterSkill->second, &iterMonster->second);
+				}
+			
+
+				ObjInteraction((*iter2));
+				// iter 삭제시 
+				IterRelease();
 				// 삭제된 데이터의 리스트 삭제;
 				if(*iter2 == nullptr)
 				{
@@ -342,20 +357,19 @@ void CObjMgr::AbilityTointeract(CObj* _pDest, CObj* _pSour)
 
 
 
-void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
+bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 {
-	if(_pSour == nullptr || _pDest == nullptr)
-		return;
-
-	if (_pDest->GetObjType() == OBJ_SKILL 
-		|| _pDest->GetObjType() == OBJ_SKILL)
-		return;
-
-	if(_pDest->GetObjType() != OBJ_PLAYER 
-		&& _pDest->GetObjType() != OBJ_MONSTER) 
-		return;
-
-
+	// UI나 건물형 객체를 밀지 않게
+	if(_pDest->GetObjType() == OBJ_UI 
+		&& _pDest->GetObjType() != OBJ_BUILDING) 
+		return false;
+	// 자신의 스킬이 자신을 밀지 않게
+	if (_pSour->GetObjType() == OBJ_SKILL
+		&& _pDest->GetObjType() == OBJ_PLAYER)
+		return false;
+	else if (_pDest->GetObjType() == OBJ_SKILL
+		&& _pSour->GetObjType() == OBJ_PLAYER)
+		return false;
 
 	// 비교할 대상이 있는 방향을 정하고
 	_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos + CObj::g_tScroll) - (_pSour->GetInfo().vPos + CObj::g_tScroll);
@@ -375,10 +389,10 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 				// 충돌 여부
 				_pSour->SetCrash(true);
 				_pDest->SetCrash(true);
+
 				// 타겟 설정
-				
-				_pSour->SetTagetObj(_pDest);
-				_pDest->SetTagetObj(_pSour);
+				//_pSour->SetTagetObj(_pDest);
+				//_pDest->SetTagetObj(_pSour);
 			}
 		}
 	}
@@ -413,6 +427,70 @@ void CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 
 		// 미는 방향대로 밀리게끔
 		_pDest->Setinfo()->vPos += (_pSour->Setinfo()->vDir * fPushRange);
+		return true;
+	}
+	return false;
+}
+
+void CObjMgr::ColCircle(list<CObj*> *pSkill, 
+	list<CObj*> *pMonsterList)
+{
+	for (list<CObj*>::iterator iter = pSkill->begin();
+		iter != pSkill->end(); ++iter)
+	{
+		for (list<CObj*>::iterator iter2 = pMonsterList->begin();
+			iter2 != pMonsterList->end();)
+		{
+			if ((*iter) == nullptr || (*iter2) == nullptr)
+				break;
+
+			if (CrashAndSlide(*iter, *iter2))
+			{
+				// 몬스터 방어력이 플레이어 공격력보다 크면 데미지 
+				if((*iter2)->GetStatas().fDefence >= (*iter)->GetStatas().fAttack)
+					(*iter2)->SetStatas()->fHealthPoint -= 1;
+				// 플레이어 공격력이 더 크면 몬스터 방어력을 뺀 나머지 만큼의 데미지만 적용 
+				else if((*iter2)->GetStatas().fDefence < (*iter)->GetStatas().fAttack)
+					(*iter2)->SetStatas()->fHealthPoint -= 
+					(*iter)->GetStatas().fAttack - (*iter2)->GetStatas().fDefence;
+
+				(*iter)->SetStatas()->fHealthPoint = -1.f;
+
+				//충돌시 데미지
+				//SAFE_DELETE(&(*iter));
+				//SAFE_DELETE(&(*iter2));
+				
+				//list의 노드를 삭제
+				//iter = pSkill->erase(iter);
+				//iter2 = pMonsterList->erase(iter2);
+				++iter;
+				++iter2;
+			}
+			else //충돌 실패시
+			{
+				//좌표를 받아 화면 밖을 벗어날 시
+				if( (*iter)->GetInfo().vPos.y < 0		 + CObj::g_tScroll.y  ||
+					(*iter)->GetInfo().vPos.y > WINSIZEY + CObj::g_tScroll.y  ||
+					(*iter)->GetInfo().vPos.x < 0		 + CObj::g_tScroll.x  ||
+					(*iter)->GetInfo().vPos.x > WINSIZEX + CObj::g_tScroll.x	)
+				{
+
+					//해제 및 노드 삭제
+					//SAFE_DELETE(&(*iter));
+					//iter = pSkill->erase(iter);
+					(*iter)->SetStatas()->fHealthPoint = -1.f;
+					++iter;
+				}
+				//다음 노드를 가르킨다.
+				++iter2;
+			}
+			//iter가 끝을 가르키면 반복문을 끝냄
+			if (iter == pSkill->end())
+				break;
+		}
+		//iter가 끝을 가르키면 반복문을 끝냄
+		if (iter == pSkill->end())
+			break;
 	}
 }
 
@@ -466,7 +544,7 @@ const vector<TILE*>* CObjMgr::GetTileInfo()
 	return static_cast<CStageBackGround*>(iter->second.front())->GetVecTile();
 }
 
-void CObjMgr::MonsterRelease()
+void CObjMgr::IterRelease()
 {
 	// 맵의 first, 처음부터 끝까지 도는 반복문
 	for(map<wstring, list<CObj*>>::iterator iter
@@ -477,9 +555,10 @@ void CObjMgr::MonsterRelease()
 			iter2 != iter->second.end();)
 		{
 			// 몬스터면
-			if((*iter2) != nullptr && (*iter2)->GetObjType() == OBJ_MONSTER)
+			if((*iter2)->GetObjType() == OBJ_MONSTER)
 			{
 				// 죽었는지 상태체크 후
+				// 0817 오전 몬스터가 제대로 삭제되지 않음
 				if((*iter2)->GetpMotion() == DEATH && 
 					(*iter2)->GetFrame().fStart >= (*iter2)->GetFrame().fLast-1)
 				{
@@ -495,22 +574,22 @@ void CObjMgr::MonsterRelease()
 				if (iter2 == iter->second.end())
 					break;
 			}
-			//if ((*iter2)->GetObjType() == OBJ_SKILL)
-			//{
-			//	if((*iter2)->GetpMotion() == DEATH)
-			//	{
-			//		// 할당된 스킬 객체 삭제
-			//		SAFE_DELETE<CObj>(&(*iter2));
-			//		// 다음 노드로
-			//		++iter2;
-			//	}
-			//	else
-			//		// 다음 노드로
-			//		++iter2;
-			//	// iter2가 노드의 끝이면 벗어남 
-			//	if (iter2 == iter->second.end())
-			//		break;
-			//}
+			if ((*iter2)->GetObjType() == OBJ_SKILL)
+			{
+				if((*iter2)->GetpMotion() == DEATH)
+				{
+					// 할당된 스킬 객체 삭제
+					SAFE_DELETE<CObj>(&(*iter2));
+					// 다음 노드로
+					++iter2;
+				}
+				else
+					// 다음 노드로
+					++iter2;
+				// iter2가 노드의 끝이면 벗어남 
+				if (iter2 == iter->second.end())
+					break;
+			}
 			else
 				// 몬스터가 아닌 노드면 다음 노드로
 				++iter2;

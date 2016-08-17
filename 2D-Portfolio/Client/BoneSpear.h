@@ -5,6 +5,7 @@ class CBoneSpear :
 {
 protected:
 	D3DXVECTOR3 m_vMousePos;
+	float m_fTime;
 public:
 	void FrameStatas();
 	void DirectAction( TCHAR* _pObjStatas );

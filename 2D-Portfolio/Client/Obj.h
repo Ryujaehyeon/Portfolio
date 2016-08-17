@@ -83,7 +83,7 @@ public:
 	virtual void SetTagetObj(CObj* _pTagetObj);
 	virtual void SetMotion(TCHAR* _pMotion) { if(m_pMotion != DEATH) m_pMotion = _pMotion; }
 	virtual void SetAngle(float _Angle){m_fAngle = _Angle;}
-
+	virtual void Setlist( list<CObj*>* _TagetList );
 
 	//Get
 	virtual SORTLAYER GetLayer() const {return m_eLayer;}

@@ -160,3 +160,8 @@ D3DXVECTOR3 CObj::MouseInfoDX()
 	ScreenToClient(g_hWnd, &pt);
 	return D3DXVECTOR3((pt.x + CObj::g_tScroll.x) , ( pt.y + CObj::g_tScroll.y) , 0);
 }
+
+void CObj::Setlist( list<CObj*>* _TagetList )
+{
+	m_pTagetList = _TagetList;
+}
