@@ -35,7 +35,6 @@ HRESULT CStage::Initialize()
 		L"Diablo"
 	};
 	m_pPrototype = new CStageObjProto;
-	m_pSkillPrototype = new CSkillProto;
 
 	if(FAILED(m_pPrototype->InitProtoInstance()))
 	{
@@ -63,6 +62,7 @@ HRESULT CStage::Initialize()
 			ERR_MSG(g_hWnd, L"%s 캐릭터 객체 생성 실패", Charter[i]);
 			return E_FAIL;
 		}
+		
 	}
 
 	// 몬스터
@@ -75,9 +75,7 @@ HRESULT CStage::Initialize()
 			return E_FAIL;
 		}
 	}
-
-
-
+	
 	///////////////////////////////////////////////////////////////
 	// UI 객체 생성
 
@@ -1334,6 +1332,29 @@ HRESULT CStage::Initialize()
 SCENEID CStage::Progress()
 {
 	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
+	if(GET_SINGLE(CObjMgr)->GetMonsterCnt() < 10)
+	{
+		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+			, SKELETON)))
+		{
+			ERR_MSG(g_hWnd, L"SKELETON 몬스터 객체 생성 실패");
+		}
+	}
+	//// 아직 몬스터 텍스쳐 추가 코드가 없음
+	//if(GET_SINGLE(CObjMgr)->GetBossCnt() < 1)
+	//{
+	//	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+	//		, SUMMONER)))
+	//	{
+	//		ERR_MSG(g_hWnd, L"SUMMONER 몬스터 객체 생성 실패");
+	//	}
+
+	//	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+	//		, GRISWOLD)))
+	//	{
+	//		ERR_MSG(g_hWnd, L"SUMMONER 몬스터 객체 생성 실패");
+	//	}
+	//}
 
 	// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화
 	if(iScene > SCENEID_NONPASS)

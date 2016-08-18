@@ -67,21 +67,6 @@ typedef struct tagFrame
 	}
 }FRAME;
 
-enum ITEM_TYPE
-{
-	ITEM_POTION = -1,
-	ITEM_HEAD,
-	ITEM_ACCESSORY_AMULET,
-	ITEM_ACCESSORY_RING,
-	ITEM_ARMOR,
-	ITEM_GLOVES,
-	ITEM_BELT,
-	ITEM_SHOES,
-	ITEM_SHIELD,
-	ITEM_WEAPON,
-	ITEM_END,
-};
-
 typedef struct tagItem
 {
 	// 오브젝트 이름
@@ -160,26 +145,53 @@ typedef struct tagInfo
 	PITEM tInventory[50];
 }INFO;
 
-
+// 
 typedef struct tagBoneSpear
 {
+	// 스킬레벨
 	int iLevel;
+	// 요구레벨
 	int iMinLevel;
+	// 최대레벨
 	int iLimitLevel;
+	// 시전간격
+	float fCastTime;
+	// 소비 HP
+	float fHpCost;
+	// 소비 MP
+	float fMpCost;
 }BoneSpearSkill;
 
 typedef struct tagFireWall
 {
+	// 스킬레벨
 	int iLevel;
+	// 요구레벨
 	int iMinLevel;
+	// 최대레벨
 	int iLimitLevel;
+	// 시전간격
+	float fCastTime;
+	// 소비 HP
+	float fHpCost;
+	// 소비 MP
+	float fMpCost;
 }FireWallSkill;
 
 typedef struct tagBlizzard
 {
+	// 스킬레벨
 	int iLevel;
+	// 요구레벨
 	int iMinLevel;
+	// 최대레벨
 	int iLimitLevel;
+	// 시전간격
+	float fCastTime;
+	// 소비 HP
+	float fHpCost;
+	// 소비 MP
+	float fMpCost;
 }BlizzardSkill;
 
 typedef struct tagSkill
@@ -187,19 +199,10 @@ typedef struct tagSkill
 	BoneSpearSkill sBoneSpear;
 	FireWallSkill sFireWall;
 	BlizzardSkill sBlizzard;
+
 }SkillTree;
 
-enum OBJ_TYPE
-{
-	OBJ_PLAYER,
-	OBJ_SKILL,
-	OBJ_MONSTER,
-	OBJ_NONPLAYER,
-	OBJ_BROKENBUILDING,
-	OBJ_BUILDING,
-	OBJ_BUTTON,
-	OBJ_UI
-};
+
 
 
 typedef struct tagTexture

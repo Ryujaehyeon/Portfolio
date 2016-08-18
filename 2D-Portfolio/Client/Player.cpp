@@ -28,24 +28,37 @@ HRESULT CPlayer::Initialize()
 		return E_FAIL;
 	}
 
+	//-------BoneSpear------------------------------------------------------------//
 	m_SkillTree.sBoneSpear.iLevel = 0;
 	m_SkillTree.sBoneSpear.iMinLevel = 0;
 	m_SkillTree.sBoneSpear.iLimitLevel = 99;
-	
+	m_SkillTree.sBoneSpear.fCastTime = 1.f;
+	m_SkillTree.sBoneSpear.fHpCost = 0.f;
+	m_SkillTree.sBoneSpear.fMpCost = 5;
+
+	//-------FireWall-------------------------------------------------------------//
 	m_SkillTree.sFireWall.iLevel = 0;
 	m_SkillTree.sFireWall.iMinLevel = 3;
 	m_SkillTree.sFireWall.iLimitLevel = 99;
+	m_SkillTree.sBoneSpear.fCastTime = 1.f;
+	m_SkillTree.sBoneSpear.fHpCost = 0.f;
+	m_SkillTree.sBoneSpear.fMpCost = 10;
 
+	//-------Blizzard-------------------------------------------------------------//
 	m_SkillTree.sBlizzard.iLevel = 0;
 	m_SkillTree.sBlizzard.iMinLevel = 5;
 	m_SkillTree.sBlizzard.iLimitLevel = 99;
+	m_SkillTree.sBoneSpear.fCastTime = 1.f;
+	m_SkillTree.sBoneSpear.fHpCost = 0.f;
+	m_SkillTree.sBoneSpear.fMpCost = 15;
 
+	//----------------------------------------------------------------------------//
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_vTagetInfo = m_Info.vPos;
 	m_Info.fCX = 50.f;
 	m_Info.fCY = 75.f;
-	
+	//----------------------------------------------------------------------------//
 	m_sPlayInfo.iLevel = 1;
 	m_sPlayInfo.fExp = 0;
 	m_sPlayInfo.fMight = 5;
@@ -66,8 +79,9 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
 	m_sPlayInfo.iGold = 0;
 	m_sPlayInfo.fSpeed = 150.0f;
-
+	//----------------------------------------------------------------------------//
 	// 기본적으로 캐릭터는 아래를 보고있게 설정.
+	m_vTagetInfo.z = 0;
 	m_fChaterDirect = 280.f;
 	m_bSelect = true;
 	m_eLayer = LAYER_OBJECT;
@@ -119,8 +133,6 @@ SCENEID CPlayer::Progress()
 
 	ScrollChange();
 
-	//DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
-
 	// 이동거리
 	// Run 또는 Walk 상태일때만 
 	if (m_pMotion == RUN)
@@ -166,7 +178,6 @@ void CPlayer::Render()
 
 void CPlayer::CheckKey()
 {
-
 	// 시간
 	static float fTime = 0.0f;
 	// 시간값 누적
@@ -175,15 +186,19 @@ void CPlayer::CheckKey()
 	// 제어할 캐릭터 선택
 	CharacterSelect();
 
+	// 스킬 단축키
 	SkillHotKey();
 
+	// 마우스 좌표 받아옴
 	m_vMousePos = MouseInfoDX();
 
+	// 키매니저로 키값 받아옴
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
 
 
-	if (m_dwKey & KEY_TAB && m_bSelect == true)
+	if (m_dwKey & KEY_TAB && m_bSelect == true && fTime > 3.0f)
 	{
+		fTime = 0;
 		m_bRun = !m_bRun;
 	}
 	if( m_dwKey & KEY_LBUTTON && m_bSelect == true) 
@@ -214,8 +229,8 @@ void CPlayer::CheckKey()
 			if(  m_dwKey & KEY_RBUTTON )
 			{
 				// 마우스를 바라보는 방향
-				m_Info.vDir = m_vMousePos - m_Info.vPos; 
-				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
+				m_Info.vDir = m_vMousePos - m_Info.vPos;
+				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다.
 				m_fChaterDirect = m_iDegree;
 				m_vTagetInfo = m_Info.vPos;
 				SkillActive(m_SkillActiveName);
@@ -228,7 +243,7 @@ void CPlayer::CheckKey()
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
-				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
+				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다.
 				m_fChaterDirect = m_iDegree;
 				// 취할 모션이미지를 바꿈
 				m_pMotion = RUN;
@@ -240,7 +255,7 @@ void CPlayer::CheckKey()
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
-				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
+				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다.
 				m_fChaterDirect = m_iDegree;
 				m_vTagetInfo = m_Info.vPos;
 				SkillActive(m_SkillActiveName);
@@ -652,7 +667,7 @@ void CPlayer::CharacterSelect()
 
 void CPlayer::Release()
 {
-
+	SAFE_DELETE<CPrototype>(&m_pSkillPrototype);
 }
 
 CObj* CPlayer::Clone()

@@ -258,28 +258,13 @@ SCENEID CUIObj::Progress()
 			}
 		}
 	}
-
-
-/*
-
-			else if (m_pObjKey == L"BlizzardButton" && PtInRect(&RealRect(), MouseInfo()) )
-			{
-				for (list<CObj*>::iterator iter = m_PlayerData->begin();
-					iter != m_PlayerData->end(); ++iter)
-				{
-					if((*iter)->GetSelect() == true)
-					{
-						if(((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel > 
-							((CPlayer*)(*iter))->GetSkillTree().sBlizzard.iMinLevel)
-							++((CPlayer*)(*iter))->SetSkillTree()->sBlizzard.iLevel;
-						--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
-					}
-				}
-			}
-
-		}
-	}*/
-	
+	if(m_dwKey & KEY_ESC)
+	{
+		m_InvenKey  = false;
+		m_SkillTree = false;
+		m_Character = false;
+		m_Bank		= false;
+	}
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
 	D3DXVec3Normalize(&m_Info.vDir, &m_Info.vDir);
@@ -420,8 +405,6 @@ void CUIObj::Render()
 
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-
-
 		}
 	}
 	else if (m_pObjKey == L"Bank")
@@ -438,7 +421,20 @@ void CUIObj::Render()
 	}
 	else if (m_pObjKey == L"Character")
 	{
+		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+			pTexInfo->ImgInfo.Height * 0.5f, 0);
 		if(m_Character == true)
+		{
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+			FontOutput(m_pObjKey);
+		}
+	}
+	else if (m_pObjKey == L"BoneSpearButton")
+	{
+		if(m_SkillTree == true)
 		{
 			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
@@ -446,20 +442,7 @@ void CUIObj::Render()
 
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-		}
-	}
-	else if (m_pObjKey == L"BoneSpearButton")
-	{
-		if(m_SkillTree == true)
-		{
-			{
-				// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
-				m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-					pTexInfo->ImgInfo.Height * 0.5f, 0);
-
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-			}
+			
 			FontOutput(m_pObjKey);
 		}
 	}
@@ -467,15 +450,13 @@ void CUIObj::Render()
 	{
 		if(m_SkillTree == true)
 		{
-			{
-				// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
-				m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-					pTexInfo->ImgInfo.Height * 0.5f, 0);
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-			}
-
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			
 			FontOutput(m_pObjKey);
 		}
 	}
@@ -483,14 +464,13 @@ void CUIObj::Render()
 	{
 		if(m_SkillTree == true)
 		{
-			{
-				// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
-				m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-					pTexInfo->ImgInfo.Height * 0.5f, 0);
+			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-			}
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			
 			FontOutput(m_pObjKey);
 		}
 	}
@@ -566,22 +546,22 @@ void CUIObj::CheckKey()
 	// 키매니저
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
 
-	if ( m_dwKey & KEY_I && fTimeButton > 1.f)
+	if ( m_dwKey & KEY_I && fTimeButton > 3.f)
 	{
 		m_InvenKey = !m_InvenKey;
 		fTimeButton = 0.f;
 	}
-	if ( m_dwKey & KEY_K && fTimeButton > 1.f)
+	if ( m_dwKey & KEY_K && fTimeButton > 3.f)
 	{
 		m_SkillTree = !m_SkillTree;
 		fTimeButton = 0.f;
 	}
-	if ( m_dwKey & KEY_B && fTimeButton > 1.f)
+	if ( m_dwKey & KEY_B && fTimeButton > 3.f)
 	{
 		m_Bank = !m_Bank;
 		fTimeButton = 0.f;
 	}
-	if ( m_dwKey & KEY_C && fTimeButton > 1.f)
+	if ( m_dwKey & KEY_C && fTimeButton > 3.f)
 	{
 		m_Character = !m_Character;
 		fTimeButton = 0.f;
@@ -706,6 +686,42 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 
 				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 62,
 					m_Info.vCenter.y - 60, 0);
+
+				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+
+				if(temp2 > 0)
+				{
+					const TEXINFO* pTexInfo 
+						= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp2]);
+
+					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
+						m_Info.vCenter.y , 0);
+
+					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				}
+			}
+		}
+	}
+	else if (m_pObjKey == L"Character")
+	{
+		for (list<CObj*>::iterator iter = m_PlayerData->begin();
+			iter != m_PlayerData->end(); ++iter)
+		{
+			if((*iter)->GetSelect() == true)
+			{
+				int temp = 0;
+				int temp2 = 0;
+				temp = ((CPlayer*)(*iter))->GetStatas().iLevel % 10;
+				temp2 = ((CPlayer*)(*iter))->GetStatas().iLevel/10;
+
+				const TEXINFO* pTexInfo 
+					= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp]);
+
+				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 38,
+					m_Info.vCenter.y - 55, 0);
 
 				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));

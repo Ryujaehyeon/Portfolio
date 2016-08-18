@@ -5,8 +5,8 @@
 
 CObjMgr::CObjMgr(void)
 {
-
-
+	m_MonsterCount = 0;
+	m_BossCount = 0;
 }
 
 CObjMgr::~CObjMgr(void)
@@ -277,12 +277,24 @@ SCENEID CObjMgr::Progress()
 			case OBJ_MONSTER:
 				if ((*iter2)->GetObjType() == OBJ_PLAYER)
 				{
+					m_MonsterCount = iterMonster->second.size();
+					if ((*iter2)->GetName() == SUMMONER &&
+						(*iter2)->GetName() == GRISWOLD &&
+						(*iter2)->GetName() == ANDARIEL &&
+						(*iter2)->GetName() == IZUAL &&
+						(*iter2)->GetName() == DIABLO)
+					{
+						++m_BossCount; 
+					}
+					
 					if(iterMonster != m_MapObject.end())
 						(*iter2)->Setlist(
 						&m_MapObject.find(MONSTER)->second);
 				}
 				else if ((*iter2)->GetObjType() == OBJ_MONSTER)
 				{
+					int temp = iter->second.size();
+
 					if(iterPlayer != m_MapObject.end())
 						(*iter2)->Setlist(
 						&m_MapObject.find(PLAYER)->second);
@@ -377,24 +389,23 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 	if(_pDest->GetObjType() == OBJ_UI 
 		&& _pDest->GetObjType() != OBJ_BUILDING) 
 		return false;
+
 	// 자신의 스킬이 자신을 밀지 않게
 	if (_pSour->GetObjType() == OBJ_SKILL
 		&& _pDest->GetObjType() == OBJ_PLAYER)
 		return false;
+
 	// 스킬이 스킬을 밀지 않게
 	else if (_pSour->GetObjType() == OBJ_SKILL
 		&& _pDest->GetObjType() == OBJ_SKILL)
 		return false;
+
 	// 플레이어가 스킬을 밀지 않게
 	else if ( _pSour->GetObjType() == OBJ_PLAYER
 		&& _pDest->GetObjType() == OBJ_SKILL)
 		return false;
-	// 스킬이 몬스터를 밀지 않게
-	else if (_pSour->GetObjType() == OBJ_SKILL
-		&& _pDest->GetObjType() == OBJ_MONSTER)
-		return false;
 
-
+	
 
 	// 비교할 대상이 있는 방향을 정하고
 	_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos + CObj::g_tScroll) - (_pSour->GetInfo().vPos + CObj::g_tScroll);
@@ -434,9 +445,15 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 	// 표면에서 "[충돌했을때!]의 중심점간(fDistance)"의 거리는 표면의 합계이다.
 	// 이때 중심점끼리의 거리(fRealDistance)는 fDistance 보다 크면 충돌하지 않음
 	// fDistance 보다 작으면 충돌
-
 	if(fDistance > fRealDistance)
 	{
+		// 스킬, 몬스터가 서로를 밀지 않게 충돌하면 충돌했다고 리턴해줌
+		if (_pSour->GetObjType() == OBJ_SKILL
+		&& _pDest->GetObjType() == OBJ_MONSTER
+		|| _pSour->GetObjType() == OBJ_MONSTER
+		&& _pDest->GetObjType() == OBJ_SKILL)
+		return true;
+
 		// 외적을 구한다
 		// 밀고있는 대상의 방향의 옆으로 밀리는 대상의 방향을 잡아줌
 		D3DXVec3Cross(&_pDest->Setinfo()->vDir, 

@@ -44,6 +44,33 @@ enum SORTLAYER
 	LAYER_END,
 };
 
+enum ITEM_TYPE
+{
+	ITEM_POTION = -1,
+	ITEM_HEAD,
+	ITEM_ACCESSORY_AMULET,
+	ITEM_ACCESSORY_RING,
+	ITEM_ARMOR,
+	ITEM_GLOVES,
+	ITEM_BELT,
+	ITEM_SHOES,
+	ITEM_SHIELD,
+	ITEM_WEAPON,
+	ITEM_END,
+};
+
+enum OBJ_TYPE
+{
+	OBJ_PLAYER,
+	OBJ_SKILL,
+	OBJ_MONSTER,
+	OBJ_NONPLAYER,
+	OBJ_BROKENBUILDING,
+	OBJ_BUILDING,
+	OBJ_BUTTON,
+	OBJ_UI
+};
+
 // 각도별 방향 16방향
 const float Diract16    = 11.25f;
 const float R			= 0.f;
@@ -163,3 +190,13 @@ TCHAR* const FONT6					= L"6";
 TCHAR* const FONT7					= L"7";
 TCHAR* const FONT8					= L"8";
 TCHAR* const FONT9					= L"9";
+
+
+TCHAR* const SKELETON	= L"Skeleton";
+TCHAR* const SANDRAIDER = L"SandRaider";
+TCHAR* const VIPER		= L"Viper";
+TCHAR* const GRISWOLD	= L"Griswold";
+TCHAR* const SUMMONER	= L"Summoner";
+TCHAR* const ANDARIEL	= L"Andariel";
+TCHAR* const IZUAL		= L"Izual";
+TCHAR* const DIABLO		= L"Diablo";

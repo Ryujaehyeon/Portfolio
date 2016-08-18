@@ -52,6 +52,8 @@ void CKeyMgr::CheckKey()
 			m_dwKey |= KEY_2;
 		if (GetAsyncKeyState('3') & 0x8000)
 			m_dwKey |= KEY_3;
+		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+			m_dwKey |= KEY_ESC;
 }
 
 DWORD CKeyMgr::PushKey(DWORD dwKey)

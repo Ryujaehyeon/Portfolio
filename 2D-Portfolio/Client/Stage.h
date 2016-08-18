@@ -4,9 +4,6 @@
 
 class CStage : public CSceneObj
 {
-	
-public:
-
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();
