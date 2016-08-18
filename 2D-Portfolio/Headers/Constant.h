@@ -151,3 +151,15 @@ TCHAR* const BLIZZARD				= L"Blizzard";
 TCHAR* const HEAL					= L"Heal";
 TCHAR* const AURA					= L"Aura";
 TCHAR* const RIVIVE					= L"Rivive";
+
+
+TCHAR* const FONT0					= L"0";
+TCHAR* const FONT1					= L"1";
+TCHAR* const FONT2					= L"2";
+TCHAR* const FONT3					= L"3";
+TCHAR* const FONT4					= L"4";
+TCHAR* const FONT5					= L"5";
+TCHAR* const FONT6					= L"6";
+TCHAR* const FONT7					= L"7";
+TCHAR* const FONT8					= L"8";
+TCHAR* const FONT9					= L"9";

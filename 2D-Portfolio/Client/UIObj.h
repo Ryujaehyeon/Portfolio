@@ -14,6 +14,7 @@ protected:
 	CObj* m_PlayerObj;
 public:
 	void CheckKey();
+	void FontOutput(TCHAR* _pObjKey);
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

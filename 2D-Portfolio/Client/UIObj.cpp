@@ -155,7 +155,7 @@ HRESULT CUIObj::Initialize()
 	}
 	if(m_pObjKey == UI[16])				 
 	{
-		m_Info.vPos  = D3DXVECTOR3(530.f, 45.f, 0.f);
+		m_Info.vPos  = D3DXVECTOR3(530.f, 48.f, 0.f);
 		m_Info.fCX = 64.f;
 		m_Info.fCY = 64.f;
 	}
@@ -198,8 +198,16 @@ SCENEID CUIObj::Progress()
 					iter != m_PlayerData->end(); ++iter)
 				{
 					if((*iter)->GetSelect() == true)
-						++((CPlayer*)(*iter))->SetSkillTree()->sBoneSpear.iLevel;
-					--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+					{
+						if(
+							((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel <
+							((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLimitLevel
+							&& ((CPlayer*)(*iter))->SetStatas()->iSKillPoint > 0)
+						{
+							++((CPlayer*)(*iter))->SetSkillTree()->sBoneSpear.iLevel;
+							--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+						}
+					}
 				}
 			}
 		}
@@ -214,8 +222,14 @@ SCENEID CUIObj::Progress()
 					if(((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel > 
 						((CPlayer*)(*iter))->GetSkillTree().sFireWall.iMinLevel)
 					{
-						++((CPlayer*)(*iter))->SetSkillTree()->sFireWall.iLevel;
-						--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+						if(
+							((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel <
+							((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLimitLevel
+							&& ((CPlayer*)(*iter))->SetStatas()->iSKillPoint > 0)
+						{
+							++((CPlayer*)(*iter))->SetSkillTree()->sFireWall.iLevel;
+							--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+						}
 					}
 				}
 			}
@@ -231,8 +245,14 @@ SCENEID CUIObj::Progress()
 					if(((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel > 
 						((CPlayer*)(*iter))->GetSkillTree().sBlizzard.iMinLevel)
 					{
-						++((CPlayer*)(*iter))->SetSkillTree()->sBlizzard.iLevel;
-						--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+						if(
+							((CPlayer*)(*iter))->GetSkillTree().sBlizzard.iLevel <
+							((CPlayer*)(*iter))->GetSkillTree().sBlizzard.iLimitLevel
+							&& ((CPlayer*)(*iter))->SetStatas()->iSKillPoint > 0)
+						{
+							++((CPlayer*)(*iter))->SetSkillTree()->sBlizzard.iLevel;
+							--((CPlayer*)(*iter))->SetStatas()->iSKillPoint;
+						}
 					}
 				}
 			}
@@ -295,8 +315,7 @@ void CUIObj::Render()
 	{
 		m_PlayerObj = (*m_PlayerData->begin());
 	}
-
-	
+		
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
 
@@ -401,6 +420,8 @@ void CUIObj::Render()
 
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+
 		}
 	}
 	else if (m_pObjKey == L"Bank")
@@ -431,36 +452,46 @@ void CUIObj::Render()
 	{
 		if(m_SkillTree == true)
 		{
-			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
-			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-				pTexInfo->ImgInfo.Height * 0.5f, 0);
+			{
+				// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+				m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+					pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			}
+			FontOutput(m_pObjKey);
 		}
 	}
 	else if (m_pObjKey == L"FireWallButton")
 	{
 		if(m_SkillTree == true)
 		{
-			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
-			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-				pTexInfo->ImgInfo.Height * 0.5f, 0);
+			{
+				// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+				m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+					pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			}
+
+			FontOutput(m_pObjKey);
 		}
 	}
 	else if (m_pObjKey == L"BlizzardButton")
 	{
 		if(m_SkillTree == true)
 		{
-			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
-			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-				pTexInfo->ImgInfo.Height * 0.5f, 0);
+			{
+				// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
+				m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
+					pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			}
+			FontOutput(m_pObjKey);
 		}
 	}
 	else
@@ -557,6 +588,7 @@ void CUIObj::CheckKey()
 	}
 }
 
+
 POINT CUIObj::MouseInfo()
 {
 	POINT pt;
@@ -566,3 +598,131 @@ POINT CUIObj::MouseInfo()
 	//return D3DXVECTOR3(pt.x , pt.y , 0);
 }
 
+void CUIObj::FontOutput( TCHAR* _pObjKey )
+{
+
+	TCHAR* NumberFont[] = {FONT0, FONT1, FONT2, FONT3, FONT4, FONT5, FONT6, FONT7, FONT8, FONT9 };
+
+	//DebugLog(L"%d, %d, %d", 
+	//	((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel, 
+	//	((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel/10, 
+	//	temp);
+
+	if (m_pObjKey == L"BoneSpearButton")
+	{
+		for (list<CObj*>::iterator iter = m_PlayerData->begin();
+			iter != m_PlayerData->end(); ++iter)
+		{
+			if((*iter)->GetSelect() == true)
+			{
+				int temp = 0;
+				int temp2 = 0;
+				temp = ((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel % 10;
+				temp2 = ((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel/10;
+
+				const TEXINFO* pTexInfo 
+					= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp]);
+
+				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 62,
+					m_Info.vCenter.y - 60, 0);
+
+				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+
+				if(temp2 > 0)
+				{
+					const TEXINFO* pTexInfo 
+						= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp2]);
+
+					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
+						m_Info.vCenter.y , 0);
+
+					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				}
+				DebugLog(L"%d, %d, %d", 
+					((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel, 
+					((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel/10,
+					temp);
+			}
+		}
+	}
+	else if (m_pObjKey == L"FireWallButton")
+	{
+		for (list<CObj*>::iterator iter = m_PlayerData->begin();
+			iter != m_PlayerData->end(); ++iter)
+		{
+			if((*iter)->GetSelect() == true)
+			{
+				int temp = 0;
+				int temp2 = 0;
+				temp = ((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel % 10;
+				temp2 = ((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel / 10;
+
+				const TEXINFO* pTexInfo 
+					= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp]);
+
+				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 62,
+					m_Info.vCenter.y - 60, 0);
+
+				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+
+				if(temp2 > 0)
+				{
+					const TEXINFO* pTexInfo 
+						= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp2]);
+
+					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
+						m_Info.vCenter.y , 0);
+
+					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				}
+
+				DebugLog(L"%d, %d, %d", 
+					((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel, 
+					((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel/10,
+					temp);
+			}
+		}
+	}
+	else if (m_pObjKey == L"BlizzardButton")
+	{
+		for (list<CObj*>::iterator iter = m_PlayerData->begin();
+			iter != m_PlayerData->end(); ++iter)
+		{
+			if((*iter)->GetSelect() == true)
+			{
+				int temp = 0;
+				int temp2 = 0;
+				temp = ((CPlayer*)(*iter))->GetSkillTree().sBlizzard.iLevel % 10;
+				temp2 = ((CPlayer*)(*iter))->GetSkillTree().sBlizzard.iLevel/10;
+
+				const TEXINFO* pTexInfo 
+					= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp]);
+
+				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 62,
+					m_Info.vCenter.y - 60, 0);
+
+				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+
+				if(temp2 > 0)
+				{
+					const TEXINFO* pTexInfo 
+						= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp2]);
+
+					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
+						m_Info.vCenter.y , 0);
+
+					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				}
+			}
+		}
+	}
+}

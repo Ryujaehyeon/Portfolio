@@ -105,16 +105,15 @@ void CBlizzard::Render()
 
 	if(pTexInfo == NULL)
 		return;
-	for (int i = 0 ; i < 15 ; ++i)
-	{
-		//블리자드 이펙트를 원하는 갯수(i)만큼 그리면 됨, 난수값에 따라 (i)개를 랜덤하게 그려줌
-		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + (CObj::g_tScroll.x + (rand()%200 - 100)) ,
-			(pTexInfo->ImgInfo.Height * 0.5) + (CObj::g_tScroll.y + (rand()%200 - 100)) , 0);
 
-		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-	}
+	//블리자드 이펙트를 원하는 갯수(i)만큼 그리면 됨, 난수값에 따라 (i)개를 랜덤하게 그려줌
+	// 클릭한곳보다 y축을 올려서 점점 내려오게 그리다가 클릭한곳 보다 낮으면 다시 올리게 바꿔야함
+	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + (CObj::g_tScroll.x + (rand()%200 - 100)) ,
+		(pTexInfo->ImgInfo.Height * 0.5) + (CObj::g_tScroll.y + (rand()%200 - 100)) , 0);
+
+	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void CBlizzard::Release()

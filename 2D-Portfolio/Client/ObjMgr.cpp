@@ -253,20 +253,22 @@ SCENEID CObjMgr::Progress()
 			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
 			map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
 						
-			// 플레이어 정보를 보기 위함
-			if((*iter2)->GetName() == PLAYER)
-			DebugLog(L"레벨 : %d \n체력 : %8.3f,%8.3f \n경험치 : %8.3f/%8.3f \n공격력 : %8.2f \n방어력 : %8.2f \n힘 : %8.2f \n체질 : %8.2f \n민첩 : %8.2f \n통찰 : %8.2f \n지능 : %8.2f \n결의 %8.2f \n능력포인트 : %d \n기술포인트 : %d",
-			(*iter2)->GetStatas().iLevel, 
-			(*iter2)->GetStatas().fHealthPoint, (*iter2)->GetStatas().fHealthPointMAX, 
-			(*iter2)->GetStatas().fExp,(*iter2)->GetStatas().fMaxExp,
-			(*iter2)->GetStatas().fAttack,(*iter2)->GetStatas().fDefence, 
-			(*iter2)->GetStatas().fMight, 
-			(*iter2)->GetStatas().fConstitution, 
-			(*iter2)->GetStatas().fDexterity, 
-			(*iter2)->GetStatas().fPerception, 
-			(*iter2)->GetStatas().fIntellect, 
-			(*iter2)->GetStatas().fResolve,
-			(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);
+			//// 플레이어 정보를 보기 위함
+			//if((*iter2)->GetName() == PLAYER)
+			//DebugLog(L"레벨 : %d \n체력 : %8.3f,%8.3f \n경험치 : %8.3f/%8.3f \n공격력 : %8.2f \n방어력 : %8.2f \n힘 : %8.2f \n체질 : %8.2f \n민첩 : %8.2f \n통찰 : %8.2f \n지능 : %8.2f \n결의 %8.2f \n능력포인트 : %d \n기술포인트 : %d",
+			//(*iter2)->GetStatas().iLevel, 
+			//(*iter2)->GetStatas().fHealthPoint, (*iter2)->GetStatas().fHealthPointMAX, 
+			//(*iter2)->GetStatas().fExp,(*iter2)->GetStatas().fMaxExp,
+			//(*iter2)->GetStatas().fAttack,(*iter2)->GetStatas().fDefence, 
+			//(*iter2)->GetStatas().fMight, 
+			//(*iter2)->GetStatas().fConstitution, 
+			//(*iter2)->GetStatas().fDexterity, 
+			//(*iter2)->GetStatas().fPerception, 
+			//(*iter2)->GetStatas().fIntellect, 
+			//(*iter2)->GetStatas().fResolve,
+			//(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);
+
+
 			iScene = (*iter2)->Progress();
 			switch((*iter2)->GetObjType())
 			{
@@ -379,9 +381,20 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 	if (_pSour->GetObjType() == OBJ_SKILL
 		&& _pDest->GetObjType() == OBJ_PLAYER)
 		return false;
-	else if (_pDest->GetObjType() == OBJ_SKILL
-		&& _pSour->GetObjType() == OBJ_PLAYER)
+	// 스킬이 스킬을 밀지 않게
+	else if (_pSour->GetObjType() == OBJ_SKILL
+		&& _pDest->GetObjType() == OBJ_SKILL)
 		return false;
+	// 플레이어가 스킬을 밀지 않게
+	else if ( _pSour->GetObjType() == OBJ_PLAYER
+		&& _pDest->GetObjType() == OBJ_SKILL)
+		return false;
+	// 스킬이 몬스터를 밀지 않게
+	else if (_pSour->GetObjType() == OBJ_SKILL
+		&& _pDest->GetObjType() == OBJ_MONSTER)
+		return false;
+
+
 
 	// 비교할 대상이 있는 방향을 정하고
 	_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos + CObj::g_tScroll) - (_pSour->GetInfo().vPos + CObj::g_tScroll);
@@ -466,7 +479,8 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 					(*iter2)->SetStatas()->fHealthPoint -= 
 					(*iter)->GetStatas().fAttack - (*iter2)->GetStatas().fDefence;
 
-				(*iter)->SetStatas()->fHealthPoint = -1.f;
+				if((*iter)->GetName() == BONESPEAR)
+					(*iter)->SetStatas()->fHealthPoint = -1.f;
 
 
 				//충돌시 데미지
@@ -491,7 +505,8 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 					//해제 및 노드 삭제
 					//SAFE_DELETE(&(*iter));
 					//iter = pSkill->erase(iter);
-					(*iter)->SetStatas()->fHealthPoint = -1.f;
+					if((*iter)->GetName() == BONESPEAR)
+						(*iter)->SetStatas()->fHealthPoint = -1.f;
 					++iter;
 				}
 				//다음 노드를 가르킨다.

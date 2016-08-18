@@ -31,7 +31,7 @@ void CSortMgr::Render()
 		for (list<CObj*>::iterator iter = m_SortLayer[i].begin();
 			iter != m_SortLayer[i].end(); ++iter)
 		{ 
-			if((*iter) != NULL)
+			//if((*iter) != NULL)
 				(*iter)->Render();
 		}
 		m_SortLayer[i].clear();

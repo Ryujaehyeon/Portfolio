@@ -217,12 +217,8 @@ void CPlayer::CheckKey()
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
 				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
 				m_fChaterDirect = m_iDegree;
-				m_pMotion = CAST;
 				m_vTagetInfo = m_Info.vPos;
-
-				// 스킬 생성
-				if (m_tFrame.fStart <= 0)
-					SkillActive(m_SkillActiveName);
+				SkillActive(m_SkillActiveName);
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -246,11 +242,8 @@ void CPlayer::CheckKey()
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
 				// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
 				m_fChaterDirect = m_iDegree;
-				m_pMotion = CAST;
 				m_vTagetInfo = m_Info.vPos;
-
-				if (m_tFrame.fStart <= 0)
-					SkillActive(m_SkillActiveName);
+				SkillActive(m_SkillActiveName);
 			}
 			else
 			{
@@ -280,6 +273,8 @@ void CPlayer::CheckKey()
 }
 void CPlayer::FuncAttack()
 {
+	DEBUG_ENTRY_EXIT;
+	DEBUG_LINE;
 	// 마우스를 바라보는 방향
 	m_Info.vDir = m_vMousePos - m_Info.vPos; 
 	// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
@@ -315,6 +310,8 @@ void CPlayer::FuncAttack()
 				}
 			}
 		}
+		else
+			m_pMotion = ATTACK;
 	}
 }
 
@@ -737,28 +734,38 @@ void CPlayer::ScrollChange()
 
 void CPlayer::SkillActive(TCHAR* _SkillName)
 {
+	DEBUG_ENTRY_EXIT;
+	DEBUG_LINE;
 
 	if(_SkillName != nullptr)
 	{
 		if( _SkillName == BONESPEAR && m_SkillTree.sBoneSpear.iLevel > 0 )
 		{
-
-			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-				, BONESPEAR)))
+			m_pMotion = CAST;
+			if (m_tFrame.fStart <= 0)
 			{
-				ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+				if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+					, BONESPEAR)))
+				{
+					ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+				}
 			}
 		}
 		else if (_SkillName == FIREWALL && m_SkillTree.sFireWall.iLevel > 0 )
 		{
-			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-				, FIREWALL)))
+			m_pMotion = CAST;
+			if (m_tFrame.fStart <= 0)
 			{
-				ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+				if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+					, FIREWALL)))
+				{
+					ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
+				}
 			}
 		}
 		else if (_SkillName == BLIZZARD && m_SkillTree.sBlizzard.iLevel > 0)
 		{
+			m_pMotion = CAST;
 			if (m_tFrame.fStart <= 0)
 			{
 				if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype

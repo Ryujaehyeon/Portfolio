@@ -1242,6 +1242,91 @@ HRESULT CStage::Initialize()
 #pragma endregion AddTexture
 	}
 #pragma endregion SkillProto
+
+
+#pragma region Font
+	// 0 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/0.png"
+		, FONT0, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"0 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// 1 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/1.png"
+		, FONT1, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"1 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// 2 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/2.png"
+		, FONT2, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"2 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// 3 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/3.png"
+		, FONT3, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"3 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// 4 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/4.png"
+		, FONT4, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"4 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// 5 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/5.png"
+		, FONT5, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"5 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// 6 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/6.png"
+		, FONT6, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"6 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// 7 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/7.png"
+		, FONT7, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"7 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+	// 8 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/8.png"
+		, FONT8, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"8 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+
+	}
+	// 9 이미지
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/UI/Font/9.png"
+		, FONT9, TEXTYPE_SINGLE)))
+	{
+		ERR_MSG(g_hWnd, L"9 텍스쳐 읽어오기 실패");
+		return E_FAIL;
+	}
+#pragma endregion Font
 	
 	return S_OK;
 }
