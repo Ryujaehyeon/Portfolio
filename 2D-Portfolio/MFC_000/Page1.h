@@ -22,7 +22,7 @@ public:
 	CComboBox m_Combo;
 	CStatic m_Picture;
 
-	HBITMAP m_BitMap[38];
+	HBITMAP m_BitMap[180];
 	virtual BOOL OnInitDialog();
 	afx_msg void OnCbnSelchangeCombo1();
 	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
@@ -30,4 +30,5 @@ public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton3();
+
 };

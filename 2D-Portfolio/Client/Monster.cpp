@@ -101,10 +101,10 @@ SCENEID CMonster::Progress()
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.001f);
 
 	// 자신의 위치에서 목표지점거리보다 이동거리가 크면 자신의 위치를 목표지점으로 지정
-	if (fDistance < 1.0f)
+	if (fDistance < 1.0f && m_pMotion != DEATH)
 		m_Info.vPos = m_vTagetInfo;
 
-	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, m_Info.vPos.z );
+	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, 0.f);
 
 	// 크기 자전 이동 공전 부모
 	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
@@ -128,7 +128,42 @@ void CMonster::Render()
 
 	if(pTexInfo == NULL)
 		return;
+	
+	//////////////////////////////////////////////////////////////////////////
+	// 그림자
+	if (m_pMotion != RUN)
+	{
+		const TEXINFO* pTexInfo 
+			= GET_SINGLE(CTextureMgr)->GetTexture(L"Shadow", L"Shadow", 0);
+		
+		if(pTexInfo == NULL)
+			return;
 
+		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
+			(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
+
+		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+	else
+	{
+		const TEXINFO* pTexInfo 
+			= GET_SINGLE(CTextureMgr)->GetTexture(L"Shadow",L"Shadow",int(m_tFrame.fStart));
+		
+		if(pTexInfo == NULL)
+			return;
+
+		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
+			(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
+
+		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+	//////////////////////////////////////////////////////////////////////////
+
+	// 본체 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
 		(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
 
@@ -153,7 +188,6 @@ void CMonster::CheckKey()
 	//
 	if(m_sPlayInfo.fHealthPoint <= 0)
 	{
-		m_pMotion = DEATH;
 
 		// 봐야할 적을 타겟으로 잡고
 		Tageting();
@@ -161,6 +195,9 @@ void CMonster::CheckKey()
 		// 바라보는 방향
 		if(m_pTagetObj != NULL)
 			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
+
+		m_pMotion = DEATH;
+		
 		return;
 	}
 	// 3초에 한번 방향과 이동을 정함, 충돌하지 않았을때

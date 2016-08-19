@@ -42,7 +42,7 @@ void CStageBackGround::InitTileFromFile()
 
 HRESULT CStageBackGround::Initialize()
 {
-	m_Info.vPos = D3DXVECTOR3(400.f, 300.f, 1.f);
+	m_Info.vPos = D3DXVECTOR3(400.f, 300.f, 0.f);
 	m_eLayer = LAYER_TERRAIN;
 	InitTileFromFile();
 	m_pObjKey = L"StageBack";

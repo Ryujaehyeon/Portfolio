@@ -375,14 +375,21 @@ HRESULT CStage::Initialize()
 	//-------------------------------------------------------------//
 	// 타일 불러오기
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/Tile/Tile%d.png",
-		L"StageBack", TEXTYPE_MULTI, L"Tile", 38)))
+		L"../Resource/Texture/Tile/Tile%03d.png",
+		L"StageBack", TEXTYPE_MULTI, L"Tile", 180)))
 	{
 		ERR_MSG(g_hWnd, L"TileTexture 로드 실패");
 		return E_FAIL;
 	}
 
-
+	// 그림자
+	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+		L"../Resource/Texture/Stage/Player/Shadow/Shadow%02d.png",
+		L"Shadow", TEXTYPE_MULTI, L"Shadow", 24)))
+	{
+		ERR_MSG(g_hWnd, L"Shadow 로드 실패");
+		return E_FAIL;
+	}
 
 	// Player
 #pragma region Player

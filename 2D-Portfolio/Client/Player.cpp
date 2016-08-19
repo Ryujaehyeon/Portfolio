@@ -170,6 +170,34 @@ void CPlayer::Render()
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
 		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
 
+	//////////////////////////////////////////////////////////////////////////
+	// ±×¸²ÀÚ
+	if (m_pMotion != RUN)
+	{
+		const TEXINFO* pTexInfo 
+			= GET_SINGLE(CTextureMgr)->GetTexture(L"Shadow",L"Shadow",0);
+
+		if(pTexInfo == NULL)
+			return;
+
+		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+	else
+	{
+		const TEXINFO* pTexInfo 
+			= GET_SINGLE(CTextureMgr)->GetTexture(L"Shadow",L"Shadow",int(m_tFrame.fStart));
+
+		if(pTexInfo == NULL)
+			return;
+
+		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+	//////////////////////////////////////////////////////////////////////////
+
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));

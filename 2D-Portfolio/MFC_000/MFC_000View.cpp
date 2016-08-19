@@ -239,9 +239,11 @@ void CMFC_000View::OnInitialUpdate()
 	
 	// 타일
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/Tile/tile%d.png", L"Tile", TEXTYPE_MULTI, 38)))
+		L"../Resource/Texture/Tile/Tile%03d.png", L"Tile", TEXTYPE_MULTI, 180)))
 		return;
 
+
+	//-----------------------------------------------------------------------------------------------
 	// 몬스터
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Stage/Monster/Monster0%d.png", L"Monster", TEXTYPE_MULTI, 3)))
@@ -295,7 +297,7 @@ void CMFC_000View::InitTile()
 				= D3DXVECTOR3(
 				j * TILESIZEX + (i % 2) * (TILESIZEX * 0.5f),
 				i * (TILESIZEY * 0.5f), 0);
-			m_vecTile[iIdx]->byDrawID = 2;
+			m_vecTile[iIdx]->byDrawID = 14;
 			m_vecTile[iIdx]->byOption = 0;
 			m_vecTile[iIdx]->TileSelect = false;
 

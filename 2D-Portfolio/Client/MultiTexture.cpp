@@ -44,7 +44,7 @@ HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName,
 			m_pTexInfo->ImgInfo.Height, m_pTexInfo->ImgInfo.MipLevels,
 			0, m_pTexInfo->ImgInfo.Format, D3DPOOL_MANAGED, 
 			D3DX_DEFAULT, D3DX_DEFAULT,
-			D3DCOLOR_ARGB(255, 0, 0, 0),
+			D3DCOLOR_ARGB(255, 255, 255, 255),
 			&m_pTexInfo->ImgInfo, NULL,
 			&m_pTexInfo->pTexture)))
 		{

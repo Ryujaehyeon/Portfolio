@@ -49,21 +49,23 @@ BOOL CPage1::OnInitDialog()
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 
 	TCHAR szTmp[128] = L"";
-	for(int i = 0; i < 38; ++i)
+	for(int i = 0; i < 180; ++i)
 	{
-		wsprintf(szTmp, L"Tile%d", i);
+		wsprintf(szTmp, L"Tile%03d", i);
 		m_Combo.AddString(szTmp);
 	}
 	m_Combo.SetCurSel(0);
 
+	//--------------------------------------------------
+	//---------------------------------------------------------
 	RECT rcPicture;
 
 	m_Picture.GetWindowRect(&rcPicture);
 	SetRect(&rcPicture, 0, 0, 150, 150);
 
-	for(int i = 0; i < 38; ++i)
+	for(int i = 0; i < 180; ++i)
 	{
-		wsprintf(szTmp, L"../Resource/Texture/TileBmp/Tile%d.bmp", i);
+		wsprintf(szTmp, L"../Resource/Texture/TileBmp/Tile%03d.bmp", i);
 		m_BitMap[i] = (HBITMAP)LoadImage(NULL, szTmp,
 			IMAGE_BITMAP, rcPicture.right, rcPicture.bottom, 
 			LR_LOADFROMFILE);
@@ -75,7 +77,6 @@ BOOL CPage1::OnInitDialog()
 	// 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
-
 void CPage1::OnCbnSelchangeCombo1()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -85,8 +86,6 @@ void CPage1::OnCbnSelchangeCombo1()
 	CMainFrame* pMainFrm = (CMainFrame*)AfxGetMainWnd();
 	pMainFrm->m_pMainView->m_iSelDrawID = iIndex;
 }
-
-
 
 void CPage1::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 {
@@ -179,3 +178,6 @@ void CPage1::OnBnClickedButton3()
 	((CMainFrame*)AfxGetMainWnd()
 		)->m_pMainView->Invalidate(FALSE);
 }
+
+
+

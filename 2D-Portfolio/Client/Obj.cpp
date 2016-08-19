@@ -158,7 +158,7 @@ D3DXVECTOR3 CObj::MouseInfoDX()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3((pt.x + CObj::g_tScroll.x) , ( pt.y + CObj::g_tScroll.y) , 0);
+	return D3DXVECTOR3((pt.x + CObj::g_tScroll.x) , ( pt.y + CObj::g_tScroll.y) , 0.f);
 }
 
 void CObj::Setlist( list<CObj*>* _TagetList )
