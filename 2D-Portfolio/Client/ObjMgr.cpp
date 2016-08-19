@@ -102,6 +102,7 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 		}
 	case OBJ_MONSTER:
 		{
+
 			map<wstring, list<CObj*>>::iterator iterMonster = 
 				m_MapObject.find(MONSTER);
 			// 키가 플레이어인 리스트가 없으면
@@ -276,24 +277,24 @@ SCENEID CObjMgr::Progress()
 			case OBJ_SKILL:
 			case OBJ_MONSTER:
 				if ((*iter2)->GetObjType() == OBJ_PLAYER)
-				{
-					m_MonsterCount = iterMonster->second.size();
-					if ((*iter2)->GetName() == SUMMONER &&
-						(*iter2)->GetName() == GRISWOLD &&
-						(*iter2)->GetName() == ANDARIEL &&
-						(*iter2)->GetName() == IZUAL &&
-						(*iter2)->GetName() == DIABLO)
-					{
-						++m_BossCount; 
-					}
-					
+				{					
 					if(iterMonster != m_MapObject.end())
 						(*iter2)->Setlist(
 						&m_MapObject.find(MONSTER)->second);
 				}
 				else if ((*iter2)->GetObjType() == OBJ_MONSTER)
 				{
-					int temp = iter->second.size();
+					// 몬스터 갯수를 측정후 몬스터 카운트에 넣어줌
+					m_MonsterCount = iterMonster->second.size();
+					if ((*iter2)->GetName() == SUMMONER ||
+						(*iter2)->GetName() == GRISWOLD ||
+						(*iter2)->GetName() == ANDARIEL ||
+						(*iter2)->GetName() == IZUAL ||
+						(*iter2)->GetName() == DIABLO)
+					{
+						if(m_BossCount < 1)
+							++m_BossCount; 
+					}
 
 					if(iterPlayer != m_MapObject.end())
 						(*iter2)->Setlist(

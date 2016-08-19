@@ -10,6 +10,7 @@ CMonster::CMonster( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjTyp
 	:CStageDynamic(Info, _ObjName, _ObjType)
 {
 		m_pObjKey = _ObjName;
+		m_pObjName = _ObjName;
 }
 
 CMonster::~CMonster(void)
@@ -249,7 +250,7 @@ void CMonster::CheckKey()
 
 		float fDistance = D3DXVec3Length(&m_Info.vDir);
 
-		// 0810 오전 AI 수정해야함
+		// 거리에 따라 다른 객체와 충돌했을 때 공격
 		if(fDistance < fRealDistance+20 && m_pMotion!=DEATH)
 		{
 			fWaitTime = 0.f;
@@ -284,7 +285,12 @@ void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 		if ((*iter)->GetCrash() == true)
 		{
 			// 해당 몬스터의 객체를 타겟팅
-			this->m_pTagetObj = (*iter);
+			m_pTagetObj = (*iter);
+			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
+
+			// 타겟을 보고 공격하게 방향을 정해줌
+			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
+
 			// 공격 모션 프레임이 끝날때 데미지가 적용
 			if (m_tFrame.fStart >= PLAYER_ATTACK-0.5f)
 			{
@@ -299,7 +305,7 @@ void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 				// 대상이 죽으면 타겟팅 해제
 				if ((*iter)->GetStatas().fHealthPoint <= 0)
 				{
-					this->m_pTagetObj = nullptr;
+					m_pTagetObj = nullptr;
 					m_sPlayInfo.fExp += (*iter)->GetStatas().fExp;
 				}
 			}
@@ -336,14 +342,30 @@ CObj* CMonster::Clone()
 
 void CMonster::FrameStatas()
 {
-	if (m_pMotion == ATTACK)
-		FrameMove(SKELETON_ATTACK, SKELETON_ATTACK);
-	else if(m_pMotion == STAND)
-		FrameMove(SKELETON_STAND, SKELETON_STAND);
-	else if (m_pMotion == RUN)
-		FrameMove(SKELETON_RUN, SKELETON_RUN);
-	else if (m_pMotion == DEATH)
-		FrameMove(SKELETON_DEATH, SKELETON_DEATH);
+	if(m_pObjName == SKELETON)
+	{
+		if (m_pMotion == ATTACK)
+			FrameMove(SKELETON_ATTACK, SKELETON_ATTACK);
+		else if(m_pMotion == STAND)
+			FrameMove(SKELETON_STAND, SKELETON_STAND);
+		else if (m_pMotion == RUN)
+			FrameMove(SKELETON_RUN, SKELETON_RUN);
+		else if (m_pMotion == DEATH)
+			FrameMove(SKELETON_DEATH, SKELETON_DEATH);
+	}
+	else if(m_pObjName == SUMMONER)
+	{
+		if (m_pMotion == ATTACK)
+			FrameMove(SUMMONER_ATTACK, SUMMONER_ATTACK);
+		else if(m_pMotion == STAND)
+			FrameMove(SUMMONER_STAND, SUMMONER_STAND);
+		else if (m_pMotion == RUN)
+			FrameMove(SUMMONER_RUN, SUMMONER_RUN);
+		else if (m_pMotion == DEATH)
+			FrameMove(SUMMONER_DEATH, SUMMONER_DEATH);
+		else if (m_pMotion == CAST)
+			FrameMove(SUMMONER_CAST, SUMMONER_CAST);
+	}
 }
 
 bool CMonster::VecterInRect( D3DXVECTOR3& _Taget )
@@ -589,8 +611,12 @@ void CMonster::Tageting()
 		// 리스트 내에 충돌하고 마우스가 몬스터 위에 있을때
 		if ((*iter)->GetCrash() == true)
 		{
+			// 해당 몬스터의 객체를 타겟팅
 			m_pTagetObj = (*iter);
 			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
+
+			// 타겟을 보고 공격하게 방향을 정해줌
+			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
 		}
 		else 
 			m_pTagetObj = this;

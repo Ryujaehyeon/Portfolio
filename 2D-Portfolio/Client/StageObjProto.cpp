@@ -107,11 +107,12 @@ HRESULT CStageObjProto::InitProtoInstance()
 	m_MapProto.insert(make_pair(L"Skeleton"
 		, new CMonster(objInfo, L"Skeleton", OBJ_MONSTER)));
 	// 2
-	m_MapProto.insert(make_pair(L"SandRaider"
-		, new CMonster(objInfo, L"SandRaider", OBJ_MONSTER)));
-	// 3
 	m_MapProto.insert(make_pair(L"Viper"
 		, new CMonster(objInfo, L"Viper", OBJ_MONSTER)));
+	// 3
+	m_MapProto.insert(make_pair(L"SandRaider"
+		, new CMonster(objInfo, L"SandRaider", OBJ_MONSTER)));
+
 
 	// 스테이지 보스몹
 	// 1

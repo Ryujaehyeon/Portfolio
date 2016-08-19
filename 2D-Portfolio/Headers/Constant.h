@@ -148,6 +148,7 @@ const float SKELETON_ATTACK			= 16.0f;
 const float SKELETON_DEATH			= 19.0f;
 
 const float SUMMONER_STAND			= 8.0f;
+const float SUMMONER_CAST			= 8.0f;
 const float SUMMONER_RUN			= 8.0f;
 const float SUMMONER_ATTACK			= 12.0f;
 const float SUMMONER_DEATH			= 16.0f;

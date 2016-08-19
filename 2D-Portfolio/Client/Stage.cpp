@@ -853,6 +853,86 @@ HRESULT CStage::Initialize()
 			ERR_MSG(g_hWnd, L"%d Stand R 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
+
+		//--------------------------------------------------------------------------------//
+		
+		//////////////////////////////////////////////////////////////////////
+		//						 SUMMONER Stand								//
+		//////////////////////////////////////////////////////////////////////
+		// 아래
+
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Stand/D/Stand_D_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Stand_D", SUMMONER_STAND)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Stand D 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Stand/LD/Stand_LD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Stand_LD", SUMMONER_STAND)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Stand LD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Stand/RD/Stand_RD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Stand_RD", SUMMONER_STAND)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Stand RD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Stand/U/Stand_U_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Stand_U", SUMMONER_STAND)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Stand U 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Stand/LU/Stand_LU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Stand_LU", SUMMONER_STAND)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Stand LU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Stand/RU/Stand_RU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Stand_RU", SUMMONER_STAND)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Stand RU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Stand/L/Stand_L_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Stand_L", SUMMONER_STAND)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Stand L 로드 실패" );
+			return E_FAIL;
+		}
+
+		// 오른쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Stand/R/Stand_R_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Stand_R", SUMMONER_STAND)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Stand R 로드 실패");
+			return E_FAIL;
+		}
+
+		//--------------------------------------------------------------------------------------//
 #pragma endregion Stand
 #pragma region Run
 		//////////////////////////////////////////////////////////////////////
@@ -928,6 +1008,84 @@ HRESULT CStage::Initialize()
 			ERR_MSG(g_hWnd, L"%d Run R 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
+
+		//////////////////////////////////////////////////////////////////////
+		//						 SUMMONER Run								//
+		//////////////////////////////////////////////////////////////////////
+		// 아래
+
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Run/D/Run_D_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Run_D", SUMMONER_RUN)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Run D 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Run/LD/Run_LD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Run_LD", SUMMONER_RUN)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Run LD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Run/RD/Run_RD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Run_RD", SUMMONER_RUN)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Run RD 로드 실패" );
+			return E_FAIL;
+		}
+
+		// 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Run/U/Run_U_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Run_U", SUMMONER_RUN)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Run U 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Run/LU/Run_LU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Run_LU", SUMMONER_RUN)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Run LU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Run/RU/Run_RU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Run_RU", SUMMONER_RUN)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Run RU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Run/L/Run_L_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Run_L", SUMMONER_RUN)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Run L 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Run/R/Run_R_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Run_R", SUMMONER_RUN)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Run R 로드 실패");
+			return E_FAIL;
+		}
+		//--------------------------------------------------------------------------------------//
+
 #pragma endregion Run
 #pragma region Attack
 		//////////////////////////////////////////////////////////////////////
@@ -1003,6 +1161,84 @@ HRESULT CStage::Initialize()
 			ERR_MSG(g_hWnd, L"%d Attack R 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
+
+		//////////////////////////////////////////////////////////////////////
+		//						 SUMMONER Attack							//
+		//////////////////////////////////////////////////////////////////////
+		// 아래
+
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Attack/D/Attack_D_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Attack_D", SUMMONER_ATTACK)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Attack D 로드 실패" );
+			return E_FAIL;
+		}
+
+		// 왼쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Attack/LD/Attack_LD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Attack_LD", SUMMONER_ATTACK)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Attack LD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Attack/RD/Attack_RD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Attack_RD", SUMMONER_ATTACK)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Attack RD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Attack/U/Attack_U_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Attack_U", SUMMONER_ATTACK)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Attack U 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Attack/LU/Attack_LU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Attack_LU", SUMMONER_ATTACK)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Attack LU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Attack/RU/Attack_RU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Attack_RU", SUMMONER_ATTACK)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Attack RU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Attack/L/Attack_L_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Attack_L", SUMMONER_ATTACK)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Attack L 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Attack/R/Attack_R_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Attack_R", SUMMONER_ATTACK)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Attack R 로드 실패" );
+			return E_FAIL;
+		}
+		//--------------------------------------------------------------------------------------//
+
 #pragma endregion Attack
 #pragma region Death
 		//////////////////////////////////////////////////////////////////////
@@ -1078,6 +1314,85 @@ HRESULT CStage::Initialize()
 			ERR_MSG(g_hWnd, L"%d Death R 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
+
+
+		//////////////////////////////////////////////////////////////////////
+		//						 SUMMONER Attack							//
+		//////////////////////////////////////////////////////////////////////
+		// 아래
+
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Death/D/Death_D_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Death_D", SUMMONER_DEATH)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Death D 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Death/LD/Death_LD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Death_LD", SUMMONER_DEATH)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Death LD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Death/RD/Death_RD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Death_RD", SUMMONER_DEATH)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Death RD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Death/U/Death_U_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Death_U", SUMMONER_DEATH)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Death U 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Death/LU/Death_LU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Death_LU", SUMMONER_DEATH)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Death LU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Death/RU/Death_RU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Death_RU", SUMMONER_DEATH)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Death RU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Death/L/Death_L_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Death_L", SUMMONER_DEATH)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Death L 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Death/R/Death_R_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Death_R", SUMMONER_DEATH)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Death R 로드 실패");
+			return E_FAIL;
+		}
+		//--------------------------------------------------------------------------------------//
+
 #pragma endregion Death
 	}
 #pragma endregion Monster
@@ -1332,6 +1647,7 @@ HRESULT CStage::Initialize()
 SCENEID CStage::Progress()
 {
 	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
+	
 	if(GET_SINGLE(CObjMgr)->GetMonsterCnt() < 10)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
@@ -1340,21 +1656,17 @@ SCENEID CStage::Progress()
 			ERR_MSG(g_hWnd, L"SKELETON 몬스터 객체 생성 실패");
 		}
 	}
-	//// 아직 몬스터 텍스쳐 추가 코드가 없음
-	//if(GET_SINGLE(CObjMgr)->GetBossCnt() < 1)
-	//{
-	//	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
-	//		, SUMMONER)))
-	//	{
-	//		ERR_MSG(g_hWnd, L"SUMMONER 몬스터 객체 생성 실패");
-	//	}
-
-	//	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
-	//		, GRISWOLD)))
-	//	{
-	//		ERR_MSG(g_hWnd, L"SUMMONER 몬스터 객체 생성 실패");
-	//	}
-	//}
+	// 아직 몬스터 텍스쳐 추가 코드가 없음
+	if(GET_SINGLE(CObjMgr)->GetBossCnt() < 1)
+	{
+		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
+			, SUMMONER)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER 몬스터 객체 생성 실패");
+		}
+		
+	}
+	
 
 	// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화
 	if(iScene > SCENEID_NONPASS)
