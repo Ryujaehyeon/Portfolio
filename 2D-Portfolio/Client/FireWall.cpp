@@ -27,8 +27,8 @@ HRESULT CFireWall::Initialize()
 
 	m_vTagetInfo = m_Info.vPos;
 
-	m_Info.fCX = 64;
-	m_Info.fCY = 64;
+	m_Info.fCX = 150;
+	m_Info.fCY = 150;
 
 
 	m_sPlayInfo.fExp = 0;
@@ -107,7 +107,7 @@ void CFireWall::Render()
 		return;
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
-		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
+		(pTexInfo->ImgInfo.Height * 0.7f)+CObj::g_tScroll.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
