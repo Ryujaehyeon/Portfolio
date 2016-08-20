@@ -189,7 +189,7 @@ SCENEID CUIObj::Progress()
 	
 	if (m_SkillTree == true)
 	{
-		if (m_pObjKey == L"BoneSpearButton" && PtInRect(&RealRect(), MouseInfo()) )
+		if (m_pObjKey == L"BoneSpearButton" && PtInRect(&RealRect(), UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -211,7 +211,7 @@ SCENEID CUIObj::Progress()
 				}
 			}
 		}
-		else if(m_pObjKey == L"FireWallButton" && PtInRect(&RealRect(), MouseInfo()) )
+		else if(m_pObjKey == L"FireWallButton" && PtInRect(&RealRect(), UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -234,7 +234,7 @@ SCENEID CUIObj::Progress()
 				}
 			}
 		}
-		else if(m_pObjKey == L"BlizzardButton" && PtInRect(&RealRect(), MouseInfo()) )
+		else if(m_pObjKey == L"BlizzardButton" && PtInRect(&RealRect(), UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -360,8 +360,8 @@ void CUIObj::Render()
 			float(m_Info.fCX * VelueToPercentage(m_pObjKey)), 
 			float(m_Info.fCY)
 		};
-		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
-			(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
+		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f),
+			(pTexInfo->ImgInfo.Height * 0.5), 0);
 
 		if( VelueToPercentage(m_pObjKey) >= 0.f && m_pObjKey == L"HPBar")
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -376,8 +376,8 @@ void CUIObj::Render()
 			float(m_Info.fCX), 
 			float(m_Info.fCY)
 		};
-		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
-			(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
+		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f),
+			(pTexInfo->ImgInfo.Height * 0.5), 0);
 
 		if (VelueToPercentage(L"HPBar")>= 0.f)
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -569,7 +569,7 @@ void CUIObj::CheckKey()
 }
 
 
-POINT CUIObj::MouseInfo()
+POINT CUIObj::UIMouseInfo()
 {
 	POINT pt;
 	GetCursorPos(&pt);

@@ -201,6 +201,19 @@ void CPlayer::Render()
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	if (m_pMotion == CAST)
+	{
+		const TEXINFO* pTexInfo 
+			= GET_SINGLE(CTextureMgr)->GetTexture(L"CastEffect",L"CastEffect",int(m_tFrame.fStart));
+
+		if(pTexInfo == NULL)
+			return;
+
+		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 }
 
 

@@ -22,7 +22,8 @@ public:
 	virtual void Release();
 	virtual CObj* Clone();
 public:
-	virtual POINT MouseInfo();
+	// UI 충돌 확인을 위해 스크롤 값이 반영되지 않은 마우스 좌표획득 함수
+	virtual POINT UIMouseInfo();
 	RECT RealRect()
 	{
 		RECT rc =

@@ -1559,6 +1559,16 @@ HRESULT CStage::Initialize()
 			}
 #pragma endregion Blizzard
 		}
+#pragma region CastEffect
+		// CastEffect
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Skill/CastEffect/Effect_%02d.png",
+			L"CastEffect", TEXTYPE_MULTI, L"CastEffect", 16)))
+		{
+			ERR_MSG(g_hWnd, L"CastEffect 로드 실패");
+			return E_FAIL;
+		}
+#pragma endregion CastEffect
 #pragma endregion AddTexture
 	}
 #pragma endregion SkillProto
