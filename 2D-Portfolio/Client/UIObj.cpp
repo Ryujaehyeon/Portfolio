@@ -583,11 +583,6 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 
 	TCHAR* NumberFont[] = {FONT0, FONT1, FONT2, FONT3, FONT4, FONT5, FONT6, FONT7, FONT8, FONT9 };
 
-	//DebugLog(L"%d, %d, %d", 
-	//	((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel, 
-	//	((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel/10, 
-	//	temp);
-
 	if (m_pObjKey == L"BoneSpearButton")
 	{
 		for (list<CObj*>::iterator iter = m_PlayerData->begin();
@@ -621,10 +616,6 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 				}
-				DebugLog(L"%d, %d, %d", 
-					((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel, 
-					((CPlayer*)(*iter))->GetSkillTree().sBoneSpear.iLevel/10,
-					temp);
 			}
 		}
 	}
@@ -661,11 +652,6 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 				}
-
-				DebugLog(L"%d, %d, %d", 
-					((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel, 
-					((CPlayer*)(*iter))->GetSkillTree().sFireWall.iLevel/10,
-					temp);
 			}
 		}
 	}

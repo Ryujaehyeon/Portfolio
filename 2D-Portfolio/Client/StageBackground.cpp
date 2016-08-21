@@ -68,12 +68,6 @@ void CStageBackGround::Render()
 	D3DXMATRIX matTrans;
 	int iSize = m_vecTile.size();
 
-	//DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", 
-	//	CObj::g_tScroll.x, 
-	//	CObj::g_tScroll.y, 
-	//	m_vecTile[0]->vPos.x, 
-	//	m_vecTile[0]->vPos.y);
-
 	for(int i = 0; i < iSize; ++i)
 	{
 		const TEXINFO* pTexInfo = 

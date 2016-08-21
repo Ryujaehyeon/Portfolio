@@ -48,11 +48,11 @@ HRESULT CMonster::Initialize()
 	m_bSelect = true;
 	m_eLayer = LAYER_OBJECT;
 	m_vMovePoint = m_Info.vPos;
-	m_pStateKey = L"FieldStand_D";
-	m_pMotion = L"FieldStand";
+	m_pStateKey = L"Stand_D";
+	m_pMotion = L"Stand";
 	m_Crash = false;
 	m_iDir = rand()%8;
-
+	m_fWaitTime = 0.f;
 	return S_OK;
 }
 
@@ -97,7 +97,7 @@ SCENEID CMonster::Progress()
 	m_fChaterDirect = m_iDegree;
 
 	// 이동거리
-	if ( m_pMotion == RUN)
+	if ( m_pMotion == RUN && m_pMotion != CAST)
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.001f);
 
 	// 자신의 위치에서 목표지점거리보다 이동거리가 크면 자신의 위치를 목표지점으로 지정
@@ -170,6 +170,19 @@ void CMonster::Render()
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	if (m_pMotion == CAST)
+	{
+		const TEXINFO* pTexInfo 
+			= GET_SINGLE(CTextureMgr)->GetTexture(L"CastEffect",L"CastEffect",int(m_tFrame.fStart));
+
+		if(pTexInfo == NULL)
+			return;
+
+		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 }
 void CMonster::CheckKey()
 {
@@ -177,9 +190,13 @@ void CMonster::CheckKey()
 	static float fTime = 0.0f;
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
+	// 제어할 캐릭터 선택
+	static float fTimeSkill = 0.0f;
+	fTimeSkill += GET_SINGLE(CTimeMgr)->DeltaTime();
+
 	// 서있을때 몇초후 걷게할지
-	static float fWaitTime = 0.f;
-	fWaitTime += GET_SINGLE(CTimeMgr)->DeltaTime();
+	
+	m_fWaitTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
 	// 이동할 거리
 	float moveLength = rand()%100+1;
@@ -203,46 +220,6 @@ void CMonster::CheckKey()
 	// 3초에 한번 방향과 이동을 정함, 충돌하지 않았을때
 	if(m_Crash == false)
 	{
-		if (m_tFrame.fStart <= 0)
-			m_iDir = rand()%8;
-				
-		switch(m_iDir)
-		{
-			//  방향을 정함
-		case 0:
-			// RD
-				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y + moveLength, 0);
-			break;												   
-		case 1:	
-			// RU
-				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y - moveLength, 0);
-			break;												   
-		case 2:	
-			// LD
-				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y + moveLength, 0);
-			break;													 		
-		case 3:	
-			// LU
-				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y - moveLength, 0);
-			break;
-		case 4:	
-			// L
-				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y, 0);
-			break;
-		case 5:	
-			// R
-				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y, 0);
-			break;
-		case 6:	
-			// U
-				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y - moveLength, 0);
-			break;
-		case 7:	
-			// D
-				m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y + moveLength, 0);
-			break;
-		}
-		
 		// 서기
 		if( m_pMotion == STAND) 
 		{	
@@ -252,8 +229,52 @@ void CMonster::CheckKey()
 			// 이동할 지점을 바라보는 방향
 			m_Info.vDir = m_vTagetInfo - m_Info.vPos;
 
-			if (int(fWaitTime) > rand()%3)
+			if (m_fWaitTime > 3.f)
+			{
 				m_pMotion = RUN;
+				m_fWaitTime = 0.f;
+			}
+
+			if(m_pMotion == RUN && m_vTagetInfo == m_Info.vPos)
+			{
+				m_iDir = rand()%8;
+				switch(m_iDir)
+				{
+					//  방향을 정함
+				case 0:
+					// RD
+					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y + moveLength, 0);
+					break;												   
+				case 1:	
+					// RU
+					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y - moveLength, 0);
+					break;												   
+				case 2:	
+					// LD
+					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y + moveLength, 0);
+					break;													 		
+				case 3:	
+					// LU
+					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y - moveLength, 0);
+					break;
+				case 4:	
+					// L
+					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x - moveLength, m_Info.vPos.y, 0);
+					break;
+				case 5:	
+					// R
+					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y, 0);
+					break;
+				case 6:	
+					// U
+					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y - moveLength, 0);
+					break;
+				case 7:	
+					// D
+					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x , m_Info.vPos.y + moveLength, 0);
+					break;
+				}
+			}
 		}
 		// 걷기
 		if( m_pMotion == RUN )
@@ -263,7 +284,6 @@ void CMonster::CheckKey()
 			if ( m_vTagetInfo == m_Info.vPos )
 			{
 				// 도달했을 시 서있는 상태
-				fWaitTime = 0.0f;
 				m_pMotion = STAND;
 			}
 		}
@@ -282,38 +302,111 @@ void CMonster::CheckKey()
 		// 바라보는 방향
 		//m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 		Tageting();
-		float fRealDistance = (m_pTagetObj->Setinfo()->fCX * 0.5f) +
+		float fDistance = (m_pTagetObj->Setinfo()->fCX * 0.5f) +
 						  (m_Info.fCX * 0.5f);
 
-		float fDistance = D3DXVec3Length(&m_Info.vDir);
+		float fRealDistance = D3DXVec3Length(&m_Info.vDir);
 
-		// 거리에 따라 다른 객체와 충돌했을 때 공격
-		if(fDistance < fRealDistance+20 && m_pMotion!=DEATH)
+		if (m_pObjName == SUMMONER)
 		{
-			fWaitTime = 0.f;
-			m_pMotion = ATTACK;
-			FuncAttack(m_pTagetObj, this);
-		}
-		else if(fDistance < fRealDistance*3.f)
-		{
+			// 거리가 기본공격 사거리보다 멀고 3배의 거리보다 가까우면 스킬사용
+			if(fDistance * 1.2f < fRealDistance && m_pMotion != DEATH)
+			{
+					fTimeSkill = 0.f;
+					m_pMotion = CAST;
+					MonSKill();
+			}
+			// 거리가 기본공격 사거리보다 가까우면
+			else if (fDistance * 1.2f > fRealDistance)
+			{
+				m_pMotion = ATTACK;
+				FuncAttack();
+			}
+			else if(fDistance * 3.0f < fRealDistance)
+			{
+				// 기본공격 사거리인 충돌거리보다 멀면 쫓아간다.
 				m_pMotion = RUN;
+			}
 		}
-		else if(fWaitTime > 5.f)
+		// 거리에 따라 다른 객체와 충돌했을 때 공격(자신의 크기보다 1.2배는 공격 사거리)
+		else if(fDistance * 1.2f > fRealDistance && m_pMotion != DEATH)
 		{
-			if(int(m_tFrame.fStart) == int(m_tFrame.fLast))
+			m_pMotion = ATTACK;
+			FuncAttack();
+		}
+		else if(fDistance < fRealDistance)
+		{
+			// 기본공격 사거리인 충돌거리보다 멀면 쫓아간다.
+			m_pMotion = RUN;
+		}
+		
+
+		if(fDistance * 5.f < fRealDistance)
+		{
+			// 충돌거리의 5배의 거리보다 크면 충돌상태를 푼다
+			if(int(m_tFrame.fStart) < 0.f )
+				m_pMotion = STAND;
+			m_Crash = false;
+			m_pTagetObj = NULL;
+		}
+		if(m_pMotion == RUN && m_fWaitTime > 5.f)
+		{
+			// 쫓아가는 상태에서 5초 이상 지나면 충돌상태를 푼다
+			m_fWaitTime = 0.f;
+			if(int(m_tFrame.fStart) < 0.f )
 				m_pMotion = STAND;
 			m_Crash = false;
 			m_pTagetObj = NULL;
 		}
 	}
 
-	//if (m_vMovePoint.x <= 0 || m_vMovePoint.x >= WINSIZEX ||
-	//	m_vMovePoint.y <= 0 || m_vMovePoint.y >= WINSIZEY)
-	//	m_iDir = rand()%8;
-
+	if (m_Info.vPos.x <= 30.f || m_Info.vPos.x >= 1730 &&
+		m_Info.vPos.y <= 30.f || m_Info.vPos.y >= 1200)
+	{
+		m_pMotion =STAND;
+		m_vTagetInfo == m_Info.vPos;
+	}
 }
 
-void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
+void CMonster::MonSKill()
+{
+	list<CObj*>::iterator iter = m_pTagetList->begin();
+	for (;iter != m_pTagetList->end(); ++iter)
+	{
+		// 리스트 내에 충돌한 녀석이 있을때
+		if ((*iter)->GetCrash() == true)
+		{
+			// 해당 객체를 타겟팅
+			m_pTagetObj = (*iter);
+			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
+
+			// 타겟을 보고 공격하게 방향을 정해줌
+			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
+
+			// 공격 모션 프레임이 끝날때 데미지가 적용
+			if (m_tFrame.fStart <= 0.f)
+			{
+				// 몬스터 방어력이 플레이어 공격력보다 크면 데미지 1
+				if((*iter)->GetStatas().fDefence >= m_sPlayInfo.fAttack)
+					(*iter)->SetStatas()->fHealthPoint -= 1;
+				// 플레이어 공격력이 더 크면 몬스터 방어력을 뺀 나머지 만큼의 데미지만 적용 
+				else if((*iter)->GetStatas().fDefence < m_sPlayInfo.fAttack)
+					(*iter)->SetStatas()->fHealthPoint -= 
+					m_sPlayInfo.fAttack - (*iter)->GetStatas().fDefence;
+
+				// 대상이 죽으면 타겟팅 해제
+				if ((*iter)->GetStatas().fHealthPoint <= 0)
+				{
+					m_pTagetObj = nullptr;
+					m_sPlayInfo.fExp += (*iter)->GetStatas().fExp;
+				}
+			}
+		}
+	}
+}
+
+
+void CMonster::FuncAttack()
 {
 	list<CObj*>::iterator iter = m_pTagetList->begin();
 	for (;iter != m_pTagetList->end(); ++iter)
@@ -329,7 +422,7 @@ void CMonster::FuncAttack(CObj* _pDest, CObj* _pSour)
 			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
 
 			// 공격 모션 프레임이 끝날때 데미지가 적용
-			if (m_tFrame.fStart >= PLAYER_ATTACK-0.5f)
+			if (m_tFrame.fStart <= 0.f)
 			{
 				// 몬스터 방어력이 플레이어 공격력보다 크면 데미지 1
 				if((*iter)->GetStatas().fDefence >= m_sPlayInfo.fAttack)
@@ -422,43 +515,43 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
 		{
-			m_pStateKey = L"FieldStand_RD";
+			m_pStateKey = L"Stand_RD";
 		}
 		// 아래 D
 		if (m_fChaterDirect >= 247.5f && m_fChaterDirect <= 292.5f)
 		{
-			m_pStateKey = L"FieldStand_D";
+			m_pStateKey = L"Stand_D";
 		}
 		// 왼쪽 아래 LD
 		if (m_fChaterDirect >= 202.5f && m_fChaterDirect <= 247.5f)
 		{
-			m_pStateKey = L"FieldStand_LD";
+			m_pStateKey = L"Stand_LD";
 		}
 		// 왼쪽 L
 		if (m_fChaterDirect >= 157.5f && m_fChaterDirect <= 202.5f)
 		{
-			m_pStateKey = L"FieldStand_L";
+			m_pStateKey = L"Stand_L";
 		}
 		// 왼쪽 위 LU
 		if (m_fChaterDirect >= 112.5f && m_fChaterDirect <= 157.5f)
 		{
-			m_pStateKey = L"FieldStand_LU";
+			m_pStateKey = L"Stand_LU";
 		}
 		// 위 U
 		if (m_fChaterDirect >= 67.5f && m_fChaterDirect <= 112.5f)
 		{
-			m_pStateKey = L"FieldStand_U";
+			m_pStateKey = L"Stand_U";
 		}
 		// 오른쪽 R
 		if (m_fChaterDirect >= 0 &&  m_fChaterDirect <= 22.5f
 			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
-			m_pStateKey = L"FieldStand_R";
+			m_pStateKey = L"Stand_R";
 		}
 		// 오른쪽 위 RU
 		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
 		{
-			m_pStateKey = L"FieldStand_RU";
+			m_pStateKey = L"Stand_RU";
 		}
 	}
 	else if (_pObjStatas == RUN)
@@ -634,6 +727,49 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
 		{
 			m_pStateKey = L"Death_RU";
+		}
+	}
+	else if (_pObjStatas == CAST)
+	{
+		// 오른쪽 아래 RD
+		{
+			m_pStateKey = L"Cast_RD";
+		}
+		// 아래 D
+		if (m_fChaterDirect >= 247.5f && m_fChaterDirect <= 292.5f)
+		{
+			m_pStateKey = L"Cast_D";
+		}
+		// 왼쪽 아래 LD
+		if (m_fChaterDirect >= 202.5f && m_fChaterDirect <= 247.5f)
+		{
+			m_pStateKey = L"Cast_LD";
+		}
+		// 왼쪽 L
+		if (m_fChaterDirect >= 157.5f && m_fChaterDirect <= 202.5f)
+		{
+			m_pStateKey = L"Cast_L";
+		}
+		// 왼쪽 위 LU
+		if (m_fChaterDirect >= 112.5f && m_fChaterDirect <= 157.5f)
+		{
+			m_pStateKey = L"Cast_LU";
+		}
+		// 위 U
+		if (m_fChaterDirect >= 67.5f && m_fChaterDirect <= 112.5f)
+		{
+			m_pStateKey = L"Cast_U";
+		}
+		// 오른쪽 R
+		if (m_fChaterDirect >= 0 &&  m_fChaterDirect <= 22.5f
+			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
+		{			
+			m_pStateKey = L"Cast_R";
+		}
+		// 오른쪽 위 RU
+		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
+		{
+			m_pStateKey = L"Cast_RU";
 		}
 	}
 }

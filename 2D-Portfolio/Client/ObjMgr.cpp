@@ -419,7 +419,11 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 
 		// 실제 거리, 객체간의 중심점간의 거리
 		float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
-		if(fDistance > fRealDistance)
+
+		// fDistance * 3.f는 자신의 크기보다 실제로 충돌하는 크기를 늘려서
+		// 다른대상을 인지하는 거리로 삼아 이 거리 안으로 들어오면 충돌했다 판단하고
+		// 객체에 충돌했다고 넘겨줌으로 객체내에서 충돌로 인한 AI작동을 하게 함
+		if(fDistance * 3.f > fRealDistance)
 		{
 			if(_pSour->GetObjType() != _pDest->GetObjType())
 			{

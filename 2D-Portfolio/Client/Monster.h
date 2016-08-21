@@ -7,6 +7,7 @@ class CMonster :
 protected:
 	D3DXVECTOR3 m_vMovePoint;
 	int m_iDir;
+	float m_fWaitTime;
 public:
 	void FrameStatas();
 	// D3DVector를 가져와 POINT변환 후 체크
@@ -14,10 +15,11 @@ public:
 	void SetMotionDirect(TCHAR* _MotionDirect);
 	// 취할 행동의 키값을 넣으면 _pObjKey를 m_pObjKey에 넣는다.
 	void DirectAction( TCHAR* _pObjStatas );
-	void FuncAttack(CObj* _pDest, CObj* _pSour);
+	void FuncAttack();
 	void ExpAcquired();
 	virtual void RegenTime();
 	virtual void Tageting();
+	virtual void MonSKill();
 
 public:
 	virtual HRESULT Initialize();

@@ -154,8 +154,8 @@ const float SUMMONER_ATTACK			= 12.0f;
 const float SUMMONER_DEATH			= 16.0f;
 
 // 모션 키워드
-TCHAR* const STAND					= L"FieldStand";
-TCHAR* const WALK					= L"FieldWalk";
+TCHAR* const STAND					= L"Stand";
+TCHAR* const WALK					= L"Walk";
 TCHAR* const RUN					= L"Run";
 TCHAR* const ATTACK					= L"Attack";
 TCHAR* const DEATH					= L"Death";

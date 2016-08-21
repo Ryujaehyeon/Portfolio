@@ -86,8 +86,8 @@ HRESULT CPlayer::Initialize()
 	m_bSelect = true;
 	m_eLayer = LAYER_OBJECT;
 	m_bRun = true;
-	m_pStateKey = L"FieldStand_D";
-	m_pMotion = L"FieldStand";
+	m_pStateKey = L"Stand_D";
+	m_pMotion = L"Stand";
 	m_SkillActiveName = NULL;
 	m_fAngle = D3DXToRadian(280.f);
 	m_pTagetObj = nullptr;
@@ -96,9 +96,12 @@ HRESULT CPlayer::Initialize()
 
 SCENEID CPlayer::Progress()
 {
-	//DebugLogClear;
-	//DebugLog(L"%d, %f, %f", m_sPlayInfo.iLevel, m_sPlayInfo.fExp, m_sPlayInfo.fMaxExp);
-	//DebugLog(L"%f, %f", MouseInfoDX().x, MouseInfoDX().y);
+	DebugLogClear;
+	DebugLog(L"마우스 : %8.3f, %8.3f \n좌표 : %5.1f, %5.1f \n스크롤 : %5.1f, %5.1f", 
+		m_vMousePos.x, m_vMousePos.y,
+		m_Info.vPos.x, m_Info.vPos.y,
+		CUIObj::g_tScroll.x,CUIObj::g_tScroll.y);
+
 	// 시간
 	static float fTime = 0.0f;
 	// 시간값 누적
@@ -219,6 +222,8 @@ void CPlayer::Render()
 
 void CPlayer::CheckKey()
 {
+
+
 	// 시간
 	static float fTime = 0.0f;
 	// 시간값 누적
@@ -404,43 +409,43 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
-			m_pStateKey = L"FieldStand_RD";
+			m_pStateKey = L"Stand_RD";
 		}
 		// 아래 D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
-			m_pStateKey = L"FieldStand_D";
+			m_pStateKey = L"Stand_D";
 		}
 		// 왼쪽 아래 LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
-			m_pStateKey = L"FieldStand_LD";
+			m_pStateKey = L"Stand_LD";
 		}
 		// 왼쪽 L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
-			m_pStateKey = L"FieldStand_L";
+			m_pStateKey = L"Stand_L";
 		}
 		// 왼쪽 위 LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
-			m_pStateKey = L"FieldStand_LU";
+			m_pStateKey = L"Stand_LU";
 		}
 		// 위 U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
-			m_pStateKey = L"FieldStand_U";
+			m_pStateKey = L"Stand_U";
 		}
 		// 오른쪽 R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
-			m_pStateKey = L"FieldStand_R";
+			m_pStateKey = L"Stand_R";
 		}
 		// 오른쪽 위 RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
-			m_pStateKey = L"FieldStand_RU";
+			m_pStateKey = L"Stand_RU";
 		}
 	}
 	// 걷기
@@ -449,43 +454,43 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
-			m_pStateKey = L"FieldWalk_RD";
+			m_pStateKey = L"Walk_RD";
 		}
 		// 아래 D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
-			m_pStateKey = L"FieldWalk_D";
+			m_pStateKey = L"Walk_D";
 		}
 		// 왼쪽 아래 LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
-			m_pStateKey = L"FieldWalk_LD";
+			m_pStateKey = L"Walk_LD";
 		}
 		// 왼쪽 L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
-			m_pStateKey = L"FieldWalk_L";
+			m_pStateKey = L"Walk_L";
 		}
 		// 왼쪽 위 LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
-			m_pStateKey = L"FieldWalk_LU";
+			m_pStateKey = L"Walk_LU";
 		}
 		// 위 U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
-			m_pStateKey = L"FieldWalk_U";
+			m_pStateKey = L"Walk_U";
 		}
 		// 오른쪽 R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
-			m_pStateKey = L"FieldWalk_R";
+			m_pStateKey = L"Walk_R";
 		}
 		// 오른쪽 위 RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
-			m_pStateKey = L"FieldWalk_RU";
+			m_pStateKey = L"Walk_RU";
 		}
 	}
 	else if (_pObjStatas == RUN)
@@ -765,6 +770,7 @@ void CPlayer::ScrollChange()
 {
 	if(m_pMotion != ATTACK && m_pMotion != CAST && m_pObjName == PLAYER)
 	{
+		m_Info.vPos;
 		CObj::g_tScroll += m_Info.vDir;
 		if(CObj::g_tScroll.x < 0)
 			CObj::g_tScroll.x -= m_Info.vDir.x;
@@ -774,17 +780,6 @@ void CPlayer::ScrollChange()
 			CObj::g_tScroll.x -= m_Info.vDir.x;
 		if (CObj::g_tScroll.y > 732)
 			CObj::g_tScroll.y -= m_Info.vDir.y;
-
-		//DebugLog(L"%5.1f, %5.1f, %5.1f, %5.1f", m_Info.vPos.x, m_Info.vPos.y, m_Info.vCenter.x,m_Info.vCenter.y);
-
-		//if(CObj::g_tScroll.x > 0.f)
-		//	CObj::g_tScroll.x += m_Info.vDir.x;
-		// if(CObj::g_tScroll.x < 1730.f)
-		//	CObj::g_tScroll.x -= m_Info.vDir.x;
-		// if (CObj::g_tScroll.y > 0.f )
-		//	CObj::g_tScroll.y += m_Info.vDir.y;
-		// if(CObj::g_tScroll.y < 1730.f)
-		//	CObj::g_tScroll.y -= m_Info.vDir.y;
 	}
 }
 

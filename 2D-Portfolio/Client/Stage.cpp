@@ -403,8 +403,8 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		// 아래
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldStand/D/FieldStand_D_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldStand_D", PLAYER_STAND)))
+			L"../Resource/Texture/Stage/Player/Stand/D/Stand_D_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Stand_D", PLAYER_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand D 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -412,8 +412,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽 아래
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldStand/LD/FieldStand_LD_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldStand_LD", PLAYER_STAND)))
+			L"../Resource/Texture/Stage/Player/Stand/LD/Stand_LD_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Stand_LD", PLAYER_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand LD 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -421,8 +421,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽 아래
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldStand/RD/FieldStand_RD_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldStand_RD", PLAYER_STAND)))
+			L"../Resource/Texture/Stage/Player/Stand/RD/Stand_RD_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Stand_RD", PLAYER_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand RD 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -430,8 +430,8 @@ HRESULT CStage::Initialize()
 
 		// 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldStand/U/FieldStand_U_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldStand_U", PLAYER_STAND)))
+			L"../Resource/Texture/Stage/Player/Stand/U/Stand_U_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Stand_U", PLAYER_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand U 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -439,8 +439,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldStand/LU/FieldStand_LU_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldStand_LU", PLAYER_STAND)))
+			L"../Resource/Texture/Stage/Player/Stand/LU/Stand_LU_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Stand_LU", PLAYER_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand LU 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -448,8 +448,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldStand/RU/FieldStand_RU_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldStand_RU", PLAYER_STAND)))
+			L"../Resource/Texture/Stage/Player/Stand/RU/Stand_RU_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Stand_RU", PLAYER_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand RU 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -457,8 +457,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldStand/L/FieldStand_L_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldStand_L", PLAYER_STAND)))
+			L"../Resource/Texture/Stage/Player/Stand/L/Stand_L_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Stand_L", PLAYER_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand L 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -466,8 +466,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldStand/R/FieldStand_R_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldStand_R", PLAYER_STAND)))
+			L"../Resource/Texture/Stage/Player/Stand/R/Stand_R_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Stand_R", PLAYER_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand R 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -479,8 +479,8 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		// 아래
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldWalk/D/FieldWalk_D_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldWalk_D", PLAYER_WALK)))
+			L"../Resource/Texture/Stage/Player/Walk/D/Walk_D_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Walk_D", PLAYER_WALK)))
 		{
 			ERR_MSG(g_hWnd, L"%d Walk D 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -488,8 +488,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽 아래
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldWalk/LD/FieldWalk_LD_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldWalk_LD", PLAYER_WALK)))
+			L"../Resource/Texture/Stage/Player/Walk/LD/Walk_LD_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Walk_LD", PLAYER_WALK)))
 		{
 			ERR_MSG(g_hWnd, L"%d Walk LD 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -497,8 +497,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽 아래
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldWalk/RD/FieldWalk_RD_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldWalk_RD", PLAYER_WALK)))
+			L"../Resource/Texture/Stage/Player/Walk/RD/Walk_RD_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Walk_RD", PLAYER_WALK)))
 		{
 			ERR_MSG(g_hWnd, L"%d Walk RD 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -506,8 +506,8 @@ HRESULT CStage::Initialize()
 
 		// 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldWalk/U/FieldWalk_U_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldWalk_U", PLAYER_WALK)))
+			L"../Resource/Texture/Stage/Player/Walk/U/Walk_U_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Walk_U", PLAYER_WALK)))
 		{
 			ERR_MSG(g_hWnd, L"%d Walk U 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -515,8 +515,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldWalk/LU/FieldWalk_LU_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldWalk_LU", PLAYER_WALK)))
+			L"../Resource/Texture/Stage/Player/Walk/LU/Walk_LU_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Walk_LU", PLAYER_WALK)))
 		{
 			ERR_MSG(g_hWnd, L"%d Walk LU 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -524,8 +524,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldWalk/RU/FieldWalk_RU_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldWalk_RU", PLAYER_WALK)))
+			L"../Resource/Texture/Stage/Player/Walk/RU/Walk_RU_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Walk_RU", PLAYER_WALK)))
 		{
 			ERR_MSG(g_hWnd, L"%d Walk RU 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -533,8 +533,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldWalk/L/FieldWalk_L_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldWalk_L", PLAYER_WALK)))
+			L"../Resource/Texture/Stage/Player/Walk/L/Walk_L_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Walk_L", PLAYER_WALK)))
 		{
 			ERR_MSG(g_hWnd, L"%d Walk L 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -542,8 +542,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Player/FieldWalk/R/FieldWalk_R_%02d.png",
-			Charter[i], TEXTYPE_MULTI, L"FieldWalk_R", PLAYER_WALK)))
+			L"../Resource/Texture/Stage/Player/Walk/R/Walk_R_%02d.png",
+			Charter[i], TEXTYPE_MULTI, L"Walk_R", PLAYER_WALK)))
 		{
 			ERR_MSG(g_hWnd, L"%d Walk R 로드 실패" , Charter[i]);
 			return E_FAIL;
@@ -791,8 +791,8 @@ HRESULT CStage::Initialize()
 		// 아래
 
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Monster/Skeleton/FieldStand/D/FieldStand_D_%02d.png",
-			Monster[i], TEXTYPE_MULTI, L"FieldStand_D", SKELETON_STAND)))
+			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/D/Stand_D_%02d.png",
+			Monster[i], TEXTYPE_MULTI, L"Stand_D", SKELETON_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand D 로드 실패" , Monster[i]);
 			return E_FAIL;
@@ -800,8 +800,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽 아래
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Monster/Skeleton/FieldStand/LD/FieldStand_LD_%02d.png",
-			Monster[i], TEXTYPE_MULTI, L"FieldStand_LD", SKELETON_STAND)))
+			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/LD/Stand_LD_%02d.png",
+			Monster[i], TEXTYPE_MULTI, L"Stand_LD", SKELETON_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand LD 로드 실패" , Monster[i]);
 			return E_FAIL;
@@ -809,8 +809,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽 아래
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Monster/Skeleton/FieldStand/RD/FieldStand_RD_%02d.png",
-			Monster[i], TEXTYPE_MULTI, L"FieldStand_RD", SKELETON_STAND)))
+			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/RD/Stand_RD_%02d.png",
+			Monster[i], TEXTYPE_MULTI, L"Stand_RD", SKELETON_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand RD 로드 실패" , Monster[i]);
 			return E_FAIL;
@@ -818,8 +818,8 @@ HRESULT CStage::Initialize()
 
 		// 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Monster/Skeleton/FieldStand/U/FieldStand_U_%02d.png",
-			Monster[i], TEXTYPE_MULTI, L"FieldStand_U", SKELETON_STAND)))
+			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/U/Stand_U_%02d.png",
+			Monster[i], TEXTYPE_MULTI, L"Stand_U", SKELETON_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand U 로드 실패" , Monster[i]);
 			return E_FAIL;
@@ -827,8 +827,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Monster/Skeleton/FieldStand/LU/FieldStand_LU_%02d.png",
-			Monster[i], TEXTYPE_MULTI, L"FieldStand_LU", SKELETON_STAND)))
+			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/LU/Stand_LU_%02d.png",
+			Monster[i], TEXTYPE_MULTI, L"Stand_LU", SKELETON_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand LU 로드 실패" , Monster[i]);
 			return E_FAIL;
@@ -836,8 +836,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽 위
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Monster/Skeleton/FieldStand/RU/FieldStand_RU_%02d.png",
-			Monster[i], TEXTYPE_MULTI, L"FieldStand_RU", SKELETON_STAND)))
+			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/RU/Stand_RU_%02d.png",
+			Monster[i], TEXTYPE_MULTI, L"Stand_RU", SKELETON_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand RU 로드 실패" , Monster[i]);
 			return E_FAIL;
@@ -845,8 +845,8 @@ HRESULT CStage::Initialize()
 
 		// 왼쪽
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Monster/Skeleton/FieldStand/L/FieldStand_L_%02d.png",
-			Monster[i], TEXTYPE_MULTI, L"FieldStand_L", SKELETON_STAND)))
+			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/L/Stand_L_%02d.png",
+			Monster[i], TEXTYPE_MULTI, L"Stand_L", SKELETON_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand L 로드 실패" , Monster[i]);
 			return E_FAIL;
@@ -854,8 +854,8 @@ HRESULT CStage::Initialize()
 
 		// 오른쪽
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-			L"../Resource/Texture/Stage/Monster/Skeleton/FieldStand/R/FieldStand_R_%02d.png",
-			Monster[i], TEXTYPE_MULTI, L"FieldStand_R", SKELETON_STAND)))
+			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/R/Stand_R_%02d.png",
+			Monster[i], TEXTYPE_MULTI, L"Stand_R", SKELETON_STAND)))
 		{
 			ERR_MSG(g_hWnd, L"%d Stand R 로드 실패" , Monster[i]);
 			return E_FAIL;
@@ -1324,7 +1324,7 @@ HRESULT CStage::Initialize()
 
 
 		//////////////////////////////////////////////////////////////////////
-		//						 SUMMONER Attack							//
+		//						 SUMMONER Death								//
 		//////////////////////////////////////////////////////////////////////
 		// 아래
 
@@ -1401,7 +1401,87 @@ HRESULT CStage::Initialize()
 		//--------------------------------------------------------------------------------------//
 
 #pragma endregion Death
+#pragma region Cast
+		//////////////////////////////////////////////////////////////////////
+		//						 SUMMONER Death								//
+		//////////////////////////////////////////////////////////////////////
+		// 아래
+
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Cast/D/Cast_D_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Cast_D", SUMMONER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Cast D 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Cast/LD/Cast_LD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Cast_LD", SUMMONER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Cast LD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 아래
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Cast/RD/Cast_RD_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Cast_RD", SUMMONER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Cast RD 로드 실패");
+			return E_FAIL;
+		}
+
+		// 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Cast/U/Cast_U_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Cast_U", SUMMONER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Cast U 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Cast/LU/Cast_LU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Cast_LU", SUMMONER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Cast LU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽 위
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Cast/RU/Cast_RU_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Cast_RU", SUMMONER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Cast RU 로드 실패");
+			return E_FAIL;
+		}
+
+		// 왼쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Cast/L/Cast_L_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Cast_L", SUMMONER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Cast L 로드 실패");
+			return E_FAIL;
+		}
+
+		// 오른쪽
+		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
+			L"../Resource/Texture/Stage/Monster/Summoner/Cast/R/Cast_R_%02d.png",
+			SUMMONER, TEXTYPE_MULTI, L"Cast_R", SUMMONER_CAST)))
+		{
+			ERR_MSG(g_hWnd, L"SUMMONER Cast R 로드 실패");
+			return E_FAIL;
+		}
+		//--------------------------------------------------------------------------------------//
+
+#pragma endregion Cast
 	}
+
 #pragma endregion Monster
 
 #pragma endregion AddTexture
