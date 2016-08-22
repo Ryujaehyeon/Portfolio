@@ -698,31 +698,92 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 		{
 			if((*iter)->GetSelect() == true)
 			{
-				int temp = 0;
-				int temp2 = 0;
-				temp = ((CPlayer*)(*iter))->GetStatas().iLevel % 10;
-				temp2 = ((CPlayer*)(*iter))->GetStatas().iLevel/10;
-
-				const TEXINFO* pTexInfo 
-					= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp]);
-
-				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 38,
-					m_Info.vCenter.y - 55, 0);
-
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-
-
-				if(temp2 > 0)
 				{
-					const TEXINFO* pTexInfo 
-						= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp2]);
+					// 레벨
+					int temp = 0;
+					int temp2 = 0;
+					temp = ((CPlayer*)(*iter))->GetStatas().iLevel % 10;
+					temp2 = ((CPlayer*)(*iter))->GetStatas().iLevel/10;
 
-					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
-						m_Info.vCenter.y , 0);
+					const TEXINFO* pTexInfo 
+						= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp]);
+
+					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 38,
+						m_Info.vCenter.y - 55, 0);
 
 					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+
+					if(temp2 > 0)
+					{
+						const TEXINFO* pTexInfo 
+							= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp2]);
+
+						m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
+							m_Info.vCenter.y , 0);
+
+						GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+							NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					}
+				}
+				{
+					// 스텟 포인트
+					int temp = 0;
+					int temp2 = 0;
+					temp = ((CPlayer*)(*iter))->GetStatas().iStatPoint % 10;
+					temp2 = ((CPlayer*)(*iter))->GetStatas().iStatPoint/10;
+
+					const TEXINFO* pTexInfo 
+						= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp]);
+
+					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 100,
+						m_Info.vCenter.y, 0);
+
+					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+
+					if(temp2 > 0 && temp2 < 10)
+					{
+						const TEXINFO* pTexInfo 
+							= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp2]);
+
+						m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
+							m_Info.vCenter.y , 0);
+
+						GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+							NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					}
+				}
+				{
+					//스킬포인트
+					int temp = 0;
+					int temp2 = 0;
+					temp = ((CPlayer*)(*iter))->GetStatas().iSKillPoint % 10;
+					temp2 = ((CPlayer*)(*iter))->GetStatas().iSKillPoint/10;
+
+					const TEXINFO* pTexInfo 
+						= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp]);
+
+					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 160,
+						m_Info.vCenter.y, 0);
+
+					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+
+					if(temp2 > 0 && temp2 < 10)
+					{
+						const TEXINFO* pTexInfo 
+							= GET_SINGLE(CTextureMgr)->GetTexture(NumberFont[temp2]);
+
+						m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
+							m_Info.vCenter.y , 0);
+
+						GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+							NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					}
 				}
 			}
 		}

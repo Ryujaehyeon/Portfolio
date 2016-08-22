@@ -1761,7 +1761,6 @@ SCENEID CStage::Progress()
 		{
 			ERR_MSG(g_hWnd, L"SUMMONER 몬스터 객체 생성 실패");
 		}
-		
 	}
 	
 

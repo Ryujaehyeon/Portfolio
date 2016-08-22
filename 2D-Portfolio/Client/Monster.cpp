@@ -34,11 +34,14 @@ HRESULT CMonster::Initialize()
 	m_sPlayInfo.fMight = 5;
 	m_sPlayInfo.fDexterity = 5;
 	m_sPlayInfo.fIntellect = 5;
-	m_sPlayInfo.fConstitution = 5;
+	if(m_pObjName == SUMMONER)
+		m_sPlayInfo.fConstitution = 700;
+	else
+		m_sPlayInfo.fConstitution = 50;
+
 	m_sPlayInfo.fResolve = 5;
 	m_sPlayInfo.fPerception = 5;
-	m_sPlayInfo.fHealthPoint = 1;
-	m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 10);
+	m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 10);
 	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
 	m_sPlayInfo.iGold = 0;
 	m_sPlayInfo.fSpeed = (100.0f) + (m_sPlayInfo.fDexterity * 3.0f);
@@ -164,24 +167,47 @@ void CMonster::Render()
 	//////////////////////////////////////////////////////////////////////////
 
 	// 본체 
-	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
-		(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
-
-	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-
-	if (m_pMotion == CAST)
 	{
-		const TEXINFO* pTexInfo 
-			= GET_SINGLE(CTextureMgr)->GetTexture(L"CastEffect",L"CastEffect",int(m_tFrame.fStart));
-
-		if(pTexInfo == NULL)
-			return;
+		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
+			(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
 
 		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+
+	if (m_pMotion == CAST)
+	{
+		{
+			const TEXINFO* pTexInfo 
+				= GET_SINGLE(CTextureMgr)->GetTexture(L"CastEffect",L"CastEffect",int(m_tFrame.fStart));
+
+			if(pTexInfo == NULL)
+				return;
+
+			m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
+				(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
+
+			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+
+		//{
+		//	if(m_tFrame.fStart <= PLAYER_FireWall)
+		//		const TEXINFO* pTexInfo 
+		//		= GET_SINGLE(CTextureMgr)->GetTexture(SKILL, FIREWALL, int(m_tFrame.fStart));
+
+		//	if(pTexInfo == NULL)
+		//		return;
+
+		//	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
+		//		(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
+
+		//	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
+		//	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
+		//		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		//}
 	}
 }
 void CMonster::CheckKey()
@@ -310,7 +336,7 @@ void CMonster::CheckKey()
 		if (m_pObjName == SUMMONER)
 		{
 			// 거리가 기본공격 사거리보다 멀고 3배의 거리보다 가까우면 스킬사용
-			if(fDistance * 1.2f < fRealDistance && m_pMotion != DEATH)
+			if(fDistance * 1.2f < fRealDistance && fDistance * 5.f > fRealDistance && m_pMotion != DEATH)
 			{
 					fTimeSkill = 0.f;
 					m_pMotion = CAST;
@@ -322,7 +348,7 @@ void CMonster::CheckKey()
 				m_pMotion = ATTACK;
 				FuncAttack();
 			}
-			else if(fDistance * 3.0f < fRealDistance)
+			else if(fDistance * 5.0f < fRealDistance)
 			{
 				// 기본공격 사거리인 충돌거리보다 멀면 쫓아간다.
 				m_pMotion = RUN;
@@ -392,7 +418,7 @@ void CMonster::MonSKill()
 				// 플레이어 공격력이 더 크면 몬스터 방어력을 뺀 나머지 만큼의 데미지만 적용 
 				else if((*iter)->GetStatas().fDefence < m_sPlayInfo.fAttack)
 					(*iter)->SetStatas()->fHealthPoint -= 
-					m_sPlayInfo.fAttack - (*iter)->GetStatas().fDefence;
+					m_sPlayInfo.fAttack*1.5f - (*iter)->GetStatas().fDefence;
 
 				// 대상이 죽으면 타겟팅 해제
 				if ((*iter)->GetStatas().fHealthPoint <= 0)

@@ -71,12 +71,10 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*20;
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 5;
-	m_sPlayInfo.iSKillPoint = 100;
-	m_sPlayInfo.iStatPoint = 100;
-	m_sPlayInfo.fHealthPoint = 250;
-	m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 100);
-	m_sPlayInfo.fMagikaPoint = 250;
-	m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
+	m_sPlayInfo.iSKillPoint = 12;
+	m_sPlayInfo.iStatPoint = 2;
+	m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 100);
+	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
 	m_sPlayInfo.iGold = 0;
 	m_sPlayInfo.fSpeed = 150.0f;
 	//----------------------------------------------------------------------------//

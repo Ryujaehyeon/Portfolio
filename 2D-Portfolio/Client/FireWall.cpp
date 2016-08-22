@@ -111,7 +111,7 @@ void CFireWall::Render()
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(100, 255, 255, 255));
 }
 
 void CFireWall::Release()

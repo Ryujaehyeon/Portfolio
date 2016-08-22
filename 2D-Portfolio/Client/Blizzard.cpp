@@ -118,7 +118,7 @@ void CBlizzard::Render()
 	// 클릭한곳보다 y축을 올려서 점점 내려오게 그리다가 클릭한곳 보다 낮으면 다시 올리게 바꿔야함
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x + iDownX,
-		(pTexInfo->ImgInfo.Height -(m_sPlayInfo.fSpeed*1.5f)) + CObj::g_tScroll.y, 0);
+		(pTexInfo->ImgInfo.Height -(m_sPlayInfo.fSpeed*1.5f)+80) + CObj::g_tScroll.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -126,7 +126,7 @@ void CBlizzard::Render()
 
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x -30 + iDownX,
-		(pTexInfo->ImgInfo.Height-(m_sPlayInfo.fSpeed*1.2f) +12) + CObj::g_tScroll.y , 0);
+		(pTexInfo->ImgInfo.Height-(m_sPlayInfo.fSpeed*1.2f) + 80) + CObj::g_tScroll.y , 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -134,7 +134,7 @@ void CBlizzard::Render()
 
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x -100 + iDownX,
-		(pTexInfo->ImgInfo.Height  -(m_sPlayInfo.fSpeed) + 5 )+ CObj::g_tScroll.y, 0);
+		(pTexInfo->ImgInfo.Height  -(m_sPlayInfo.fSpeed) + 80 )+ CObj::g_tScroll.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -142,7 +142,7 @@ void CBlizzard::Render()
 
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x +30 + iDownX,
-		(pTexInfo->ImgInfo.Height  -(m_sPlayInfo.fSpeed*0.8f) +20) + CObj::g_tScroll.y, 0);
+		(pTexInfo->ImgInfo.Height  -(m_sPlayInfo.fSpeed*0.8f) +80) + CObj::g_tScroll.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -150,7 +150,7 @@ void CBlizzard::Render()
 
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x +100 + iDownX,
-		(pTexInfo->ImgInfo.Height  -(m_sPlayInfo.fSpeed*1.2f) +10)+ CObj::g_tScroll.y , 0);
+		(pTexInfo->ImgInfo.Height  -(m_sPlayInfo.fSpeed*1.2f) +80)+ CObj::g_tScroll.y , 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,

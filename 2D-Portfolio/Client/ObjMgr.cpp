@@ -286,15 +286,22 @@ SCENEID CObjMgr::Progress()
 				{
 					// 몬스터 갯수를 측정후 몬스터 카운트에 넣어줌
 					m_MonsterCount = iterMonster->second.size();
-					if ((*iter2)->GetName() == SUMMONER ||
-						(*iter2)->GetName() == GRISWOLD ||
-						(*iter2)->GetName() == ANDARIEL ||
-						(*iter2)->GetName() == IZUAL ||
-						(*iter2)->GetName() == DIABLO)
+
+					m_BossCount = 0;
+					for (list<CObj*>::iterator iterCount = iterMonster->second.begin();
+						 iterCount != iterMonster->second.end() ; ++iterCount	)
 					{
-						if(m_BossCount < 1)
-							++m_BossCount; 
+						if ((*iterCount)->GetName() == SUMMONER ||
+							(*iterCount)->GetName() == GRISWOLD ||
+							(*iterCount)->GetName() == ANDARIEL ||
+							(*iterCount)->GetName() == IZUAL ||
+							(*iterCount)->GetName() == DIABLO)
+						{
+							if(m_BossCount < 1)
+								++m_BossCount; 
+						}
 					}
+
 
 					if(iterPlayer != m_MapObject.end())
 						(*iter2)->Setlist(
@@ -423,7 +430,7 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 		// fDistance * 3.f는 자신의 크기보다 실제로 충돌하는 크기를 늘려서
 		// 다른대상을 인지하는 거리로 삼아 이 거리 안으로 들어오면 충돌했다 판단하고
 		// 객체에 충돌했다고 넘겨줌으로 객체내에서 충돌로 인한 AI작동을 하게 함
-		if(fDistance * 3.f > fRealDistance)
+		if(fDistance * 5.f > fRealDistance)
 		{
 			if(_pSour->GetObjType() != _pDest->GetObjType())
 			{
