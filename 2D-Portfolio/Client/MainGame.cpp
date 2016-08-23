@@ -26,7 +26,7 @@ HRESULT CMainGame::Initialize()
 //	}
 //#endif
 
-	if(FAILED(GET_SINGLE(CDevice)->InitDevice(WINMODE_FULL)))
+	if(FAILED(GET_SINGLE(CDevice)->InitDevice(WINMODE_WIN)))
 	{
 		ERR_MSG(g_hWnd, L"장치 초기화 실패");
 		return E_FAIL;

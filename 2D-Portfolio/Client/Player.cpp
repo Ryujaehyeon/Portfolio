@@ -168,6 +168,7 @@ void CPlayer::Render()
 	if(pTexInfo == NULL)
 		return;
 
+
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
 		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
 
@@ -768,15 +769,16 @@ void CPlayer::ScrollChange()
 {
 	if(m_pMotion != ATTACK && m_pMotion != CAST && m_pObjName == PLAYER)
 	{
-		m_Info.vPos;
-		CObj::g_tScroll += m_Info.vDir;
+
+		//CObj::g_tScroll += m_Info.vDir;
 		if(CObj::g_tScroll.x < 0)
 			CObj::g_tScroll.x -= m_Info.vDir.x;
 		if (CObj::g_tScroll.y < 0)
 			CObj::g_tScroll.y -= m_Info.vDir.y;
-		if(CObj::g_tScroll.x > 1730)
+
+		if(CObj::g_tScroll.x > 1735)
 			CObj::g_tScroll.x -= m_Info.vDir.x;
-		if (CObj::g_tScroll.y > 732)
+		if (CObj::g_tScroll.y > 760)
 			CObj::g_tScroll.y -= m_Info.vDir.y;
 	}
 }
