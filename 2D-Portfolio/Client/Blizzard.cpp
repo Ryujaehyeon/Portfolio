@@ -70,7 +70,7 @@ SCENEID CBlizzard::Progress()
 	// ½Ã°£
 
 	if(m_dwKey & KEY_RBUTTON && m_fTime == 0)
-		m_Info.vPos = MouseInfoDX();
+		m_Info.vPos = MouseInfoDX() + CObj::g_tScroll;
 
 	m_fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 

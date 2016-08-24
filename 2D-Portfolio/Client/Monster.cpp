@@ -61,7 +61,12 @@ HRESULT CMonster::Initialize()
 
 SCENEID CMonster::Progress()
 {
-	
+	//DebugLog(L"마우스 : %8.3f, %8.3f \n좌표 : %5.1f, %5.1f \n스크롤 : %5.1f, %5.1f", 
+	//	MouseInfo().x, MouseInfo().y,
+	//	m_Info.vPos.x + CObj::g_tScroll.x, 
+	//	m_Info.vPos.y + CObj::g_tScroll.y,
+	//	CObj::g_tScroll.x, CObj::g_tScroll.y);
+
 	// 시간
 	static float fTime = 0.0f;
 	// 시간값 누적
@@ -351,6 +356,7 @@ void CMonster::CheckKey()
 			else if(fDistance * 5.0f < fRealDistance)
 			{
 				// 기본공격 사거리인 충돌거리보다 멀면 쫓아간다.
+
 				m_pMotion = RUN;
 			}
 		}
@@ -389,7 +395,7 @@ void CMonster::CheckKey()
 	if (m_Info.vPos.x <= 30.f || m_Info.vPos.x >= 1730 &&
 		m_Info.vPos.y <= 30.f || m_Info.vPos.y >= 1200)
 	{
-		m_pMotion =STAND;
+		m_pMotion = STAND;
 		m_vTagetInfo == m_Info.vPos;
 	}
 }
@@ -404,10 +410,10 @@ void CMonster::MonSKill()
 		{
 			// 해당 객체를 타겟팅
 			m_pTagetObj = (*iter);
-			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
+			m_Info.vDir = (m_pTagetObj->GetInfo().vPos + CObj::g_tScroll) - m_Info.vPos;
 
 			// 타겟을 보고 공격하게 방향을 정해줌
-			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
+			m_vTagetInfo = (m_pTagetObj->GetInfo().vPos + CObj::g_tScroll);
 
 			// 공격 모션 프레임이 끝날때 데미지가 적용
 			if (m_tFrame.fStart <= 0.f)
@@ -440,12 +446,12 @@ void CMonster::FuncAttack()
 		// 리스트 내에 충돌한 녀석이 있을때
 		if ((*iter)->GetCrash() == true)
 		{
-			// 해당 몬스터의 객체를 타겟팅
+			// 해당 객체를 타겟팅
 			m_pTagetObj = (*iter);
-			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
+			m_Info.vDir = (m_pTagetObj->GetInfo().vPos + CObj::g_tScroll) - m_Info.vPos;
 
 			// 타겟을 보고 공격하게 방향을 정해줌
-			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
+			m_vTagetInfo = (m_pTagetObj->GetInfo().vPos + CObj::g_tScroll);
 
 			// 공격 모션 프레임이 끝날때 데미지가 적용
 			if (m_tFrame.fStart <= 0.f)
@@ -468,7 +474,26 @@ void CMonster::FuncAttack()
 		}
 	}
 }
+void CMonster::Tageting()
+{
+	// 봐야할 적을 타겟으로 잡고
+	list<CObj*>::iterator iter = m_pTagetList->begin();
+	for (;iter != m_pTagetList->end(); ++iter)
+	{
+		// 리스트 내에 충돌하고 마우스가 몬스터 위에 있을때
+		if ((*iter)->GetCrash() == true)
+		{
+			// 해당 몬스터의 객체를 타겟팅
+			m_pTagetObj = (*iter);
+			m_Info.vDir = (m_pTagetObj->GetInfo().vPos + CObj::g_tScroll) - m_Info.vPos;
 
+			// 타겟을 보고 공격하게 방향을 정해줌
+			m_vTagetInfo = m_pTagetObj->GetInfo().vPos+ CObj::g_tScroll;
+		}
+		else 
+			m_pTagetObj = this;
+	}
+}
 void CMonster::RegenTime()
 {
 	if (m_pMotion == DEATH)
@@ -801,26 +826,7 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 }
 
 
-void CMonster::Tageting()
-{
-	// 봐야할 적을 타겟으로 잡고
-	list<CObj*>::iterator iter = m_pTagetList->begin();
-	for (;iter != m_pTagetList->end(); ++iter)
-	{
-		// 리스트 내에 충돌하고 마우스가 몬스터 위에 있을때
-		if ((*iter)->GetCrash() == true)
-		{
-			// 해당 몬스터의 객체를 타겟팅
-			m_pTagetObj = (*iter);
-			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 
-			// 타겟을 보고 공격하게 방향을 정해줌
-			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
-		}
-		else 
-			m_pTagetObj = this;
-	}
-}
 
 void CMonster::ExpAcquired()
 {

@@ -77,7 +77,7 @@ void CStageBackGround::Render()
 			return;
 
 		D3DXMatrixTranslation(&matTrans,
-			m_vecTile[i]->vPos.x - CObj::g_tScroll.x, 
+			m_vecTile[i]->vPos.x - CObj::g_tScroll.x , 
 			m_vecTile[i]->vPos.y - CObj::g_tScroll.y,
 			m_vecTile[i]->vPos.z);
 

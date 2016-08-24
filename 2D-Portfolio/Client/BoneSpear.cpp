@@ -72,7 +72,7 @@ SCENEID CBoneSpear::Progress()
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
 
 	if(m_dwKey & KEY_RBUTTON && m_fTime == 0)
-		m_vMousePos = MouseInfoDX();
+		m_vMousePos = MouseInfoDX() + CObj::g_tScroll;
 	// ½Ã°£
 	m_fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
