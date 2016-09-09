@@ -2,8 +2,6 @@
 #include "Stage.h"
 #include "Include.h"
 
-
-
 CStage::CStage(void)
 {
 	GameSound Sound;
@@ -62,7 +60,6 @@ HRESULT CStage::Initialize()
 			ERR_MSG(g_hWnd, L"%s 캐릭터 객체 생성 실패", Charter[i]);
 			return E_FAIL;
 		}
-		
 	}
 
 	// 몬스터

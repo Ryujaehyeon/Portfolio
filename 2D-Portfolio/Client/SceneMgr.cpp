@@ -25,6 +25,10 @@ HRESULT CSceneMgr::InitScene(SCENEID ID)
 		m_pSceneObj = new CMenuD2;
 		break;
 
+	case SCENEID_LODING:
+		m_pSceneObj = new CLodingScene;
+		break;
+
 	case SCENEID_STAGE:
 		m_pSceneObj = new CStage;
 		break;
@@ -47,9 +51,7 @@ HRESULT CSceneMgr::InitScene(SCENEID ID)
 SCENEID CSceneMgr::Progress()
 {
 	SCENEID iScene = m_pSceneObj->Progress();
-
-
-
+	
 	if (iScene == SCENEID_END)
 		return SCENEID_END;
 	return iScene;

@@ -5,6 +5,9 @@
 class CMainGame
 {
 public:
+	HDC hdc;
+	static HANDLE hEvent;
+public:
 	HRESULT Initialize();
 	SCENEID Progress();
 	void Render();
