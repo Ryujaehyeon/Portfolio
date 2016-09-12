@@ -1,6 +1,6 @@
 #pragma once
 #include "obj.h"
-class CLodingView :
+class LoadingView :
 	public CObj
 {
 public:
@@ -10,8 +10,8 @@ public:
 	virtual void Release()PURE;
 	virtual CObj* Clone()PURE;
 public:
-	CLodingView(void);
-	CLodingView(const OBJINFO& Info, const OBJ_TYPE _OjbType);
-	virtual ~CLodingView(void);
+	LoadingView(void);
+	LoadingView(const OBJINFO& Info,  TCHAR* _ObjName, const OBJ_TYPE _ObjType);
+	virtual ~LoadingView(void);
 };
 

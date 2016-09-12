@@ -1,17 +1,17 @@
 #include "StdAfx.h"
-#include "LodingObjProto.h"
+#include "LoadingObjProto.h"
+#include "Include.h"
 
-
-CLodingObjProto::CLodingObjProto(void)
+LoadingObjProto::LoadingObjProto(void)
 {
 }
 
 
-CLodingObjProto::~CLodingObjProto(void)
+LoadingObjProto::~LoadingObjProto(void)
 {
 }
 
-HRESULT CLodingObjProto::InitProtoInstance()
+HRESULT LoadingObjProto::InitProtoInstance()
 {
 	// 아직 정해지지 않은 원형 객체의 기본 설정값(틀)
 	OBJINFO objInfo;
@@ -23,11 +23,8 @@ HRESULT CLodingObjProto::InitProtoInstance()
 	objInfo.vLook = D3DXVECTOR3(1, 0, 0);
 
 	// 원형 객체를 생성해서 삽입해줌
-	m_MapProto.insert(make_pair(L"Back"
-		, new CLogoBackGround(objInfo, OBJ_BUILDING)));
-
-	m_MapProto.insert(make_pair(L"Ball"
-		, new CBall(objInfo, OBJ_BUTTON)));
+	m_MapProto.insert(make_pair(L"Loading"
+		, new Loading(objInfo, L"Loading", OBJ_BUILDING)));
 
 	return S_OK;
 }

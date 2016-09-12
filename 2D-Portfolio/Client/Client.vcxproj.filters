@@ -366,17 +366,17 @@
     <ClInclude Include="SkillProto.h">
       <Filter>97.Design\Prototype\Object\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="LodingScene.h">
+    <ClInclude Include="LoadingScene.h">
       <Filter>01.Scene\Loding</Filter>
     </ClInclude>
-    <ClInclude Include="LodingObjProto.h">
-      <Filter>97.Design\Prototype\Object\Loding</Filter>
+    <ClInclude Include="Loading.h">
+      <Filter>02.Object\04. LodingView\Loding</Filter>
     </ClInclude>
-    <ClInclude Include="LodingView.h">
+    <ClInclude Include="LoadingView.h">
       <Filter>02.Object\04. LodingView</Filter>
     </ClInclude>
-    <ClInclude Include="Loding.h">
-      <Filter>02.Object\04. LodingView\Loding</Filter>
+    <ClInclude Include="LoadingObjProto.h">
+      <Filter>97.Design\Prototype\Object\Loding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -527,17 +527,17 @@
     <ClCompile Include="SkillProto.cpp">
       <Filter>97.Design\Prototype\Object\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="LodingScene.cpp">
+    <ClCompile Include="LoadingScene.cpp">
       <Filter>01.Scene\Loding</Filter>
     </ClCompile>
-    <ClCompile Include="LodingObjProto.cpp">
-      <Filter>97.Design\Prototype\Object\Loding</Filter>
+    <ClCompile Include="Loading.cpp">
+      <Filter>02.Object\04. LodingView\Loding</Filter>
     </ClCompile>
-    <ClCompile Include="LodingView.cpp">
+    <ClCompile Include="LoadingView.cpp">
       <Filter>02.Object\04. LodingView</Filter>
     </ClCompile>
-    <ClCompile Include="Loding.cpp">
-      <Filter>02.Object\04. LodingView\Loding</Filter>
+    <ClCompile Include="LoadingObjProto.cpp">
+      <Filter>97.Design\Prototype\Object\Loding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

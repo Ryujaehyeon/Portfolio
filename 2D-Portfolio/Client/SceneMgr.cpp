@@ -26,7 +26,7 @@ HRESULT CSceneMgr::InitScene(SCENEID ID)
 		break;
 
 	case SCENEID_LODING:
-		m_pSceneObj = new CLodingScene;
+		m_pSceneObj = new CLoadingScene;
 		break;
 
 	case SCENEID_STAGE:

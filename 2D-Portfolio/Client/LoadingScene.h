@@ -2,7 +2,7 @@
 
 #include "SceneObj.h"
 
-class CLodingScene : public CSceneObj
+class CLoadingScene : public CSceneObj
 {
 public:
 	virtual HRESULT Initialize();
@@ -10,7 +10,7 @@ public:
 	virtual void Render();
 	virtual void Release();
 public:
-	CLodingScene(void);
-	virtual ~CLodingScene(void);
+	CLoadingScene(void);
+	virtual ~CLoadingScene(void);
 };
 

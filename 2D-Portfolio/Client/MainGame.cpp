@@ -75,9 +75,9 @@ SCENEID CMainGame::Progress()
 	else
 	{
 		SCENEID iScene  = GET_SINGLE(CSceneMgr)->Progress();
-		//if (iScene == SCENEID_END)
-		//	return SCENEID_END;
-		//return iScene;
+		////if (iScene == SCENEID_END)
+		////	return SCENEID_END;
+		////return iScene;
 		if(iScene > SCENEID_NONPASS)
 			GET_SINGLE(CSceneMgr)->InitScene(SCENEID_LODING);
 		return iScene;
