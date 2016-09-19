@@ -77,7 +77,7 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX = (m_sPlayInfo.fConstitution * 100);
 	m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX = (m_sPlayInfo.fPerception * 100);
 	m_sPlayInfo.iGold = 0;
-	m_sPlayInfo.fSpeed = 200.0f;
+	m_sPlayInfo.fSpeed = 150.0f;
 	//----------------------------------------------------------------------------//
 	// 기본적으로 캐릭터는 아래를 보고있게 설정.
 	m_vTagetInfo.z = 0;
@@ -135,10 +135,10 @@ SCENEID CPlayer::Progress()
 
 	// 이동거리
 	// Run 또는 Walk 상태일때만 
-	//if (m_pMotion == RUN)
-	//	m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.008f);
-	//else if (m_pMotion == WALK)
-	//	m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.005f);
+	if (m_pMotion == RUN)
+		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.008f);
+	else if (m_pMotion == WALK)
+		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.005f);
 
 	// 자신의 위치에서 목표지점거리보다 이동거리가 크면 자신의 위치를 목표지점으로 지정
 	if (fDistance < 2.0f)
@@ -166,10 +166,11 @@ void CPlayer::Render()
 
 	if(pTexInfo == NULL)
 		return;
+	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
+		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
 
-
-	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f),
-		(pTexInfo->ImgInfo.Height * 0.5), 0);
+	//m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f),
+	//	(pTexInfo->ImgInfo.Height * 0.5), 0);
 
 	//////////////////////////////////////////////////////////////////////////
 	// 그림자
@@ -198,6 +199,9 @@ void CPlayer::Render()
 			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	//////////////////////////////////////////////////////////////////////////
+
+	//m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+SCROLL.x,
+	//	(pTexInfo->ImgInfo.Height * 0.5)+SCROLL.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -775,18 +779,29 @@ void CPlayer::ScrollChange()
 
 		// Run은 true, Walk는 false 상태일때만 
 		//if(m_Info.vPos.x == WINSIZEX * 0.5f && m_Info.vPos.y == WINSIZEY * 0.5f )
-			CObj::g_tScroll += ((RunSpeed * m_bRun) + (WalkSpeed * !m_bRun));
+			//CObj::g_tScroll += ((RunSpeed * m_bRun) + (WalkSpeed * !m_bRun));
 
+		CObj::g_tScroll += m_Info.vDir;
 		if(CObj::g_tScroll.x < 0)
-			CObj::g_tScroll.x = 0;
-		if(CObj::g_tScroll.y < 0)
-			CObj::g_tScroll.y = 0;
+			CObj::g_tScroll.x -= m_Info.vDir.x;
+		if (CObj::g_tScroll.y < 0)
+			CObj::g_tScroll.y -= m_Info.vDir.y;
 
 		if(CObj::g_tScroll.x > 1735)
-			CObj::g_tScroll.x = 1735;
-		if(CObj::g_tScroll.y > 760)
-			CObj::g_tScroll.y = 760;
-		m_Info.vPos = D3DXVECTOR3(WINSIZEX * 0.5f, WINSIZEY * 0.5f, 0);
+			CObj::g_tScroll.x -= m_Info.vDir.x;
+		if (CObj::g_tScroll.y > 760)
+			CObj::g_tScroll.y -= m_Info.vDir.y;
+
+		//if(CObj::g_tScroll.x < 0)
+		//	CObj::g_tScroll.x = 0;
+		//if(CObj::g_tScroll.y < 0)
+		//	CObj::g_tScroll.y = 0;
+
+		//if(CObj::g_tScroll.x > 1735)
+		//	CObj::g_tScroll.x = 1735;
+		//if(CObj::g_tScroll.y > 760)
+		//	CObj::g_tScroll.y = 760;
+		//m_Info.vPos = D3DXVECTOR3(WINSIZEX * 0.5f, WINSIZEY * 0.5f, 0);
 	}
 }
 

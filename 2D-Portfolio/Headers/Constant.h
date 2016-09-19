@@ -1,5 +1,7 @@
 #pragma once
 
+#define SCROLL CObj::g_tScroll
+
 const int WINSIZEX = 800;		 /*  창크기   X          */
 const int WINSIZEY = 600;		 /*           Y          */
 const int TILECNTX = 20;		 /*  맵의가로축타일갯수   */

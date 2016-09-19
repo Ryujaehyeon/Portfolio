@@ -65,31 +65,28 @@ SCENEID CMainGame::Progress()
 	
 	GET_SINGLE(CTimeMgr)->SetTime();
 	GET_SINGLE(CKeyMgr)->CheckKey();
-	if(WaitForSingleObject(hEvent, 1) == WAIT_OBJECT_0)
-	{
-		SCENEID iScene  = GET_SINGLE(CSceneMgr)->Progress();
-		if (iScene == SCENEID_END)
-			return SCENEID_END;
-		return iScene;
-	}
-	else
-	{
-		SCENEID iScene  = GET_SINGLE(CSceneMgr)->Progress();
-		////if (iScene == SCENEID_END)
-		////	return SCENEID_END;
-		////return iScene;
-		if(iScene > SCENEID_NONPASS)
-			GET_SINGLE(CSceneMgr)->InitScene(SCENEID_LODING);
-		return iScene;
-	}
-	//GET_SINGLE(CKeyMgr)->CheckKey();
-	//GET_SINGLE(CTimeMgr)->SetTime();
-	//SCENEID iScene = GET_SINGLE(CSceneMgr)->Progress();
-	//if (iScene == SCENEID_END)
-	//	return SCENEID_END;
-	//return iScene;
+	//if(WaitForSingleObject(hEvent, 1) == WAIT_OBJECT_0)
+	//{
+	//	SCENEID iScene  = GET_SINGLE(CSceneMgr)->Progress();
+	//	if (iScene == SCENEID_END)
+	//		return SCENEID_END;
+	//	return iScene;
+	//}
+	//else
+	//{
+	//	SCENEID iScene  = GET_SINGLE(CSceneMgr)->Progress();
+	//	////if (iScene == SCENEID_END)
+	//	////	return SCENEID_END;
+	//	////return iScene;
+	//	if(iScene > SCENEID_NONPASS)
+	//		GET_SINGLE(CSceneMgr)->InitScene(SCENEID_LODING);
+	//	return iScene;
+	//}
 
-
+	SCENEID iScene = GET_SINGLE(CSceneMgr)->Progress();
+	if (iScene == SCENEID_END)
+		return SCENEID_END;
+	return iScene;
 }
 
 void CMainGame::Render()
