@@ -53,7 +53,6 @@ HRESULT CPlayer::Initialize()
 	m_SkillTree.sBoneSpear.fMpCost = 15;
 
 	//----------------------------------------------------------------------------//
-	m_Info.vPos  = D3DXVECTOR3(WINSIZEX *0.5f, WINSIZEY * 0.5f, 0.f);
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_vTagetInfo = m_Info.vPos;
@@ -95,9 +94,11 @@ HRESULT CPlayer::Initialize()
 
 SCENEID CPlayer::Progress()
 {
-	D3DMATRIX matTrans;
-
-
+	DebugLogClear;
+	DebugLog(L"마우스 : %8.3f, %8.3f \n좌표 : %5.1f, %5.1f \n스크롤 : %5.1f, %5.1f", 
+		m_vMousePos.x, m_vMousePos.y,
+		m_Info.vPos.x, m_Info.vPos.y,
+		CUIObj::g_tScroll.x,CUIObj::g_tScroll.y);
 
 	// 시간
 	static float fTime = 0.0f;
@@ -166,11 +167,9 @@ void CPlayer::Render()
 
 	if(pTexInfo == NULL)
 		return;
+
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
 		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
-
-	//m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f),
-	//	(pTexInfo->ImgInfo.Height * 0.5), 0);
 
 	//////////////////////////////////////////////////////////////////////////
 	// 그림자
@@ -199,9 +198,6 @@ void CPlayer::Render()
 			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	//////////////////////////////////////////////////////////////////////////
-
-	//m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+SCROLL.x,
-	//	(pTexInfo->ImgInfo.Height * 0.5)+SCROLL.y, 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -772,36 +768,16 @@ void CPlayer::ScrollChange()
 {
 	if(m_pMotion != ATTACK && m_pMotion != CAST && m_pObjName == PLAYER)
 	{
-		// 이동거리
-		// Run은 true, Walk는 false 상태일때만 
-		D3DXVECTOR3 RunSpeed = m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.010f);
-		D3DXVECTOR3 WalkSpeed = m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.005f);
-
-		// Run은 true, Walk는 false 상태일때만 
-		//if(m_Info.vPos.x == WINSIZEX * 0.5f && m_Info.vPos.y == WINSIZEY * 0.5f )
-			//CObj::g_tScroll += ((RunSpeed * m_bRun) + (WalkSpeed * !m_bRun));
-
+		m_Info.vPos;
 		CObj::g_tScroll += m_Info.vDir;
 		if(CObj::g_tScroll.x < 0)
 			CObj::g_tScroll.x -= m_Info.vDir.x;
 		if (CObj::g_tScroll.y < 0)
 			CObj::g_tScroll.y -= m_Info.vDir.y;
-
 		if(CObj::g_tScroll.x > 1735)
 			CObj::g_tScroll.x -= m_Info.vDir.x;
 		if (CObj::g_tScroll.y > 760)
 			CObj::g_tScroll.y -= m_Info.vDir.y;
-
-		//if(CObj::g_tScroll.x < 0)
-		//	CObj::g_tScroll.x = 0;
-		//if(CObj::g_tScroll.y < 0)
-		//	CObj::g_tScroll.y = 0;
-
-		//if(CObj::g_tScroll.x > 1735)
-		//	CObj::g_tScroll.x = 1735;
-		//if(CObj::g_tScroll.y > 760)
-		//	CObj::g_tScroll.y = 760;
-		//m_Info.vPos = D3DXVECTOR3(WINSIZEX * 0.5f, WINSIZEY * 0.5f, 0);
 	}
 }
 

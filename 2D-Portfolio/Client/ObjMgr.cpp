@@ -83,7 +83,7 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 				}
 
 				if((*iterPlayerList)->GetSelect() == true)
-					pProtoInst->Setinfo()->vPos = (*iterPlayerList)->GetInfo().vPos + CObj::g_tScroll;
+					pProtoInst->Setinfo()->vPos = (*iterPlayerList)->GetInfo().vPos;
 			}
 			// 키가 플레이어인 리스트가 없으면
 			if (iterSKILL == m_MapObject.end())
@@ -416,11 +416,7 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 	
 
 	// 비교할 대상이 있는 방향을 정하고
-	if(_pSour->GetObjType() == OBJ_PLAYER && _pDest->GetObjType() == OBJ_MONSTER)
-		_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos) - (_pSour->GetInfo().vPos + CObj::g_tScroll);
-	else
-		_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos) - (_pSour->GetInfo().vPos);
-
+	_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos + CObj::g_tScroll) - (_pSour->GetInfo().vPos + CObj::g_tScroll);
 
 	// 타겟을 정하기 위한 거리
 	{

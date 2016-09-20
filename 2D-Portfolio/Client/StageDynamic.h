@@ -4,6 +4,8 @@ class CStageDynamic :
 	public CObj
 {
 public:
+
+public:
 	void ASterBegin(const D3DXVECTOR3& vDestPos, const D3DXVECTOR3& vSourPos);
 	void AStarMove();
 	void SetDirect(const D3DXVECTOR3& Dest);

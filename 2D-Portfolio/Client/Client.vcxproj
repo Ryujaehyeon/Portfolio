@@ -92,10 +92,6 @@
     <ClInclude Include="FireWall.h" />
     <ClInclude Include="FullModeMgr.h" />
     <ClInclude Include="KeyMgr.h" />
-    <ClInclude Include="Loading.h" />
-    <ClInclude Include="LoadingObjProto.h" />
-    <ClInclude Include="LoadingScene.h" />
-    <ClInclude Include="LoadingView.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillProto.h" />
     <ClInclude Include="SkillTree.h" />
@@ -149,10 +145,6 @@
     <ClCompile Include="FireWall.cpp" />
     <ClCompile Include="FullModeMgr.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
-    <ClCompile Include="Loading.cpp" />
-    <ClCompile Include="LoadingObjProto.cpp" />
-    <ClCompile Include="LoadingScene.cpp" />
-    <ClCompile Include="LoadingView.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillProto.cpp" />
     <ClCompile Include="SkillTree.cpp" />

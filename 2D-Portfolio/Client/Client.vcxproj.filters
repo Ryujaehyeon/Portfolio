@@ -190,18 +190,6 @@
     <Filter Include="97.Design\Prototype\Object\Skill">
       <UniqueIdentifier>{91930e38-611d-40c6-af27-3c3eca3fda1d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Scene\Loding">
-      <UniqueIdentifier>{ef7fd300-48a0-4f84-879c-5cc207e8a060}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.Design\Prototype\Object\Loding">
-      <UniqueIdentifier>{b0e31c08-ebaf-408b-a1c8-c979fe461fc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\04. LodingView">
-      <UniqueIdentifier>{6ad6a43f-5e51-4c6f-90f4-b53d90f8776c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\04. LodingView\Loding">
-      <UniqueIdentifier>{a6c54231-4220-4d13-a317-9e730d4cc935}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -366,18 +354,6 @@
     <ClInclude Include="SkillProto.h">
       <Filter>97.Design\Prototype\Object\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="LoadingScene.h">
-      <Filter>01.Scene\Loding</Filter>
-    </ClInclude>
-    <ClInclude Include="Loading.h">
-      <Filter>02.Object\04. LodingView\Loding</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadingView.h">
-      <Filter>02.Object\04. LodingView</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadingObjProto.h">
-      <Filter>97.Design\Prototype\Object\Loding</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -526,18 +502,6 @@
     </ClCompile>
     <ClCompile Include="SkillProto.cpp">
       <Filter>97.Design\Prototype\Object\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingScene.cpp">
-      <Filter>01.Scene\Loding</Filter>
-    </ClCompile>
-    <ClCompile Include="Loading.cpp">
-      <Filter>02.Object\04. LodingView\Loding</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingView.cpp">
-      <Filter>02.Object\04. LodingView</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadingObjProto.cpp">
-      <Filter>97.Design\Prototype\Object\Loding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

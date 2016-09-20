@@ -23,7 +23,6 @@
 //===========Scene Header==============//
 #include "Logo.h"
 #include "MenuD2.h"
-#include "LoadingScene.h"
 #include "Stage.h"
 #include "Stage2.h"
 #include "Stage3.h"
@@ -35,7 +34,6 @@
 #include "MenuButton.h"
 #include "UIObj.h"
 #include "Ball.h"
-#include "Loading.h"
 
 #include "Player.h"
 #include "Monster.h"
@@ -47,7 +45,6 @@
 #include "MenuObjProto.h"
 #include "StageObjProto.h"
 #include "SkillProto.h"
-#include "LoadingObjProto.h"
 
 //================Skill=================//
 #include "Skill.h"

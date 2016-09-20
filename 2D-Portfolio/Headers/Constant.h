@@ -1,7 +1,5 @@
 #pragma once
 
-#define SCROLL CObj::g_tScroll
-
 const int WINSIZEX = 800;		 /*  창크기   X          */
 const int WINSIZEY = 600;		 /*           Y          */
 const int TILECNTX = 20;		 /*  맵의가로축타일갯수   */
@@ -32,7 +30,6 @@ enum SCENEID
 	SCENEID_END = -2,
 	SCENEID_NONPASS = -1,
 	SCENEID_LOGO,
-	SCENEID_LODING,
 	SCENEID_MENU,
 	SCENEID_STAGE,
 	SCENEID_STAGE2,

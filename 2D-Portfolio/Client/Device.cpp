@@ -68,6 +68,28 @@ HRESULT CDevice::InitDevice(WINMODE Mode)
 	if(FAILED(D3DXCreateSprite(m_pDevice, &m_pSprite)))
 		return E_FAIL;
 
+	m_pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+	//m_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+
+	DirectInput8Create(g_hInst, DIRECTINPUT_VERSION,
+		IID_IDirectInput8, (void**)&m_pInput, NULL);
+
+	m_pInput->CreateDevice(
+		GUID_SysKeyboard, &m_pKeyBoard, NULL);
+	m_pKeyBoard->SetCooperativeLevel(
+		g_hWnd, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
+	m_pKeyBoard->SetDataFormat(
+		&c_dfDIKeyboard);
+	m_pKeyBoard->Acquire();
+
+	m_pInput->CreateDevice(
+		GUID_SysMouse, &m_pMouse, NULL);
+	m_pMouse->SetCooperativeLevel(
+		g_hWnd, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
+	m_pMouse->SetDataFormat(
+		&c_dfDIMouse);
+	m_pMouse->Acquire();
+
 	return S_OK;
 }
 
@@ -89,7 +111,18 @@ void CDevice::Render_End(HWND hWnd)
 
 void CDevice::Release()
 {
+	m_pMouse->Release();
+	m_pKeyBoard->Release();
+	m_pInput->Release();
+
 	m_pSprite->Release();
 	m_pDevice->Release();
 	m_p3D->Release();
+}
+void CDevice::SetKey()
+{
+	m_pKeyBoard->GetDeviceState(
+		sizeof(m_byKState), m_byKState);
+	m_pMouse->GetDeviceState(
+		sizeof(m_MState), &m_MState);
 }
