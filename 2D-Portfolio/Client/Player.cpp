@@ -233,22 +233,42 @@ void CPlayer::CheckKey()
 	// 스킬 단축키
 	SkillHotKey();
 
+	// 키보드 입력
+	(*CDevice::GetInstance())->SetKey();
+
+	//rgbButtons[0, 1, 2] 0 왼쪽 클릭, 1 오른쪽 클릭, 2 휠버튼 상태
+	//(*CDevice::GetInstance())->GetMouseState();
+
 	// 마우스 좌표 받아옴
 	m_vMousePos = MouseInfoDX();
 
 	// 키매니저로 키값 받아옴
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
 
+	//if((*CDevice::GetInstance())->GetKeyBoardState(DIK_LEFTARROW)
+	//	& 0x80)
+	//	m_Info.vPos.x -= fTime * 8.0f;
+	//if((*CDevice::GetInstance())->GetKeyBoardState(DIK_RIGHTARROW)
+	//	& 0x80)
+	//	m_Info.vPos.x += fTime * 8.0f;
+	//if((*CDevice::GetInstance())->GetKeyBoardState(DIK_UPARROW)
+	//	& 0x80)
+	//	m_Info.vPos.z += fTime * 8.0f;
+	//if((*CDevice::GetInstance())->GetKeyBoardState(DIK_DOWNARROW)
+	//	& 0x80)
+	//	m_Info.vPos.z -= fTime * 8.0f;
 
 	if (m_dwKey & KEY_TAB && m_bSelect == true && fTime > 3.0f)
 	{
 		fTime = 0;
 		m_bRun = !m_bRun;
 	}
-	if( m_dwKey & KEY_LBUTTON && m_bSelect == true) 
+	if(/* m_dwKey & KEY_LBUTTON*/
+		(*CDevice::GetInstance())->GetMouseState()->rgbButtons[0] & 0x80 && m_bSelect == true) 
 	{	
 		// 우클릭시 클릭된 지점을 가져옴
 		m_vTagetInfo = m_vMousePos;
+		
 		// 마우스를 바라보는 방향
 		m_Info.vDir = m_vTagetInfo - m_Info.vPos; 
 		// 플레이어 캐릭터 방향을 마우스가 있는 방향(각도)을 넣는다 
@@ -270,7 +290,8 @@ void CPlayer::CheckKey()
 			{
 				FuncAttack();
 			}
-			if(  m_dwKey & KEY_RBUTTON )
+			if( (*CDevice::GetInstance())->GetMouseState()->rgbButtons[1] & 0x80
+				/* m_dwKey & KEY_RBUTTON */)
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos;
@@ -283,7 +304,8 @@ void CPlayer::CheckKey()
 		// 목표위치에 도달하지 못했을때
 		else if ( m_vTagetInfo != m_Info.vPos )
 		{
-			if( m_dwKey & KEY_LBUTTON ) 
+			if((*CDevice::GetInstance())->GetMouseState()->rgbButtons[0] & 0x80
+				/*m_dwKey & KEY_LBUTTON ) */)
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
@@ -295,7 +317,8 @@ void CPlayer::CheckKey()
 				m_vTagetInfo = m_Info.vPos;
 
 			}
-			else if(m_dwKey & KEY_RBUTTON )
+			else if((*CDevice::GetInstance())->GetMouseState()->rgbButtons[1] & 0x80
+				/*m_dwKey & KEY_RBUTTON*/ )
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
