@@ -98,7 +98,7 @@ dumpbin /dependents 2D-Portfolio\Exe\Win32\Debug\Client\Client.exe
 | R1 참조 0 | ✅ `git grep` 결과 `intent/`·`docs/` 밖 0건 |
 | R2 파일 제거 | ✅ `Debug.lib`·`Debug.dll`·`Headers/Debug.h` 삭제 (`Client/Debug/Debug.dll` 은 repo-cleanup 에서) |
 | R3 의존 DLL | ✅ `dumpbin /dependents` Debug·Release 모두 `Debug.dll`·`MSVCR100D.dll` 없음 (CRT 는 `VCRUNTIME140(D)`·`ucrtbase(d)`) |
-| R4 Debug 콘솔·로그 | ⚠️ B안: `DBWIN_BUFFER` 리스너(DebugView 와 같은 방식)로 Debug `Client.exe` 를 8초 실행 → `Scene : 0`, `Scene : 1` 수신, 창 응답. 「시작」 클릭 후 `Scene : 2` 와 스테이지 콘솔 로그(`Player.cpp:98`)는 **수동 확인 남음** |
+| R4 Debug 콘솔·로그 | ✅ B안: `DBWIN_BUFFER` 리스너(DebugView 와 같은 방식)로 Debug `Client.exe` 를 8초 실행 → `Scene : 0`, `Scene : 1` 수신, 창 응답. 「시작」 클릭 후 `Scene : 2` 는 사용자가 VS 에서 확인(2026-11-10) |
 | R5 Release 무콘솔 | ✅ `AttachConsole` 실패(콘솔 없음), 창 응답 |
 | R6 C4005 제거 | ✅ 0건, 고유 경고 283 → 282 |
 | R7 빌드·실행 | ✅ `Exe/`·`Temp/` 삭제 후 Debug·Release 종료 코드 0, 두 구성 창 응답·`fmodexL.dll` 로드 |
