@@ -106,3 +106,4 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - 변경 1개 = `intent/<기능-슬러그>/` 폴더 1개. 그 안에 `intent.md` → `spec.md` → `plan.md`.
 - 폴더 규칙·SSOT 표는 `intent/README.md`.
 - 단계별 운영 지침은 `.harness/sdlc/`.
+- 직접 수정할 때의 순서·명령·확인 체크리스트는 [docs/FIX-GUIDE.md](docs/FIX-GUIDE.md).
