@@ -85,6 +85,7 @@ git switch -c feature/ship-tracking
 | `plan-brief` | 승인된 `spec.md` 로 Stage 3 착수 | `spec.md` 없음·미승인 / 한두 줄 수정 |
 | `layered-review` | 변경을 리뷰 레이어 전체로 점검 | 버그만 빠르게 볼 때(→ `/code-review`) |
 | `tmux-collaboration` | TMUX 패인으로 다른 에이전트와 협업 | TMUX 협업이 아닌 일반 작업 |
+| `coding-standard` | C++ 코드를 `.harness/standards/cpp11-coding-standard.md` 와 대조해 위반 보고서 작성(직접 호출 전용) | C++ 가 아닌 코드 / 코드를 고칠 때 |
 
 이 문서의 `/code-review` 는 Claude Code 내장 명령(현재 diff·PR 대상)이다. code-review 플러그인을 설치했다면
 그쪽은 `/code-review:code-review` 로 따로 부르는 별개 스킬이다.
@@ -113,7 +114,7 @@ cd /path/to/agent-harness && git pull
 cd /path/to/product-repo && /path/to/agent-harness/update.sh          # SVN 작업본이면 --svn
 ```
 
-`.harness/templates`·`.harness/sdlc`·`.harness/USAGE.md`·`.claude/hooks` 와
+`.harness/templates`·`.harness/sdlc`·`.harness/standards`·`.harness/USAGE.md`·`.claude/hooks` 와
 `.claude/skills`·`.hermes/skills` 의 스킬(하네스 전용 `harness-diet`·`harness-legacy-scan` 제외)은
 하네스가 정본이라 덮어쓴다. 제품이 채운 `CLAUDE.md` 와 커스터마이즈한 `AGENTS.md` 는 병합한다
 (`update.sh` 는 이 둘을 건드리지 않는다). 상세: 하네스 저장소의 `UPDATE.md`.
