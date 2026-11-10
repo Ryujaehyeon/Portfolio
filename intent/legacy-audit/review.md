@@ -212,6 +212,8 @@ exe 위치 기준 경로 해석 함수 하나로 모으고, 리소스·데이터
 1. `repo-cleanup` (7) — 코드 무관, 위험 0. 저장소부터 가볍게.
 2. `dead-code-removal` (5, 6) — 동작 불변. 이후 작업 대상 코드량이 줄어든다.
 3. `debug-dll-removal` (8)
+   → `x64-migration` — 2026-11-10 추가. 32비트 전용 `Debug.lib` 가 유일한 차단 요소라 **반드시 8번 뒤**.
+     이후 수정들을 x64 에서 검증하도록 버그 수정보다 앞에 둔다. [x64-migration](../x64-migration/plan.md)
 4. `err-msg-format` (4) — 작고 독립적, 경고 84건 감소.
 5. `ub-fixes` (3)
 6. `objmgr-lifetime` (1) — 가장 위험한 버그. 3번의 `erase` 교정과 맞물린다.
