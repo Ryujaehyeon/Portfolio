@@ -149,7 +149,13 @@ git 이력에 남아 있으므로 지운다. 의도를 남길 가치가 있는 �
 ### 8. 소스 없는 `Debug.dll` 의존 — 확인
 
 - `Client/Client.cpp:8` `#pragma comment(lib, "Debug.lib")` 가 **Release 에도** 링크된다. Release 배포물에 디버그 DLL 이 따라간다.
-- 쓰는 곳은 `Client/MenuD2.cpp:84` `DebugMsg(Info)` 한 곳(`Headers/Debug.h` 의 `DebugMsgw`). `CreateConsole` 은 호출처 0.
+- **배포 차단 요소**(2026-11-10 추가): `Debug.dll` 은 2016-07-21 VS2010 **디버그 CRT `MSVCR100D.dll`** 에 링크돼 있다(import 테이블 확인).
+  디버그 CRT 는 재배포가 허용되지 않고 VS2010 이 없는 PC 엔 없다 → 그런 PC 에선 **Release 빌드조차 시작되지 않는다**
+  (개발 PC 는 `System32`·`SysWOW64` 에 2011년 사본이 있어 드러나지 않음). 또한 PE32(x86) 라 x64 링크 불가.
+- 정체: export 는 `DebugMsgw/a`, `CreateConsole`, `DestroyConsole` + `DebugClass`(콘솔 생성·`WriteConsoleW`·파일 쓰기).
+  즉 `AllocConsole` 로 띄운 디버그 콘솔에 문자열을 찍는 로깅 헬퍼다.
+- 쓰는 곳은 `Client/MenuD2.cpp:84` `DebugMsg(Info)` 한 곳 — 메뉴 장면에서 **매 프레임** `"Scene : %d"` 를 보낸다(`Headers/Debug.h` 의 `DebugMsgw`).
+  `CreateConsole` 은 호출처 0 이라 콘솔이 없는 상태로 호출된다.
 - 같은 역할을 헤더 전용 `Headers/Debug.hpp` 의 `DebugLog` 가 이미 한다(`Player.cpp:97-98`).
 - `Headers/Debug.h:12` 의 `EXPORT` 매크로가 MFC 쪽 정의와 충돌한다(C4005).
 
