@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "AStar.h"
 #include "Include.h"
 
@@ -14,7 +14,7 @@ CAStar::~CAStar(void)
 
 void CAStar::AStarBegin( const int& iStart, const int& iGoal )
 {
-	// ½ºÅ¸Æ® == ³»À§Ä¡ , °ñ == ¸ñÇ¥ÁöÁ¡
+	// ìŠ¤íƒ€íŠ¸ == ë‚´ìœ„ì¹˜ , ê³¨ == ëª©í‘œì§€ì 
 	if (iStart == iGoal)
 		return;
 	const vector<TILE*>* pVecTile = GET_SINGLE(CObjMgr)->GetTileInfo();
@@ -50,23 +50,23 @@ void CAStar::MakeRoute()
 
 	while(true)
 	{
-		// À§
+		// ìœ„
 		iIndex = pParent->iIndex - TILECNTX * 2;
 
-		// Á¶°Çµé
-		// Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
-		// °¥ ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
-		// ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
-		// ¿ÀÇÂ¸®½ºÆ®¿¡ ÀÌ¹Ì ÀÖ´Â°¡?
+		// ì¡°ê±´ë“¤
+		// ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
+		// ê°ˆ ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
+		// ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
+		// ì˜¤í”ˆë¦¬ìŠ¤íŠ¸ì— ì´ë¯¸ ìˆëŠ”ê°€?
 
-		// 1. Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
+		// 1. ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
 		if (iIndex > -1)
 		{
-			// 2. °¥(ÀÌµ¿) ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
+			// 2. ê°ˆ(ì´ë™) ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
 			if ( ((*pVecTile)[iIndex]->byOption ^ 
 				TILE_OPTION_DONT_MOVE) & TILE_OPTION_DONT_MOVE )
 			{
-				// 3. ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
+				// 3. ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
 				if (CheckList(iIndex))
 				{
 					pNode = MakeNode(iIndex, pParent, pVecTile);
@@ -74,22 +74,22 @@ void CAStar::MakeRoute()
 				}
 			}
 		}
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		iIndex = pParent->iIndex - 
 			( TILECNTX - (pParent->iIndex / TILECNTX) % 2 );
 
-		// 1. Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
+		// 1. ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
 		if (iIndex > -1)
 		{
-			// ¿¹¿Ü Ã³¸®
+			// ì˜ˆì™¸ ì²˜ë¦¬
 			if (pParent->iIndex % (TILECNTX * 2) 
 				!= TILECNTX * 2 - 1)
 			{
-				// 2. °¥(ÀÌµ¿) ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
+				// 2. ê°ˆ(ì´ë™) ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
 				if ( ((*pVecTile)[iIndex]->byOption ^ 
 					TILE_OPTION_DONT_MOVE) & TILE_OPTION_DONT_MOVE )
 				{
-					// 3. ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
+					// 3. ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
 					if (CheckList(iIndex))
 					{
 						pNode = MakeNode(iIndex,pParent,pVecTile);
@@ -98,19 +98,19 @@ void CAStar::MakeRoute()
 				}
 			}
 		}
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		iIndex = pParent->iIndex + 1 ;
 
-		// 1. Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
+		// 1. ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
 		if (iIndex < TILECNTX * TILECNTY)
 		{
 			if (pParent->iIndex % TILECNTX != TILECNTX - 1)
 			{
-				// 2. °¥(ÀÌµ¿) ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
+				// 2. ê°ˆ(ì´ë™) ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
 				if ( ((*pVecTile)[iIndex]->byOption ^ 
 					TILE_OPTION_DONT_MOVE) & TILE_OPTION_DONT_MOVE )
 				{
-					// 3. ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
+					// 3. ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
 					if (CheckList(iIndex))
 					{
 						pNode = MakeNode(iIndex,pParent,pVecTile);
@@ -120,20 +120,20 @@ void CAStar::MakeRoute()
 			}
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		iIndex =  pParent->iIndex + 
 			( TILECNTX + (pParent->iIndex / TILECNTX) % 2 ); 
 
-		// 1. Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
+		// 1. ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
 		if (iIndex < TILECNTX * TILECNTY)
 		{
 			if (pParent->iIndex % TILECNTX != TILECNTX - 1)
 			{
-				// 2. °¥(ÀÌµ¿) ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
+				// 2. ê°ˆ(ì´ë™) ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
 				if ( ((*pVecTile)[iIndex]->byOption ^ 
 					TILE_OPTION_DONT_MOVE) & TILE_OPTION_DONT_MOVE )
 				{
-					// 3. ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
+					// 3. ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
 					if (CheckList(iIndex))
 					{
 						pNode = MakeNode(iIndex, pParent, pVecTile);
@@ -142,17 +142,17 @@ void CAStar::MakeRoute()
 				}
 			}
 		}
-		// ¾Æ·¡
+		// ì•„ë˜
 		iIndex = pParent->iIndex + TILECNTX * 2;
 
-		// 1. Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
+		// 1. ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
 		if (iIndex < TILECNTX * TILECNTY)
 		{
-			// 2. °¥(ÀÌµ¿) ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
+			// 2. ê°ˆ(ì´ë™) ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
 			if ( ((*pVecTile)[iIndex]->byOption ^ 
 				TILE_OPTION_DONT_MOVE) & TILE_OPTION_DONT_MOVE )
 			{
-				// 3. ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
+				// 3. ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
 				if (CheckList(iIndex))
 				{
 					pNode = MakeNode(iIndex,pParent,pVecTile);
@@ -161,20 +161,20 @@ void CAStar::MakeRoute()
 			}
 		}
 
-		// ¿Ş ¾Æ·¡
+		// ì™¼ ì•„ë˜
 		iIndex = pParent->iIndex + 
 			(TILECNTX - 1 + (pParent->iIndex / TILECNTX) % 2);
 
-		// 1. Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
+		// 1. ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
 		if (iIndex < TILECNTX * TILECNTY)
 		{
 			if (pParent->iIndex % (TILECNTX * 2) != 0)
 			{
-				// 2. °¥(ÀÌµ¿) ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
+				// 2. ê°ˆ(ì´ë™) ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
 				if ( ((*pVecTile)[iIndex]->byOption ^ 
 					TILE_OPTION_DONT_MOVE) & TILE_OPTION_DONT_MOVE )
 				{
-					// 3. ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
+					// 3. ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
 					if (CheckList(iIndex))
 					{
 						pNode = MakeNode(iIndex,pParent,pVecTile);
@@ -183,19 +183,19 @@ void CAStar::MakeRoute()
 				}
 			}
 		}
-		// ¿Ş
+		// ì™¼
 		iIndex = pParent->iIndex - 1 ;
 
-		// 1. Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
+		// 1. ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
 		if (iIndex > -1)
 		{
 			if (pParent->iIndex % TILECNTX != 0)
 			{
-				// 2. °¥(ÀÌµ¿) ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
+				// 2. ê°ˆ(ì´ë™) ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
 				if ( ((*pVecTile)[iIndex]->byOption ^ 
 					TILE_OPTION_DONT_MOVE) & TILE_OPTION_DONT_MOVE )
 				{
-					// 3. ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
+					// 3. ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
 					if (CheckList(iIndex))
 					{
 						pNode = MakeNode(iIndex, pParent, pVecTile);
@@ -204,21 +204,21 @@ void CAStar::MakeRoute()
 				}
 			}
 		}
-		// ¿Ş À§
+		// ì™¼ ìœ„
 		iIndex = pParent->iIndex - 
 			( TILECNTX + 1 - (pParent->iIndex / TILECNTX) % 2 );
 
-		// 1. Á¸ÀçÇÏ´Â Å¸ÀÏÀÎ°¡?
+		// 1. ì¡´ì¬í•˜ëŠ” íƒ€ì¼ì¸ê°€?
 		if (iIndex > -1)
 		{
-			// ¿¹¿Ü Ã³¸®
+			// ì˜ˆì™¸ ì²˜ë¦¬
 			if (pParent->iIndex % (TILECNTX * 2) != 0)
 			{
-				// 2. °¥(ÀÌµ¿) ¼ö ÀÖ´Â Å¸ÀÏÀÎ°¡?
+				// 2. ê°ˆ(ì´ë™) ìˆ˜ ìˆëŠ” íƒ€ì¼ì¸ê°€?
 				if ( ((*pVecTile)[iIndex]->byOption ^ 
 					TILE_OPTION_DONT_MOVE) & TILE_OPTION_DONT_MOVE )
 				{
-					// 3. ÀÌ¹Ì Á¶»çÇÑ Å¸ÀÏÀÎ°¡?
+					// 3. ì´ë¯¸ ì¡°ì‚¬í•œ íƒ€ì¼ì¸ê°€?
 					if (CheckList(iIndex))
 					{
 						pNode = MakeNode(iIndex, pParent, pVecTile);
@@ -251,7 +251,7 @@ void CAStar::MakeRoute()
 
 bool CAStar::CheckList( const int& iIndex )
 {
-	// ÀÎÀÚ·Î ¹ŞÀº iIndex°¡ Open, Close¿¡ Á¸ÀçÇÏ´ÂÁö ¿©ºÎ¸¦ Ã¼Å©ÇÔ
+	// ì¸ìë¡œ ë°›ì€ iIndexê°€ Open, Closeì— ì¡´ì¬í•˜ëŠ”ì§€ ì—¬ë¶€ë¥¼ ì²´í¬í•¨
 	for (list<NODE*>::iterator iter = m_OpenList.begin();
 		iter != m_OpenList.end(); ++iter)
 	{
@@ -275,13 +275,13 @@ NODE* CAStar::MakeNode( int iIndex, NODE* pParent, const vector<TILE*>* pVecTile
 	pNode->iIndex = iIndex;
 	pNode->pParent = pParent;
 
-	// ºÎ¸ğ³ëµå±îÁöÀÇ °Å¸®
+	// ë¶€ëª¨ë…¸ë“œê¹Œì§€ì˜ ê±°ë¦¬
 	D3DXVECTOR3 vDir = (*pVecTile)[iIndex]->vPos - 
 		(*pVecTile)[pParent->iIndex]->vPos;
 
 	float fPCost = D3DXVec3Length(&vDir);
 	
-	// µµÂø³ëµå±îÁöÀÇ °Å¸®
+	// ë„ì°©ë…¸ë“œê¹Œì§€ì˜ ê±°ë¦¬
 	vDir = (*pVecTile)[iIndex]->vPos - 
 		(*pVecTile)[m_iGoalIndex]->vPos;
 

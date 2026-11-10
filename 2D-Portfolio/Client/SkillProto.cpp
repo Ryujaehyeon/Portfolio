@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "SkillProto.h"
 #include "Include.h"
 
@@ -13,7 +13,7 @@ CSkillProto::~CSkillProto(void)
 
 HRESULT CSkillProto::InitProtoInstance()
 {
-	// ¾ÆÁ÷ Á¤ÇØÁöÁö ¾ÊÀº ¿øÇü °´Ã¼ÀÇ ±âº» ¼³Á¤°ª(Æ²)
+	// ì•„ì§ ì •í•´ì§€ì§€ ì•Šì€ ì›í˜• ê°ì²´ì˜ ê¸°ë³¸ ì„¤ì •ê°’(í‹€)
 	OBJINFO objInfo;
 	ZeroMemory(&objInfo, sizeof(OBJINFO));
 

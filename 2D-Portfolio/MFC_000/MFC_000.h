@@ -1,17 +1,17 @@
-
-// MFC_000.h : MFC_000 ÀÀ¿ë ÇÁ·Î±×·¥¿¡ ´ëÇÑ ÁÖ Çì´õ ÆÄÀÏ
+ï»¿
+// MFC_000.h : MFC_000 ì‘ìš© í”„ë¡œê·¸ëž¨ì— ëŒ€í•œ ì£¼ í—¤ë” íŒŒì¼
 //
 #pragma once
 
 #ifndef __AFXWIN_H__
-	#error "PCH¿¡ ´ëÇØ ÀÌ ÆÄÀÏÀ» Æ÷ÇÔÇÏ±â Àü¿¡ 'stdafx.h'¸¦ Æ÷ÇÔÇÕ´Ï´Ù."
+	#error "PCHì— ëŒ€í•´ ì´ íŒŒì¼ì„ í¬í•¨í•˜ê¸° ì „ì— 'stdafx.h'ë¥¼ í¬í•¨í•©ë‹ˆë‹¤."
 #endif
 
-#include "resource.h"       // ÁÖ ±âÈ£ÀÔ´Ï´Ù.
+#include "resource.h"       // ì£¼ ê¸°í˜¸ìž…ë‹ˆë‹¤.
 
 
 // CMFC_000App:
-// ÀÌ Å¬·¡½ºÀÇ ±¸Çö¿¡ ´ëÇØ¼­´Â MFC_000.cppÀ» ÂüÁ¶ÇÏ½Ê½Ã¿À.
+// ì´ í´ëž˜ìŠ¤ì˜ êµ¬í˜„ì— ëŒ€í•´ì„œëŠ” MFC_000.cppì„ ì°¸ì¡°í•˜ì‹­ì‹œì˜¤.
 //
 
 class CMFC_000App : public CWinAppEx
@@ -20,12 +20,12 @@ public:
 	CMFC_000App();
 
 
-// ÀçÁ¤ÀÇÀÔ´Ï´Ù.
+// ìž¬ì •ì˜ìž…ë‹ˆë‹¤.
 public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 
-// ±¸ÇöÀÔ´Ï´Ù.
+// êµ¬í˜„ìž…ë‹ˆë‹¤.
 	UINT  m_nAppLook;
 	BOOL  m_bHiColorIcons;
 

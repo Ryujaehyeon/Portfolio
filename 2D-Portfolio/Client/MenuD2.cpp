@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "MenuD2.h"
 #include "Include.h"
 
@@ -8,7 +8,7 @@ CMenuD2::CMenuD2(void)
 	Sound->Init(40);
 	Sound->LoadSound(L"Wilderness", L"Wilderness.mp3", true);
 	Sound->SetVolume(10);
-	Sound->Play(L"Wilderness");       //»ç¿îµå
+	Sound->Play(L"Wilderness");       //ì‚¬ìš´ë“œ
 }
 
 
@@ -22,27 +22,27 @@ HRESULT CMenuD2::Initialize()
 	m_pPrototype = new CMenuObjProto;
 	if(FAILED(m_pPrototype->InitProtoInstance()))
 	{
-		ERR_MSG(g_hWnd, L"¿øÇü °´Ã¼ »ý¼º ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ì›í˜• ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"MenuBack")))
 	{
-		ERR_MSG(g_hWnd, L"°´Ã¼ »ý¼º ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"MenuButton_Start")))
 	{
-		ERR_MSG(g_hWnd, L"°´Ã¼ »ý¼º ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"MenuButton_Exit")))
 	{
-		ERR_MSG(g_hWnd, L"°´Ã¼ »ý¼º ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -50,7 +50,7 @@ HRESULT CMenuD2::Initialize()
 		L"../Resource/Texture/Menu/MenuBack.png"
 		, L"MenuBack", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"ÅØ½ºÃÄ ÀÐ¾î¿À±â ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -58,7 +58,7 @@ HRESULT CMenuD2::Initialize()
 		L"../Resource/Texture/Menu/MenuButtonStart.png"
 		, L"MenuButton_Start", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"ÅØ½ºÃÄ ÀÐ¾î¿À±â ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -66,7 +66,7 @@ HRESULT CMenuD2::Initialize()
 		L"../Resource/Texture/Menu/MenuButtonEnd.png"
 		, L"MenuButton_Exit", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"ÅØ½ºÃÄ ÀÐ¾î¿À±â ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	return S_OK;
@@ -76,7 +76,7 @@ SCENEID CMenuD2::Progress()
 {
 	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
 
-	// ¾ÀID°¡ NONPASS°¡ ¾Æ´Ï¸é ¾À¸Å´ÏÁ®¿¡¼­ ÇØ´çIDÀÇ ¾ÀÀ» »ý¼º ¹× ÃÊ±âÈ­
+	// ì”¬IDê°€ NONPASSê°€ ì•„ë‹ˆë©´ ì”¬ë§¤ë‹ˆì ¸ì—ì„œ í•´ë‹¹IDì˜ ì”¬ì„ ìƒì„± ë° ì´ˆê¸°í™”
 	if(iScene > SCENEID_NONPASS)
 		GET_SINGLE(CSceneMgr)->InitScene(iScene);
 	TCHAR Info[128];

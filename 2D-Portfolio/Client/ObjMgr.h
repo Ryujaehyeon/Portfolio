@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Defines.h"
 #include "Obj.h"
@@ -13,14 +13,14 @@ private:
 	int m_BossCount;
 public:
 	const vector<TILE*>* GetTileInfo();
-	// °´Ã¼°£ »óÈ£ÀÛ¿ë ÇÁ·Î±×·¡½º¿¡¼­ ÀÎÀÚ¸¦ ¹Ş¾Æ¼­ 
-	// ¹İº¹¹®À¸·Î iter·Î ¶È°°Àº ½ÃÁ¡¿¡¼­ map³¡±îÁö ºñ±³
+	// ê°ì²´ê°„ ìƒí˜¸ì‘ìš© í”„ë¡œê·¸ë˜ìŠ¤ì—ì„œ ì¸ìë¥¼ ë°›ì•„ì„œ 
+	// ë°˜ë³µë¬¸ìœ¼ë¡œ iterë¡œ ë˜‘ê°™ì€ ì‹œì ì—ì„œ mapëê¹Œì§€ ë¹„êµ
 	void ObjInteraction(CObj* pSour);
-	// °´Ã¼³¢¸® Ãæµ¹½Ã ¹Ğ¾î³»±â
+	// ê°ì²´ë¼ë¦¬ ì¶©ëŒì‹œ ë°€ì–´ë‚´ê¸°
 	bool CrashAndSlide(CObj* _pDest, CObj* _pSour);
-	// ´É·Â¿¡ µû¸¥ ±³È¯
+	// ëŠ¥ë ¥ì— ë”°ë¥¸ êµí™˜
 	void AbilityTointeract(CObj* _pDest, CObj* _pSour);
-	// »óÈ£ÀÛ¿ë 
+	// ìƒí˜¸ì‘ìš© 
 	float DegreeMon( CObj* _pDest, CObj* _pSour );
 	float DegreeMouse(CObj* _pSour );
 	void IterRelease();

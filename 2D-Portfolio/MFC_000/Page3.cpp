@@ -1,4 +1,4 @@
-// Page3.cpp : ±¸Çö ÆÄÀÏÀÔ´Ï´Ù.
+ï»¿// Page3.cpp : êµ¬í˜„ íŒŒì¼ìž…ë‹ˆë‹¤.
 //
 
 #include "stdafx.h"
@@ -9,7 +9,7 @@
 #include "MFC_000View.h"
 
 
-// CPage3 ´ëÈ­ »óÀÚÀÔ´Ï´Ù.
+// CPage3 ëŒ€í™” ìƒìžìž…ë‹ˆë‹¤.
 
 IMPLEMENT_DYNAMIC(CPage3, CPropertyPage)
 
@@ -40,54 +40,54 @@ BEGIN_MESSAGE_MAP(CPage3, CPropertyPage)
 	ON_WM_VSCROLL()
 END_MESSAGE_MAP()
 
-// CPage3 ¸Þ½ÃÁö Ã³¸®±âÀÔ´Ï´Ù.
+// CPage3 ë©”ì‹œì§€ ì²˜ë¦¬ê¸°ìž…ë‹ˆë‹¤.
 
 BOOL CPage3::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	
 
-	// TODO:  ¿©±â¿¡ Ãß°¡ ÃÊ±âÈ­ ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.
+	// TODO:  ì—¬ê¸°ì— ì¶”ê°€ ì´ˆê¸°í™” ìž‘ì—…ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
 
 	UpdateData(TRUE);
 
-	// ½½¶óÀÌ´õ ¹Ù
-	// »ç¿ë¿µ¿ª °ª ¼³Á¤ÇÑ´Ù.
+	// ìŠ¬ë¼ì´ë” ë°”
+	// ì‚¬ìš©ì˜ì—­ ê°’ ì„¤ì •í•œë‹¤.
 	m_ctrSlider.SetRange(0, 300);
 
-	// ÃÖ¼Ò °ª ¼³Á¤.
+	// ìµœì†Œ ê°’ ì„¤ì •.
 	//m_ctrSlider.SetRangeMin(-300);
-	// ÃÖ´ë °ªÀ» ¼³Á¤.
+	// ìµœëŒ€ ê°’ì„ ì„¤ì •.
 	//m_ctrSlider.SetRangeMax(300);
 
 
-	// À§Ä¡ ¼³Á¤.
+	// ìœ„ì¹˜ ì„¤ì •.
 	m_ctrSlider.SetPos(30);
 
-	// ´«±Ý °£°ÝÀ» ¼³Á¤ÇÑ´Ù.
-	// ¼Ó¼ºÀÇ Tick Marks¿Í Auto Ticks°¡ True·Î µÇ¾î ÀÖ¾î¾ß ÇÑ´Ù.
+	// ëˆˆê¸ˆ ê°„ê²©ì„ ì„¤ì •í•œë‹¤.
+	// ì†ì„±ì˜ Tick Marksì™€ Auto Ticksê°€ Trueë¡œ ë˜ì–´ ìžˆì–´ì•¼ í•œë‹¤.
 	m_ctrSlider.SetTicFreq(10);
 
-	// Å°º¸µå Ä¿¼­Å°·Î ½½¶óÀÌ´õ¸¦ ¿òÁ÷ÀÏ¶§ÀÇ Áõ°¡ Å©±â¸¦ ¼³Á¤
+	// í‚¤ë³´ë“œ ì»¤ì„œí‚¤ë¡œ ìŠ¬ë¼ì´ë”ë¥¼ ì›€ì§ì¼ë•Œì˜ ì¦ê°€ í¬ê¸°ë¥¼ ì„¤ì •
 	m_ctrSlider.SetLineSize(1);
 
-	// Å°º¸µåÀÇ PgUp, PgDnÅ°¸¦ ´©¸£°Å³ª ¸¶¿ì½º·Î ½½¶óÀÌ´õÀÇ ¸öµ¿À» Å¬¸¯½Ã ¿òÁ÷ÀÏ Å©±â 
+	// í‚¤ë³´ë“œì˜ PgUp, PgDní‚¤ë¥¼ ëˆ„ë¥´ê±°ë‚˜ ë§ˆìš°ìŠ¤ë¡œ ìŠ¬ë¼ì´ë”ì˜ ëª¸ë™ì„ í´ë¦­ì‹œ ì›€ì§ì¼ í¬ê¸° 
 	m_ctrSlider.SetPageSize(5);
 
-	// ½½¶óÀÌ´õÀÇ Æ¯Á¤ ¿µ¿ª ¼±ÅÃ.
-	// ¼Ó¼ºÀÇ Enable Selection Range°¡ True·Î µÇ¾î ÀÖ¾î¾ß ÇÑ´Ù.
+	// ìŠ¬ë¼ì´ë”ì˜ íŠ¹ì • ì˜ì—­ ì„ íƒ.
+	// ì†ì„±ì˜ Enable Selection Rangeê°€ Trueë¡œ ë˜ì–´ ìžˆì–´ì•¼ í•œë‹¤.
 	//m_ctrSlider.SetSelection(-100, 100);
 
-	// ¼±ÅÃ¿µ¿ª Áö¿î±â.
+	// ì„ íƒì˜ì—­ ì§€ìš´ê¸°.
 	//m_ctrSlider.ClearSel();
 
-	//4. ½½¶óÀÌ´õ°¡ ÀÌµ¿ µÇ¾úÀ»¶§.
-	//	- ½½¶óÀÌ´õ ÄÁÆ®·ÑÀÇ ÀÌº¥Æ® NM_RELEASEDCAPTURE¸¦ »ç¿ëÇÑ´Ù.
-	//	- ¸¶¿ì½º·Î ½½¶óÀÌ´õÀÇ ÀÌµ¿ÀÌ ³¡³­ ÈÄ ¹ß»ýÇÑ´Ù.
+	//4. ìŠ¬ë¼ì´ë”ê°€ ì´ë™ ë˜ì—ˆì„ë•Œ.
+	//	- ìŠ¬ë¼ì´ë” ì»¨íŠ¸ë¡¤ì˜ ì´ë²¤íŠ¸ NM_RELEASEDCAPTUREë¥¼ ì‚¬ìš©í•œë‹¤.
+	//	- ë§ˆìš°ìŠ¤ë¡œ ìŠ¬ë¼ì´ë”ì˜ ì´ë™ì´ ëë‚œ í›„ ë°œìƒí•œë‹¤.
 
-	//	int nPos = m_ctrSlider.GetPos();   // ÇöÀç ½½¶óÀÌ´õÀÇ À§Ä¡¸¦ ¾Ë¾Æ³½´Ù.
+	//	int nPos = m_ctrSlider.GetPos();   // í˜„ìž¬ ìŠ¬ë¼ì´ë”ì˜ ìœ„ì¹˜ë¥¼ ì•Œì•„ë‚¸ë‹¤.
 
-	// ÄÞº¸¹Ú½º
+	// ì½¤ë³´ë°•ìŠ¤
 	TCHAR szTmp[128] = L"";
 	for(int i = 0; i < 3; ++i)
 	{
@@ -114,26 +114,26 @@ BOOL CPage3::OnInitDialog()
 	UpdateData(FALSE);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	// ¿¹¿Ü: OCX ¼Ó¼º ÆäÀÌÁö´Â FALSE¸¦ ¹ÝÈ¯ÇØ¾ß ÇÕ´Ï´Ù.
+	// ì˜ˆì™¸: OCX ì†ì„± íŽ˜ì´ì§€ëŠ” FALSEë¥¼ ë°˜í™˜í•´ì•¼ í•©ë‹ˆë‹¤.
 }
 
 void CPage3::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
-	// TODO: ¿©±â¿¡ ¸Þ½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
 
-	//5. ½½¶óÀÌ´õ°¡ ¿òÁ÷ÀÏ¶§ ¸¶´Ù °ªÀ» ¾Ë°íÀÚ ÇÑ´Ù¸é.
-	//	- ´ëÈ­»óÀÚÀÇ ¸Þ½ÃÁö WM_HSCROOL¸¦ »ç¿ëÇÑ´Ù. °¡·Î ½½¶óÀÌ´õ¶ó¸é WM_HSCROOLÀ» »ç¿ëÇÑ´Ù.
+	//5. ìŠ¬ë¼ì´ë”ê°€ ì›€ì§ì¼ë•Œ ë§ˆë‹¤ ê°’ì„ ì•Œê³ ìž í•œë‹¤ë©´.
+	//	- ëŒ€í™”ìƒìžì˜ ë©”ì‹œì§€ WM_HSCROOLë¥¼ ì‚¬ìš©í•œë‹¤. ê°€ë¡œ ìŠ¬ë¼ì´ë”ë¼ë©´ WM_HSCROOLì„ ì‚¬ìš©í•œë‹¤.
 	vector<OBJINFO*>* pMonster = 
 		&((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecMonster;
 
 	if(pScrollBar)
 	{
-		// ¾î¶² ½½¶óÀÌ´õÀÎÁö °Ë»ç
+		// ì–´ë–¤ ìŠ¬ë¼ì´ë”ì¸ì§€ ê²€ì‚¬
 		if(pScrollBar == (CScrollBar*)&m_ctrSlider)
 		{
-			// ½ºÄÉÀÏ °ªÀº ¼Ò¼ö°ªÀ» ¹ÞÁö¸¸ ½½¶óÀÌ´õ °ª ¼Ò¼öÁ¡ ´ÜÀ§·Î 
-			// ¼³Á¤ÇÒ ¼ö ¾ø±â ¶§¹®¿¡ ´ÜÀ§¸¦ ³ôÀÎ ÈÄ ±× °ªÀ» ³ª´«ÈÄ ±× °ªÀ» ÀÌ¿ë 
-			// ½½¶óÀÌ´õÀÇ À§Ä¡¸¦ °Ë»çÇÑ´Ù.
+			// ìŠ¤ì¼€ì¼ ê°’ì€ ì†Œìˆ˜ê°’ì„ ë°›ì§€ë§Œ ìŠ¬ë¼ì´ë” ê°’ ì†Œìˆ˜ì  ë‹¨ìœ„ë¡œ 
+			// ì„¤ì •í•  ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— ë‹¨ìœ„ë¥¼ ë†’ì¸ í›„ ê·¸ ê°’ì„ ë‚˜ëˆˆí›„ ê·¸ ê°’ì„ ì´ìš© 
+			// ìŠ¬ë¼ì´ë”ì˜ ìœ„ì¹˜ë¥¼ ê²€ì‚¬í•œë‹¤.
 			float nPos = m_ctrSlider.GetPos() * 0.01f;
 			((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_fScrollval = nPos;
 			for (vector<OBJINFO*>::iterator iter = pMonster->begin();
@@ -141,7 +141,7 @@ void CPage3::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			{
 				if ((*iter) != NULL && (*iter)->unitSelect == true )
 				{
-					// 7/21 ¿ÀÈÄ 8½Ã 30ºÐ
+					// 7/21 ì˜¤í›„ 8ì‹œ 30ë¶„
 					D3DXMatrixScaling(&(*iter)->matScale, nPos, nPos, nPos);
 				}
 			}
@@ -149,7 +149,7 @@ void CPage3::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	}
 	else
 	{
-		// CScrollView¸¦ »ó¼Ó¹ÞÀº ºäÀÇ °æ¿ì ÇÁ·¡ÀÓÀÇ ½ºÅ©·Ñ·Ñ µ¿ÀÛ½Ã pScrollBarÀÌ NULLµÈ´Ù.
+		// CScrollViewë¥¼ ìƒì†ë°›ì€ ë·°ì˜ ê²½ìš° í”„ëž˜ìž„ì˜ ìŠ¤í¬ë¡¤ë¡¤ ë™ìž‘ì‹œ pScrollBarì´ NULLëœë‹¤.
 	}
 
 	((CMainFrame*)AfxGetMainWnd()
@@ -160,7 +160,7 @@ void CPage3::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 void CPage3::OnCbnSelchangeCombo1()
 {
-	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	int iIndex = m_Combo.GetCurSel();
 	m_Picture.SetBitmap(m_BitMap[iIndex]);
 
@@ -173,14 +173,14 @@ void CPage3::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 {
 	CPropertyPage::OnActivate(nState, pWndOther, bMinimized);
 
-	// TODO: ¿©±â¿¡ ¸Þ½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 
 }
 
 
 BOOL CPage3::OnSetActive()
 {
-	// TODO: ¿©±â¿¡ Æ¯¼öÈ­µÈ ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº» Å¬·¡½º¸¦ È£ÃâÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— íŠ¹ìˆ˜í™”ëœ ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ í´ëž˜ìŠ¤ë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
 	int iIndex = m_Combo.GetCurSel();
 
 	CMainFrame* pMainFrm = (CMainFrame*)AfxGetMainWnd();
@@ -193,7 +193,7 @@ BOOL CPage3::OnSetActive()
 
 void CPage3::OnBnClickedButton1()
 {
-	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	vector<OBJINFO*>* pMonster = 
 		&((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecMonster;
 
@@ -215,7 +215,7 @@ void CPage3::OnBnClickedButton1()
 void CPage3::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
-	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ì»¨íŠ¸ë¡¤ ì•Œë¦¼ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	*pResult = 0;
 }
 

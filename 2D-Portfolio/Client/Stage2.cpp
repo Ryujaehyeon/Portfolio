@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Stage2.h"
 #include "Include.h"
 
@@ -8,7 +8,7 @@ CStage2::CStage2(void)
 	Sound->Stop(L"Tristram");
 	Sound->LoadSound(L"Cave", L"Cave.mp3", true);
 	Sound->SetVolume(10);
-	Sound->Play(L"Cave");       //»ç¿îµå
+	Sound->Play(L"Cave");       //ì‚¬ìš´ë“œ
 }
 
 
@@ -31,27 +31,27 @@ SCENEID CStage2::Progress()
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 			, VIPER)))
 		{
-			ERR_MSG(g_hWnd, L"Viper ¸ó½ºÅÍ °´Ã¼ »ý¼º ½ÇÆÐ");
+			ERR_MSG(g_hWnd, L"Viper ëª¬ìŠ¤í„° ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		}
 	}
 	
-	//// ¾ÆÁ÷ ¸ó½ºÅÍ ÅØ½ºÃÄ Ãß°¡ ÄÚµå°¡ ¾øÀ½
+	//// ì•„ì§ ëª¬ìŠ¤í„° í…ìŠ¤ì³ ì¶”ê°€ ì½”ë“œê°€ ì—†ìŒ
 	//if(GET_SINGLE(CObjMgr)->GetBossCnt() < 1)
 	//{
 	//	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 	//		, IZUAL)))
 	//	{
-	//		ERR_MSG(g_hWnd, L"IZUAL ¸ó½ºÅÍ °´Ã¼ »ý¼º ½ÇÆÐ");
+	//		ERR_MSG(g_hWnd, L"IZUAL ëª¬ìŠ¤í„° ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 	//	}
 
 	//	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 	//		, ANDARIEL)))
 	//	{
-	//		ERR_MSG(g_hWnd, L"ANDARIEL ¸ó½ºÅÍ °´Ã¼ »ý¼º ½ÇÆÐ");
+	//		ERR_MSG(g_hWnd, L"ANDARIEL ëª¬ìŠ¤í„° ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 	//	}
 	//}
 
-	// ¾ÀID°¡ NONPASS°¡ ¾Æ´Ï¸é ¾À¸Å´ÏÁ®¿¡¼­ ÇØ´çIDÀÇ ¾ÀÀ» »ý¼º ¹× ÃÊ±âÈ­
+	// ì”¬IDê°€ NONPASSê°€ ì•„ë‹ˆë©´ ì”¬ë§¤ë‹ˆì ¸ì—ì„œ í•´ë‹¹IDì˜ ì”¬ì„ ìƒì„± ë° ì´ˆê¸°í™”
 	if(iScene > SCENEID_NONPASS)
 		GET_SINGLE(CSceneMgr)->InitScene(iScene);
 

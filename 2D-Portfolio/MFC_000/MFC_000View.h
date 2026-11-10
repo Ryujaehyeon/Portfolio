@@ -1,5 +1,5 @@
-
-// MFC_000View.h : CMFC_000View Å¬·¡½ºÀÇ ÀÎÅÍÆäÀÌ½º
+ï»¿
+// MFC_000View.h : CMFC_000View í´ë˜ìŠ¤ì˜ ì¸í„°í˜ì´ìŠ¤
 //
 
 #pragma once
@@ -8,15 +8,15 @@
 
 class CMFC_000View : public CScrollView
 {
-protected: // serialization¿¡¼­¸¸ ¸¸µé¾îÁı´Ï´Ù.
+protected: // serializationì—ì„œë§Œ ë§Œë“¤ì–´ì§‘ë‹ˆë‹¤.
 	CMFC_000View();
 	DECLARE_DYNCREATE(CMFC_000View)
 
-// Æ¯¼ºÀÔ´Ï´Ù.
+// íŠ¹ì„±ì…ë‹ˆë‹¤.
 public:
 	CMFC_000Doc* GetDocument() const;
 
-// ÀÛ¾÷ÀÔ´Ï´Ù.
+// ì‘ì—…ì…ë‹ˆë‹¤.
 public:
 	vector<TILE*> m_vecTile;
 	vector<OBJINFO*> m_vecMonster;
@@ -24,21 +24,21 @@ public:
 	int m_iCurrentID;
 	float m_fScrollval;
 	CPoint m_MousePoint;
-	void InitTile(); /* Å¸ÀÏÀ» ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö */
+	void InitTile(); /* íƒ€ì¼ì„ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜ */
 	bool CollisionMouseToTile(D3DXVECTOR2 vMousePos,
 		const TILE* pTileInfo);
 
-// ÀçÁ¤ÀÇÀÔ´Ï´Ù.
+// ì¬ì •ì˜ì…ë‹ˆë‹¤.
 public:
-	virtual void OnDraw(CDC* pDC);  // ÀÌ ºä¸¦ ±×¸®±â À§ÇØ ÀçÁ¤ÀÇµÇ¾ú½À´Ï´Ù.
+	virtual void OnDraw(CDC* pDC);  // ì´ ë·°ë¥¼ ê·¸ë¦¬ê¸° ìœ„í•´ ì¬ì •ì˜ë˜ì—ˆìŠµë‹ˆë‹¤.
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
-	virtual void OnInitialUpdate(); // »ı¼º ÈÄ Ã³À½ È£ÃâµÇ¾ú½À´Ï´Ù.
+	virtual void OnInitialUpdate(); // ìƒì„± í›„ ì²˜ìŒ í˜¸ì¶œë˜ì—ˆìŠµë‹ˆë‹¤.
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
 
-// ±¸ÇöÀÔ´Ï´Ù.
+// êµ¬í˜„ì…ë‹ˆë‹¤.
 public:
 	virtual ~CMFC_000View();
 #ifdef _DEBUG
@@ -48,7 +48,7 @@ public:
 
 protected:
 
-// »ı¼ºµÈ ¸Ş½ÃÁö ¸Ê ÇÔ¼ö
+// ìƒì„±ëœ ë©”ì‹œì§€ ë§µ í•¨ìˆ˜
 protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
@@ -62,7 +62,7 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
 
-#ifndef _DEBUG  // MFC_000View.cppÀÇ µğ¹ö±× ¹öÀü
+#ifndef _DEBUG  // MFC_000View.cppì˜ ë””ë²„ê·¸ ë²„ì „
 inline CMFC_000Doc* CMFC_000View::GetDocument() const
    { return reinterpret_cast<CMFC_000Doc*>(m_pDocument); }
 #endif

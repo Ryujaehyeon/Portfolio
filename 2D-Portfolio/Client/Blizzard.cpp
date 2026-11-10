@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Blizzard.h"
 #include "Include.h"
 
@@ -67,7 +67,7 @@ HRESULT CBlizzard::Initialize()
 SCENEID CBlizzard::Progress()
 {
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
-	// ½Ã°£
+	// ì‹œê°„
 
 	if(m_dwKey & KEY_RBUTTON && m_fTime == 0)
 		m_Info.vPos = MouseInfoDX();
@@ -83,10 +83,10 @@ SCENEID CBlizzard::Progress()
 	if (m_vTagetInfo == m_Info.vPos)
 		m_vTagetInfo = m_Info.vPos;
 
-	// ÀÌ¹ÌÁö Å©±â º¯°æÇØ¾ßÇÔ
+	// ì´ë¯¸ì§€ í¬ê¸° ë³€ê²½í•´ì•¼í•¨
 	D3DXMatrixScaling(&m_Info.matScale, 1.f, 1.f, 1.f);
 
-	// À§Ä¡¸¦ ¸¶¿ì½º°¡ ÀÖ´Â À§Ä¡·Î ³õ´Â´Ù.
+	// ìœ„ì¹˜ë¥¼ ë§ˆìš°ìŠ¤ê°€ ìžˆëŠ” ìœ„ì¹˜ë¡œ ë†“ëŠ”ë‹¤.
 	m_Info.vDir = m_Info.vPos;
 
 	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, m_Info.vPos.z );
@@ -103,7 +103,7 @@ void CBlizzard::Render()
 {
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(SKILL, m_pStateKey, int(m_tFrame.fStart));
-	// ÇÁ·¹ÀÓ °ªÀÌ ÀúÀåÇÑ ÀÌ¹ÌÁö º¤ÅÍÅ©±â¸¦ ¹þ¾î³­ °ªÀÌ µé¾î°¡¸é ¿¡·¯
+	// í”„ë ˆìž„ ê°’ì´ ì €ìž¥í•œ ì´ë¯¸ì§€ ë²¡í„°í¬ê¸°ë¥¼ ë²—ì–´ë‚œ ê°’ì´ ë“¤ì–´ê°€ë©´ ì—ëŸ¬
 
 	if(pTexInfo == NULL)
 		return;
@@ -111,11 +111,11 @@ void CBlizzard::Render()
 	static int iDownX = -(rand()%50-25);
 	int iDownY = (rand()%150+100);
 	
-	// ½Ã°£°ª ´©Àû
+	// ì‹œê°„ê°’ ëˆ„ì 
 	m_sPlayInfo.fSpeed += GET_SINGLE(CTimeMgr)->DeltaTime() * iDownY * 2.f;
 	
-	//ºí¸®ÀÚµå ÀÌÆåÆ®¸¦ ¿øÇÏ´Â °¹¼ö(i)¸¸Å­ ±×¸®¸é µÊ, ³­¼ö°ª¿¡ µû¶ó (i)°³¸¦ ·£´ýÇÏ°Ô ±×·ÁÁÜ
-	// Å¬¸¯ÇÑ°÷º¸´Ù yÃàÀ» ¿Ã·Á¼­ Á¡Á¡ ³»·Á¿À°Ô ±×¸®´Ù°¡ Å¬¸¯ÇÑ°÷ º¸´Ù ³·À¸¸é ´Ù½Ã ¿Ã¸®°Ô ¹Ù²ã¾ßÇÔ
+	//ë¸”ë¦¬ìžë“œ ì´íŽ™íŠ¸ë¥¼ ì›í•˜ëŠ” ê°¯ìˆ˜(i)ë§Œí¼ ê·¸ë¦¬ë©´ ë¨, ë‚œìˆ˜ê°’ì— ë”°ë¼ (i)ê°œë¥¼ ëžœë¤í•˜ê²Œ ê·¸ë ¤ì¤Œ
+	// í´ë¦­í•œê³³ë³´ë‹¤ yì¶•ì„ ì˜¬ë ¤ì„œ ì ì  ë‚´ë ¤ì˜¤ê²Œ ê·¸ë¦¬ë‹¤ê°€ í´ë¦­í•œê³³ ë³´ë‹¤ ë‚®ìœ¼ë©´ ë‹¤ì‹œ ì˜¬ë¦¬ê²Œ ë°”ê¿”ì•¼í•¨
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x + iDownX,
 		(pTexInfo->ImgInfo.Height -(m_sPlayInfo.fSpeed*1.5f)+80) + CObj::g_tScroll.y, 0);

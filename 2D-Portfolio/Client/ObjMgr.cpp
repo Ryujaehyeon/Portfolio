@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "ObjMgr.h"
 #include "Include.h"
 #include "SortMgr.h"
@@ -20,18 +20,18 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 		L"Fellow_First",
 		L"Fellow_Second"};
 
-	// Å°°ªÀ» ¹Ş°í ¸Ê¿¡¼­ ÇØ´ç Å°°ª°ú µ¿ÀÏÇÑ ¸®½ºÆ®¸¦ Ã£À½
+	// í‚¤ê°’ì„ ë°›ê³  ë§µì—ì„œ í•´ë‹¹ í‚¤ê°’ê³¼ ë™ì¼í•œ ë¦¬ìŠ¤íŠ¸ë¥¼ ì°¾ìŒ
 	map<wstring, list<CObj*>>::iterator iter = 
 		m_MapObject.find(pObjKey);
 
-	// ¿øÇü °´Ã¼ÀÎ ÇÁ·ÎÅä·Î »ı¼ºÇÒ °´Ã¼ÀÇ ¿øÇü °´Ã¼¸¦ º¹»çÇØ¿È
+	// ì›í˜• ê°ì²´ì¸ í”„ë¡œí† ë¡œ ìƒì„±í•  ê°ì²´ì˜ ì›í˜• ê°ì²´ë¥¼ ë³µì‚¬í•´ì˜´
 	CObj* pProtoInst = ((CObjProto*)pProto)->GetProto(pObjKey);
 
-	// ¿øÇü °´Ã¼°¡ ¾øÀ¸¸é ¿ÀºêÁ§Æ® »ı¼º ½ÇÆĞ
+	// ì›í˜• ê°ì²´ê°€ ì—†ìœ¼ë©´ ì˜¤ë¸Œì íŠ¸ ìƒì„± ì‹¤íŒ¨
 	if(pProtoInst == NULL)
 		return E_FAIL;
 
-	// »ı¼º¿¡ ¼º°øÇÏ¸é ÃÊ±âÈ­
+	// ìƒì„±ì— ì„±ê³µí•˜ë©´ ì´ˆê¸°í™”
 	if(FAILED(pProtoInst->Initialize()))
 		return E_FAIL;
 
@@ -41,14 +41,14 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 		{
 			map<wstring, list<CObj*>>::iterator iterPLAYER = 
 				m_MapObject.find(PLAYER);
-			// Å°°¡ ÇÃ·¹ÀÌ¾îÀÎ ¸®½ºÆ®°¡ ¾øÀ¸¸é
+			// í‚¤ê°€ í”Œë ˆì´ì–´ì¸ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë©´
 			if (iterPLAYER == m_MapObject.end())
 			{
-				// Ãß°¡ »ı¼º ÈÄ
+				// ì¶”ê°€ ìƒì„± í›„
 				list<CObj*> objlist;
-				// ¸®½ºÆ®¿¡ ³Ö°í
+				// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 				objlist.push_back(pProtoInst);
-				// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+				// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 				m_MapObject.insert(make_pair(PLAYER, objlist));
 			}
 			else
@@ -67,8 +67,8 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 
 			for (;iterPlayerList != iterPLAYER->second.end(); ++iterPlayerList)
 			{
-				// ÇÃ·¹ÀÌ¾î À§Ä¡¿¡¼­ ½ºÅ³ÀÌ ¹ß»çµÇ°Ô²û ÇÔ
-				// ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÅÍ½º¿¡ µû¶ó ½ºÅ³ÀÇ À§·ÂÀÌ ´Ù¸£°Ô º¯°æ °¡´É
+				// í”Œë ˆì´ì–´ ìœ„ì¹˜ì—ì„œ ìŠ¤í‚¬ì´ ë°œì‚¬ë˜ê²Œë” í•¨
+				// í”Œë ˆì´ì–´ ìŠ¤í…Œì´í„°ìŠ¤ì— ë”°ë¼ ìŠ¤í‚¬ì˜ ìœ„ë ¥ì´ ë‹¤ë¥´ê²Œ ë³€ê²½ ê°€ëŠ¥
 				if(pObjKey == BONESPEAR)
 				{
 					pProtoInst->SetStatas()->iLevel = ((CPlayer*)(*iterPlayerList))->GetSkillTree().sBoneSpear.iLevel;
@@ -85,14 +85,14 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 				if((*iterPlayerList)->GetSelect() == true)
 					pProtoInst->Setinfo()->vPos = (*iterPlayerList)->GetInfo().vPos;
 			}
-			// Å°°¡ ÇÃ·¹ÀÌ¾îÀÎ ¸®½ºÆ®°¡ ¾øÀ¸¸é
+			// í‚¤ê°€ í”Œë ˆì´ì–´ì¸ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë©´
 			if (iterSKILL == m_MapObject.end())
 			{
-				// Ãß°¡ »ı¼º ÈÄ
+				// ì¶”ê°€ ìƒì„± í›„
 				list<CObj*> objlist;
-				// ¸®½ºÆ®¿¡ ³Ö°í
+				// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 				objlist.push_back(pProtoInst);
-				// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+				// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 				m_MapObject.insert(make_pair(SKILL, objlist));
 			}
 			else
@@ -105,14 +105,14 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 
 			map<wstring, list<CObj*>>::iterator iterMonster = 
 				m_MapObject.find(MONSTER);
-			// Å°°¡ ÇÃ·¹ÀÌ¾îÀÎ ¸®½ºÆ®°¡ ¾øÀ¸¸é
+			// í‚¤ê°€ í”Œë ˆì´ì–´ì¸ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë©´
 			if (iterMonster == m_MapObject.end())
 			{
-				// Ãß°¡ »ı¼º ÈÄ
+				// ì¶”ê°€ ìƒì„± í›„
 				list<CObj*> objlist;
-				// ¸®½ºÆ®¿¡ ³Ö°í
+				// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 				objlist.push_back(pProtoInst);
-				// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+				// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 				m_MapObject.insert(make_pair(MONSTER, objlist));
 			}
 			else
@@ -125,14 +125,14 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 	//	{
 	//		map<wstring, list<CObj*>>::iterator iterNONPLAYER = 
 	//			m_MapObject.find(L"Npc");
-	//		// Å°°¡ ÇÃ·¹ÀÌ¾îÀÎ ¸®½ºÆ®°¡ ¾øÀ¸¸é
+	//		// í‚¤ê°€ í”Œë ˆì´ì–´ì¸ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë©´
 	//		if (iterNONPLAYER == m_MapObject.end())
 	//		{
-	//			// Ãß°¡ »ı¼º ÈÄ
+	//			// ì¶”ê°€ ìƒì„± í›„
 	//			list<CObj*> objlist;
-	//			// ¸®½ºÆ®¿¡ ³Ö°í
+	//			// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 	//			objlist.push_back(pProtoInst);
-	//			// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+	//			// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 	//			m_MapObject.insert(make_pair(L"Npc", objlist));
 	//		}
 	//		else
@@ -145,14 +145,14 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 	//	{
 	//		map<wstring, list<CObj*>>::iterator iterBROKENOBJ = 
 	//			m_MapObject.find(L"BrokenObj");
-	//		// Å°°¡ ÇÃ·¹ÀÌ¾îÀÎ ¸®½ºÆ®°¡ ¾øÀ¸¸é
+	//		// í‚¤ê°€ í”Œë ˆì´ì–´ì¸ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë©´
 	//		if (iterBROKENOBJ == m_MapObject.end())
 	//		{
-	//			// Ãß°¡ »ı¼º ÈÄ
+	//			// ì¶”ê°€ ìƒì„± í›„
 	//			list<CObj*> objlist;
-	//			// ¸®½ºÆ®¿¡ ³Ö°í
+	//			// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 	//			objlist.push_back(pProtoInst);
-	//			// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+	//			// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 	//			m_MapObject.insert(make_pair(L"BrokenObj", objlist));
 	//		}
 	//		else
@@ -165,14 +165,14 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 	//	{
 	//		map<wstring, list<CObj*>>::iterator iterBUILDING = 
 	//			m_MapObject.find(L"Building");
-	//		// Å°°¡ ÇÃ·¹ÀÌ¾îÀÎ ¸®½ºÆ®°¡ ¾øÀ¸¸é
+	//		// í‚¤ê°€ í”Œë ˆì´ì–´ì¸ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë©´
 	//		if (iterBUILDING == m_MapObject.end())
 	//		{
-	//			// Ãß°¡ »ı¼º ÈÄ
+	//			// ì¶”ê°€ ìƒì„± í›„
 	//			list<CObj*> objlist;
-	//			// ¸®½ºÆ®¿¡ ³Ö°í
+	//			// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 	//			objlist.push_back(pProtoInst);
-	//			// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+	//			// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 	//			m_MapObject.insert(make_pair(L"Building", objlist));
 	//		}
 	//		else
@@ -184,14 +184,14 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 		{
 			map<wstring, list<CObj*>>::iterator iterBUTTON = 
 				m_MapObject.find(L"Button");
-			// Å°°¡ ÇÃ·¹ÀÌ¾îÀÎ ¸®½ºÆ®°¡ ¾øÀ¸¸é
+			// í‚¤ê°€ í”Œë ˆì´ì–´ì¸ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë©´
 			if (iterBUTTON == m_MapObject.end())
 			{
-				// Ãß°¡ »ı¼º ÈÄ
+				// ì¶”ê°€ ìƒì„± í›„
 				list<CObj*> objlist;
-				// ¸®½ºÆ®¿¡ ³Ö°í
+				// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 				objlist.push_back(pProtoInst);
-				// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+				// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 				m_MapObject.insert(make_pair(L"Button", objlist));
 			}
 			else
@@ -204,14 +204,14 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 		{
 			map<wstring, list<CObj*>>::iterator iterUI = 
 				m_MapObject.find(L"UI");
-			// Å°°¡ ÇÃ·¹ÀÌ¾îÀÎ ¸®½ºÆ®°¡ ¾øÀ¸¸é
+			// í‚¤ê°€ í”Œë ˆì´ì–´ì¸ ë¦¬ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë©´
 			if (iterUI == m_MapObject.end())
 			{
-				// Ãß°¡ »ı¼º ÈÄ
+				// ì¶”ê°€ ìƒì„± í›„
 				list<CObj*> objlist;
-				// ¸®½ºÆ®¿¡ ³Ö°í
+				// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 				objlist.push_back(pProtoInst);
-				// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+				// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 				m_MapObject.insert(make_pair(L"UI", objlist));
 			}
 			else
@@ -220,17 +220,17 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 		}
 	default:
 		{
-			// pObjKey·Î ¹ŞÀº °ª°ú °°Àº °´Ã¼°¡ ¾øÀ¸¸é 
+			// pObjKeyë¡œ ë°›ì€ ê°’ê³¼ ê°™ì€ ê°ì²´ê°€ ì—†ìœ¼ë©´ 
 			if(iter == m_MapObject.end())
 			{
-				// Ãß°¡ »ı¼º ÈÄ
+				// ì¶”ê°€ ìƒì„± í›„
 				list<CObj*> objlist;
-				// ¸®½ºÆ®¿¡ ³Ö°í
+				// ë¦¬ìŠ¤íŠ¸ì— ë„£ê³ 
 				objlist.push_back(pProtoInst);
-				// ¸Ê¿¡ ¸®½ºÆ®¸¦ ³ÖÀ½
+				// ë§µì— ë¦¬ìŠ¤íŠ¸ë¥¼ ë„£ìŒ
 				m_MapObject.insert(make_pair(pObjKey, objlist));
 			}
-			else // ÀÖÀ¸¸é ¸®½ºÆ® ¸Ç µÚ¿¡ Ãß°¡
+			else // ìˆìœ¼ë©´ ë¦¬ìŠ¤íŠ¸ ë§¨ ë’¤ì— ì¶”ê°€
 				iter->second.push_back(pProtoInst);
 
 			break;
@@ -254,9 +254,9 @@ SCENEID CObjMgr::Progress()
 			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
 			map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
 						
-			//// ÇÃ·¹ÀÌ¾î Á¤º¸¸¦ º¸±â À§ÇÔ
+			//// í”Œë ˆì´ì–´ ì •ë³´ë¥¼ ë³´ê¸° ìœ„í•¨
 			//if((*iter2)->GetName() == PLAYER)
-			//DebugLog(L"·¹º§ : %d \nÃ¼·Â : %8.3f,%8.3f \n°æÇèÄ¡ : %8.3f/%8.3f \n°ø°İ·Â : %8.2f \n¹æ¾î·Â : %8.2f \nÈû : %8.2f \nÃ¼Áú : %8.2f \n¹ÎÃ¸ : %8.2f \nÅëÂû : %8.2f \nÁö´É : %8.2f \n°áÀÇ %8.2f \n´É·ÂÆ÷ÀÎÆ® : %d \n±â¼úÆ÷ÀÎÆ® : %d",
+			//DebugLog(L"ë ˆë²¨ : %d \nì²´ë ¥ : %8.3f,%8.3f \nê²½í—˜ì¹˜ : %8.3f/%8.3f \nê³µê²©ë ¥ : %8.2f \në°©ì–´ë ¥ : %8.2f \ní˜ : %8.2f \nì²´ì§ˆ : %8.2f \në¯¼ì²© : %8.2f \ní†µì°° : %8.2f \nì§€ëŠ¥ : %8.2f \nê²°ì˜ %8.2f \nëŠ¥ë ¥í¬ì¸íŠ¸ : %d \nê¸°ìˆ í¬ì¸íŠ¸ : %d",
 			//(*iter2)->GetStatas().iLevel, 
 			//(*iter2)->GetStatas().fHealthPoint, (*iter2)->GetStatas().fHealthPointMAX, 
 			//(*iter2)->GetStatas().fExp,(*iter2)->GetStatas().fMaxExp,
@@ -284,7 +284,7 @@ SCENEID CObjMgr::Progress()
 				}
 				else if ((*iter2)->GetObjType() == OBJ_MONSTER)
 				{
-					// ¸ó½ºÅÍ °¹¼ö¸¦ ÃøÁ¤ÈÄ ¸ó½ºÅÍ Ä«¿îÆ®¿¡ ³Ö¾îÁÜ
+					// ëª¬ìŠ¤í„° ê°¯ìˆ˜ë¥¼ ì¸¡ì •í›„ ëª¬ìŠ¤í„° ì¹´ìš´íŠ¸ì— ë„£ì–´ì¤Œ
 					m_MonsterCount = iterMonster->second.size();
 
 					m_BossCount = 0;
@@ -318,9 +318,9 @@ SCENEID CObjMgr::Progress()
 						ColCircle(&iterSkill->second, &iterMonster->second);
 				}
 				ObjInteraction((*iter2));
-				// iter »èÁ¦½Ã 
+				// iter ì‚­ì œì‹œ 
 				IterRelease();
-				// »èÁ¦µÈ µ¥ÀÌÅÍÀÇ ¸®½ºÆ® »èÁ¦;
+				// ì‚­ì œëœ ë°ì´í„°ì˜ ë¦¬ìŠ¤íŠ¸ ì‚­ì œ;
 				if(*iter2 == nullptr)
 				{
 					iter2 = iter->second.erase(iter2);
@@ -331,14 +331,14 @@ SCENEID CObjMgr::Progress()
 				break;
 			case OBJ_UI:
 				{
-					// ÇÃ·¹ÀÌ¾î Á¤º¸
+					// í”Œë ˆì´ì–´ ì •ë³´
 					if(iterPlayer != m_MapObject.end())
 					{
 						static_cast<CPlayer*>(*iter2)->Setlist(
 							&m_MapObject.find(PLAYER)->second);
 					}
 
-					// ¸ó½ºÅÍ Á¤º¸
+					// ëª¬ìŠ¤í„° ì •ë³´
 					if(iterMonster != m_MapObject.end())
 					{
 						static_cast<CMonster*>(*iter2)->Setlist(
@@ -393,93 +393,93 @@ void CObjMgr::AbilityTointeract(CObj* _pDest, CObj* _pSour)
 
 bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 {
-	// UI³ª °Ç¹°Çü °´Ã¼¸¦ ¹ĞÁö ¾Ê°Ô
+	// UIë‚˜ ê±´ë¬¼í˜• ê°ì²´ë¥¼ ë°€ì§€ ì•Šê²Œ
 	if(_pDest->GetObjType() == OBJ_UI 
 		&& _pDest->GetObjType() != OBJ_BUILDING) 
 		return false;
 
-	// ÀÚ½ÅÀÇ ½ºÅ³ÀÌ ÀÚ½ÅÀ» ¹ĞÁö ¾Ê°Ô
+	// ìì‹ ì˜ ìŠ¤í‚¬ì´ ìì‹ ì„ ë°€ì§€ ì•Šê²Œ
 	if (_pSour->GetObjType() == OBJ_SKILL
 		&& _pDest->GetObjType() == OBJ_PLAYER)
 		return false;
 
-	// ½ºÅ³ÀÌ ½ºÅ³À» ¹ĞÁö ¾Ê°Ô
+	// ìŠ¤í‚¬ì´ ìŠ¤í‚¬ì„ ë°€ì§€ ì•Šê²Œ
 	else if (_pSour->GetObjType() == OBJ_SKILL
 		&& _pDest->GetObjType() == OBJ_SKILL)
 		return false;
 
-	// ÇÃ·¹ÀÌ¾î°¡ ½ºÅ³À» ¹ĞÁö ¾Ê°Ô
+	// í”Œë ˆì´ì–´ê°€ ìŠ¤í‚¬ì„ ë°€ì§€ ì•Šê²Œ
 	else if ( _pSour->GetObjType() == OBJ_PLAYER
 		&& _pDest->GetObjType() == OBJ_SKILL)
 		return false;
 
 	
 
-	// ºñ±³ÇÒ ´ë»óÀÌ ÀÖ´Â ¹æÇâÀ» Á¤ÇÏ°í
+	// ë¹„êµí•  ëŒ€ìƒì´ ìˆëŠ” ë°©í–¥ì„ ì •í•˜ê³ 
 	_pSour->Setinfo()->vDir = (_pDest->GetInfo().vPos + CObj::g_tScroll) - (_pSour->GetInfo().vPos + CObj::g_tScroll);
 
-	// Å¸°ÙÀ» Á¤ÇÏ±â À§ÇÑ °Å¸®
+	// íƒ€ê²Ÿì„ ì •í•˜ê¸° ìœ„í•œ ê±°ë¦¬
 	{
-		// ½ÇÁ¦ Å©±â¿¡ µû¸¥ Ãæµ¹
+		// ì‹¤ì œ í¬ê¸°ì— ë”°ë¥¸ ì¶©ëŒ
 		float fDistance = ((_pSour->GetInfo().fCX * 0.7f) +
 			(_pDest->GetInfo().fCX * 0.7f));
 
-		// ½ÇÁ¦ °Å¸®, °´Ã¼°£ÀÇ Áß½ÉÁ¡°£ÀÇ °Å¸®
+		// ì‹¤ì œ ê±°ë¦¬, ê°ì²´ê°„ì˜ ì¤‘ì‹¬ì ê°„ì˜ ê±°ë¦¬
 		float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
 
-		// fDistance * 3.f´Â ÀÚ½ÅÀÇ Å©±âº¸´Ù ½ÇÁ¦·Î Ãæµ¹ÇÏ´Â Å©±â¸¦ ´Ã·Á¼­
-		// ´Ù¸¥´ë»óÀ» ÀÎÁöÇÏ´Â °Å¸®·Î »ï¾Æ ÀÌ °Å¸® ¾ÈÀ¸·Î µé¾î¿À¸é Ãæµ¹Çß´Ù ÆÇ´ÜÇÏ°í
-		// °´Ã¼¿¡ Ãæµ¹Çß´Ù°í ³Ñ°ÜÁÜÀ¸·Î °´Ã¼³»¿¡¼­ Ãæµ¹·Î ÀÎÇÑ AIÀÛµ¿À» ÇÏ°Ô ÇÔ
+		// fDistance * 3.fëŠ” ìì‹ ì˜ í¬ê¸°ë³´ë‹¤ ì‹¤ì œë¡œ ì¶©ëŒí•˜ëŠ” í¬ê¸°ë¥¼ ëŠ˜ë ¤ì„œ
+		// ë‹¤ë¥¸ëŒ€ìƒì„ ì¸ì§€í•˜ëŠ” ê±°ë¦¬ë¡œ ì‚¼ì•„ ì´ ê±°ë¦¬ ì•ˆìœ¼ë¡œ ë“¤ì–´ì˜¤ë©´ ì¶©ëŒí–ˆë‹¤ íŒë‹¨í•˜ê³ 
+		// ê°ì²´ì— ì¶©ëŒí–ˆë‹¤ê³  ë„˜ê²¨ì¤Œìœ¼ë¡œ ê°ì²´ë‚´ì—ì„œ ì¶©ëŒë¡œ ì¸í•œ AIì‘ë™ì„ í•˜ê²Œ í•¨
 		if(fDistance * 5.f > fRealDistance)
 		{
 			if(_pSour->GetObjType() != _pDest->GetObjType())
 			{
-				// Ãæµ¹ ¿©ºÎ
+				// ì¶©ëŒ ì—¬ë¶€
 				_pSour->SetCrash(true);
 				_pDest->SetCrash(true);
 
-				// Å¸°Ù ¼³Á¤
+				// íƒ€ê²Ÿ ì„¤ì •
 				//_pSour->SetTagetObj(_pDest);
 				//_pDest->SetTagetObj(_pSour);
 			}
 		}
 	}
 
-	// Ãæµ¹½Ã ¹Ğ¾îÁÖ±â À§ÇÑ °Å¸®
-	// Ãæµ¹ °Å¸®
+	// ì¶©ëŒì‹œ ë°€ì–´ì£¼ê¸° ìœ„í•œ ê±°ë¦¬
+	// ì¶©ëŒ ê±°ë¦¬
 	float fDistance = ((_pSour->GetInfo().fCX * 0.4f) +
 		(_pDest->GetInfo().fCX * 0.4f));
 
-	// ½ÇÁ¦ °Å¸®, °´Ã¼°£ÀÇ Áß½ÉÁ¡°£ÀÇ °Å¸®
+	// ì‹¤ì œ ê±°ë¦¬, ê°ì²´ê°„ì˜ ì¤‘ì‹¬ì ê°„ì˜ ê±°ë¦¬
 	float fRealDistance = D3DXVec3Length(&_pSour->Setinfo()->vDir);
 
-	// fDistance°¡ ¼­·Î°£ÀÇ Áß½ÉÁ¡¿¡¼­ Ç¥¸é±îÁöÀÇ °Å¸®¸¦ ´õÇÑ°ÍÀÎµ¥
-	// Ç¥¸é¿¡¼­ "[Ãæµ¹ÇßÀ»¶§!]ÀÇ Áß½ÉÁ¡°£(fDistance)"ÀÇ °Å¸®´Â Ç¥¸éÀÇ ÇÕ°èÀÌ´Ù.
-	// ÀÌ¶§ Áß½ÉÁ¡³¢¸®ÀÇ °Å¸®(fRealDistance)´Â fDistance º¸´Ù Å©¸é Ãæµ¹ÇÏÁö ¾ÊÀ½
-	// fDistance º¸´Ù ÀÛÀ¸¸é Ãæµ¹
+	// fDistanceê°€ ì„œë¡œê°„ì˜ ì¤‘ì‹¬ì ì—ì„œ í‘œë©´ê¹Œì§€ì˜ ê±°ë¦¬ë¥¼ ë”í•œê²ƒì¸ë°
+	// í‘œë©´ì—ì„œ "[ì¶©ëŒí–ˆì„ë•Œ!]ì˜ ì¤‘ì‹¬ì ê°„(fDistance)"ì˜ ê±°ë¦¬ëŠ” í‘œë©´ì˜ í•©ê³„ì´ë‹¤.
+	// ì´ë•Œ ì¤‘ì‹¬ì ë¼ë¦¬ì˜ ê±°ë¦¬(fRealDistance)ëŠ” fDistance ë³´ë‹¤ í¬ë©´ ì¶©ëŒí•˜ì§€ ì•ŠìŒ
+	// fDistance ë³´ë‹¤ ì‘ìœ¼ë©´ ì¶©ëŒ
 	if(fDistance > fRealDistance)
 	{
-		// ½ºÅ³, ¸ó½ºÅÍ°¡ ¼­·Î¸¦ ¹ĞÁö ¾Ê°Ô Ãæµ¹ÇÏ¸é Ãæµ¹Çß´Ù°í ¸®ÅÏÇØÁÜ
+		// ìŠ¤í‚¬, ëª¬ìŠ¤í„°ê°€ ì„œë¡œë¥¼ ë°€ì§€ ì•Šê²Œ ì¶©ëŒí•˜ë©´ ì¶©ëŒí–ˆë‹¤ê³  ë¦¬í„´í•´ì¤Œ
 		if (_pSour->GetObjType() == OBJ_SKILL
 		&& _pDest->GetObjType() == OBJ_MONSTER
 		|| _pSour->GetObjType() == OBJ_MONSTER
 		&& _pDest->GetObjType() == OBJ_SKILL)
 		return true;
 
-		// ¿ÜÀûÀ» ±¸ÇÑ´Ù
-		// ¹Ğ°íÀÖ´Â ´ë»óÀÇ ¹æÇâÀÇ ¿·À¸·Î ¹Ğ¸®´Â ´ë»óÀÇ ¹æÇâÀ» Àâ¾ÆÁÜ
+		// ì™¸ì ì„ êµ¬í•œë‹¤
+		// ë°€ê³ ìˆëŠ” ëŒ€ìƒì˜ ë°©í–¥ì˜ ì˜†ìœ¼ë¡œ ë°€ë¦¬ëŠ” ëŒ€ìƒì˜ ë°©í–¥ì„ ì¡ì•„ì¤Œ
 		D3DXVec3Cross(&_pDest->Setinfo()->vDir, 
 			&_pSour->GetInfo().vDir, 
 			&D3DXVECTOR3(0.f, 0.f, -1.f));
 
-		// Ãæµ¹ÇØ¼­ °ãÄ£¸¸Å­ ¹Ğ¾îÁÖ±â À§ÇØ °ãÄ£ °Å¸®¸¦ ±¸ÇÔ
+		// ì¶©ëŒí•´ì„œ ê²¹ì¹œë§Œí¼ ë°€ì–´ì£¼ê¸° ìœ„í•´ ê²¹ì¹œ ê±°ë¦¬ë¥¼ êµ¬í•¨
 		float fPushRange = fDistance - fRealDistance;
 
-		// Á¤±ÔÈ­ , 
+		// ì •ê·œí™” , 
 		D3DXVec3Normalize(&_pSour->Setinfo()->vDir, 
 			&_pSour->Setinfo()->vDir);
 
-		// ¹Ì´Â ¹æÇâ´ë·Î ¹Ğ¸®°Ô²û
+		// ë¯¸ëŠ” ë°©í–¥ëŒ€ë¡œ ë°€ë¦¬ê²Œë”
 		_pDest->Setinfo()->vPos += (_pSour->Setinfo()->vDir * fPushRange);
 		return true;
 	}
@@ -500,10 +500,10 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 
 			if (CrashAndSlide(*iter, *iter2))
 			{
-				// ¸ó½ºÅÍ ¹æ¾î·ÂÀÌ ÇÃ·¹ÀÌ¾î °ø°İ·Âº¸´Ù Å©¸é µ¥¹ÌÁö 
+				// ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì´ í”Œë ˆì´ì–´ ê³µê²©ë ¥ë³´ë‹¤ í¬ë©´ ë°ë¯¸ì§€ 
 				if((*iter2)->GetStatas().fDefence >= (*iter)->GetStatas().fAttack)
 					(*iter2)->SetStatas()->fHealthPoint -= 1;
-				// ÇÃ·¹ÀÌ¾î °ø°İ·ÂÀÌ ´õ Å©¸é ¸ó½ºÅÍ ¹æ¾î·ÂÀ» »« ³ª¸ÓÁö ¸¸Å­ÀÇ µ¥¹ÌÁö¸¸ Àû¿ë 
+				// í”Œë ˆì´ì–´ ê³µê²©ë ¥ì´ ë” í¬ë©´ ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì„ ëº€ ë‚˜ë¨¸ì§€ ë§Œí¼ì˜ ë°ë¯¸ì§€ë§Œ ì ìš© 
 				else if((*iter2)->GetStatas().fDefence < (*iter)->GetStatas().fAttack)
 					(*iter2)->SetStatas()->fHealthPoint -= 
 					(*iter)->GetStatas().fAttack - (*iter2)->GetStatas().fDefence;
@@ -512,40 +512,40 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 					(*iter)->SetStatas()->fHealthPoint = -1.f;
 
 
-				//Ãæµ¹½Ã µ¥¹ÌÁö
+				//ì¶©ëŒì‹œ ë°ë¯¸ì§€
 				//SAFE_DELETE(&(*iter));
 				//SAFE_DELETE(&(*iter2));
 				
-				//listÀÇ ³ëµå¸¦ »èÁ¦
+				//listì˜ ë…¸ë“œë¥¼ ì‚­ì œ
 				//iter = pSkill->erase(iter);
 				//iter2 = pMonsterList->erase(iter2);
 				++iter;
 				++iter2;
 			}
-			else //Ãæµ¹ ½ÇÆĞ½Ã
+			else //ì¶©ëŒ ì‹¤íŒ¨ì‹œ
 			{
-				//ÁÂÇ¥¸¦ ¹Ş¾Æ È­¸é ¹ÛÀ» ¹ş¾î³¯ ½Ã
+				//ì¢Œí‘œë¥¼ ë°›ì•„ í™”ë©´ ë°–ì„ ë²—ì–´ë‚  ì‹œ
 				if( (*iter)->GetInfo().vPos.y < 0		 + CObj::g_tScroll.y  ||
 					(*iter)->GetInfo().vPos.y > WINSIZEY + CObj::g_tScroll.y  ||
 					(*iter)->GetInfo().vPos.x < 0		 + CObj::g_tScroll.x  ||
 					(*iter)->GetInfo().vPos.x > WINSIZEX + CObj::g_tScroll.x	)
 				{
 
-					//ÇØÁ¦ ¹× ³ëµå »èÁ¦
+					//í•´ì œ ë° ë…¸ë“œ ì‚­ì œ
 					//SAFE_DELETE(&(*iter));
 					//iter = pSkill->erase(iter);
 					if((*iter)->GetName() == BONESPEAR)
 						(*iter)->SetStatas()->fHealthPoint = -1.f;
 					++iter;
 				}
-				//´ÙÀ½ ³ëµå¸¦ °¡¸£Å²´Ù.
+				//ë‹¤ìŒ ë…¸ë“œë¥¼ ê°€ë¥´í‚¨ë‹¤.
 				++iter2;
 			}
-			//iter°¡ ³¡À» °¡¸£Å°¸é ¹İº¹¹®À» ³¡³¿
+			//iterê°€ ëì„ ê°€ë¥´í‚¤ë©´ ë°˜ë³µë¬¸ì„ ëëƒ„
 			if (iter == pSkill->end())
 				break;
 		}
-		//iter°¡ ³¡À» °¡¸£Å°¸é ¹İº¹¹®À» ³¡³¿
+		//iterê°€ ëì„ ê°€ë¥´í‚¤ë©´ ë°˜ë³µë¬¸ì„ ëëƒ„
 		if (iter == pSkill->end())
 			break;
 	}
@@ -603,31 +603,31 @@ const vector<TILE*>* CObjMgr::GetTileInfo()
 
 void CObjMgr::IterRelease()
 {
-	// ¸ÊÀÇ first, Ã³À½ºÎÅÍ ³¡±îÁö µµ´Â ¹İº¹¹®
+	// ë§µì˜ first, ì²˜ìŒë¶€í„° ëê¹Œì§€ ë„ëŠ” ë°˜ë³µë¬¸
 	for(map<wstring, list<CObj*>>::iterator iter
 		= m_MapObject.begin(); iter != m_MapObject.end(); ++iter)
 	{
-		// ¸ÊÀÇ second, second¿£ ¸®½ºÆ®°¡ ÀÖÀ¸¸ç ¸®½ºÆ®ÀÇ ³¡±îÁö µµ´Â ¹İº¹¹®
+		// ë§µì˜ second, secondì—” ë¦¬ìŠ¤íŠ¸ê°€ ìˆìœ¼ë©° ë¦¬ìŠ¤íŠ¸ì˜ ëê¹Œì§€ ë„ëŠ” ë°˜ë³µë¬¸
 		for(list<CObj*>::iterator iter2 = iter->second.begin();
 			iter2 != iter->second.end();)
 		{
-			// ¸ó½ºÅÍ¸é
+			// ëª¬ìŠ¤í„°ë©´
 			if((*iter2)->GetObjType() == OBJ_MONSTER)
 			{
-				// Á×¾ú´ÂÁö »óÅÂÃ¼Å© ÈÄ
-				// 0817 ¿ÀÀü ¸ó½ºÅÍ°¡ Á¦´ë·Î »èÁ¦µÇÁö ¾ÊÀ½
+				// ì£½ì—ˆëŠ”ì§€ ìƒíƒœì²´í¬ í›„
+				// 0817 ì˜¤ì „ ëª¬ìŠ¤í„°ê°€ ì œëŒ€ë¡œ ì‚­ì œë˜ì§€ ì•ŠìŒ
 				if((*iter2)->GetpMotion() == DEATH && 
 					(*iter2)->GetFrame().fStart <= 0.f/*>= (*iter2)->GetFrame().fLast-2*/)
 				{
-					// ÇÒ´çµÈ ¸ó½ºÅÍ °´Ã¼ »èÁ¦
+					// í• ë‹¹ëœ ëª¬ìŠ¤í„° ê°ì²´ ì‚­ì œ
 					SAFE_DELETE<CObj>(&(*iter2));
-					// ´ÙÀ½ ³ëµå·Î
+					// ë‹¤ìŒ ë…¸ë“œë¡œ
 					++iter2;
 				}
 				else
-					// ´ÙÀ½ ³ëµå·Î
+					// ë‹¤ìŒ ë…¸ë“œë¡œ
 					++iter2;
-				// iter2°¡ ³ëµåÀÇ ³¡ÀÌ¸é ¹ş¾î³² 
+				// iter2ê°€ ë…¸ë“œì˜ ëì´ë©´ ë²—ì–´ë‚¨ 
 				if (iter2 == iter->second.end())
 					break;
 			}
@@ -635,22 +635,22 @@ void CObjMgr::IterRelease()
 			{
 				if((*iter2)->GetpMotion() == DEATH)
 				{
-					// ÇÒ´çµÈ ½ºÅ³ °´Ã¼ »èÁ¦
+					// í• ë‹¹ëœ ìŠ¤í‚¬ ê°ì²´ ì‚­ì œ
 					SAFE_DELETE<CObj>(&(*iter2));
-					// ´ÙÀ½ ³ëµå·Î
+					// ë‹¤ìŒ ë…¸ë“œë¡œ
 					++iter2;
 				}
 				else
-					// ´ÙÀ½ ³ëµå·Î
+					// ë‹¤ìŒ ë…¸ë“œë¡œ
 					++iter2;
-				// iter2°¡ ³ëµåÀÇ ³¡ÀÌ¸é ¹ş¾î³² 
+				// iter2ê°€ ë…¸ë“œì˜ ëì´ë©´ ë²—ì–´ë‚¨ 
 				if (iter2 == iter->second.end())
 					break;
 			}
 			else
-				// ¸ó½ºÅÍ°¡ ¾Æ´Ñ ³ëµå¸é ´ÙÀ½ ³ëµå·Î
+				// ëª¬ìŠ¤í„°ê°€ ì•„ë‹Œ ë…¸ë“œë©´ ë‹¤ìŒ ë…¸ë“œë¡œ
 				++iter2;
-			// ³ëµå°¡ ³¡ÀÌ¸é ¹ş¾î³²
+			// ë…¸ë“œê°€ ëì´ë©´ ë²—ì–´ë‚¨
 			if (iter2 == iter->second.end())
 				break;
 		}

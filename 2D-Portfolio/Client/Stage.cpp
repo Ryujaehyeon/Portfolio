@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Stage.h"
 #include "Include.h"
 
@@ -10,7 +10,7 @@ CStage::CStage(void)
 	Sound->Stop(L"Wilderness");
 	Sound->LoadSound(L"Tristram", L"Tristram.mp3", true);
 	Sound->SetVolume(10);
-	Sound->Play(L"Tristram");       //»ç¿îµå
+	Sound->Play(L"Tristram");       //ì‚¬ìš´ë“œ
 }
 
 CStage::~CStage(void)
@@ -38,7 +38,7 @@ HRESULT CStage::Initialize()
 
 	if(FAILED(m_pPrototype->InitProtoInstance()))
 	{
-		ERR_MSG(g_hWnd, L"¿øÇü °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"ì›í˜• ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -50,235 +50,235 @@ HRESULT CStage::Initialize()
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"StageBack")))
 	{
-		ERR_MSG(g_hWnd, L"°´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// Ä³¸¯ÅÍ
+	// ìºë¦­í„°
 	for ( int i= 0 ; i < PlayerCount; ++i)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 			, Charter[i])))
 		{
-			ERR_MSG(g_hWnd, L"%s Ä³¸¯ÅÍ °´Ã¼ »ı¼º ½ÇÆĞ", Charter[i]);
+			ERR_MSG(g_hWnd, L"%s ìºë¦­í„° ê°ì²´ ìƒì„± ì‹¤íŒ¨", Charter[i]);
 			return E_FAIL;
 		}
 		
 	}
 
-	// ¸ó½ºÅÍ
+	// ëª¬ìŠ¤í„°
 	for(int i = 0; i < MonsterCount; ++i)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 			, Monster[0])))
 		{
-			ERR_MSG(g_hWnd, L"%s ¸ó½ºÅÍ °´Ã¼ »ı¼º ½ÇÆĞ", Monster[0]);
+			ERR_MSG(g_hWnd, L"%s ëª¬ìŠ¤í„° ê°ì²´ ìƒì„± ì‹¤íŒ¨", Monster[0]);
 			return E_FAIL;
 		}
 	}
 	
 	///////////////////////////////////////////////////////////////
-	// UI °´Ã¼ »ı¼º
+	// UI ê°ì²´ ìƒì„±
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"StatusBar")))
 	{
-		ERR_MSG(g_hWnd, L"StatusBar °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"StatusBar ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// HP °´Ã¼ »ı¼º
+	// HP ê°ì²´ ìƒì„±
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"HP")))
 	{
-		ERR_MSG(g_hWnd, L"HP °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"HP ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
-	// HPBarBack °´Ã¼ »ı¼º
+	// HPBarBack ê°ì²´ ìƒì„±
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"HPBarBack")))
 	{
-		ERR_MSG(g_hWnd, L"HPBarBack °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"HPBarBack ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
-	// HPBar °´Ã¼ »ı¼º
+	// HPBar ê°ì²´ ìƒì„±
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"HPBar")))
 	{
-		ERR_MSG(g_hWnd, L"HPBar °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"HPBar ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// MP °´Ã¼ »ı¼º
+	// MP ê°ì²´ ìƒì„±
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"MP")))
 	{
-		ERR_MSG(g_hWnd, L"MP °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"MP ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
-	// Stamina °´Ã¼ »ı¼º
+	// Stamina ê°ì²´ ìƒì„±
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Stamina")))
 	{
-		ERR_MSG(g_hWnd, L"Stamina °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Stamina ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// Run °´Ã¼ »ı¼º
+	// Run ê°ì²´ ìƒì„±
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Run")))
 	{
-		ERR_MSG(g_hWnd, L"Run°´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Runê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// SkillPoint °´Ã¼ »ı¼º
+	// SkillPoint ê°ì²´ ìƒì„±
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"SkillPointTrue")))
 	{
-		ERR_MSG(g_hWnd, L"SkillPointTrue °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"SkillPointTrue ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"SkillPointFalse")))
 	{
-		ERR_MSG(g_hWnd, L"SkillPointFalse °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"SkillPointFalse ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
-	// SkillPoint °´Ã¼ »ı¼º
+	// SkillPoint ê°ì²´ ìƒì„±
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"StatPointTrue")))
 	{
-		ERR_MSG(g_hWnd, L"StatPointTrue °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"StatPointTrue ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"StatPointFalse")))
 	{
-		ERR_MSG(g_hWnd, L"StatPointFalse °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"StatPointFalse ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"ExpBar")))
 	{
-		ERR_MSG(g_hWnd, L"ExpBar °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"ExpBar ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Inven")))
 	{
-		ERR_MSG(g_hWnd, L"Inven °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Inven ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"SkillTree")))
 	{
-		ERR_MSG(g_hWnd, L"SkillTree °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"SkillTree ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Bank")))
 	{
-		ERR_MSG(g_hWnd, L"Bank °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Bank ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Character")))
 	{
-		ERR_MSG(g_hWnd, L"Character °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Character ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// ½ºÅ³ Æ÷ÀÎÆ® ¹öÆ°
+	// ìŠ¤í‚¬ í¬ì¸íŠ¸ ë²„íŠ¼
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"BoneSpearButton")))
 	{
-		ERR_MSG(g_hWnd, L"BoneSpearButton °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"BoneSpearButton ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"FireWallButton")))
 	{
-		ERR_MSG(g_hWnd, L"FireWallButton °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"FireWallButton ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"BlizzardButton")))
 	{
-		ERR_MSG(g_hWnd, L"BlizzardButton °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"BlizzardButton ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 #pragma endregion AddObj
 #pragma region AddTexture
 
 	/////////////////////////////////////////////////////////
-	// UI ÀÌ¹ÌÁö
+	// UI ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/StatusBar.png"
 		, L"StatusBar", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"StatusBar ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"StatusBar í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
-	// HP ÀÌ¹ÌÁö
+	// HP ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/HP.png"
 		, L"HP", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"HP ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"HP í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// HPBar ÀÌ¹ÌÁö
+	// HPBar ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/HPBar/HPBar.png"
 		, L"HPBar", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"HPBar ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"HPBar í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// HPBarBack ÀÌ¹ÌÁö
+	// HPBarBack ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/HPbar/HPBarBack.png"
 		, L"HPBarBack", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"HPBarBack ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"HPBarBack í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
-	// MP ÀÌ¹ÌÁö
+	// MP ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/MP.png"
 		, L"MP", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"MP ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"MP í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// Stamina ÀÌ¹ÌÁö
+	// Stamina ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Stamina.png"
 		, L"Stamina", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"Stamina ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Stamina í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// RUN ÀÌ¹ÌÁö
+	// RUN ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Run.png"
 		, L"Run", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"Run ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Run í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// SkillPoint ÀÌ¹ÌÁö
+	// SkillPoint ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/PointFalse.png"
 		, L"SkillPointFalse", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"SkillPointFalse ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"SkillPointFalse í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -286,15 +286,15 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/PointTrue.png"
 		, L"SkillPointTrue", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"SkillPointTrue ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"SkillPointTrue í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// StatPoint ÀÌ¹ÌÁö
+	// StatPoint ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/PointFalse.png"
 		, L"StatPointFalse", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"StatPointFalse ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"StatPointFalse í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -302,7 +302,7 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/PointTrue.png"
 		, L"StatPointTrue", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"StatPointTrue ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"StatPointTrue í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -311,7 +311,7 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/ExpBar.png"
 		, L"ExpBar", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"ExpBar ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"ExpBar í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -319,7 +319,7 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/Inven/Inven.png"
 		, L"Inven", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"Inven ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Inven í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -327,7 +327,7 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/SkillTree/PoisonBorn/SkillTree.png"
 		, L"SkillTree", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"SkillTree ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"SkillTree í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -335,7 +335,7 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/Inven/TownStorage.png"
 		, L"Bank", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"Bank ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Bank í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -343,7 +343,7 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/Stat/StatBoard.png"
 		, L"Character", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"Character ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Character í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -352,7 +352,7 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/SkillTree/PoisonBorn/BoneSpear.png"
 		, L"BoneSpearButton", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"BoneSpearButton ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"BoneSpearButton í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	
@@ -360,7 +360,7 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/SkillTree/PoisonBorn/FireWall.png"
 		, L"FireWallButton", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"FireWallButton ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"FireWallButton í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	
@@ -368,26 +368,26 @@ HRESULT CStage::Initialize()
 		L"../Resource/Texture/UI/SkillTree/PoisonBorn/Blizzard.png"
 		, L"BlizzardButton", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"BlizzardButton ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"BlizzardButton í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	//-------------------------------------------------------------//
-	// Å¸ÀÏ ºÒ·¯¿À±â
+	// íƒ€ì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Tile/Tile%03d.png",
 		L"StageBack", TEXTYPE_MULTI, L"Tile", 180)))
 	{
-		ERR_MSG(g_hWnd, L"TileTexture ·Îµå ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"TileTexture ë¡œë“œ ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
-	// ±×¸²ÀÚ
+	// ê·¸ë¦¼ì
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Stage/Player/Shadow/Shadow%02d.png",
 		L"Shadow", TEXTYPE_MULTI, L"Shadow", 24)))
 	{
-		ERR_MSG(g_hWnd, L"Shadow ·Îµå ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"Shadow ë¡œë“œ ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -401,75 +401,75 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//						 		Stand								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Stand/D/Stand_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_D", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand D ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Stand D ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Stand/LD/Stand_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_LD", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand LD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Stand LD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Stand/RD/Stand_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_RD", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand RD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Stand RD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Stand/U/Stand_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_U", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand U ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Stand U ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Stand/LU/Stand_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_LU", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand LU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Stand LU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Stand/RU/Stand_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_RU", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand RU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Stand RU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Stand/L/Stand_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_L", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand L ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Stand L ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Stand/R/Stand_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_R", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand R ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Stand R ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 #pragma endregion Stand
@@ -477,75 +477,75 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//								Walk								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Walk/D/Walk_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_D", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk D ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk D ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Walk/LD/Walk_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_LD", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk LD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Walk/RD/Walk_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_RD", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk RD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Walk/U/Walk_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_U", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk U ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk U ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Walk/LU/Walk_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_LU", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk LU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Walk/RU/Walk_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_RU", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk RU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Walk/L/Walk_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_L", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk L ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk L ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Walk/R/Walk_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_R", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk R ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk R ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 #pragma endregion Walk
@@ -553,75 +553,75 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//								Run									//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Run/D/Run_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_D", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk D ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk D ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Run/LD/Run_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_LD", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk LD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Run/RD/Run_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_RD", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk RD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Run/U/Run_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_U", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk U ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk U ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Run/LU/Run_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_LU", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk LU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Run/RU/Run_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_RU", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk RU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Run/L/Run_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_L", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk L ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk L ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Run/R/Run_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_R", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk R ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk R ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 #pragma endregion Run
@@ -629,75 +629,75 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//								Attack								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Attack/D/Attack_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_D", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack D ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Attack D ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Attack/LD/Attack_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_LD", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk LD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Attack/RD/Attack_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_RD", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk RD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Attack/U/Attack_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_U", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk U ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk U ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Attack/LU/Attack_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_LU", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk LU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Attack/RU/Attack_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_RU", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk RU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Attack/L/Attack_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_L", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk L ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk L ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Attack/R/Attack_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_R", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk R ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk R ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -706,75 +706,75 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//								Cast								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Cast/D/Cast_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_D", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Cast D ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Cast D ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Cast/LD/Cast_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_LD", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk LD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Cast/RD/Cast_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_RD", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RD ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk RD ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Cast/U/Cast_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_U", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk U ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk U ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Cast/LU/Cast_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_LU", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk LU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Cast/RU/Cast_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_RU", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RU ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk RU ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Cast/L/Cast_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_L", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk L ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk L ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Player/Cast/R/Cast_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_R", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk R ·Îµå ½ÇÆĞ" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%d Walk R ë¡œë“œ ì‹¤íŒ¨" , Charter[i]);
 			return E_FAIL;
 		}
 #pragma endregion Cast
@@ -788,76 +788,76 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//						 		Stand								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/D/Stand_D_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_D", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand D ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Stand D ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/LD/Stand_LD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_LD", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand LD ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Stand LD ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/RD/Stand_RD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_RD", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand RD ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Stand RD ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/U/Stand_U_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_U", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand U ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Stand U ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/LU/Stand_LU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_LU", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand LU ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Stand LU ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/RU/Stand_RU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_RU", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand RU ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Stand RU ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/L/Stand_L_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_L", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand L ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Stand L ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/R/Stand_R_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_R", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand R ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Stand R ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -866,76 +866,76 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//						 SUMMONER Stand								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Stand/D/Stand_D_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Stand_D", SUMMONER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Stand D ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Stand D ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Stand/LD/Stand_LD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Stand_LD", SUMMONER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Stand LD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Stand LD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Stand/RD/Stand_RD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Stand_RD", SUMMONER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Stand RD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Stand RD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Stand/U/Stand_U_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Stand_U", SUMMONER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Stand U ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Stand U ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Stand/LU/Stand_LU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Stand_LU", SUMMONER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Stand LU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Stand LU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Stand/RU/Stand_RU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Stand_RU", SUMMONER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Stand RU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Stand RU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Stand/L/Stand_L_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Stand_L", SUMMONER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Stand L ·Îµå ½ÇÆĞ" );
+			ERR_MSG(g_hWnd, L"SUMMONER Stand L ë¡œë“œ ì‹¤íŒ¨" );
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Stand/R/Stand_R_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Stand_R", SUMMONER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Stand R ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Stand R ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
@@ -949,146 +949,146 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/D/Run_D_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_D", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run D ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Run D ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/LD/Run_LD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_LD", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run LD ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Run LD ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/RD/Run_RD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_RD", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run RD ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Run RD ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/U/Run_U_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_U", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run U ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Run U ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/LU/Run_LU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_LU", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run LU ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Run LU ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/RU/Run_RU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_RU", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run RU ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Run RU ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/L/Run_L_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_L", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run L ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Run L ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/R/Run_R_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_R", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run R ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Run R ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
 		//////////////////////////////////////////////////////////////////////
 		//						 SUMMONER Run								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Run/D/Run_D_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Run_D", SUMMONER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Run D ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Run D ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Run/LD/Run_LD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Run_LD", SUMMONER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Run LD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Run LD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Run/RD/Run_RD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Run_RD", SUMMONER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Run RD ·Îµå ½ÇÆĞ" );
+			ERR_MSG(g_hWnd, L"SUMMONER Run RD ë¡œë“œ ì‹¤íŒ¨" );
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Run/U/Run_U_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Run_U", SUMMONER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Run U ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Run U ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Run/LU/Run_LU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Run_LU", SUMMONER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Run LU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Run LU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Run/RU/Run_RU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Run_RU", SUMMONER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Run RU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Run RU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Run/L/Run_L_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Run_L", SUMMONER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Run L ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Run L ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Run/R/Run_R_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Run_R", SUMMONER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Run R ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Run R ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 		//--------------------------------------------------------------------------------------//
@@ -1102,146 +1102,146 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/D/Attack_D_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_D", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack D ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Attack D ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/LD/Attack_LD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_LD", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack LD ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Attack LD ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/RD/Attack_RD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_RD", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack RD ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Attack RD ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/U/Attack_U_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_U", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack U ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Attack U ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/LU/Attack_LU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_LU", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack LU ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Attack LU ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/RU/Attack_RU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_RU", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack RU ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Attack RU ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/L/Attack_L_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_L", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack L ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Attack L ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/R/Attack_R_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_R", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack R ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Attack R ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
 		//////////////////////////////////////////////////////////////////////
 		//						 SUMMONER Attack							//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Attack/D/Attack_D_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Attack_D", SUMMONER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Attack D ·Îµå ½ÇÆĞ" );
+			ERR_MSG(g_hWnd, L"SUMMONER Attack D ë¡œë“œ ì‹¤íŒ¨" );
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Attack/LD/Attack_LD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Attack_LD", SUMMONER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Attack LD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Attack LD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Attack/RD/Attack_RD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Attack_RD", SUMMONER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Attack RD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Attack RD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Attack/U/Attack_U_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Attack_U", SUMMONER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Attack U ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Attack U ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Attack/LU/Attack_LU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Attack_LU", SUMMONER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Attack LU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Attack LU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Attack/RU/Attack_RU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Attack_RU", SUMMONER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Attack RU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Attack RU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Attack/L/Attack_L_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Attack_L", SUMMONER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Attack L ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Attack L ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Attack/R/Attack_R_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Attack_R", SUMMONER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Attack R ·Îµå ½ÇÆĞ" );
+			ERR_MSG(g_hWnd, L"SUMMONER Attack R ë¡œë“œ ì‹¤íŒ¨" );
 			return E_FAIL;
 		}
 		//--------------------------------------------------------------------------------------//
@@ -1255,70 +1255,70 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/D/Death_D_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_D", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death D ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Death D ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/LD/Death_LD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_LD", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death LD ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Death LD ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/RD/Death_RD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_RD", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death RD ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Death RD ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/U/Death_U_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_U", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death U ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Death U ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/LU/Death_LU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_LU", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death LU ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Death LU ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/RU/Death_RU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_RU", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death RU ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Death RU ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/L/Death_L_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_L", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death L ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Death L ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/R/Death_R_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_R", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death R ·Îµå ½ÇÆĞ" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%d Death R ë¡œë“œ ì‹¤íŒ¨" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1326,76 +1326,76 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//						 SUMMONER Death								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Death/D/Death_D_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Death_D", SUMMONER_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Death D ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Death D ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Death/LD/Death_LD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Death_LD", SUMMONER_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Death LD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Death LD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Death/RD/Death_RD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Death_RD", SUMMONER_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Death RD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Death RD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Death/U/Death_U_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Death_U", SUMMONER_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Death U ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Death U ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Death/LU/Death_LU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Death_LU", SUMMONER_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Death LU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Death LU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Death/RU/Death_RU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Death_RU", SUMMONER_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Death RU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Death RU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Death/L/Death_L_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Death_L", SUMMONER_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Death L ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Death L ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Death/R/Death_R_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Death_R", SUMMONER_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Death R ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Death R ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 		//--------------------------------------------------------------------------------------//
@@ -1405,76 +1405,76 @@ HRESULT CStage::Initialize()
 		//////////////////////////////////////////////////////////////////////
 		//						 SUMMONER Death								//
 		//////////////////////////////////////////////////////////////////////
-		// ¾Æ·¡
+		// ì•„ë˜
 
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Cast/D/Cast_D_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Cast_D", SUMMONER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Cast D ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Cast D ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ ¾Æ·¡
+		// ì™¼ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Cast/LD/Cast_LD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Cast_LD", SUMMONER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Cast LD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Cast LD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ ¾Æ·¡
+		// ì˜¤ë¥¸ìª½ ì•„ë˜
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Cast/RD/Cast_RD_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Cast_RD", SUMMONER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Cast RD ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Cast RD ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// À§
+		// ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Cast/U/Cast_U_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Cast_U", SUMMONER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Cast U ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Cast U ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ À§
+		// ì™¼ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Cast/LU/Cast_LU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Cast_LU", SUMMONER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Cast LU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Cast LU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ À§
+		// ì˜¤ë¥¸ìª½ ìœ„
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Cast/RU/Cast_RU_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Cast_RU", SUMMONER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Cast RU ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Cast RU ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿ŞÂÊ
+		// ì™¼ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Cast/L/Cast_L_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Cast_L", SUMMONER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Cast L ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Cast L ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 
-		// ¿À¸¥ÂÊ
+		// ì˜¤ë¥¸ìª½
 		if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 			L"../Resource/Texture/Stage/Monster/Summoner/Cast/R/Cast_R_%02d.png",
 			SUMMONER, TEXTYPE_MULTI, L"Cast_R", SUMMONER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER Cast R ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER Cast R ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 		//--------------------------------------------------------------------------------------//
@@ -1497,37 +1497,37 @@ HRESULT CStage::Initialize()
 			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 				, BONESPEAR)))
 			{
-				ERR_MSG(g_hWnd, L"BoneSpear °´Ã¼ »ı¼º ½ÇÆĞ");
+				ERR_MSG(g_hWnd, L"BoneSpear ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				return E_FAIL;
 			}
 			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 				, FIREWALL)))
 			{
-				ERR_MSG(g_hWnd, L"FireWall °´Ã¼ »ı¼º ½ÇÆĞ");
+				ERR_MSG(g_hWnd, L"FireWall ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				return E_FAIL;
 			}
 			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 				, BLIZZARD)))
 			{
-				ERR_MSG(g_hWnd, L"Blizzard °´Ã¼ »ı¼º ½ÇÆĞ");
+				ERR_MSG(g_hWnd, L"Blizzard ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				return E_FAIL;
 			}
 			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 				, HEAL)))
 			{
-				ERR_MSG(g_hWnd, L"Heal °´Ã¼ »ı¼º ½ÇÆĞ");
+				ERR_MSG(g_hWnd, L"Heal ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				return E_FAIL;
 			}
 			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 				, AURA)))
 			{
-				ERR_MSG(g_hWnd, L"Aura °´Ã¼ »ı¼º ½ÇÆĞ");
+				ERR_MSG(g_hWnd, L"Aura ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				return E_FAIL;
 			}
 			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 				, RIVIVE)))
 			{
-				ERR_MSG(g_hWnd, L"Rivive °´Ã¼ »ı¼º ½ÇÆĞ");
+				ERR_MSG(g_hWnd, L"Rivive ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				return E_FAIL;
 			}
 		}
@@ -1543,70 +1543,70 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/D/Missile_D_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_D", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear D ·Îµå ½ÇÆĞ" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%d BoneSpear D ë¡œë“œ ì‹¤íŒ¨" , BONESPEAR);
 					return E_FAIL;
 				}
 
-				// ¿ŞÂÊ ¾Æ·¡
+				// ì™¼ìª½ ì•„ë˜
 				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 					L"../Resource/Texture/Skill/BoneSpear/Missile/LD/Missile_LD_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_LD", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear LD ·Îµå ½ÇÆĞ" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%d BoneSpear LD ë¡œë“œ ì‹¤íŒ¨" , BONESPEAR);
 					return E_FAIL;
 				}
 
-				// ¿À¸¥ÂÊ ¾Æ·¡
+				// ì˜¤ë¥¸ìª½ ì•„ë˜
 				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 					L"../Resource/Texture/Skill/BoneSpear/Missile/RD/Missile_RD_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_RD", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear RD ·Îµå ½ÇÆĞ" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%d BoneSpear RD ë¡œë“œ ì‹¤íŒ¨" , BONESPEAR);
 					return E_FAIL;
 				}
 
-				// À§
+				// ìœ„
 				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 					L"../Resource/Texture/Skill/BoneSpear/Missile/U/Missile_U_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_U", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear U ·Îµå ½ÇÆĞ" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%d BoneSpear U ë¡œë“œ ì‹¤íŒ¨" , BONESPEAR);
 					return E_FAIL;
 				}
 
-				// ¿ŞÂÊ À§
+				// ì™¼ìª½ ìœ„
 				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 					L"../Resource/Texture/Skill/BoneSpear/Missile/LU/Missile_LU_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_LU", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear LU ·Îµå ½ÇÆĞ" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%d BoneSpear LU ë¡œë“œ ì‹¤íŒ¨" , BONESPEAR);
 					return E_FAIL;
 				}
 
-				// ¿À¸¥ÂÊ À§
+				// ì˜¤ë¥¸ìª½ ìœ„
 				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 					L"../Resource/Texture/Skill/BoneSpear/Missile/RU/Missile_RU_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_RU", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear RU ·Îµå ½ÇÆĞ" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%d BoneSpear RU ë¡œë“œ ì‹¤íŒ¨" , BONESPEAR);
 					return E_FAIL;
 				}
 
-				// ¿ŞÂÊ
+				// ì™¼ìª½
 				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 					L"../Resource/Texture/Skill/BoneSpear/Missile/L/Missile_L_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_L", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear L ·Îµå ½ÇÆĞ" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%d BoneSpear L ë¡œë“œ ì‹¤íŒ¨" , BONESPEAR);
 					return E_FAIL;
 				}
 
-				// ¿À¸¥ÂÊ
+				// ì˜¤ë¥¸ìª½
 				if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 					L"../Resource/Texture/Skill/BoneSpear/Missile/R/Missile_R_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_R", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear R ·Îµå ½ÇÆĞ" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%d BoneSpear R ë¡œë“œ ì‹¤íŒ¨" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1620,7 +1620,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/FireWall/FireWall_%02d.png",
 					SKILL, TEXTYPE_MULTI, FIREWALL, PLAYER_FireWall)))
 				{
-					ERR_MSG(g_hWnd, L"%d ·Îµå ½ÇÆĞ" , FIREWALL);
+					ERR_MSG(g_hWnd, L"%d ë¡œë“œ ì‹¤íŒ¨" , FIREWALL);
 					return E_FAIL;
 				}
 
@@ -1633,7 +1633,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/Blizzard/Blizzard_%02d.png",
 					SKILL, TEXTYPE_MULTI, BLIZZARD, PLAYER_Blizzard)))
 				{
-					ERR_MSG(g_hWnd, L"%d ·Îµå ½ÇÆĞ" , BLIZZARD);
+					ERR_MSG(g_hWnd, L"%d ë¡œë“œ ì‹¤íŒ¨" , BLIZZARD);
 					return E_FAIL;
 				}
 			}
@@ -1645,7 +1645,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Skill/CastEffect/Effect_%02d.png",
 			L"CastEffect", TEXTYPE_MULTI, L"CastEffect", 16)))
 		{
-			ERR_MSG(g_hWnd, L"CastEffect ·Îµå ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"CastEffect ë¡œë“œ ì‹¤íŒ¨");
 			return E_FAIL;
 		}
 #pragma endregion CastEffect
@@ -1655,85 +1655,85 @@ HRESULT CStage::Initialize()
 
 
 #pragma region Font
-	// 0 ÀÌ¹ÌÁö
+	// 0 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/0.png"
 		, FONT0, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"0 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"0 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// 1 ÀÌ¹ÌÁö
+	// 1 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/1.png"
 		, FONT1, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"1 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"1 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// 2 ÀÌ¹ÌÁö
+	// 2 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/2.png"
 		, FONT2, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"2 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"2 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// 3 ÀÌ¹ÌÁö
+	// 3 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/3.png"
 		, FONT3, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"3 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"3 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// 4 ÀÌ¹ÌÁö
+	// 4 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/4.png"
 		, FONT4, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"4 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"4 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// 5 ÀÌ¹ÌÁö
+	// 5 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/5.png"
 		, FONT5, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"5 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"5 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// 6 ÀÌ¹ÌÁö
+	// 6 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/6.png"
 		, FONT6, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"6 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"6 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// 7 ÀÌ¹ÌÁö
+	// 7 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/7.png"
 		, FONT7, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"7 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"7 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
-	// 8 ÀÌ¹ÌÁö
+	// 8 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/8.png"
 		, FONT8, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"8 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"8 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 
 	}
-	// 9 ÀÌ¹ÌÁö
+	// 9 ì´ë¯¸ì§€
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/UI/Font/9.png"
 		, FONT9, TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"9 ÅØ½ºÃÄ ÀĞ¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"9 í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 #pragma endregion Font
@@ -1750,21 +1750,21 @@ SCENEID CStage::Progress()
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 			, SKELETON)))
 		{
-			ERR_MSG(g_hWnd, L"SKELETON ¸ó½ºÅÍ °´Ã¼ »ı¼º ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SKELETON ëª¬ìŠ¤í„° ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		}
 	}
-	// ¾ÆÁ÷ ¸ó½ºÅÍ ÅØ½ºÃÄ Ãß°¡ ÄÚµå°¡ ¾øÀ½
+	// ì•„ì§ ëª¬ìŠ¤í„° í…ìŠ¤ì³ ì¶”ê°€ ì½”ë“œê°€ ì—†ìŒ
 	if(GET_SINGLE(CObjMgr)->GetBossCnt() < 1)
 	{
 		if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 			, SUMMONER)))
 		{
-			ERR_MSG(g_hWnd, L"SUMMONER ¸ó½ºÅÍ °´Ã¼ »ı¼º ½ÇÆĞ");
+			ERR_MSG(g_hWnd, L"SUMMONER ëª¬ìŠ¤í„° ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		}
 	}
 	
 
-	// ¾ÀID°¡ NONPASS°¡ ¾Æ´Ï¸é ¾À¸Å´ÏÁ®¿¡¼­ ÇØ´çIDÀÇ ¾ÀÀ» »ı¼º ¹× ÃÊ±âÈ­
+	// ì”¬IDê°€ NONPASSê°€ ì•„ë‹ˆë©´ ì”¬ë§¤ë‹ˆì ¸ì—ì„œ í•´ë‹¹IDì˜ ì”¬ì„ ìƒì„± ë° ì´ˆê¸°í™”
 	if(iScene > SCENEID_NONPASS)
 		GET_SINGLE(CSceneMgr)->InitScene(iScene);
 

@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 typedef struct AStarNode
 {
-	// ÀÌµ¿ ºñ¿ë
+	// ì´ë™ ë¹„ìš©
 	float fCost;
-	// ÁÂÇ¥°ª
+	// ì¢Œí‘œê°’
 	int iIndex;
 	// 
 	AStarNode* pParent;
@@ -11,35 +11,35 @@ typedef struct AStarNode
 }NODE;
 typedef struct tagObjInfo
 {
-	// ¿ÀºêÁ§Æ® ÁÂÇ¥
+	// ì˜¤ë¸Œì íŠ¸ ì¢Œí‘œ
 	D3DXVECTOR3 vPos;
-	// ¹æÇâ
+	// ë°©í–¥
 	D3DXVECTOR3 vDir;
 	// 
 	D3DXVECTOR3 vLook;
-	// Áß½ÉÁ¡
+	// ì¤‘ì‹¬ì 
 	D3DXVECTOR3 vCenter;
-	// ±×¸± XÁÂÇ¥
+	// ê·¸ë¦´ Xì¢Œí‘œ
 	float fX;
-	// ±×¸± YÁÂÇ¥
+	// ê·¸ë¦´ Yì¢Œí‘œ
 	float fY;
-	// X Å©±â
+	// X í¬ê¸°
 	float fCX;
-	// Y Å©±â
+	// Y í¬ê¸°
 	float fCY;
-	// ¿ÀºêÁ§Æ® Å©±â
+	// ì˜¤ë¸Œì íŠ¸ í¬ê¸°
 	D3DXMATRIX  matScale;
-	// ¿ÀºêÁ§Æ® ÀÚÀü
+	// ì˜¤ë¸Œì íŠ¸ ìì „
 	D3DXMATRIX  matRotz;
-	// ¿ÀºêÁ§Æ® ÀÌµ¿
+	// ì˜¤ë¸Œì íŠ¸ ì´ë™
 	D3DXMATRIX  matTrans;
-	// ¿ÀºêÁ§Æ®°¡ Á¸ÀçÇÒ ¿ùµå ÁÂÇ¥
+	// ì˜¤ë¸Œì íŠ¸ê°€ ì¡´ì¬í•  ì›”ë“œ ì¢Œí‘œ
 	D3DXMATRIX  matWorld;
-	// ¿ÀºêÁ§Æ®°¡ ¼±ÅÃ‰ç´ÂÁöÀÇ ¿©ºÎ
+	// ì˜¤ë¸Œì íŠ¸ê°€ ì„ íƒë¬ëŠ”ì§€ì˜ ì—¬ë¶€
 	bool		unitSelect;
-	// ¾î¶² ÅØ½ºÃÄ¸¦ ±×¸±Áö
+	// ì–´ë–¤ í…ìŠ¤ì³ë¥¼ ê·¸ë¦´ì§€
 	BYTE        byDrawID;
-	// ¿ÀºêÁ§Æ®ÀÇ ¿É¼Ç
+	// ì˜¤ë¸Œì íŠ¸ì˜ ì˜µì…˜
 	BYTE        byOption;
 	tagObjInfo(){}
 	tagObjInfo(const tagObjInfo& Info)
@@ -69,27 +69,27 @@ typedef struct tagFrame
 
 typedef struct tagItem
 {
-	// ¿ÀºêÁ§Æ® ÀÌ¸§
+	// ì˜¤ë¸Œì íŠ¸ ì´ë¦„
 	TCHAR szName[128];
-	// Èû(Might): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç µ¥¹ÌÁö(±ÙÁ¢, Åõ»ç, ¸¶¹ı(!))¿Í È¸º¹¼öÄ¡(Æ÷¼Ç, ¸¶¹ı, ¾îºô¸®Æ¼) +3%, ÀÎ³»(Fortitude) ¹æ¾î¼öÄ¡ +2
+	// í˜(Might): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ë°ë¯¸ì§€(ê·¼ì ‘, íˆ¬ì‚¬, ë§ˆë²•(!))ì™€ íšŒë³µìˆ˜ì¹˜(í¬ì…˜, ë§ˆë²•, ì–´ë¹Œë¦¬í‹°) +3%, ì¸ë‚´(Fortitude) ë°©ì–´ìˆ˜ì¹˜ +2
 	float fMight;
-	// Ã¼Áú(Constitution): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç Áö±¸·Â(Endurance)°ú Ã¼·Â(Health) +5%, ÀÎ³» ¹æ¾î¼öÄ¡ +2
+	// ì²´ì§ˆ(Constitution): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ì§€êµ¬ë ¥(Endurance)ê³¼ ì²´ë ¥(Health) +5%, ì¸ë‚´ ë°©ì–´ìˆ˜ì¹˜ +2
 	float fConstitution;
-	// ¹ÎÃ¸(Dexterity): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç Çàµ¿ ¼Óµµ(Action Speed) +3%, ¹İ»ç(Reflex) ¹æ¾î¼öÄ¡ +2
+	// ë¯¼ì²©(Dexterity): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ í–‰ë™ ì†ë„(Action Speed) +3%, ë°˜ì‚¬(Reflex) ë°©ì–´ìˆ˜ì¹˜ +2
 	float fDexterity;
-	// ÅëÂû(Perception): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç ¹æÇØ(Interrupt) ¼öÄ¡ +3, ¸íÁß·ü +1 , ¹İ»ç ¹æ¾î¼öÄ¡ +2
+	// í†µì°°(Perception): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ë°©í•´(Interrupt) ìˆ˜ì¹˜ +3, ëª…ì¤‘ë¥  +1 , ë°˜ì‚¬ ë°©ì–´ìˆ˜ì¹˜ +2
 	float fPerception;
-	// Áö´É(Intellect): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç ¸¶¹ı/¾îºô¸®Æ¼ÀÇ Àû¿ë¹üÀ§(AOE) +6%, ¸¶¹ı/¾îºô¸®Æ¼ÀÇ À¯È¿½Ã°£ +5%, ÀÇÁö (Will) ¹æ¾î¼öÄ¡ +2
+	// ì§€ëŠ¥(Intellect): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ë§ˆë²•/ì–´ë¹Œë¦¬í‹°ì˜ ì ìš©ë²”ìœ„(AOE) +6%, ë§ˆë²•/ì–´ë¹Œë¦¬í‹°ì˜ ìœ íš¨ì‹œê°„ +5%, ì˜ì§€ (Will) ë°©ì–´ìˆ˜ì¹˜ +2
 	float fIntellect;
-	// °áÀÇ(Resolve): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç ÁıÁß(Concentration) +3, È¸ÇÇ ¹æ¾î¼öÄ¡ +1, ÀÇÁö ¹æ¾î¼öÄ¡ +2
+	// ê²°ì˜(Resolve): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ì§‘ì¤‘(Concentration) +3, íšŒí”¼ ë°©ì–´ìˆ˜ì¹˜ +1, ì˜ì§€ ë°©ì–´ìˆ˜ì¹˜ +2
 	float fResolve;
-	// °ø°İ·Â
+	// ê³µê²©ë ¥
 	float fAttack;
-	// ¹æ¾î·Â
+	// ë°©ì–´ë ¥
 	float fDefence;
-	// Ã¼·Â
+	// ì²´ë ¥
 	float fHealthPoint;
-	// ¸¶·Â
+	// ë§ˆë ¥
 	float fMagikaPoint;
 	int  iSKillPoint;
 	int  iGold;
@@ -100,47 +100,47 @@ typedef struct tagItem* PITEM;
 
 typedef struct tagInfo
 {
-	// ¿ÀºêÁ§Æ® ÀÌ¸§
+	// ì˜¤ë¸Œì íŠ¸ ì´ë¦„
 	TCHAR szName[128];
-	// ·¹º§
+	// ë ˆë²¨
 	int iLevel;
-	// °æÇèÄ¡
+	// ê²½í—˜ì¹˜
 	float fExp;
 	float fMaxExp;
-	// Èû(Might): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç µ¥¹ÌÁö(±ÙÁ¢, Åõ»ç, ¸¶¹ı(!))¿Í È¸º¹¼öÄ¡(Æ÷¼Ç, ¸¶¹ı, ¾îºô¸®Æ¼) +3%, ÀÎ³»(Fortitude) ¹æ¾î¼öÄ¡ +2
+	// í˜(Might): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ë°ë¯¸ì§€(ê·¼ì ‘, íˆ¬ì‚¬, ë§ˆë²•(!))ì™€ íšŒë³µìˆ˜ì¹˜(í¬ì…˜, ë§ˆë²•, ì–´ë¹Œë¦¬í‹°) +3%, ì¸ë‚´(Fortitude) ë°©ì–´ìˆ˜ì¹˜ +2
 	float fMight;
-	// Ã¼Áú(Constitution): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç Áö±¸·Â(Endurance)°ú Ã¼·Â(Health) +5%, ÀÎ³» ¹æ¾î¼öÄ¡ +2
+	// ì²´ì§ˆ(Constitution): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ì§€êµ¬ë ¥(Endurance)ê³¼ ì²´ë ¥(Health) +5%, ì¸ë‚´ ë°©ì–´ìˆ˜ì¹˜ +2
 	float fConstitution;
-	// ¹ÎÃ¸(Dexterity): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç Çàµ¿ ¼Óµµ(Action Speed) +3%, ¹İ»ç(Reflex) ¹æ¾î¼öÄ¡ +2
+	// ë¯¼ì²©(Dexterity): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ í–‰ë™ ì†ë„(Action Speed) +3%, ë°˜ì‚¬(Reflex) ë°©ì–´ìˆ˜ì¹˜ +2
 	float fDexterity;
-	// ÅëÂû(Perception): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç ¹æÇØ(Interrupt) ¼öÄ¡ +3, ¸íÁß·ü +1 , ¹İ»ç ¹æ¾î¼öÄ¡ +2
+	// í†µì°°(Perception): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ë°©í•´(Interrupt) ìˆ˜ì¹˜ +3, ëª…ì¤‘ë¥  +1 , ë°˜ì‚¬ ë°©ì–´ìˆ˜ì¹˜ +2
 	float fPerception;
-	// Áö´É(Intellect): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç ¸¶¹ı/¾îºô¸®Æ¼ÀÇ Àû¿ë¹üÀ§(AOE) +6%, ¸¶¹ı/¾îºô¸®Æ¼ÀÇ À¯È¿½Ã°£ +5%, ÀÇÁö (Will) ¹æ¾î¼öÄ¡ +2
+	// ì§€ëŠ¥(Intellect): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ë§ˆë²•/ì–´ë¹Œë¦¬í‹°ì˜ ì ìš©ë²”ìœ„(AOE) +6%, ë§ˆë²•/ì–´ë¹Œë¦¬í‹°ì˜ ìœ íš¨ì‹œê°„ +5%, ì˜ì§€ (Will) ë°©ì–´ìˆ˜ì¹˜ +2
 	float fIntellect;
-	// °áÀÇ(Resolve): 10Á¡ ÃÊ°ú½Ã 1Á¡´ç ÁıÁß(Concentration) +3, È¸ÇÇ ¹æ¾î¼öÄ¡ +1, ÀÇÁö ¹æ¾î¼öÄ¡ +2
+	// ê²°ì˜(Resolve): 10ì  ì´ˆê³¼ì‹œ 1ì ë‹¹ ì§‘ì¤‘(Concentration) +3, íšŒí”¼ ë°©ì–´ìˆ˜ì¹˜ +1, ì˜ì§€ ë°©ì–´ìˆ˜ì¹˜ +2
 	float fResolve;
-	// °ø°İ·Â
+	// ê³µê²©ë ¥
 	float fAttack;
-	// ¹æ¾î·Â
+	// ë°©ì–´ë ¥
 	float fDefence;
-	// Ã¼·Â
+	// ì²´ë ¥
 	float fHealthPoint;
-	// ÃÖ´ë Ã¼·Â
+	// ìµœëŒ€ ì²´ë ¥
 	float fHealthPointMAX;
-	// ¸¶·Â
+	// ë§ˆë ¥
 	float fMagikaPoint;
-	// ÃÖ´ë ¸¶·Â
+	// ìµœëŒ€ ë§ˆë ¥
 	float fMagikaPointMAX;
-	// ½ºÅ³ Æ÷ÀÎÆ®
+	// ìŠ¤í‚¬ í¬ì¸íŠ¸
 	int  iSKillPoint;
-	// ½ºÅİ Æ÷ÀÎÆ®
+	// ìŠ¤í…Ÿ í¬ì¸íŠ¸
 	int  iStatPoint;
-	// ¼ºº°
+	// ì„±ë³„
 	int iGenderIdx;
-	// ¼ÒÁö±İ
+	// ì†Œì§€ê¸ˆ
 	int iGold;
 	float fSpeed;
-	// ¾ÆÀÌÅÛ
+	// ì•„ì´í…œ
 	PITEM tItem[ITEM_END];
 	PITEM tInventory[50];
 }INFO;
@@ -148,49 +148,49 @@ typedef struct tagInfo
 // 
 typedef struct tagBoneSpear
 {
-	// ½ºÅ³·¹º§
+	// ìŠ¤í‚¬ë ˆë²¨
 	int iLevel;
-	// ¿ä±¸·¹º§
+	// ìš”êµ¬ë ˆë²¨
 	int iMinLevel;
-	// ÃÖ´ë·¹º§
+	// ìµœëŒ€ë ˆë²¨
 	int iLimitLevel;
-	// ½ÃÀü°£°İ
+	// ì‹œì „ê°„ê²©
 	float fCastTime;
-	// ¼Òºñ HP
+	// ì†Œë¹„ HP
 	float fHpCost;
-	// ¼Òºñ MP
+	// ì†Œë¹„ MP
 	float fMpCost;
 }BoneSpearSkill;
 
 typedef struct tagFireWall
 {
-	// ½ºÅ³·¹º§
+	// ìŠ¤í‚¬ë ˆë²¨
 	int iLevel;
-	// ¿ä±¸·¹º§
+	// ìš”êµ¬ë ˆë²¨
 	int iMinLevel;
-	// ÃÖ´ë·¹º§
+	// ìµœëŒ€ë ˆë²¨
 	int iLimitLevel;
-	// ½ÃÀü°£°İ
+	// ì‹œì „ê°„ê²©
 	float fCastTime;
-	// ¼Òºñ HP
+	// ì†Œë¹„ HP
 	float fHpCost;
-	// ¼Òºñ MP
+	// ì†Œë¹„ MP
 	float fMpCost;
 }FireWallSkill;
 
 typedef struct tagBlizzard
 {
-	// ½ºÅ³·¹º§
+	// ìŠ¤í‚¬ë ˆë²¨
 	int iLevel;
-	// ¿ä±¸·¹º§
+	// ìš”êµ¬ë ˆë²¨
 	int iMinLevel;
-	// ÃÖ´ë·¹º§
+	// ìµœëŒ€ë ˆë²¨
 	int iLimitLevel;
-	// ½ÃÀü°£°İ
+	// ì‹œì „ê°„ê²©
 	float fCastTime;
-	// ¼Òºñ HP
+	// ì†Œë¹„ HP
 	float fHpCost;
-	// ¼Òºñ MP
+	// ì†Œë¹„ MP
 	float fMpCost;
 }BlizzardSkill;
 
@@ -207,20 +207,20 @@ typedef struct tagSkill
 
 typedef struct tagTexture
 {
-	// ÅØ½ºÃ³¸¦ ´ã´Â Æ÷ÀÎÅÍ
+	// í…ìŠ¤ì²˜ë¥¼ ë‹´ëŠ” í¬ì¸í„°
 	LPDIRECT3DTEXTURE9 pTexture;
-	// ºñ½ÁÇÑ ÀÌ¹ÌÁöÀÇ ±×·ì¸íÀ» ´ã´Â º¯¼ö
+	// ë¹„ìŠ·í•œ ì´ë¯¸ì§€ì˜ ê·¸ë£¹ëª…ì„ ë‹´ëŠ” ë³€ìˆ˜
 	D3DXIMAGE_INFO     ImgInfo;
 }TEXINFO;
 
 typedef struct tagTile
 {
 	D3DXVECTOR3 vPos;
-	// ¿©·¯°¡Áö Å¸ÀÏ Áß ¸î¹øÂ° ¸ğ¾çÀÇ Å¸ÀÏÀ» ±×¸±Áö¿¡ ´ëÇÑ º¯¼ö
+	// ì—¬ëŸ¬ê°€ì§€ íƒ€ì¼ ì¤‘ ëª‡ë²ˆì§¸ ëª¨ì–‘ì˜ íƒ€ì¼ì„ ê·¸ë¦´ì§€ì— ëŒ€í•œ ë³€ìˆ˜
 	BYTE        byDrawID;
-	// ¾î¶² È¿°ú¸¦ °¡Áø Å¸ÀÏÀÎÁö¿¡ ´ëÇÑ º¯¼ö 
+	// ì–´ë–¤ íš¨ê³¼ë¥¼ ê°€ì§„ íƒ€ì¼ì¸ì§€ì— ëŒ€í•œ ë³€ìˆ˜ 
 	BYTE        byOption;
-	// Å¸ÀÏ ¼±ÅÃ ¿©ºÎ
+	// íƒ€ì¼ ì„ íƒ ì—¬ë¶€
 	bool		TileSelect;
 }TILE;
 

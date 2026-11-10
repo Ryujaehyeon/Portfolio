@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "MainGame.h"
 #include "Include.h"
 
@@ -15,26 +15,26 @@ HRESULT CMainGame::Initialize()
 //#if _DEBUG
 //	if(FAILED(GET_SINGLE(CDevice)->InitDevice(WINMODE_WIN)))
 //	{
-//		ERR_MSG(g_hWnd, L"ÀåÄ¡ ÃÊ±âÈ­ ½ÇÆÐ");
+//		ERR_MSG(g_hWnd, L"ìž¥ì¹˜ ì´ˆê¸°í™” ì‹¤íŒ¨");
 //		return E_FAIL;
 //	}
 //#else
 //	if(FAILED(GET_SINGLE(CDevice)->InitDevice(WINMODE_FULL)))
 //	{
-//		ERR_MSG(g_hWnd, L"ÀåÄ¡ ÃÊ±âÈ­ ½ÇÆÐ");
+//		ERR_MSG(g_hWnd, L"ìž¥ì¹˜ ì´ˆê¸°í™” ì‹¤íŒ¨");
 //		return E_FAIL;
 //	}
 //#endif
 
 	if(FAILED(GET_SINGLE(CDevice)->InitDevice(WINMODE_WIN)))
 	{
-		ERR_MSG(g_hWnd, L"ÀåÄ¡ ÃÊ±âÈ­ ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ìž¥ì¹˜ ì´ˆê¸°í™” ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CSceneMgr)->InitScene(SCENEID_LOGO)))
 	{
-		ERR_MSG(g_hWnd, L"Àå¸é ÃÊ±âÈ­ ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ìž¥ë©´ ì´ˆê¸°í™” ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 

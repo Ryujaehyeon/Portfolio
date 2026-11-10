@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "MenuButton.h"
 #include "Include.h"
 
@@ -19,7 +19,7 @@ CMenuButton::~CMenuButton(void)
 
 HRESULT CMenuButton::Initialize()
 {
-	// ¾î¶² ¿ÀºêÁ§Æ®¿Í ÀÌ¹ÌÁö¸¦ ºÒ·¯¿ÃÁö °áÁ¤ÇÏ´Â °ªµé
+	// ì–´ë–¤ ì˜¤ë¸Œì íŠ¸ì™€ ì´ë¯¸ì§€ë¥¼ ë¶ˆëŸ¬ì˜¬ì§€ ê²°ì •í•˜ëŠ” ê°’ë“¤
 	m_eLayer = LAYER_OBJECT;
 	m_pObjKey = m_DrawID;
 	m_pStateKey = NULL;
@@ -33,15 +33,15 @@ SCENEID CMenuButton::Progress()
 {
 	D3DXMATRIX matTrans;
 
-	// ÀÚ½ÅÀÇ À§Ä¡¸¦ ÁöÁ¤
+	// ìì‹ ì˜ ìœ„ì¹˜ë¥¼ ì§€ì •
 	D3DXMatrixTranslation(&matTrans, m_Info.vPos.x
 		, m_Info.vPos.y, m_Info.vPos.z);
-	//< Å©±â * ÀÚÀü * ÀÌµ¿ * °øÀü * ºÎ¸ğ >ÇÊ¿ä¿¡ ÀÇÇØ ±¸ÇØ³õÀº °ª³¢¸®¸¸ °öÇÏ¿© ¿ùµå¿¡ ´ëÀÔÇÑ´Ù.
+	//< í¬ê¸° * ìì „ * ì´ë™ * ê³µì „ * ë¶€ëª¨ >í•„ìš”ì— ì˜í•´ êµ¬í•´ë†“ì€ ê°’ë¼ë¦¬ë§Œ ê³±í•˜ì—¬ ì›”ë“œì— ëŒ€ì…í•œë‹¤.
 
 	m_Info.matWorld =  matTrans;
 
 	SCENEID iScene;
-	// &RealRect() ½ÇÁ¦ Ãæµ¹ÇÏ´Â ÁÂÇ¥¸¦ Ã¼Å©
+	// &RealRect() ì‹¤ì œ ì¶©ëŒí•˜ëŠ” ì¢Œí‘œë¥¼ ì²´í¬
 	if(PtInRect(&RealRect(), MouseInfo()))
 	{
 		m_bMouseOver = true;
@@ -62,12 +62,12 @@ SCENEID CMenuButton::Progress()
 	}
 	else
 	{
-		// ¹öÆ°À» ¸¶¿ì½º°¡ ¿Ã¶ó°¡Áö ¾ÊÀº ÀÌ¹ÌÁö·Î ¹Ù²Ş
+		// ë²„íŠ¼ì„ ë§ˆìš°ìŠ¤ê°€ ì˜¬ë¼ê°€ì§€ ì•Šì€ ì´ë¯¸ì§€ë¡œ ë°”ê¿ˆ
 		m_bMouseOver = false;
 		iScene = SCENEID_NONPASS;
 	}
 
-	// ¾ÀÀ» ³Ñ±âÁö ¾Ê´Â´Ù.
+	// ì”¬ì„ ë„˜ê¸°ì§€ ì•ŠëŠ”ë‹¤.
 
 
 	return iScene;
@@ -76,12 +76,12 @@ SCENEID CMenuButton::Progress()
 
 void CMenuButton::Render()
 {
-	// ÅØ½ºÃÄ¸Å´ÏÀú¸¦ ÅëÇØ ÅØ½ºÃÄ¸¦ °¡Á®¿Â´Ù.
-	// ÀÌ¹Ì Initialize¿¡¼­ Á¤ÇØÁø ¿ÀºêÁ§Æ®ÀÇ ÀÌ¸§À¸·Î ±¸ÇØ¿Â´Ù.
+	// í…ìŠ¤ì³ë§¤ë‹ˆì €ë¥¼ í†µí•´ í…ìŠ¤ì³ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+	// ì´ë¯¸ Initializeì—ì„œ ì •í•´ì§„ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ìœ¼ë¡œ êµ¬í•´ì˜¨ë‹¤.
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
 
-	// ¾øÀ¸¸é ½ÇÆĞÇÏ¿© ¸®ÅÏ
+	// ì—†ìœ¼ë©´ ì‹¤íŒ¨í•˜ì—¬ ë¦¬í„´
 	if(pTexInfo == NULL)
 		return;
 
@@ -97,7 +97,7 @@ void CMenuButton::Render()
 	}
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 
-	// &GetRect() ±×¸®´Â ÀÌ¹ÌÁöÀÇ ÁÂÇ¥
+	// &GetRect() ê·¸ë¦¬ëŠ” ì´ë¯¸ì§€ì˜ ì¢Œí‘œ
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 		&GetRect(), &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 }

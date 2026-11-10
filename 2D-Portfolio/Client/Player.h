@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "stagedynamic.h"
 class CPlayer :
 	public CStageDynamic
@@ -9,9 +9,9 @@ protected:
 	TCHAR* m_SkillActiveName;
 public:
 	void FrameStatas();
-	// D3DVector¸¦ °¡Á®¿Í POINTº¯È¯ ÈÄ Ã¼Å©
+	// D3DVectorë¥¼ ê°€ì ¸ì™€ POINTë³€í™˜ í›„ ì²´í¬
 	bool VecterInRect(D3DXVECTOR3& _Taget);
-	// ÃëÇÒ Çàµ¿ÀÇ Å°°ªÀ» ³ÖÀ¸¸é _pObjKey¸¦ m_pObjKey¿¡ ³Ö´Â´Ù.
+	// ì·¨í•  í–‰ë™ì˜ í‚¤ê°’ì„ ë„£ìœ¼ë©´ _pObjKeyë¥¼ m_pObjKeyì— ë„£ëŠ”ë‹¤.
 	void DirectAction( TCHAR* _pObjStatas );
 	void CharacterSelect();
 	void FuncAttack();

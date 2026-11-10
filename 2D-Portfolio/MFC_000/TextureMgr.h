@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 
 #include "Defines.h"
 
@@ -7,7 +7,7 @@ class CTextureMgr
 {							
 	SINGLETON(CTextureMgr);	
 public:
-	// Texture ∞¸∏Æ µ•¿Ã≈Õ
+	// Texture Í¥ÄÎ¶¨ Îç∞Ïù¥ÌÑ∞
 	map<const TCHAR*, CTexture*> m_MapTexture;
 public:
 	const TEXINFO* GetTexture(const TCHAR* pObjKey, int iCnt = 0);

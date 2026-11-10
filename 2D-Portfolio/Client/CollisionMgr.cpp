@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "CollisionMgr.h"
 #include "Include.h"
 
@@ -13,21 +13,21 @@ CCollisionMgr::~CCollisionMgr(void)
 bool CCollisionMgr::CircleCol( CObj* pTemp, CObj* pDest)
 {
 
-	//´ë»ó°ú ´ë»óÀÌ Ãæµ¹ÇÏ¸é Áß½ÉÁ¡ÀÌ ¾Æ´Ñ ¼­·ÎÀÇ Ç¥¸é¿¡¼­ Ãæµ¹ÇØ¾ßÇÏ±â ¶§¹®¿¡
-	//Áß½ÉÁ¡³¢¸®ÀÇ ½ÇÁ¦ °Å¸®¿¡¼­ ¼­·ÎÀÇ Áß½ÉºÎÅÍ Ç¥¸é±îÁöÀÇ ±æÀÌ¸¦ ÇÕÇØ ½ÇÁ¦°Å¸® °ª¿¡¼­ »©ÁÖ¸é Ãæµ¹°Å¸®°¡ µÈ´Ù.
+	//ëŒ€ìƒê³¼ ëŒ€ìƒì´ ì¶©ëŒí•˜ë©´ ì¤‘ì‹¬ì ì´ ì•„ë‹Œ ì„œë¡œì˜ í‘œë©´ì—ì„œ ì¶©ëŒí•´ì•¼í•˜ê¸° ë•Œë¬¸ì—
+	//ì¤‘ì‹¬ì ë¼ë¦¬ì˜ ì‹¤ì œ ê±°ë¦¬ì—ì„œ ì„œë¡œì˜ ì¤‘ì‹¬ë¶€í„° í‘œë©´ê¹Œì§€ì˜ ê¸¸ì´ë¥¼ í•©í•´ ì‹¤ì œê±°ë¦¬ ê°’ì—ì„œ ë¹¼ì£¼ë©´ ì¶©ëŒê±°ë¦¬ê°€ ëœë‹¤.
 
-	//´ë»óÃ¼ Áß½ÉÁ¡ºÎÅÍ Ç¥¸é±îÁöÀÇ ±æÀÌ¿Í ´ë»óÃ¼ Áß½ÉÁ¡ºÎÅÍ Ç¥¸é±îÁöÀÇ ±æÀÌÀÇ ÇÕ
+	//ëŒ€ìƒì²´ ì¤‘ì‹¬ì ë¶€í„° í‘œë©´ê¹Œì§€ì˜ ê¸¸ì´ì™€ ëŒ€ìƒì²´ ì¤‘ì‹¬ì ë¶€í„° í‘œë©´ê¹Œì§€ì˜ ê¸¸ì´ì˜ í•©
 	float fDistance = float(
-		(pDest->GetInfo().fCX * 0.5f /*»ç°Å¸® - 30 */)+
-		(pTemp->GetInfo().fCX * 0.5f /*»ç°Å¸® - 30 */));
+		(pDest->GetInfo().fCX * 0.5f /*ì‚¬ê±°ë¦¬ - 30 */)+
+		(pTemp->GetInfo().fCX * 0.5f /*ì‚¬ê±°ë¦¬ - 30 */));
 
-	//´ë»óÃ¼¿Í ´ë»óÃ¼ÀÇ ½ÇÁ¦ °¡·Î °Å¸®
+	//ëŒ€ìƒì²´ì™€ ëŒ€ìƒì²´ì˜ ì‹¤ì œ ê°€ë¡œ ê±°ë¦¬
 	float fWidth = float((pDest->GetInfo().vPos.x+ CObj::g_tScroll.x) - (pTemp->GetInfo().vPos.x + CObj::g_tScroll.x));
-		//+ CGameScene::g_tScroll.x; // Ä³¸¯ÅÍ°¡ ÀÌµ¿ÇÑ ¸¸Å­ º¯°æµÈ ½ºÅ©·Ñ°ªÀ» ´õÇÔ
+		//+ CGameScene::g_tScroll.x; // ìºë¦­í„°ê°€ ì´ë™í•œ ë§Œí¼ ë³€ê²½ëœ ìŠ¤í¬ë¡¤ê°’ì„ ë”í•¨
 
-	//´ë»óÃ¼¿Í ´ë»óÃ¼ÀÇ ½ÇÁ¦ ¼¼·Î °Å¸®									   
+	//ëŒ€ìƒì²´ì™€ ëŒ€ìƒì²´ì˜ ì‹¤ì œ ì„¸ë¡œ ê±°ë¦¬									   
 	float fHeight = float((pDest->GetInfo().vPos.y + CObj::g_tScroll.y) - (pTemp->GetInfo().vPos.y + CObj::g_tScroll.y));
-		//+ CGameScene::g_tScroll.y; // Ä³¸¯ÅÍ°¡ ÀÌµ¿ÇÑ ¸¸Å­ º¯°æµÈ ½ºÅ©·Ñ°ªÀ» ´õÇÔ
+		//+ CGameScene::g_tScroll.y; // ìºë¦­í„°ê°€ ì´ë™í•œ ë§Œí¼ ë³€ê²½ëœ ìŠ¤í¬ë¡¤ê°’ì„ ë”í•¨
 
 	float fRealDistance = 
 		sqrt(fWidth * fWidth + fHeight * fHeight);
@@ -52,46 +52,46 @@ void CCollisionMgr::ColCircle(list<CObj*> *pSkill,
 
 			if (CircleCol(*iter, *iter2))
 			{
-				// ¸ó½ºÅÍ ¹æ¾î·ÂÀÌ ÇÃ·¹ÀÌ¾î °ø°İ·Âº¸´Ù Å©¸é µ¥¹ÌÁö 
+				// ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì´ í”Œë ˆì´ì–´ ê³µê²©ë ¥ë³´ë‹¤ í¬ë©´ ë°ë¯¸ì§€ 
 				if((*iter2)->GetStatas().fDefence >= (*iter)->GetStatas().fAttack)
 					(*iter2)->SetStatas()->fHealthPoint -= 1;
-				// ÇÃ·¹ÀÌ¾î °ø°İ·ÂÀÌ ´õ Å©¸é ¸ó½ºÅÍ ¹æ¾î·ÂÀ» »« ³ª¸ÓÁö ¸¸Å­ÀÇ µ¥¹ÌÁö¸¸ Àû¿ë 
+				// í”Œë ˆì´ì–´ ê³µê²©ë ¥ì´ ë” í¬ë©´ ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì„ ëº€ ë‚˜ë¨¸ì§€ ë§Œí¼ì˜ ë°ë¯¸ì§€ë§Œ ì ìš© 
 				else if((*iter2)->GetStatas().fDefence < (*iter)->GetStatas().fAttack)
 					(*iter2)->SetStatas()->fHealthPoint -= 
 					(*iter)->GetStatas().fAttack - (*iter2)->GetStatas().fDefence;
 				
-				//Ãæµ¹½Ã µ¥¹ÌÁö
+				//ì¶©ëŒì‹œ ë°ë¯¸ì§€
 				SAFE_DELETE(&(*iter));
 				//SAFE_DELETE(&(*iter2));
 
 
-				//listÀÇ ³ëµå¸¦ »èÁ¦
+				//listì˜ ë…¸ë“œë¥¼ ì‚­ì œ
 				//iter = pSkill->erase(iter);
 				//iter2 = pMonsterList->erase(iter2);
 				++iter;
 				++iter2;
 			}
-			else //Ãæµ¹ ½ÇÆĞ½Ã
+			else //ì¶©ëŒ ì‹¤íŒ¨ì‹œ
 			{
-				//ÁÂÇ¥¸¦ ¹Ş¾Æ È­¸é ¹ÛÀ» ¹ş¾î³¯ ½Ã
+				//ì¢Œí‘œë¥¼ ë°›ì•„ í™”ë©´ ë°–ì„ ë²—ì–´ë‚  ì‹œ
 				if( (*iter)->GetInfo().vPos.y + CObj:: g_tScroll.y < 0		   + CObj:: g_tScroll.y  ||
 					(*iter)->GetInfo().vPos.y + CObj:: g_tScroll.y > WINSIZEY  + CObj:: g_tScroll.y  ||
 					(*iter)->GetInfo().vPos.x + CObj:: g_tScroll.x < 0		   + CObj:: g_tScroll.x  ||
 					(*iter)->GetInfo().vPos.x + CObj:: g_tScroll.x > WINSIZEX  + CObj:: g_tScroll.x )
 				{
-					//ÇØÁ¦ ¹× ³ëµå »èÁ¦
+					//í•´ì œ ë° ë…¸ë“œ ì‚­ì œ
 					SAFE_DELETE(&(*iter));
 					//iter = pSkill->erase(iter);
 					++iter;
 				}
-				//´ÙÀ½ ³ëµå¸¦ °¡¸£Å²´Ù.
+				//ë‹¤ìŒ ë…¸ë“œë¥¼ ê°€ë¥´í‚¨ë‹¤.
 				++iter2;
 			}
-			//iter°¡ ³¡À» °¡¸£Å°¸é ¹İº¹¹®À» ³¡³¿
+			//iterê°€ ëì„ ê°€ë¥´í‚¤ë©´ ë°˜ë³µë¬¸ì„ ëëƒ„
 			if (iter == pSkill->end())
 				break;
 		}
-		//iter°¡ ³¡À» °¡¸£Å°¸é ¹İº¹¹®À» ³¡³¿
+		//iterê°€ ëì„ ê°€ë¥´í‚¤ë©´ ë°˜ë³µë¬¸ì„ ëëƒ„
 		if (iter == pSkill->end())
 			break;
 	}

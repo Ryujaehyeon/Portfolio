@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Defines.h"
 
@@ -6,9 +6,9 @@ class CAStar
 {
 	SINGLETON(CAStar);
 private:
-	list<NODE*> m_OpenList;		 //Á¶»çÇÒ ´ë»ó
-	list<NODE*> m_CloseList;	 //Á¶»çÇÑ ´ë»ó
-	list<int> m_BestList;		 //°¡¾ßÇÒ °æ·Î
+	list<NODE*> m_OpenList;		 //ì¡°ì‚¬í•  ëŒ€ìƒ
+	list<NODE*> m_CloseList;	 //ì¡°ì‚¬í•œ ëŒ€ìƒ
+	list<int> m_BestList;		 //ê°€ì•¼í•  ê²½ë¡œ
 public:
 	int m_iStartIndex;
 	int m_iGoalIndex;

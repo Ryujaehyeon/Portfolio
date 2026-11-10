@@ -1,17 +1,17 @@
-#pragma once
+ï»¿#pragma once
 #include "afxwin.h"
 
 #include "Defines.h"
 #include "MySheet.h"
 
-// CMyForm Æû ºäÀÔ´Ï´Ù.
+// CMyForm í¼ ë·°ì…ë‹ˆë‹¤.
 
 class CMyForm : public CFormView
 {
 	DECLARE_DYNCREATE(CMyForm)
 
 protected:
-	CMyForm();           // µ¿Àû ¸¸µé±â¿¡ »ç¿ëµÇ´Â protected »ı¼ºÀÚÀÔ´Ï´Ù.
+	CMyForm();           // ë™ì  ë§Œë“¤ê¸°ì— ì‚¬ìš©ë˜ëŠ” protected ìƒì„±ìì…ë‹ˆë‹¤.
 	virtual ~CMyForm();
 
 public:
@@ -24,7 +24,7 @@ public:
 #endif
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Áö¿øÀÔ´Ï´Ù.
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ì§€ì›ì…ë‹ˆë‹¤.
 
 	DECLARE_MESSAGE_MAP()
 public:

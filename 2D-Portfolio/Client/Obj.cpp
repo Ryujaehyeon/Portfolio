@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Obj.h"
 #include "Include.h"
 
@@ -62,13 +62,13 @@ void CObj::FrameMove( const float& fCnt, const float& fMax )
 	m_tFrame.fLast = fMax;
 
 #if _DEBUG
-	// µğ¹ö±× ¸ğµå ½Ã ºê·¹ÀÌÅ©·Î Á¤Áö ÈÄ ´Ù½Ã ÁøÇàÇÒ¶§ 
-	// µé¾î¿À´Â Å¸ÀÓ°ªÀÌ max°ªÀ» ÃÊ°úÇØ ÇÁ·¹ÀÓ°ªÀ¸·Î ÀÎÇØ ¿¡·¯°¡ ³ªÁö ¾Ê°Ô
-	// ÃÊ±âÈ­
+	// ë””ë²„ê·¸ ëª¨ë“œ ì‹œ ë¸Œë ˆì´í¬ë¡œ ì •ì§€ í›„ ë‹¤ì‹œ ì§„í–‰í• ë•Œ 
+	// ë“¤ì–´ì˜¤ëŠ” íƒ€ì„ê°’ì´ maxê°’ì„ ì´ˆê³¼í•´ í”„ë ˆì„ê°’ìœ¼ë¡œ ì¸í•´ ì—ëŸ¬ê°€ ë‚˜ì§€ ì•Šê²Œ
+	// ì´ˆê¸°í™”
 	if (m_tFrame.fStart > fMax)
 		m_tFrame.fStart = 0.f;
 #else
-	// ¿ÀÂ÷°ªÀ» ÁÙÀÌ±â À§ÇØ
+	// ì˜¤ì°¨ê°’ì„ ì¤„ì´ê¸° ìœ„í•´
 	if (m_tFrame.fStart > fMax)
 		m_tFrame.fStart -= fMax;
 #endif
@@ -94,11 +94,11 @@ int CObj::GetTileIndex( const D3DXVECTOR3& vPos )
 bool CObj::CollisionMouseToTile( const D3DXVECTOR3& vPos, const TILE* pTileInfo )
 {
 	// y = ax + b;
-	// a? == ±â¿ï±â´Â?
+	// a? == ê¸°ìš¸ê¸°ëŠ”?
 	float fGrad = (TILESIZEY * 0.5f) / (TILESIZEX * 0.5f);
 
 
-	// b? == Á÷¼±ÀÌ ¾î´ÀÁ¡À» °üÅëÇÏ´ÂÁö?
+	// b? == ì§ì„ ì´ ì–´ëŠì ì„ ê´€í†µí•˜ëŠ”ì§€?
 	// b = y - ax;
 
 	D3DXVECTOR2 vPoint[4];
@@ -121,9 +121,9 @@ bool CObj::CollisionMouseToTile( const D3DXVECTOR3& vPos, const TILE* pTileInfo 
 	};
 
 	// y = ax + b;
-	// y - ax - b = 0	 //Á÷¼±»ó¿¡ Á¸ÀçÇÑ´Ù.
-	// y - ax - b < 0	 //Á÷¼±ÀÇ ¾Æ·¡¿¡ ÀÖ´Ù
-	// y - ax - b > 0	 //Á÷¼±ÀÇ À§¿¡ ÀÖ´Ù.
+	// y - ax - b = 0	 //ì§ì„ ìƒì— ì¡´ì¬í•œë‹¤.
+	// y - ax - b < 0	 //ì§ì„ ì˜ ì•„ë˜ì— ìˆë‹¤
+	// y - ax - b > 0	 //ì§ì„ ì˜ ìœ„ì— ìˆë‹¤.
 
 	if(vPos.y -  fGrad * vPos.x - fB[0] < 0 &&
 	   vPos.y - -fGrad * vPos.x - fB[1] < 0 &&
