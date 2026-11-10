@@ -9,6 +9,7 @@
 #ifndef _INC_STRING
 #include <string.h>
 #endif
+#include <string>
 
 class __errfind__
 {

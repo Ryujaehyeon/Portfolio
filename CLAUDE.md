@@ -19,27 +19,29 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 
 ## 빌드 / 테스트 / 린트
 
-솔루션 `2D-Portfolio/MyProgram.sln` — VS2010 형식(ToolsVersion 4.0), 구성 `Debug|Win32`·`Release|Win32` 만 있다.
+솔루션 `2D-Portfolio/MyProgram.sln` — VS2026(v145), 구성 `Debug|Win32`·`Release|Win32` 만 있다.
+경위는 `intent/vs2026-migration/`.
 
-**현재 이 PC에서는 빌드되지 않는다** (2026-11-10 확인):
-- v100(VS2010) 툴셋이 없다 — 설치된 건 VS 18 Insiders(v145)·VS2022(v143).
-- DirectX SDK (June 2010) 가 없다 — `d3dx9.h`/`d3dx9.lib` 는 Windows SDK 에 포함되지 않는다.
-  v145 로 시험 빌드 시 `Client\stdafx.h(27,10): error C1083: ... 'd3dx9.h'` 에서 멈춘다.
-
-빌드를 살리려면 (1) DXSDK June 2010 설치(`DXSDK_DIR` 환경변수) + Include/Lib 경로 추가,
-(2) 툴셋 지정이 필요하다. 이건 코드 변경이 아닌 환경 결정이므로 사용자에게 먼저 묻는다.
+- D3DX 는 DirectX SDK 대신 NuGet `Microsoft.DXSDK.D3DX`(packages.config)로 받는다. `d3dx9.lib` 를 vcxproj 에
+  직접 적지 않는다 — 패키지가 구성별로 `d3dx9.lib`/`d3dx9d.lib` 를 넣고 DLL 도 복사한다.
+- 출력·중간 경로는 `2D-Portfolio/Directory.Build.props` 한 곳에서 정한다(vcxproj 에 OutDir/IntDir 를 쓰지 않는다).
+  산출물 `Exe\<플랫폼>\<구성>\<프로젝트>\`, 중간 `Temp\<플랫폼>\<프로젝트>\<구성>\` — 둘 다 gitignore.
+- Client 런타임 DLL(`Debug.dll`, `fmodexL.dll`)은 Post-Build 가 OutDir 로 복사한다.
+- `ConformanceMode`(`/permissive-`)는 꺼져 있다. 켜면 `TCHAR*` ← 리터럴 등에서 대량 오류 — 별도 작업으로 다룬다.
 
 ```
-빌드(WSL에서, 툴셋 오버라이드·산출물은 repo 밖으로):
-  "/mnt/c/Program Files/Microsoft Visual Studio/18/Insiders/MSBuild/Current/Bin/MSBuild.exe" \
-    2D-Portfolio/MyProgram.sln /p:Configuration=Debug /p:Platform=Win32 /p:PlatformToolset=v145 \
-    "/p:OutDir=C:\Users\Public\pf-build\\" /m /nologo /v:m
-  정상 출력: 오류 0개, 종료 코드 0   (현재는 d3dx9.h 누락으로 실패)
+복원:   MSBuild.exe 2D-Portfolio/MyProgram.sln -t:restore -p:RestorePackagesConfig=true -nologo -v:m
+        정상 출력: 패키지 추가 메시지 또는 "복원할 항목 없음", 종료 코드 0
+빌드:   MSBuild.exe 2D-Portfolio/MyProgram.sln -p:Configuration=Debug -p:Platform=Win32 -m -nologo -v:m
+        (WSL: "/mnt/c/Program Files/Microsoft Visual Studio/18/Insiders/MSBuild/Current/Bin/MSBuild.exe")
+        정상 출력: "Client.vcxproj -> ...\Exe\Win32\Debug\Client\Client.exe", 오류 0, 종료 코드 0
+        기존 경고 약 280건(C4244·C4002·C4838 등)은 정상 — 새로 늘어나면 안 된다.
+실행:   작업 디렉터리를 `2D-Portfolio/Client/`(툴은 `MFC_000/`)로 두고 exe 실행 — 리소스가 상대 경로.
+        WSL 스모크: cd 2D-Portfolio/Client && timeout 8 ../Exe/Win32/Debug/Client/Client.exe → exit 124(살아 있음)
+        단, 오류 메시지박스("system err")가 떠도 살아 있으므로 창 제목까지 확인한다.
 테스트: 없음 (자동화 테스트 없음 — 실행해서 눈으로 확인)
 린트:   없음 (컴파일러 경고 /W3 이 유일한 정적 검사)
 ```
-
-빌드 산출물을 repo 안에 만들지 않는다 — `.gitignore` 가 VS 산출물을 제대로 막지 않는다.
 
 ## 코드 관례
 
