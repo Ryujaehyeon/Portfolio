@@ -59,6 +59,21 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - 포매터: 없음. 탭 들여쓰기, 중괄호는 다음 줄(Allman). 주변 코드 스타일을 따른다.
 - 주석·문서 언어: 한국어, 식별자는 원문.
 
+### C++ 코딩 표준
+
+- 표준: [.harness/standards/cpp11-coding-standard.md](.harness/standards/cpp11-coding-standard.md) (항목 번호 `I-56` = I장 56번, 분류는 `coding-standard` 스킬 참고)
+- 언어 표준: C++14 (MSVC 기본값, `/std` 미지정)
+- 검사 제외 경로: `2D-Portfolio/Client/fmod/`(FMOD Ex 서드파티), `2D-Portfolio/packages/`(NuGet), `2D-Portfolio/Client/Resource.h`·`2D-Portfolio/MFC_000/resource.h`(리소스 편집기 생성 파일)
+
+| 대상 | 적용 |
+|---|---|
+| 기존 코드의 **명명·구조 관례**(위 목록: `C` 접두사, `m_`+헝가리안, `SCENEID_*` enum, `SAFE_DELETE` 등) | **기존 관례 유지** — 표준의 I-1·I-10·I-11·I-16·I-40 등과 달라도 일괄 개명·재구조화하지 않는다 |
+| 인텐트에서 **고치는 코드** | 표준의 품질 규칙 적용: 경고 0(I-56), `const`(I-26·27), `nullptr`(III-4), `override`(III-1), `constexpr`(III-10), 한 줄 블록도 중괄호(II-4), `default:`(I-23), 변수 가리기 금지(I-57) |
+| **새로 만드는** 클래스·파일 | 위 품질 규칙 + 이름은 주변 기존 관례에 맞춘다(한 파일 안에서 두 스타일을 섞지 않는다) |
+| 표준이 「미정」으로 둔 항목(I-62, III-11, III-12) | 규칙으로 해석하지 않는다 |
+
+충돌하면 이 CLAUDE.md → 표준 순으로 따른다(표준 문서도 「프로젝트 규칙 우선」을 명시).
+
 ## 커밋 규약
 
 - `type(scope): 제목` — Conventional Commits. 제목은 한국어·명령형·~50자, 식별자는 원문.
