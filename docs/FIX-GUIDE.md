@@ -102,6 +102,7 @@ git rebase master          # debug-dll-removal 머지 후
 | `git status` 에 vcxproj 가 통째로 바뀐 것처럼 보임 | VS 가 줄바꿈을 CRLF 로 저장 — `.gitattributes`(`text=auto`)가 커밋 시 정규화하므로 실제 diff 는 작다. `git diff --stat` 로 확인 |
 | 경고 수가 늘었다 | 새로 생긴 경고는 고치고 커밋. 기존 283건(Debug)은 `warning-cleanup` 몫 |
 | 빌드 산출물이 `git status` 에 보인다 | 산출물은 `Exe/`·`Temp/` 로만 나와야 한다. 다른 곳에 생기면 vcxproj 에 OutDir 이 박혔는지 확인(경로는 `Directory.Build.props` 한 곳에서만) |
+| 새 코드를 어떤 스타일로 쓸지 | 이름은 주변 기존 관례(`C` 접두사·`m_` 헝가리안), 품질은 [C++ 표준](../.harness/standards/cpp11-coding-standard.md) — 경고 0·`const`·`nullptr`·`override`·한 줄 블록도 중괄호. 범위는 CLAUDE.md 「C++ 코딩 표준」 |
 
 ## 6. Claude 에게 맡길 수 있는 것
 
