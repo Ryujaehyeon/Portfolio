@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Defines.h"
 
@@ -9,7 +9,7 @@ class CSceneMgr
 private:
 	CSceneObj* m_pSceneObj;
 public:
-	HRESULT InitScene(SCENEID ID);
+	HRESULT InitScene(const SCENEID ID);
 	SCENEID Progress();
 	void Render();
 	void Release();

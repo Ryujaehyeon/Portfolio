@@ -10,8 +10,8 @@
 
 | # | 인텐트 | 브랜치 | 상태 | 선행 |
 |---|---|---|---|---|
-| 1 | [repo-cleanup](../intent/repo-cleanup/plan.md) | `feature/repo-cleanup` (만들어 둠) | 착수 대기 | — |
-| 2 | [debug-dll-removal](../intent/debug-dll-removal/plan.md) | `feature/debug-dll-removal` (master 에서 새로) | 대기 | 1 머지 권장 |
+| 1 | [repo-cleanup](../intent/repo-cleanup/plan.md) | — | ✅ 완료 (PR #8, `7c94bb0`) | — |
+| 2 | [debug-dll-removal](../intent/debug-dll-removal/plan.md) | `feature/debug-dll-removal` | 진행 중 — **코드 4곳 수정 대기**(4.2) | 1 ✅ |
 | 3 | [x64-migration](../intent/x64-migration/plan.md) | `feature/x64-migration` (**WIP 커밋 `6c6b963` 있음**) | 진행 중 보관 | **2 머지 필수** |
 
 그다음은 오딧 「제안 순서」: `dead-code-removal` → `err-msg-format` → `ub-fixes` → `objmgr-lifetime` →
@@ -76,7 +76,9 @@ VS 에서는 그냥 빌드(F7)해도 같다. x64 가 생긴 뒤에는 `-p:Platfo
 ### 4.2 debug-dll-removal
 - **변경 전에** Debug 로 메뉴까지 실행해 `Scene :` 로그가 어디에도 안 나오는지 본다(plan 1단계). 결과를 PR 에 적는다.
 - `MenuD2.cpp:82-84` 는 `if(iScene > SCENEID_NONPASS) DebugLog(L"Scene : %d", iScene);` 로. `wsprintf` 두 줄을 꼭 지운다.
-- `Client/Debug/Debug.dll` 은 repo-cleanup 에서 이미 지웠으면 이 단계에서 뺀다.
+- 코드 외 작업(1단계 확인, sln·Post-Build, 바이너리 삭제, 문서)은 브랜치에 **미커밋으로 반영돼 있다**. 남은 건 코드 4곳:
+  `MenuD2.cpp:82-84` 교체, `Client.cpp:8` pragma 삭제, `Include.h:2` 삭제, `git rm Headers/Debug.h`.
+  (그 전까지는 `Debug.lib` 가 없어 Client 링크가 실패하는 게 정상.)
 - 확인: VS 개발자 명령 프롬프트에서 `dumpbin /dependents 2D-Portfolio\Exe\Win32\Release\Client\Client.exe` 에 `Debug.dll` 없음.
 - 커밋 예: `refactor(debug-dll-removal): 소스 없는 Debug.dll 의존 제거, 디버그 로그를 Debug.hpp 로 통일`
 
@@ -98,6 +100,7 @@ git rebase master          # debug-dll-removal 머지 후
 | 문자열 비교를 새로 쓴다 | `==` 금지(주소 비교). `lstrcmp(a, b) == 0` 또는 `wstring` 비교 — 오딧 2번 |
 | `ERR_MSG` 에 포맷 인자를 넘긴다 | 지금 매크로는 3번째 인자를 버린다. `err-msg-format` 전까지는 `swprintf` 로 먼저 조립 |
 | `TILE`·`OBJINFO` 를 고치고 싶다 | `.dat` 호환이 깨진다. 포인터·`size_t` 를 넣으면 x86/x64 간에도 깨진다 |
+| `Client/fmod.log` 가 생긴다 | FMOD 로깅판(`fmodexL`)이 실행마다 남기는 로그. `*.log` 로 gitignore — 무시 |
 | exe 를 더블클릭했더니 리소스 오류 | 정상(작업 디렉터리 문제). VS F5 나 `cd Client` 후 실행 |
 | `git status` 에 vcxproj 가 통째로 바뀐 것처럼 보임 | VS 가 줄바꿈을 CRLF 로 저장 — `.gitattributes`(`text=auto`)가 커밋 시 정규화하므로 실제 diff 는 작다. `git diff --stat` 로 확인 |
 | 경고 수가 늘었다 | 새로 생긴 경고는 고치고 커밋. 기존 283건(Debug)은 `warning-cleanup` 몫 |

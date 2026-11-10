@@ -5,7 +5,6 @@
 #include "Client.h"
 #include "MainGame.h"
 #include "Include.h"
-#pragma comment(lib, "Debug.lib")
 
 #define MAX_LOADSTRING 100
 

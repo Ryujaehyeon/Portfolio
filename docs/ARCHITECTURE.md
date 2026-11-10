@@ -46,16 +46,12 @@ flowchart LR
     SDK["Windows SDK<br/>d3d9 · dinput8 · dxguid"] --> Client
     SDK --> Tool
     FMOD["fmod/lib/fmodexL_vc.lib<br/>+ fmodexL.dll"] --> Client
-    DebugLib["Debug.lib + Debug.dll<br/>(소스 없음, x86, MSVCR100D)"] --> Client
     MFC["MFC (Dynamic)"] --> Tool
     Client --> OutC["Exe/Win32/구성/Client/<br/>Client.exe + DLL"]
     Tool --> OutT["Exe/Win32/구성/MFC_000/<br/>MFC_000.exe + DLL"]
 
-    classDef legacy stroke:#c33,stroke-dasharray:4 3;
-    class DebugLib legacy;
 ```
 
-- 점선 빨간 테두리 = 제거 예정([debug-dll-removal](../intent/debug-dll-removal/plan.md)).
 - Client 의 런타임 DLL 은 Post-Build 가 `Exe/.../Client/` 로 복사, D3DX DLL 은 NuGet 타깃이 복사한다.
 - 실행 시 **작업 디렉터리는 `2D-Portfolio/Client/`(툴은 `MFC_000/`)** 여야 한다 — 리소스 경로가 `../Resource/...` 상대 경로.
 
@@ -350,8 +346,7 @@ flowchart TB
     Defines --> Function["Function.h<br/>SAFE_DELETE"]
     Defines --> Struct["Struct.h<br/>OBJINFO · INFO · FRAME · TILE · TEXINFO"]
     Defines --> stdafx
-    Include["Headers/Include.h<br/>전 헤더 모음"] --> DebugH["Debug.h (DLL 선언)"]
-    Include --> DebugHpp["Debug.hpp (헤더 전용 콘솔 로그, _DEBUG 전용)"]
+    Include["Headers/Include.h<br/>전 헤더 모음"] --> DebugHpp["Debug.hpp (헤더 전용 콘솔 로그, _DEBUG 전용)"]
     Include --> Common["Device · TextureMgr · *Texture"]
     Include -->|"#ifdef __CLIENT__EXEC__<br/>(Client/stdafx.h 에서 정의)"| ClientOnly["Client 전용 헤더 전부<br/>매니저 · 장면 · 객체 · 원형 · 스킬 · 사운드"]
 ```
