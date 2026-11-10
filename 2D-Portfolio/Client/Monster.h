@@ -1,19 +1,19 @@
-#pragma once
+ï»¿#pragma once
 #include "stagedynamic.h"
 class CMonster :
 	public CStageDynamic
 {
-	// ÇÃ·¹ÀÌ¾î¿Í °Å¸®Ãæµ¹Ã¼Å© ÈÄ ÀÏÁ¤°Å¸® ÀÌ³»¿¡ µé¾î¿À¸é ÂÑ¾Æ°¡ °ø°İ ¸Ö¾îÁö¸é µ¹¾Æ°¨
+	// í”Œë ˆì´ì–´ì™€ ê±°ë¦¬ì¶©ëŒì²´í¬ í›„ ì¼ì •ê±°ë¦¬ ì´ë‚´ì— ë“¤ì–´ì˜¤ë©´ ì«“ì•„ê°€ ê³µê²© ë©€ì–´ì§€ë©´ ëŒì•„ê°
 protected:
 	D3DXVECTOR3 m_vMovePoint;
 	int m_iDir;
 	float m_fWaitTime;
 public:
 	void FrameStatas();
-	// D3DVector¸¦ °¡Á®¿Í POINTº¯È¯ ÈÄ Ã¼Å©
+	// D3DVectorë¥¼ ê°€ì ¸ì™€ POINTë³€í™˜ í›„ ì²´í¬
 	bool VecterInRect(D3DXVECTOR3& _Taget);
 	void SetMotionDirect(TCHAR* _MotionDirect);
-	// ÃëÇÒ Çàµ¿ÀÇ Å°°ªÀ» ³ÖÀ¸¸é _pObjKey¸¦ m_pObjKey¿¡ ³Ö´Â´Ù.
+	// ì·¨í•  í–‰ë™ì˜ í‚¤ê°’ì„ ë„£ìœ¼ë©´ _pObjKeyë¥¼ m_pObjKeyì— ë„£ëŠ”ë‹¤.
 	void DirectAction( TCHAR* _pObjStatas );
 	void FuncAttack();
 	void ExpAcquired();

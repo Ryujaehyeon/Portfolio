@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "LogoObjProto.h"
 #include "Include.h"
 
@@ -13,7 +13,7 @@ CLogoObjProto::~CLogoObjProto(void)
 
 HRESULT CLogoObjProto::InitProtoInstance()
 {
-	// ¾ÆÁ÷ Á¤ÇØÁöÁö ¾ÊÀº ¿øÇü °´Ã¼ÀÇ ±âº» ¼³Á¤°ª(Æ²)
+	// ì•„ì§ ì •í•´ì§€ì§€ ì•Šì€ ì›í˜• ê°ì²´ì˜ ê¸°ë³¸ ì„¤ì •ê°’(í‹€)
 	OBJINFO objInfo;
 	ZeroMemory(&objInfo, sizeof(objInfo));
 
@@ -22,7 +22,7 @@ HRESULT CLogoObjProto::InitProtoInstance()
 	objInfo.vDir = D3DXVECTOR3(0, 0, 0);
 	objInfo.vLook = D3DXVECTOR3(1, 0, 0);
 
-	// ¿øÇü °´Ã¼¸¦ »ý¼ºÇØ¼­ »ðÀÔÇØÁÜ
+	// ì›í˜• ê°ì²´ë¥¼ ìƒì„±í•´ì„œ ì‚½ìž…í•´ì¤Œ
 	m_MapProto.insert(make_pair(L"Back"
 		, new CLogoBackGround(objInfo, OBJ_BUILDING)));
 

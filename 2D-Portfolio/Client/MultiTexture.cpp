@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "MultiTexture.h"
 #include "Device.h"
 
@@ -65,7 +65,7 @@ void CMultiTexture::Release()
 		for(vector<TEXINFO*>::iterator iter2 = iter->second.begin();
 			iter2 != iter->second.end(); ++iter2)
 		{
-			// ·ÎµåµÈ µ¥ÀÌÅÍ¸¦ ÇØÁ¦
+			// ë¡œë“œëœ ë°ì´í„°ë¥¼ í•´ì œ
 			(*iter2)->pTexture->Release();
 			SAFE_DELETE<TEXINFO>(&(*iter2));
 		}

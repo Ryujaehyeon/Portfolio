@@ -1,4 +1,4 @@
-// MyForm.cpp : ±¸Çö ÆÄÀÏÀÔ´Ï´Ù.
+ï»¿// MyForm.cpp : êµ¬í˜„ íŒŒì¼ì…ë‹ˆë‹¤.
 //
 
 #include "stdafx.h"
@@ -33,7 +33,7 @@ BEGIN_MESSAGE_MAP(CMyForm, CFormView)
 END_MESSAGE_MAP()
 
 
-// CMyForm Áø´ÜÀÔ´Ï´Ù.
+// CMyForm ì§„ë‹¨ì…ë‹ˆë‹¤.
 
 #ifdef _DEBUG
 void CMyForm::AssertValid() const
@@ -50,7 +50,7 @@ void CMyForm::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 
-// CMyForm ¸Ş½ÃÁö Ã³¸®±âÀÔ´Ï´Ù.
+// CMyForm ë©”ì‹œì§€ ì²˜ë¦¬ê¸°ì…ë‹ˆë‹¤.
 void CMyForm::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
@@ -65,7 +65,7 @@ void CMyForm::OnDestroy()
 {
 	CFormView::OnDestroy();
 
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	delete m_pMySheet;
 	m_pMySheet = NULL;
 }

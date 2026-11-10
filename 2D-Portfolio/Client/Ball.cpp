@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Ball.h"
 #include "Include.h"
 
@@ -16,7 +16,7 @@ CBall::~CBall(void)
 
 HRESULT CBall::Initialize()
 {
-	// ¾î¶² ¿ÀºêÁ§Æ®¿Í ÀÌ¹ÌÁö¸¦ ºÒ·¯¿ÃÁö °áÁ¤ÇÏ´Â °ªµé
+	// ì–´ë–¤ ì˜¤ë¸Œì íŠ¸ì™€ ì´ë¯¸ì§€ë¥¼ ë¶ˆëŸ¬ì˜¬ì§€ ê²°ì •í•˜ëŠ” ê°’ë“¤
 	m_eLayer = LAYER_OBJECT;
 	m_pObjKey = L"Ball";
 	m_pStateKey = NULL;
@@ -25,48 +25,48 @@ HRESULT CBall::Initialize()
 
 SCENEID CBall::Progress()
 {
-	// °¢µµ
+	// ê°ë„
 	static float fAngle = 0.0f;
-	// ½Ã°£
+	// ì‹œê°„
 	static float fTime = 0.0f;
 
-	// µð±×¸®(°¢µµ)À» ¶óµð¾È°ªÀ¸·Î ¹Ù²ÛÈÄ 
-	// ±× °ªÀ» ½Ã°£°ª°ú °öÇÏ¸é 360µµ È¸ÀüÀÌ °¡´ÉÇÑ °ªÀÌ »ý¼ºµÊ
+	// ë””ê·¸ë¦¬(ê°ë„)ì„ ë¼ë””ì•ˆê°’ìœ¼ë¡œ ë°”ê¾¼í›„ 
+	// ê·¸ ê°’ì„ ì‹œê°„ê°’ê³¼ ê³±í•˜ë©´ 360ë„ íšŒì „ì´ ê°€ëŠ¥í•œ ê°’ì´ ìƒì„±ë¨
 	fAngle += D3DXToRadian(360.f) * GET_SINGLE(CTimeMgr)->DeltaTime();
-	// ½Ã°£°ªÀ» ±¸ÇÑ´Ù.
+	// ì‹œê°„ê°’ì„ êµ¬í•œë‹¤.
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
-	// ½Ã°£ÀÌ Áö³ª¸é ¸®ÅÏÀ¸·Î ¿øÇÏ´Â ¾ÀID·Î ³Ñ°Ü¼­ ¾ÀÀ» ¹Ù²ß´Ï´Ù.
+	// ì‹œê°„ì´ ì§€ë‚˜ë©´ ë¦¬í„´ìœ¼ë¡œ ì›í•˜ëŠ” ì”¬IDë¡œ ë„˜ê²¨ì„œ ì”¬ì„ ë°”ê¿‰ë‹ˆë‹¤.
 	if(fTime >= 1.0f)
 		return SCENEID_MENU;
 
 	D3DXMATRIX matTrans;
 	D3DXMATRIX matRotZ;
 
-	// ±¸ÇØ³õÀº °¢µµ¸¦ ÇÔ¼ö¿¡ »ç¿ë
+	// êµ¬í•´ë†“ì€ ê°ë„ë¥¼ í•¨ìˆ˜ì— ì‚¬ìš©
 	D3DXMatrixRotationZ(&matRotZ, fAngle);
-	// ÀÚ½ÅÀÇ À§Ä¡¸¦ ÁöÁ¤
+	// ìžì‹ ì˜ ìœ„ì¹˜ë¥¼ ì§€ì •
 	D3DXMatrixTranslation(&matTrans, m_Info.vPos.x
 		, m_Info.vPos.y, m_Info.vPos.z);
-	//< Å©±â * ÀÚÀü * ÀÌµ¿ * °øÀü * ºÎ¸ð >ÇÊ¿ä¿¡ ÀÇÇØ ±¸ÇØ³õÀº °ª³¢¸®¸¸ °öÇÏ¿© ¿ùµå¿¡ ´ëÀÔÇÑ´Ù.
+	//< í¬ê¸° * ìžì „ * ì´ë™ * ê³µì „ * ë¶€ëª¨ >í•„ìš”ì— ì˜í•´ êµ¬í•´ë†“ì€ ê°’ë¼ë¦¬ë§Œ ê³±í•˜ì—¬ ì›”ë“œì— ëŒ€ìž…í•œë‹¤.
 	m_Info.matWorld = matRotZ * matTrans;
 
-	// ¾ÀÀ» ³Ñ±âÁö ¾Ê´Â´Ù.
+	// ì”¬ì„ ë„˜ê¸°ì§€ ì•ŠëŠ”ë‹¤.
 	return SCENEID_NONPASS;
 }
 
 void CBall::Render()
 {
-	// ÅØ½ºÃÄ¸Å´ÏÀú¸¦ ÅëÇØ ÅØ½ºÃÄ¸¦ °¡Á®¿Â´Ù.
-	// ÀÌ¹Ì Initialize¿¡¼­ Á¤ÇØÁø ¿ÀºêÁ§Æ®ÀÇ ÀÌ¸§À¸·Î ±¸ÇØ¿Â´Ù.
+	// í…ìŠ¤ì³ë§¤ë‹ˆì €ë¥¼ í†µí•´ í…ìŠ¤ì³ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+	// ì´ë¯¸ Initializeì—ì„œ ì •í•´ì§„ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ìœ¼ë¡œ êµ¬í•´ì˜¨ë‹¤.
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
 
-	// ¾øÀ¸¸é ½ÇÆÐÇÏ¿© ¸®ÅÏ
+	// ì—†ìœ¼ë©´ ì‹¤íŒ¨í•˜ì—¬ ë¦¬í„´
 	if(pTexInfo == NULL)
 		return;
 
-	// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+	// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 	m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 		pTexInfo->ImgInfo.Height * 0.5f, 0);
 

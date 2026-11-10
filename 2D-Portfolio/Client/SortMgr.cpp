@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "SortMgr.h"
 #include "Include.h"
 
@@ -20,7 +20,7 @@ void CSortMgr::SetLayer( CObj* pObj )
 
 void CSortMgr::Render()
 {
-	//// y Ãà¿¡ µû¶ó ¸ÕÀú ±×·ÁÁö°í ´Ê°Ô ±×·ÁÁö°Ô Á¤·Ä
+	//// y ì¶•ì— ë”°ë¼ ë¨¼ì € ê·¸ë ¤ì§€ê³  ëŠ¦ê²Œ ê·¸ë ¤ì§€ê²Œ ì •ë ¬
 	//for (list<CObj*>::iterator iter = m_SortLayer[i].begin();
 	//	iter != m_SortLayer[i].end(); ++iter)
 	//{

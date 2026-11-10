@@ -1,4 +1,4 @@
-// Page4.cpp : ±¸Çö ÆÄÀÏÀÔ´Ï´Ù.
+ï»¿// Page4.cpp : êµ¬í˜„ íŒŒì¼ì…ë‹ˆë‹¤.
 //
 
 #include "stdafx.h"
@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 
 
-// CPage4 ´ëÈ­ »óÀÚÀÔ´Ï´Ù.
+// CPage4 ëŒ€í™” ìƒìì…ë‹ˆë‹¤.
 
 IMPLEMENT_DYNAMIC(CPage4, CPropertyPage)
 
@@ -31,4 +31,4 @@ BEGIN_MESSAGE_MAP(CPage4, CPropertyPage)
 END_MESSAGE_MAP()
 
 
-// CPage4 ¸Ş½ÃÁö Ã³¸®±âÀÔ´Ï´Ù.
+// CPage4 ë©”ì‹œì§€ ì²˜ë¦¬ê¸°ì…ë‹ˆë‹¤.

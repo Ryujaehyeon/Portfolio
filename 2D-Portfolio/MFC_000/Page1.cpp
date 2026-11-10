@@ -1,4 +1,4 @@
-// Page1.cpp : ���� �����Դϴ�.
+﻿// Page1.cpp : 구현 파일입니다.
 //
 
 #include "stdafx.h"
@@ -8,7 +8,7 @@
 #include "MainFrm.h"
 #include "MFC_000View.h"
 
-// CPage1 ��ȭ �����Դϴ�.
+// CPage1 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(CPage1, CPropertyPage)
 
@@ -39,14 +39,14 @@ BEGIN_MESSAGE_MAP(CPage1, CPropertyPage)
 END_MESSAGE_MAP()
 
 
-// CPage1 �޽��� ó�����Դϴ�.
+// CPage1 메시지 처리기입니다.
 
 
 BOOL CPage1::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 
-	// TODO:  ���⿡ �߰� �ʱ�ȭ �۾��� �߰��մϴ�.
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 
 	TCHAR szTmp[128] = L"";
 	for(int i = 0; i < 180; ++i)
@@ -74,12 +74,12 @@ BOOL CPage1::OnInitDialog()
 	m_Picture.SetBitmap(m_BitMap[0]);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	// ����: OCX �Ӽ� �������� FALSE�� ��ȯ�ؾ� �մϴ�.
+	// 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
 
 void CPage1::OnCbnSelchangeCombo1()
 {
-	// TODO: ���⿡ ��Ʈ�� �˸� ó���� �ڵ带 �߰��մϴ�.
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	int iIndex = m_Combo.GetCurSel();
 	m_Picture.SetBitmap(m_BitMap[iIndex]);
 
@@ -91,13 +91,13 @@ void CPage1::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 {
 	CPropertyPage::OnActivate(nState, pWndOther, bMinimized);
 
-	// TODO: ���⿡ �޽��� ó���� �ڵ带 �߰��մϴ�.
+	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 }
 
 
 BOOL CPage1::OnSetActive()
 {
-	// TODO: ���⿡ Ư��ȭ�� �ڵ带 �߰� ��/�Ǵ� �⺻ Ŭ������ ȣ���մϴ�.
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	int iIndex = m_Combo.GetCurSel();
 
 	CMainFrame* pMainFrm = (CMainFrame*)AfxGetMainWnd();
@@ -109,8 +109,8 @@ BOOL CPage1::OnSetActive()
 
 void CPage1::OnBnClickedButton1()
 {
-	// TODO: ���⿡ ��Ʈ�� �˸� ó���� �ڵ带 �߰��մϴ�.
-	// Ÿ�� �ʱ�ȭ
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// 타일 초기화
 	vector<TILE*> pTile = 
 		((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecTile;
 
@@ -130,8 +130,8 @@ void CPage1::OnBnClickedButton1()
 
 void CPage1::OnBnClickedButton2()
 {
-	// TODO: ���⿡ ��Ʈ�� �˸� ó���� �ڵ带 �߰��մϴ�.
-	// ���õ� Ÿ�Ϸ� ���� ��ü
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// 선택된 타일로 전부 교체
 	vector<TILE*> pTile = 
 		((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecTile;
 	int iIndex = m_Combo.GetCurSel();
@@ -153,7 +153,7 @@ void CPage1::OnBnClickedButton2()
 
 void CPage1::OnBnClickedButton3()
 {
-	// TODO: ���⿡ ��Ʈ�� �˸� ó���� �ڵ带 �߰��մϴ�.
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	vector<TILE*> pTile = 
 		((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecTile;
 

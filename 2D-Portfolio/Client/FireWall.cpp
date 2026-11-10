@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "FireWall.h"
 #include "Include.h"
 
@@ -66,7 +66,7 @@ HRESULT CFireWall::Initialize()
 SCENEID CFireWall::Progress()
 {
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
-	// ½Ã°£
+	// ì‹œê°„
 
 	if(m_dwKey & KEY_RBUTTON && m_fTime == 0)
 		m_Info.vPos = MouseInfoDX();
@@ -81,10 +81,10 @@ SCENEID CFireWall::Progress()
 	if (m_vTagetInfo == m_Info.vPos)
 		m_vTagetInfo = m_Info.vPos;
 
-	// ÀÌ¹ÌÁö Å©±â º¯°æÇØ¾ßÇÔ
+	// ì´ë¯¸ì§€ í¬ê¸° ë³€ê²½í•´ì•¼í•¨
 	D3DXMatrixScaling(&m_Info.matScale, 1.f, 1.f, 1.f);
 
-	// À§Ä¡¸¦ ¸¶¿ì½º°¡ ÀÖ´Â À§Ä¡·Î ³õ´Â´Ù.
+	// ìœ„ì¹˜ë¥¼ ë§ˆìš°ìŠ¤ê°€ ìžˆëŠ” ìœ„ì¹˜ë¡œ ë†“ëŠ”ë‹¤.
 	m_Info.vDir = m_Info.vPos;
 
 	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, m_Info.vPos.z );
@@ -101,7 +101,7 @@ void CFireWall::Render()
 {
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(SKILL, m_pStateKey, int(m_tFrame.fStart));
-	// ÇÁ·¹ÀÓ °ªÀÌ ÀúÀåÇÑ ÀÌ¹ÌÁö º¤ÅÍÅ©±â¸¦ ¹þ¾î³­ °ªÀÌ µé¾î°¡¸é ¿¡·¯
+	// í”„ë ˆìž„ ê°’ì´ ì €ìž¥í•œ ì´ë¯¸ì§€ ë²¡í„°í¬ê¸°ë¥¼ ë²—ì–´ë‚œ ê°’ì´ ë“¤ì–´ê°€ë©´ ì—ëŸ¬
 
 	if(pTexInfo == NULL)
 		return;

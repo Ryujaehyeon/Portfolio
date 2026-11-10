@@ -1,13 +1,13 @@
-#pragma once
+ï»¿#pragma once
 
-const int WINSIZEX = 800;		 /*  Ã¢Å©±â   X          */
+const int WINSIZEX = 800;		 /*  ì°½í¬ê¸°   X          */
 const int WINSIZEY = 600;		 /*           Y          */
-const int TILECNTX = 20;		 /*  ¸ÊÀÇ°¡·ÎÃàÅ¸ÀÏ°¹¼ö   */
-const int TILECNTY = 40;		 /*  ¸ÊÀÇ¼¼·ÎÃàÅ¸ÀÏ°¹¼ö   */
-const int TILESIZEX = 130;		 /*  ¸ÊÅ¸ÀÏÀÇ °¡·ÎÃàÅ©±â  */
-const int TILESIZEY = 68;		 /*  ¸ÊÅ¸ÀÏÀÇ ¼¼·ÎÃàÅ©±â  */
+const int TILECNTX = 20;		 /*  ë§µì˜ê°€ë¡œì¶•íƒ€ì¼ê°¯ìˆ˜   */
+const int TILECNTY = 40;		 /*  ë§µì˜ì„¸ë¡œì¶•íƒ€ì¼ê°¯ìˆ˜   */
+const int TILESIZEX = 130;		 /*  ë§µíƒ€ì¼ì˜ ê°€ë¡œì¶•í¬ê¸°  */
+const int TILESIZEY = 68;		 /*  ë§µíƒ€ì¼ì˜ ì„¸ë¡œì¶•í¬ê¸°  */
 
-enum TEXTYPE					 /*  ÅØ½ºÆ®Å¸ÀÔ           */
+enum TEXTYPE					 /*  í…ìŠ¤íŠ¸íƒ€ìž…           */
 {								 /*                      */
 	TEXTYPE_SINGLE,				 /*                      */
 	TEXTYPE_MULTI,				 /*                      */
@@ -20,13 +20,13 @@ enum TEXTYPE					 /*  ÅØ½ºÆ®Å¸ÀÔ           */
 
 
 enum WINMODE
-{	// À©µµ¿ì ¸ðµå, Ç®¸ðµå
+{	// ìœˆë„ìš° ëª¨ë“œ, í’€ëª¨ë“œ
 	WINMODE_FULL,
 	WINMODE_WIN,
 };
 
 enum SCENEID
-{	// Àå¸é¹øÈ£
+{	// ìž¥ë©´ë²ˆí˜¸
 	SCENEID_END = -2,
 	SCENEID_NONPASS = -1,
 	SCENEID_LOGO,
@@ -37,7 +37,7 @@ enum SCENEID
 };
 
 enum SORTLAYER
-{	// Á¤·Ä
+{	// ì •ë ¬
 	LAYER_TERRAIN,
 	LAYER_OBJECT,
 	LAYER_UI,
@@ -71,7 +71,7 @@ enum OBJ_TYPE
 	OBJ_UI
 };
 
-// °¢µµº° ¹æÇâ 16¹æÇâ
+// ê°ë„ë³„ ë°©í–¥ 16ë°©í–¥
 const float Diract16    = 11.25f;
 const float R			= 0.f;
 const float R_START		= 348.75f;
@@ -125,12 +125,12 @@ const float RRD_END		= 348.75f;
 // 
 #define PI 3.1415926535897932384626433832795f
 
-// Å¸ÀÏ ¿É¼Ç Á¾·ù
+// íƒ€ì¼ ì˜µì…˜ ì¢…ë¥˜
 const BYTE TILE_OPTION_NONE		 = 0x00; // 0000 0001
 const BYTE TILE_OPTION_DONT_MOVE = 0x01; // 0000 0001
 
 
-// ¸ð¼Ç ÇÁ·¹ÀÓ ¸ÅÅ©·ÎÈ­
+// ëª¨ì…˜ í”„ë ˆìž„ ë§¤í¬ë¡œí™”
 const float PLAYER_STAND				= 8.0f;
 const float PLAYER_WALK					= 8.0f;
 const float PLAYER_RUN					= 8.0f;
@@ -153,7 +153,7 @@ const float SUMMONER_RUN			= 8.0f;
 const float SUMMONER_ATTACK			= 12.0f;
 const float SUMMONER_DEATH			= 16.0f;
 
-// ¸ð¼Ç Å°¿öµå
+// ëª¨ì…˜ í‚¤ì›Œë“œ
 TCHAR* const STAND					= L"Stand";
 TCHAR* const WALK					= L"Walk";
 TCHAR* const RUN					= L"Run";
@@ -164,7 +164,7 @@ TCHAR* const CAST					= L"CAST";
 TCHAR* const SUMMON					= L"SUMMON";
 
 
-// ÇÃ·¹ÀÌ¾î Å°¿öµå
+// í”Œë ˆì´ì–´ í‚¤ì›Œë“œ
 TCHAR* const PLAYER					= L"Player";
 TCHAR* const FELLOW_1ST				= L"Fellow_First";
 TCHAR* const FELLOW_2ND				= L"Fellow_Second";

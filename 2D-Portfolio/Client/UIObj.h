@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "stagestatic.h"
 class CUIObj :
 	public CStageStatic
@@ -22,7 +22,7 @@ public:
 	virtual void Release();
 	virtual CObj* Clone();
 public:
-	// UI Ãæµ¹ È®ÀÎÀ» À§ÇØ ½ºÅ©·Ñ °ªÀÌ ¹İ¿µµÇÁö ¾ÊÀº ¸¶¿ì½º ÁÂÇ¥È¹µæ ÇÔ¼ö
+	// UI ì¶©ëŒ í™•ì¸ì„ ìœ„í•´ ìŠ¤í¬ë¡¤ ê°’ì´ ë°˜ì˜ë˜ì§€ ì•Šì€ ë§ˆìš°ìŠ¤ ì¢Œí‘œíšë“ í•¨ìˆ˜
 	virtual POINT UIMouseInfo();
 	RECT RealRect()
 	{

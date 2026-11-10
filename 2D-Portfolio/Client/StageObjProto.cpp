@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "StageObjProto.h"
 #include "Include.h"
 
@@ -13,7 +13,7 @@ CStageObjProto::~CStageObjProto(void)
 
 HRESULT CStageObjProto::InitProtoInstance()
 {
-	// ¾ÆÁ÷ Á¤ÇØÁöÁö ¾ÊÀº ¿øÇü °´Ã¼ÀÇ ±âº» ¼³Á¤°ª(Æ²)
+	// ì•„ì§ ì •í•´ì§€ì§€ ì•Šì€ ì›í˜• ê°ì²´ì˜ ê¸°ë³¸ ì„¤ì •ê°’(í‹€)
 	OBJINFO objInfo;
 	ZeroMemory(&objInfo, sizeof(OBJINFO));
 
@@ -22,7 +22,7 @@ HRESULT CStageObjProto::InitProtoInstance()
 	objInfo.vDir = D3DXVECTOR3(0, 0, 0);
 	objInfo.vLook = D3DXVECTOR3(1, 0, 0);
 	
-	// ¿øÇü °´Ã¼¸¦ »ı¼ºÇØ¼­ »ğÀÔÇØÁÜ
+	// ì›í˜• ê°ì²´ë¥¼ ìƒì„±í•´ì„œ ì‚½ì…í•´ì¤Œ
 	m_MapProto.insert(make_pair(L"StageBack"
 		, new CStageBackGround(objInfo, OBJ_BUILDING)));
 	
@@ -86,23 +86,23 @@ HRESULT CStageObjProto::InitProtoInstance()
 	//m_MapProto.insert(make_pair(L"ItemInfoRect"
 	//	, new CUIObj(objInfo, L"ItemInfoRect", OBJ_UI)));
 	//------------------------------------------------------------//
-	// ÇÃ·¹ÀÌ¾î
+	// í”Œë ˆì´ì–´
 	m_MapProto.insert(make_pair(L"Player"
 		, new CPlayer(objInfo, L"Player", OBJ_PLAYER)));
 	
-	// µ¿·á 1
+	// ë™ë£Œ 1
 	objInfo.vPos = D3DXVECTOR3(450.f, 350.f, 0.f);
 	m_MapProto.insert(make_pair(L"Fellow_First"
 		, new CPlayer(objInfo, L"Fellow_First", OBJ_PLAYER)));
 
-	// µ¿·á 2
+	// ë™ë£Œ 2
 	objInfo.vPos = D3DXVECTOR3(350.f, 250.f, 0.f);
 	m_MapProto.insert(make_pair(L"Fellow_Second"
 		, new CPlayer(objInfo, L"Fellow_Second", OBJ_PLAYER)));
 
 
 	
-	// ½ºÅ×ÀÌÁö ÀÏ¹İ ¸÷
+	// ìŠ¤í…Œì´ì§€ ì¼ë°˜ ëª¹
 	// 1
 	m_MapProto.insert(make_pair(L"Skeleton"
 		, new CMonster(objInfo, L"Skeleton", OBJ_MONSTER)));
@@ -114,7 +114,7 @@ HRESULT CStageObjProto::InitProtoInstance()
 		, new CMonster(objInfo, L"SandRaider", OBJ_MONSTER)));
 
 
-	// ½ºÅ×ÀÌÁö º¸½º¸÷
+	// ìŠ¤í…Œì´ì§€ ë³´ìŠ¤ëª¹
 	// 1
 	m_MapProto.insert(make_pair(L"Griswold"
 		, new CMonster(objInfo, L"Griswold", OBJ_MONSTER)));

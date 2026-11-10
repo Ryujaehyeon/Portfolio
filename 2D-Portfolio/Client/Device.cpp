@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Device.h"
 
 
@@ -14,15 +14,15 @@ HRESULT CDevice::InitDevice(WINMODE Mode)
 {
 	m_p3D = Direct3DCreate9(D3D_SDK_VERSION);
 
-	// ÀåÄ¡ÀÇ ¼º´ÉÀ» Á¶»çÇÑ´Ù.
+	// ì¥ì¹˜ì˜ ì„±ëŠ¥ì„ ì¡°ì‚¬í•œë‹¤.
 	D3DCAPS9 devicecaps;
 	ZeroMemory(&devicecaps, sizeof(D3DCAPS9));
 
-	// ÀåÄ¡ ¼º´ÉÁ¶»ç
+	// ì¥ì¹˜ ì„±ëŠ¥ì¡°ì‚¬
 	if(FAILED(m_p3D->GetDeviceCaps(D3DADAPTER_DEFAULT
 		, D3DDEVTYPE_HAL, &devicecaps)))
 	{
-		ERR_MSG(g_hWnd, L"ÀåÄ¡Á¤º¸¾ò¾î¿À±â ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"ì¥ì¹˜ì •ë³´ì–»ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 	DWORD BehaviorFlag = 0;
@@ -57,11 +57,11 @@ HRESULT CDevice::InitDevice(WINMODE Mode)
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
-	// ÀåÄ¡ »ı¼º
+	// ì¥ì¹˜ ìƒì„±
 	if(FAILED(m_p3D->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL, g_hWnd, BehaviorFlag, &d3dpp, &m_pDevice)))
 	{
-		ERR_MSG(g_hWnd, L"ÀåÄ¡»ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"ì¥ì¹˜ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 

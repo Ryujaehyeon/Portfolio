@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Player.h"
 #include "Include.h"
 
@@ -24,7 +24,7 @@ HRESULT CPlayer::Initialize()
 	m_pSkillPrototype = new CSkillProto;
 	if(FAILED(m_pSkillPrototype->InitProtoInstance()))
 	{
-		ERR_MSG(g_hWnd, L"¿øÇü °´Ã¼ »ı¼º ½ÇÆĞ");
+		ERR_MSG(g_hWnd, L"ì›í˜• ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -78,7 +78,7 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.iGold = 0;
 	m_sPlayInfo.fSpeed = 150.0f;
 	//----------------------------------------------------------------------------//
-	// ±âº»ÀûÀ¸·Î Ä³¸¯ÅÍ´Â ¾Æ·¡¸¦ º¸°íÀÖ°Ô ¼³Á¤.
+	// ê¸°ë³¸ì ìœ¼ë¡œ ìºë¦­í„°ëŠ” ì•„ë˜ë¥¼ ë³´ê³ ìˆê²Œ ì„¤ì •.
 	m_vTagetInfo.z = 0;
 	m_fChaterDirect = 280.f;
 	m_bSelect = true;
@@ -95,65 +95,65 @@ HRESULT CPlayer::Initialize()
 SCENEID CPlayer::Progress()
 {
 	DebugLogClear;
-	DebugLog(L"¸¶¿ì½º : %8.3f, %8.3f \nÁÂÇ¥ : %5.1f, %5.1f \n½ºÅ©·Ñ : %5.1f, %5.1f", 
+	DebugLog(L"ë§ˆìš°ìŠ¤ : %8.3f, %8.3f \nì¢Œí‘œ : %5.1f, %5.1f \nìŠ¤í¬ë¡¤ : %5.1f, %5.1f", 
 		m_vMousePos.x, m_vMousePos.y,
 		m_Info.vPos.x, m_Info.vPos.y,
 		CUIObj::g_tScroll.x,CUIObj::g_tScroll.y);
 
-	// ½Ã°£
+	// ì‹œê°„
 	static float fTime = 0.0f;
-	// ½Ã°£°ª ´©Àû
+	// ì‹œê°„ê°’ ëˆ„ì 
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
 	StatesChange();
-	// ÀÔ·Â¹Ş´Â Å°¸¦ Ã¼Å©ÇØ »óÅÂ¸¦ º¯°æ
+	// ì…ë ¥ë°›ëŠ” í‚¤ë¥¼ ì²´í¬í•´ ìƒíƒœë¥¼ ë³€ê²½
 	CheckKey();
 
-	// °Å¸®¸¦ ±¸ÇÑ´Ù.
+	// ê±°ë¦¬ë¥¼ êµ¬í•œë‹¤.
 	float fDistance = D3DXVec3Length(&m_Info.vDir);
 
-	// º¤ÅÍ Á¤±ÔÈ­
+	// ë²¡í„° ì •ê·œí™”
 	D3DXVec3Normalize(&m_Info.vDir, &m_Info.vDir);
 	
-	// ÀÚ½ÅÀÇ À§Ä¡¿Í ¸¶¿ì½ºÀÇ À§Ä¡°¡ °°Áö ¾ÊÀ»¶§, 
-	// °°À¸¸é À§¸¦ º¸±â ‹š¹® dir°ªÀÌ 0ÀÌµÇ 90µµÀÎ À§¸¦ º¸±â¶§¹®
+	// ìì‹ ì˜ ìœ„ì¹˜ì™€ ë§ˆìš°ìŠ¤ì˜ ìœ„ì¹˜ê°€ ê°™ì§€ ì•Šì„ë•Œ, 
+	// ê°™ìœ¼ë©´ ìœ„ë¥¼ ë³´ê¸° ë–„ë¬¸ dirê°’ì´ 0ì´ë˜ 90ë„ì¸ ìœ„ë¥¼ ë³´ê¸°ë•Œë¬¸
 	if(m_Info.vPos != m_vMousePos)
-		// °¢µµ°ªÀ» ±¸ÇÑ´Ù
+		// ê°ë„ê°’ì„ êµ¬í•œë‹¤
 		m_fAngle = acosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
 
-	// ³»ÀûÀ» ±¸ÇÑ´Ù.
+	// ë‚´ì ì„ êµ¬í•œë‹¤.
 	if (m_vMousePos.y > m_Info.vPos.y)
 	{
 		m_fAngle = 2 * D3DX_PI - m_fAngle;
 	}
-	// °¢µµÀÇ ¶óµğ¾È °ªÀ» µğ±×¸®°ª(0~360)À¸·Î º¯°æ
+	// ê°ë„ì˜ ë¼ë””ì•ˆ ê°’ì„ ë””ê·¸ë¦¬ê°’(0~360)ìœ¼ë¡œ ë³€ê²½
 	m_iDegree = D3DXToDegree(m_fAngle);
 
 
 	ScrollChange();
 
-	// ÀÌµ¿°Å¸®
-	// Run ¶Ç´Â Walk »óÅÂÀÏ¶§¸¸ 
+	// ì´ë™ê±°ë¦¬
+	// Run ë˜ëŠ” Walk ìƒíƒœì¼ë•Œë§Œ 
 	if (m_pMotion == RUN)
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.008f);
 	else if (m_pMotion == WALK)
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.005f);
 
-	// ÀÚ½ÅÀÇ À§Ä¡¿¡¼­ ¸ñÇ¥ÁöÁ¡°Å¸®º¸´Ù ÀÌµ¿°Å¸®°¡ Å©¸é ÀÚ½ÅÀÇ À§Ä¡¸¦ ¸ñÇ¥ÁöÁ¡À¸·Î ÁöÁ¤
+	// ìì‹ ì˜ ìœ„ì¹˜ì—ì„œ ëª©í‘œì§€ì ê±°ë¦¬ë³´ë‹¤ ì´ë™ê±°ë¦¬ê°€ í¬ë©´ ìì‹ ì˜ ìœ„ì¹˜ë¥¼ ëª©í‘œì§€ì ìœ¼ë¡œ ì§€ì •
 	if (fDistance < 2.0f)
 		m_Info.vPos = m_vTagetInfo;
 
 	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, m_Info.vPos.z );
 
-	// Å©±â ÀÚÀü ÀÌµ¿ °øÀü ºÎ¸ğ
+	// í¬ê¸° ìì „ ì´ë™ ê³µì „ ë¶€ëª¨
 	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 
-	// Ä³¸¯ÅÍ°¡ ±×·ÁÁú ¹æÇâÀ» Á¤ÇØÁÜ
+	// ìºë¦­í„°ê°€ ê·¸ë ¤ì§ˆ ë°©í–¥ì„ ì •í•´ì¤Œ
 	DirectAction(m_pMotion);
 
-	//Ã¹¹øÂ° ÀÎÀÚ°ªÀº ÃÊ´ç ¸îÇÁ·¹ÀÓÀ» Ãâ·ÂÇÒ°ÇÁö, µÎ¹øÂ°´Â ÃÖ´ë Àå¼ö
+	//ì²«ë²ˆì§¸ ì¸ìê°’ì€ ì´ˆë‹¹ ëª‡í”„ë ˆì„ì„ ì¶œë ¥í• ê±´ì§€, ë‘ë²ˆì§¸ëŠ” ìµœëŒ€ ì¥ìˆ˜
 	FrameStatas();
 
 	return SCENEID_NONPASS;
@@ -163,7 +163,7 @@ void CPlayer::Render()
 {
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, m_pStateKey, int(m_tFrame.fStart));
-	// ÇÁ·¹ÀÓ °ªÀÌ ÀúÀåÇÑ ÀÌ¹ÌÁö º¤ÅÍÅ©±â¸¦ ¹ş¾î³­ °ªÀÌ µé¾î°¡¸é ¿¡·¯
+	// í”„ë ˆì„ ê°’ì´ ì €ì¥í•œ ì´ë¯¸ì§€ ë²¡í„°í¬ê¸°ë¥¼ ë²—ì–´ë‚œ ê°’ì´ ë“¤ì–´ê°€ë©´ ì—ëŸ¬
 
 	if(pTexInfo == NULL)
 		return;
@@ -172,7 +172,7 @@ void CPlayer::Render()
 		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
 
 	//////////////////////////////////////////////////////////////////////////
-	// ±×¸²ÀÚ
+	// ê·¸ë¦¼ì
 	if (m_pMotion != RUN)
 	{
 		const TEXINFO* pTexInfo 
@@ -222,27 +222,27 @@ void CPlayer::CheckKey()
 {
 
 
-	// ½Ã°£
+	// ì‹œê°„
 	static float fTime = 0.0f;
-	// ½Ã°£°ª ´©Àû
+	// ì‹œê°„ê°’ ëˆ„ì 
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
-	// Á¦¾îÇÒ Ä³¸¯ÅÍ ¼±ÅÃ
+	// ì œì–´í•  ìºë¦­í„° ì„ íƒ
 	CharacterSelect();
 
-	// ½ºÅ³ ´ÜÃàÅ°
+	// ìŠ¤í‚¬ ë‹¨ì¶•í‚¤
 	SkillHotKey();
 
-	// Å°º¸µå ÀÔ·Â
+	// í‚¤ë³´ë“œ ì…ë ¥
 	(*CDevice::GetInstance())->SetKey();
 
-	//rgbButtons[0, 1, 2] 0 ¿ŞÂÊ Å¬¸¯, 1 ¿À¸¥ÂÊ Å¬¸¯, 2 ÈÙ¹öÆ° »óÅÂ
+	//rgbButtons[0, 1, 2] 0 ì™¼ìª½ í´ë¦­, 1 ì˜¤ë¥¸ìª½ í´ë¦­, 2 íœ ë²„íŠ¼ ìƒíƒœ
 	//(*CDevice::GetInstance())->GetMouseState();
 
-	// ¸¶¿ì½º ÁÂÇ¥ ¹Ş¾Æ¿È
+	// ë§ˆìš°ìŠ¤ ì¢Œí‘œ ë°›ì•„ì˜´
 	m_vMousePos = MouseInfoDX();
 
-	// Å°¸Å´ÏÀú·Î Å°°ª ¹Ş¾Æ¿È
+	// í‚¤ë§¤ë‹ˆì €ë¡œ í‚¤ê°’ ë°›ì•„ì˜´
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
 
 	//if((*CDevice::GetInstance())->GetKeyBoardState(DIK_LEFTARROW)
@@ -266,12 +266,12 @@ void CPlayer::CheckKey()
 	if(/* m_dwKey & KEY_LBUTTON*/
 		(*CDevice::GetInstance())->GetMouseState()->rgbButtons[0] & 0x80 && m_bSelect == true) 
 	{	
-		// ¿ìÅ¬¸¯½Ã Å¬¸¯µÈ ÁöÁ¡À» °¡Á®¿È
+		// ìš°í´ë¦­ì‹œ í´ë¦­ëœ ì§€ì ì„ ê°€ì ¸ì˜´
 		m_vTagetInfo = m_vMousePos;
 		
-		// ¸¶¿ì½º¸¦ ¹Ù¶óº¸´Â ¹æÇâ
+		// ë§ˆìš°ìŠ¤ë¥¼ ë°”ë¼ë³´ëŠ” ë°©í–¥
 		m_Info.vDir = m_vTagetInfo - m_Info.vPos; 
-		// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¹æÇâÀ» ¸¶¿ì½º°¡ ÀÖ´Â ¹æÇâ(°¢µµ)À» ³Ö´Â´Ù 
+		// í”Œë ˆì´ì–´ ìºë¦­í„° ë°©í–¥ì„ ë§ˆìš°ìŠ¤ê°€ ìˆëŠ” ë°©í–¥(ê°ë„)ì„ ë„£ëŠ”ë‹¤ 
 		m_fChaterDirect = m_iDegree;
 	}
 	else 
@@ -280,12 +280,12 @@ void CPlayer::CheckKey()
 	}
 	if ( m_bSelect == true )
 	{
-		// Ä³¸¯ÅÍ°¡ ¿òÁ÷ÀÏ ¸ñÇ¥À§Ä¡¿¡ µµ´ŞÇß´ÂÁö
+		// ìºë¦­í„°ê°€ ì›€ì§ì¼ ëª©í‘œìœ„ì¹˜ì— ë„ë‹¬í–ˆëŠ”ì§€
 		if ( m_vTagetInfo == m_Info.vPos )
 		{
-			// µµ´ŞÇßÀ» ½Ã ¼­ÀÖ´Â »óÅÂ
+			// ë„ë‹¬í–ˆì„ ì‹œ ì„œìˆëŠ” ìƒíƒœ
 			m_pMotion = STAND;
-			// Å¬¸¯ ´©¸£°í ÀÖÀ»¶§
+			// í´ë¦­ ëˆ„ë¥´ê³  ìˆì„ë•Œ
 			if(m_dwKey & KEY_SPACE) 
 			{
 				FuncAttack();
@@ -293,36 +293,36 @@ void CPlayer::CheckKey()
 			if( (*CDevice::GetInstance())->GetMouseState()->rgbButtons[1] & 0x80
 				/* m_dwKey & KEY_RBUTTON */)
 			{
-				// ¸¶¿ì½º¸¦ ¹Ù¶óº¸´Â ¹æÇâ
+				// ë§ˆìš°ìŠ¤ë¥¼ ë°”ë¼ë³´ëŠ” ë°©í–¥
 				m_Info.vDir = m_vMousePos - m_Info.vPos;
-				// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¹æÇâÀ» ¸¶¿ì½º°¡ ÀÖ´Â ¹æÇâ(°¢µµ)À» ³Ö´Â´Ù.
+				// í”Œë ˆì´ì–´ ìºë¦­í„° ë°©í–¥ì„ ë§ˆìš°ìŠ¤ê°€ ìˆëŠ” ë°©í–¥(ê°ë„)ì„ ë„£ëŠ”ë‹¤.
 				m_fChaterDirect = m_iDegree;
 				m_vTagetInfo = m_Info.vPos;
 				SkillActive(m_SkillActiveName);
 			}
 		}
-		// ¸ñÇ¥À§Ä¡¿¡ µµ´ŞÇÏÁö ¸øÇßÀ»¶§
+		// ëª©í‘œìœ„ì¹˜ì— ë„ë‹¬í•˜ì§€ ëª»í–ˆì„ë•Œ
 		else if ( m_vTagetInfo != m_Info.vPos )
 		{
 			if((*CDevice::GetInstance())->GetMouseState()->rgbButtons[0] & 0x80
 				/*m_dwKey & KEY_LBUTTON ) */)
 			{
-				// ¸¶¿ì½º¸¦ ¹Ù¶óº¸´Â ¹æÇâ
+				// ë§ˆìš°ìŠ¤ë¥¼ ë°”ë¼ë³´ëŠ” ë°©í–¥
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
-				// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¹æÇâÀ» ¸¶¿ì½º°¡ ÀÖ´Â ¹æÇâ(°¢µµ)À» ³Ö´Â´Ù.
+				// í”Œë ˆì´ì–´ ìºë¦­í„° ë°©í–¥ì„ ë§ˆìš°ìŠ¤ê°€ ìˆëŠ” ë°©í–¥(ê°ë„)ì„ ë„£ëŠ”ë‹¤.
 				m_fChaterDirect = m_iDegree;
-				// ÃëÇÒ ¸ğ¼ÇÀÌ¹ÌÁö¸¦ ¹Ù²Ş
+				// ì·¨í•  ëª¨ì…˜ì´ë¯¸ì§€ë¥¼ ë°”ê¿ˆ
 				m_pMotion = RUN;
-				// ÀÌµ¿ Áß °ø°İ½Ã ÀÌµ¿À» ¸ØÃã
+				// ì´ë™ ì¤‘ ê³µê²©ì‹œ ì´ë™ì„ ë©ˆì¶¤
 				m_vTagetInfo = m_Info.vPos;
 
 			}
 			else if((*CDevice::GetInstance())->GetMouseState()->rgbButtons[1] & 0x80
 				/*m_dwKey & KEY_RBUTTON*/ )
 			{
-				// ¸¶¿ì½º¸¦ ¹Ù¶óº¸´Â ¹æÇâ
+				// ë§ˆìš°ìŠ¤ë¥¼ ë°”ë¼ë³´ëŠ” ë°©í–¥
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
-				// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¹æÇâÀ» ¸¶¿ì½º°¡ ÀÖ´Â ¹æÇâ(°¢µµ)À» ³Ö´Â´Ù.
+				// í”Œë ˆì´ì–´ ìºë¦­í„° ë°©í–¥ì„ ë§ˆìš°ìŠ¤ê°€ ìˆëŠ” ë°©í–¥(ê°ë„)ì„ ë„£ëŠ”ë‹¤.
 				m_fChaterDirect = m_iDegree;
 				m_vTagetInfo = m_Info.vPos;
 				SkillActive(m_SkillActiveName);
@@ -340,7 +340,7 @@ void CPlayer::CheckKey()
 	{
 		if ( m_vTagetInfo == m_Info.vPos )
 		{
-			// µµ´ŞÇßÀ» ½Ã ¼­ÀÖ´Â »óÅÂ
+			// ë„ë‹¬í–ˆì„ ì‹œ ì„œìˆëŠ” ìƒíƒœ
 			m_pMotion = STAND;
 		}
 		if ( m_vTagetInfo != m_Info.vPos )
@@ -357,34 +357,34 @@ void CPlayer::FuncAttack()
 {
 	DEBUG_ENTRY_EXIT;
 	DEBUG_LINE;
-	// ¸¶¿ì½º¸¦ ¹Ù¶óº¸´Â ¹æÇâ
+	// ë§ˆìš°ìŠ¤ë¥¼ ë°”ë¼ë³´ëŠ” ë°©í–¥
 	m_Info.vDir = m_vMousePos - m_Info.vPos; 
-	// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¹æÇâÀ» ¸¶¿ì½º°¡ ÀÖ´Â ¹æÇâ(°¢µµ)À» ³Ö´Â´Ù 
+	// í”Œë ˆì´ì–´ ìºë¦­í„° ë°©í–¥ì„ ë§ˆìš°ìŠ¤ê°€ ìˆëŠ” ë°©í–¥(ê°ë„)ì„ ë„£ëŠ”ë‹¤ 
 	m_fChaterDirect = m_iDegree;
-	// ÃëÇÒ ¸ğ¼ÇÀÌ¹ÌÁö¸¦ ¹Ù²Ş
+	// ì·¨í•  ëª¨ì…˜ì´ë¯¸ì§€ë¥¼ ë°”ê¿ˆ
 	m_pMotion = ATTACK;
 
 	list<CObj*>::iterator iter = m_pTagetList->begin();
 	for (;iter != m_pTagetList->end(); ++iter)
 	{
-		// ¸®½ºÆ® ³»¿¡ Ãæµ¹ÇÏ°í ¸¶¿ì½º°¡ ¸ó½ºÅÍ À§¿¡ ÀÖÀ»¶§
+		// ë¦¬ìŠ¤íŠ¸ ë‚´ì— ì¶©ëŒí•˜ê³  ë§ˆìš°ìŠ¤ê°€ ëª¬ìŠ¤í„° ìœ„ì— ìˆì„ë•Œ
 		if (PtInRect(&(*iter)->RealRect(), MouseInfo())
 			&& (*iter)->GetCrash() == true)
 		{
-			// ÇØ´ç ¸ó½ºÅÍÀÇ °´Ã¼¸¦ Å¸°ÙÆÃ
+			// í•´ë‹¹ ëª¬ìŠ¤í„°ì˜ ê°ì²´ë¥¼ íƒ€ê²ŸíŒ…
 			this->m_pTagetObj = (*iter);
-			// °ø°İ ¸ğ¼Ç ÇÁ·¹ÀÓÀÌ ³¡³¯¶§ µ¥¹ÌÁö°¡ Àû¿ë
+			// ê³µê²© ëª¨ì…˜ í”„ë ˆì„ì´ ëë‚ ë•Œ ë°ë¯¸ì§€ê°€ ì ìš©
 			if (m_tFrame.fStart >= PLAYER_ATTACK-0.5f)
 			{
-				// ¸ó½ºÅÍ ¹æ¾î·ÂÀÌ ÇÃ·¹ÀÌ¾î °ø°İ·Âº¸´Ù Å©¸é µ¥¹ÌÁö 1
+				// ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì´ í”Œë ˆì´ì–´ ê³µê²©ë ¥ë³´ë‹¤ í¬ë©´ ë°ë¯¸ì§€ 1
 				if((*iter)->GetStatas().fDefence >= m_sPlayInfo.fAttack)
 					(*iter)->SetStatas()->fHealthPoint -= 1;
-				// ÇÃ·¹ÀÌ¾î °ø°İ·ÂÀÌ ´õ Å©¸é ¸ó½ºÅÍ ¹æ¾î·ÂÀ» »« ³ª¸ÓÁö ¸¸Å­ÀÇ µ¥¹ÌÁö¸¸ Àû¿ë 
+				// í”Œë ˆì´ì–´ ê³µê²©ë ¥ì´ ë” í¬ë©´ ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì„ ëº€ ë‚˜ë¨¸ì§€ ë§Œí¼ì˜ ë°ë¯¸ì§€ë§Œ ì ìš© 
 				else if((*iter)->GetStatas().fDefence < m_sPlayInfo.fAttack)
 					(*iter)->SetStatas()->fHealthPoint -= 
 					m_sPlayInfo.fAttack - (*iter)->GetStatas().fDefence;
 
-				// ¸ó½ºÅÍ°¡ Á×À¸¸é Å¸°ÙÆÃ ÇØÁ¦
+				// ëª¬ìŠ¤í„°ê°€ ì£½ìœ¼ë©´ íƒ€ê²ŸíŒ… í•´ì œ
 				if ((*iter)->GetStatas().fHealthPoint <= 0)
 				{
 					this->m_pTagetObj = nullptr;
@@ -422,93 +422,93 @@ bool CPlayer::VecterInRect( D3DXVECTOR3& _Taget )
 
 void CPlayer::DirectAction( TCHAR* _pObjStatas )
 {
-	// 0808 09:00 m_pMotion¸¸ ¹Ù²Ù°í _pObjStatas¹Ù²ÙÁö ¾Ê¾Æ¼­ ¿¡·¯
+	// 0808 09:00 m_pMotionë§Œ ë°”ê¾¸ê³  _pObjStatasë°”ê¾¸ì§€ ì•Šì•„ì„œ ì—ëŸ¬
 	m_pMotion = _pObjStatas;
-	// ¼­ÀÖ±â
+	// ì„œìˆê¸°
 	if(_pObjStatas == STAND)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Stand_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Stand_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Stand_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Stand_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Stand_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Stand_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
 			m_pStateKey = L"Stand_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Stand_RU";
 		}
 	}
-	// °È±â
+	// ê±·ê¸°
 	if(_pObjStatas == WALK)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Walk_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Walk_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Walk_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Walk_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Walk_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Walk_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
 			m_pStateKey = L"Walk_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Walk_RU";
@@ -516,43 +516,43 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 	}
 	else if (_pObjStatas == RUN)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Run_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Run_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Run_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Run_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Run_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Run_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
 			m_pStateKey = L"Run_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Run_RU";
@@ -560,43 +560,43 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 	}	
 	else if (_pObjStatas == ATTACK)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Attack_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Attack_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Attack_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Attack_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Attack_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Attack_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
 			m_pStateKey = L"Attack_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Attack_RU";
@@ -604,43 +604,43 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 	}
 	else if (_pObjStatas == ATTACKSKILL)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Attack_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Attack_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Attack_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Attack_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Attack_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Attack_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
 			m_pStateKey = L"Attack_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Attack_RU";
@@ -648,43 +648,43 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 	}
 	else if (_pObjStatas == CAST)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Cast_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Cast_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Cast_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Cast_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Cast_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Cast_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
 			m_pStateKey = L"Cast_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Cast_RU";
@@ -766,23 +766,23 @@ void CPlayer::StatesChange()
 		(m_sPlayInfo.fConstitution * 100) *  
 		( 1.f + (m_sPlayInfo.fConstitution-20 * 0.05f));
 
-	// ·¹º§¾÷¿¡ ÇÊ¿äÇÑ °æÇèÄ¡ ´Ş¼º ½Ã
+	// ë ˆë²¨ì—…ì— í•„ìš”í•œ ê²½í—˜ì¹˜ ë‹¬ì„± ì‹œ
 	if (m_sPlayInfo.iLevel < 100 && 
 		m_sPlayInfo.fExp >= m_sPlayInfo.fMaxExp)
 	{
-		// ·¹º§¾÷
+		// ë ˆë²¨ì—…
 		++m_sPlayInfo.iLevel;
-		// °æÇèÄ¡
+		// ê²½í—˜ì¹˜
 		m_sPlayInfo.fExp = 0;
-		// ÇÊ¿ä°æÇèÄ¡
+		// í•„ìš”ê²½í—˜ì¹˜
 		m_sPlayInfo.fMaxExp = (m_sPlayInfo.iLevel * 20) + ((m_sPlayInfo.iLevel * 20) * 0.1); 
-		// ½ºÅ³ Æ÷ÀÎÆ®
+		// ìŠ¤í‚¬ í¬ì¸íŠ¸
 		++m_sPlayInfo.iSKillPoint;
-		// ½ºÅİ Æ÷ÀÎÆ®
+		// ìŠ¤í…Ÿ í¬ì¸íŠ¸
 		m_sPlayInfo.iStatPoint += 5;
-		// Ã¼·Â ÃÊ±âÈ­
+		// ì²´ë ¥ ì´ˆê¸°í™”
 		m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX;
-		// ¸¶·Â ÃÊ±âÈ­
+		// ë§ˆë ¥ ì´ˆê¸°í™”
 		m_sPlayInfo.fMagikaPoint = m_sPlayInfo.fMagikaPointMAX;
 	}
 }
@@ -819,7 +819,7 @@ void CPlayer::SkillActive(TCHAR* _SkillName)
 				if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 					, BONESPEAR)))
 				{
-					ERR_MSG(g_hWnd, L"BoneSpear °´Ã¼ »ı¼º ½ÇÆĞ");
+					ERR_MSG(g_hWnd, L"BoneSpear ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				}
 			}
 		}
@@ -831,7 +831,7 @@ void CPlayer::SkillActive(TCHAR* _SkillName)
 				if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 					, FIREWALL)))
 				{
-					ERR_MSG(g_hWnd, L"BoneSpear °´Ã¼ »ı¼º ½ÇÆĞ");
+					ERR_MSG(g_hWnd, L"BoneSpear ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				}
 			}
 		}
@@ -843,7 +843,7 @@ void CPlayer::SkillActive(TCHAR* _SkillName)
 				if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
 					, BLIZZARD)))
 				{
-					ERR_MSG(g_hWnd, L"BoneSpear °´Ã¼ »ı¼º ½ÇÆĞ");
+					ERR_MSG(g_hWnd, L"BoneSpear ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 				}
 			}
 		}

@@ -1,10 +1,10 @@
-
-// MFC_000View.cpp : CMFC_000View Å¬·¡½ºÀÇ ±¸Çö
+ï»¿
+// MFC_000View.cpp : CMFC_000View í´ë˜ìŠ¤ì˜ êµ¬í˜„
 //
 
 #include "stdafx.h"
-// SHARED_HANDLERS´Â ¹Ì¸® º¸±â, Ãà¼ÒÆÇ ±×¸² ¹× °Ë»ö ÇÊÅÍ Ã³¸®±â¸¦ ±¸ÇöÇÏ´Â ATL ÇÁ·ÎÁ§Æ®¿¡¼­ Á¤ÀÇÇÒ ¼ö ÀÖÀ¸¸ç
-// ÇØ´ç ÇÁ·ÎÁ§Æ®¿Í ¹®¼­ ÄÚµå¸¦ °øÀ¯ÇÏµµ·Ï ÇØ Áİ´Ï´Ù.
+// SHARED_HANDLERSëŠ” ë¯¸ë¦¬ ë³´ê¸°, ì¶•ì†ŒíŒ ê·¸ë¦¼ ë° ê²€ìƒ‰ í•„í„° ì²˜ë¦¬ê¸°ë¥¼ êµ¬í˜„í•˜ëŠ” ATL í”„ë¡œì íŠ¸ì—ì„œ ì •ì˜í•  ìˆ˜ ìˆìœ¼ë©°
+// í•´ë‹¹ í”„ë¡œì íŠ¸ì™€ ë¬¸ì„œ ì½”ë“œë¥¼ ê³µìœ í•˜ë„ë¡ í•´ ì¤ë‹ˆë‹¤.
 #ifndef SHARED_HANDLERS
 #include "MFC_000.h"
 #endif
@@ -25,7 +25,7 @@
 IMPLEMENT_DYNCREATE(CMFC_000View, CScrollView)
 
 BEGIN_MESSAGE_MAP(CMFC_000View, CScrollView)
-	// Ç¥ÁØ ÀÎ¼â ¸í·ÉÀÔ´Ï´Ù.
+	// í‘œì¤€ ì¸ì‡„ ëª…ë ¹ì…ë‹ˆë‹¤.
 	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CMFC_000View::OnFilePrintPreview)
@@ -38,11 +38,11 @@ BEGIN_MESSAGE_MAP(CMFC_000View, CScrollView)
 	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
-// CMFC_000View »ı¼º/¼Ò¸ê
+// CMFC_000View ìƒì„±/ì†Œë©¸
 
 CMFC_000View::CMFC_000View()
 {
-	// TODO: ¿©±â¿¡ »ı¼º ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ìƒì„± ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 
 }
 
@@ -52,13 +52,13 @@ CMFC_000View::~CMFC_000View()
 
 BOOL CMFC_000View::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: CREATESTRUCT cs¸¦ ¼öÁ¤ÇÏ¿© ¿©±â¿¡¼­
-	//  Window Å¬·¡½º ¶Ç´Â ½ºÅ¸ÀÏÀ» ¼öÁ¤ÇÕ´Ï´Ù.
+	// TODO: CREATESTRUCT csë¥¼ ìˆ˜ì •í•˜ì—¬ ì—¬ê¸°ì—ì„œ
+	//  Window í´ë˜ìŠ¤ ë˜ëŠ” ìŠ¤íƒ€ì¼ì„ ìˆ˜ì •í•©ë‹ˆë‹¤.
 
 	return CScrollView::PreCreateWindow(cs);
 }
 
-// CMFC_000View ±×¸®±â
+// CMFC_000View ê·¸ë¦¬ê¸°
 
 void CMFC_000View::OnDraw(CDC* /*pDC*/)
 {
@@ -67,14 +67,14 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
-	// TODO: ¿©±â¿¡ ¿ø½Ã µ¥ÀÌÅÍ¿¡ ´ëÇÑ ±×¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ì›ì‹œ ë°ì´í„°ì— ëŒ€í•œ ê·¸ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	GET_SINGLE(CDevice)->Render_Begin();
 
 	D3DXMATRIX matWorld, matScale;
 	D3DXMatrixScaling(&matScale, 0.3f, 0.3f, 0.3f);
 	const TEXINFO* pTex;
 
-	// Å¸ÀÏ
+	// íƒ€ì¼
 	for(int i = 0; i < WINSIZEY / (TILESIZEY * 0.5f) + 2; ++i)
 	{
 		for(int j = 0; j < WINSIZEX / TILESIZEX + 2; ++j)
@@ -105,7 +105,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 		}
 	}
 
-	// Å¸ÀÏ ¼±ÅÃ
+	// íƒ€ì¼ ì„ íƒ
 	for(int i = 0; i < WINSIZEY / (TILESIZEY * 0.5f) + 2; ++i)
 	{
 		for(int j = 0; j < WINSIZEX / TILESIZEX + 2; ++j)
@@ -142,7 +142,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 	int icnt = m_vecMonster.size();
 	
 
-	// ¸ó½ºÅÍ
+	// ëª¬ìŠ¤í„°
 	for(int i = 0; i < WINSIZEY / (TILESIZEY * 0.5f) + 2; ++i)
 	{
 		for(int j = 0; j < WINSIZEX / TILESIZEX + 2; ++j)
@@ -169,7 +169,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 				, m_vecMonster[idx]->vPos.y - GetScrollPos(1)
 				, m_vecMonster[idx]->vPos.z);
 
-			// °´Ã¼°¡ °¢°¢ Áö´Ï°í ÀÖ´Â ÀÚ½ÅÀÇ Å©±â·Î ÀÚ½ÅÀÇ ÀÌ¹ÌÁö Å©±â¸¦ °áÁ¤
+			// ê°ì²´ê°€ ê°ê° ì§€ë‹ˆê³  ìˆëŠ” ìì‹ ì˜ í¬ê¸°ë¡œ ìì‹ ì˜ ì´ë¯¸ì§€ í¬ê¸°ë¥¼ ê²°ì •
 			matWorld = m_vecMonster[idx]->matScale * matWorld;
 
 			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
@@ -179,7 +179,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 		}
 	}
 
-	// ¸ó½ºÅÍ ¼±ÅÃÇ¥½Ã
+	// ëª¬ìŠ¤í„° ì„ íƒí‘œì‹œ
 	for(int i = 0; i < WINSIZEY / (TILESIZEY * 0.5f) + 2; ++i)
 	{
 		for(int j = 0; j < WINSIZEX / TILESIZEX + 2; ++j)
@@ -206,7 +206,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 				, m_vecMonster[idx]->vPos.y - GetScrollPos(1)
 				, m_vecMonster[idx]->vPos.z);
 
-			// °´Ã¼°¡ °¢°¢ Áö´Ï°í ÀÖ´Â ÀÚ½ÅÀÇ Å©±â·Î ÀÚ½ÅÀÇ ÀÌ¹ÌÁö Å©±â¸¦ °áÁ¤
+			// ê°ì²´ê°€ ê°ê° ì§€ë‹ˆê³  ìˆëŠ” ìì‹ ì˜ í¬ê¸°ë¡œ ìì‹ ì˜ ì´ë¯¸ì§€ í¬ê¸°ë¥¼ ê²°ì •
 			matWorld = m_vecMonster[idx]->matScale * matWorld;
 
 			if (m_vecMonster[idx]->unitSelect == true)
@@ -232,34 +232,34 @@ void CMFC_000View::OnInitialUpdate()
 	CSize sizeTotal;
 	sizeTotal.cx = TILESIZEX * TILECNTX;
 	sizeTotal.cy = TILESIZEY * TILECNTY * 0.5f;
-	// TODO: ÀÌ ºäÀÇ ÀüÃ¼ Å©±â¸¦ °è»êÇÕ´Ï´Ù.
+	// TODO: ì´ ë·°ì˜ ì „ì²´ í¬ê¸°ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
 	SetScrollSizes(MM_TEXT, sizeTotal);
 	if(FAILED(GET_SINGLE(CDevice)->InitDevice(m_hWnd)))
 		return;
 	
-	// Å¸ÀÏ
+	// íƒ€ì¼
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Tile/Tile%03d.png", L"Tile", TEXTYPE_MULTI, 180)))
 		return;
 
 
 	//-----------------------------------------------------------------------------------------------
-	// ¸ó½ºÅÍ
+	// ëª¬ìŠ¤í„°
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Stage/Monster/Monster0%d.png", L"Monster", TEXTYPE_MULTI, 3)))
 		return;
 
-	// Å¸ÀÏ ¼±ÅÃ
+	// íƒ€ì¼ ì„ íƒ
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Select/TileSelect%d.png", L"TileSelect", TEXTYPE_MULTI, 1)))
 		return;
 
-	// ¸ó½ºÅÍ ¼±ÅÃ
+	// ëª¬ìŠ¤í„° ì„ íƒ
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
 		L"../Resource/Texture/Select/SelectObj%d.png", L"ObjSelEffect", TEXTYPE_MULTI, 1)))
 		return;
 
-	// Å¸ÀÏ ÃÊ±âÈ­
+	// íƒ€ì¼ ì´ˆê¸°í™”
 	InitTile();
 
 	m_iSelDrawID = 0;
@@ -301,14 +301,14 @@ void CMFC_000View::InitTile()
 			m_vecTile[iIdx]->byOption = 0;
 			m_vecTile[iIdx]->TileSelect = false;
 
-			// Null ·Î ÃÊ±âÈ­
+			// Null ë¡œ ì´ˆê¸°í™”
 			m_vecMonster[iIdx] = NULL;
 		}
 	}
 }
 
 
-// CMFC_000View ÀÎ¼â
+// CMFC_000View ì¸ì‡„
 
 
 void CMFC_000View::OnFilePrintPreview()
@@ -320,18 +320,18 @@ void CMFC_000View::OnFilePrintPreview()
 
 BOOL CMFC_000View::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	// ±âº»ÀûÀÎ ÁØºñ
+	// ê¸°ë³¸ì ì¸ ì¤€ë¹„
 	return DoPreparePrinting(pInfo);
 }
 
 void CMFC_000View::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: ÀÎ¼âÇÏ±â Àü¿¡ Ãß°¡ ÃÊ±âÈ­ ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì¸ì‡„í•˜ê¸° ì „ì— ì¶”ê°€ ì´ˆê¸°í™” ì‘ì—…ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
 }
 
 void CMFC_000View::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: ÀÎ¼â ÈÄ Á¤¸® ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì¸ì‡„ í›„ ì •ë¦¬ ì‘ì—…ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
 }
 
 void CMFC_000View::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -348,7 +348,7 @@ void CMFC_000View::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 }
 
 
-// CMFC_000View Áø´Ü
+// CMFC_000View ì§„ë‹¨
 
 #ifdef _DEBUG
 void CMFC_000View::AssertValid() const
@@ -361,7 +361,7 @@ void CMFC_000View::Dump(CDumpContext& dc) const
 	CScrollView::Dump(dc);
 }
 
-CMFC_000Doc* CMFC_000View::GetDocument() const // µğ¹ö±×µÇÁö ¾ÊÀº ¹öÀüÀº ÀÎ¶óÀÎÀ¸·Î ÁöÁ¤µË´Ï´Ù.
+CMFC_000Doc* CMFC_000View::GetDocument() const // ë””ë²„ê·¸ë˜ì§€ ì•Šì€ ë²„ì „ì€ ì¸ë¼ì¸ìœ¼ë¡œ ì§€ì •ë©ë‹ˆë‹¤.
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CMFC_000Doc)));
 	return (CMFC_000Doc*)m_pDocument;
@@ -369,44 +369,44 @@ CMFC_000Doc* CMFC_000View::GetDocument() const // µğ¹ö±×µÇÁö ¾ÊÀº ¹öÀüÀº ÀÎ¶óÀÎÀ
 #endif //_DEBUG
 
 
-// CMFC_000View ¸Ş½ÃÁö Ã³¸®±â
+// CMFC_000View ë©”ì‹œì§€ ì²˜ë¦¬ê¸°
 
 
 void CMFC_000View::OnLButtonDown(UINT nFlags
 	, CPoint point)
 {
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
-	// ¸ó½ºÅÍ ¹× Å¸ÀÏ »ı¼º(¿øÅ¬¸¯), »èÁ¦(´Ù½Ã Å¬¸¯)
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
+	// ëª¬ìŠ¤í„° ë° íƒ€ì¼ ìƒì„±(ì›í´ë¦­), ì‚­ì œ(ë‹¤ì‹œ í´ë¦­)
 	D3DXVECTOR2 vMousePoint 
 		= D3DXVECTOR2(point.x + GetScrollPos(0)
 		, point.y + GetScrollPos(1));
 	int iSize = m_vecTile.size();
 	for(int i = 0; i < iSize; ++i)
 	{
-		// Ãæµ¹ Ã¼Å©, ¸¶¿ì½º°¡ Å¬¸¯ÇÑ ÁöÁ¡ÀÇ Å¸ÀÏÀ» Ã¼Å©
+		// ì¶©ëŒ ì²´í¬, ë§ˆìš°ìŠ¤ê°€ í´ë¦­í•œ ì§€ì ì˜ íƒ€ì¼ì„ ì²´í¬
 		if(CollisionMouseToTile(vMousePoint,
 			m_vecTile[i]))
 		{
-			// Å¸ÀÏ ÆäÀÌÁö°¡ È°¼ºÈ­ µÇ¾îÀÖ´Â °æ¿ì
+			// íƒ€ì¼ í˜ì´ì§€ê°€ í™œì„±í™” ë˜ì–´ìˆëŠ” ê²½ìš°
 			if (m_iCurrentID == 0)
 			{
 				if (m_vecTile[i] != NULL)
 				{
-					// Å¸ÀÏ°ú ¹Ù²Ü Å¸ÀÏÀÇ ÀÎµ¦½º°¡ °°Áö ¾ÊÀ¸¸é 
+					// íƒ€ì¼ê³¼ ë°”ê¿€ íƒ€ì¼ì˜ ì¸ë±ìŠ¤ê°€ ê°™ì§€ ì•Šìœ¼ë©´ 
 					if(m_vecTile[i]->byDrawID != m_iSelDrawID)
 					{
-						// ÆäÀÌÁö ÄŞº¸¿¡¼­ ¼±ÅÃµÈ Å¸ÀÏÀÇ ÀÎµ¦½º¸¦ °¡Á®¿È
+						// í˜ì´ì§€ ì½¤ë³´ì—ì„œ ì„ íƒëœ íƒ€ì¼ì˜ ì¸ë±ìŠ¤ë¥¼ ê°€ì ¸ì˜´
 						m_vecTile[i]->byDrawID = m_iSelDrawID;
 					}
 					else
 					{
-						// Å¸ÀÏ°ú ¹Ù²Ü Å¸ÀÏÀÇ ÀÎµ¦½º°¡ °°À¸¸é
-						// Å¸ÀÏ ¼±ÅÃ½Ã ¹İÀü(true->false·Î false->true·Î ¹Ù²ãÁÜ)
+						// íƒ€ì¼ê³¼ ë°”ê¿€ íƒ€ì¼ì˜ ì¸ë±ìŠ¤ê°€ ê°™ìœ¼ë©´
+						// íƒ€ì¼ ì„ íƒì‹œ ë°˜ì „(true->falseë¡œ false->trueë¡œ ë°”ê¿”ì¤Œ)
 						m_vecTile[i]->TileSelect = !m_vecTile[i]->TileSelect;
 					}
 				}
 
-				// ÀÌµ¿ ºÒ°¡ ¿µ¿ª Å¸ÀÏ
+				// ì´ë™ ë¶ˆê°€ ì˜ì—­ íƒ€ì¼
 				if (m_iSelDrawID >= 18 && m_iSelDrawID <= 22)
 					m_vecTile[i]->byOption |= TILE_OPTION_DONT_MOVE;
 				else
@@ -416,15 +416,15 @@ void CMFC_000View::OnLButtonDown(UINT nFlags
 				}
 
 			}
-			// ¸ó½ºÅÍ ÆäÀÌÁö°¡ È°¼ºÈ­ µÇ¾îÀÖ´Â °æ¿ì
+			// ëª¬ìŠ¤í„° í˜ì´ì§€ê°€ í™œì„±í™” ë˜ì–´ìˆëŠ” ê²½ìš°
 			else if (m_iCurrentID == 1)
 			{
-				// ¸ó½ºÅÍ°¡ ÀÖÀ¸¸é ¼±ÅÃ
+				// ëª¬ìŠ¤í„°ê°€ ìˆìœ¼ë©´ ì„ íƒ
 				if (m_vecMonster[i] != NULL)
 				{
 					m_vecMonster[i]->unitSelect = !m_vecMonster[i]->unitSelect;
 				}
-				// ¸ó½ºÅÍ°¡ ¾øÀ¸¸é »ı¼º
+				// ëª¬ìŠ¤í„°ê°€ ì—†ìœ¼ë©´ ìƒì„±
 				else if (m_vecMonster[i] == NULL)
 				{
 					SAFE_DELETE<OBJINFO>(&m_vecMonster[i]);
@@ -495,7 +495,7 @@ void CMFC_000View::OnDestroy()
 {
 	CScrollView::OnDestroy();
 
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	GET_SINGLE(CTextureMgr)->DestroyInstance();
 	GET_SINGLE(CDevice)->DestroyInstance();
 	
@@ -519,7 +519,7 @@ void CMFC_000View::OnDestroy()
 
 void CMFC_000View::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
 
 	CScrollView::OnLButtonDblClk(nFlags, point);
 }
@@ -527,13 +527,13 @@ void CMFC_000View::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 void CMFC_000View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
 	D3DXVECTOR2 vMousePoint 
 		= D3DXVECTOR2(m_MousePoint.x + GetScrollPos(0)
 		, m_MousePoint.y + GetScrollPos(1));
 	int iSize = m_vecTile.size();
 
-	// ¸ó½ºÅÍ ÆäÀÌÁö°¡ È°¼ºÈ­ µÇ¾îÀÖ´Â °æ¿ì
+	// ëª¬ìŠ¤í„° í˜ì´ì§€ê°€ í™œì„±í™” ë˜ì–´ìˆëŠ” ê²½ìš°
 	if(m_iCurrentID == 1 )
 	{
 		switch(nChar)
@@ -542,7 +542,7 @@ void CMFC_000View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			{
 				for(int i = 0; i < iSize; ++i)
 				{
-					// ¸ó½ºÅÍ°¡ ÀÖÀ¸¸é »èÁ¦
+					// ëª¬ìŠ¤í„°ê°€ ìˆìœ¼ë©´ ì‚­ì œ
 					if (m_vecMonster[i] != NULL && m_vecMonster[i]->unitSelect == true)
 					{
 						delete m_vecMonster[i];
@@ -561,7 +561,7 @@ void CMFC_000View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CMFC_000View::OnMouseMove(UINT nFlags, CPoint point)
 {
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
 	m_MousePoint = point;
 	CScrollView::OnMouseMove(nFlags, point);
 }

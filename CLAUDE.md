@@ -45,8 +45,10 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 
 ## 코드 관례
 
-- **인코딩: 소스는 CP949(EUC-KR)**, BOM 없음. 한글 주석이 있으므로 UTF-8 로 변환해 저장하지 않는다.
-  읽을 때는 `iconv -f cp949 -t utf-8`, 수정 시에도 CP949 를 유지한다. 줄바꿈은 `.gitattributes`(`* text=auto`)에 맡긴다.
+- **인코딩: C/C++ 소스는 UTF-8 BOM**(`.editorconfig`). 새 파일도 BOM 을 붙인다 — BOM 이 없으면 MSVC 가
+  시스템 코드 페이지(한국어 Windows 는 CP949)로 읽어 한글 리터럴이 깨진다. `/utf-8` 옵션은 쓰지 않는다.
+  예외: `.rc`·`.rc2`·`MFC_000/resource.h` 는 UTF-16 LE, `MFC_000/MFC_000.reg` 는 CP949(regedit 호환) — 그대로 둔다.
+  경위는 `intent/source-utf8/`. 줄바꿈은 `.gitattributes`(`* text=auto`)에 맡긴다.
 - 네이밍: 클래스 `C` 접두(`CPlayer`, `CSceneMgr`), 멤버 `m_` + 헝가리안(`m_pObjKey`, `m_fAngle`, `m_bRun`, `m_iDegree`),
   인자 `_` 접두(`_ObjName`), 전역 `g_`(`g_hWnd`, `CObj::g_tScroll`), 상수 대문자(`WINSIZEX`), enum 값 `타입_값`(`SCENEID_LOGO`, `WINMODE_WIN`).
 - 문자열: `TCHAR*`/`wstring`, 리터럴은 `L"..."` (CharacterSet=Unicode).

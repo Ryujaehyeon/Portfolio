@@ -1,0 +1,5 @@
+root = true
+
+# C/C++ 소스는 UTF-8 BOM. BOM 이 있어야 MSVC 가 시스템 로케일과 무관하게 UTF-8 로 읽는다.
+[*.{c,cpp,h,hpp,inl}]
+charset = utf-8-bom

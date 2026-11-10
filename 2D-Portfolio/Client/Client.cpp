@@ -1,4 +1,4 @@
-// Client.cpp : ���� ���α׷��� ���� �������� �����մϴ�.
+﻿// Client.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 //
 
 #include "stdafx.h"
@@ -9,13 +9,13 @@
 
 #define MAX_LOADSTRING 100
 
-// ���� ����:
-HINSTANCE hInst;								// ���� �ν��Ͻ��Դϴ�.
-TCHAR szTitle[MAX_LOADSTRING];					// ���� ǥ���� �ؽ�Ʈ�Դϴ�.
-TCHAR szWindowClass[MAX_LOADSTRING];			// �⺻ â Ŭ���� �̸��Դϴ�.
+// 전역 변수:
+HINSTANCE hInst;								// 현재 인스턴스입니다.
+TCHAR szTitle[MAX_LOADSTRING];					// 제목 표시줄 텍스트입니다.
+TCHAR szWindowClass[MAX_LOADSTRING];			// 기본 창 클래스 이름입니다.
 HWND g_hWnd;
 
-// �� �ڵ� ��⿡ ��� �ִ� �Լ��� ������ �����Դϴ�.
+// 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -29,30 +29,30 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
- 	// TODO: ���⿡ �ڵ带 �Է��մϴ�.
+ 	// TODO: 여기에 코드를 입력합니다.
 	MSG msg;
 	HACCEL hAccelTable;
 	CMainGame MainGame;
 	static SCENEID iScene;
 	srand(time(0));
-	// ���� ���ڿ��� �ʱ�ȭ�մϴ�.
+	// 전역 문자열을 초기화합니다.
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
 	MyRegisterClass(hInstance);
 
-	// ���� ���α׷� �ʱ�ȭ�� �����մϴ�.
+	// 응용 프로그램 초기화를 수행합니다.
 	if (!InitInstance (hInstance, nCmdShow))
 	{
 		return FALSE;
 	}
 
-	// ȭ�� ��� ��ȯ
+	// 화면 모드 전환
 	ModeSetter Setter;
 	Setter->SetMode(g_hWnd, 800, 600);
 	Setter->ModeChange(WINDOW_WINMODE);
 
 
-	// ����
+	// 사운드
 	GameSound Sound;
 
 	CREATE_DEBUG_CONSOLE;
@@ -75,7 +75,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			}
 			else
 			{
-				// MainGame ����
+				// MainGame 시작
 				iScene = MainGame.Progress();
 				MainGame.Render();
 				
@@ -93,17 +93,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 
 //
-//  �Լ�: MyRegisterClass()
+//  함수: MyRegisterClass()
 //
-//  ����: â Ŭ������ ����մϴ�.
+//  목적: 창 클래스를 등록합니다.
 //
-//  ����:
+//  설명:
 //
-//    Windows 95���� �߰��� 'RegisterClassEx' �Լ����� ����
-//    �ش� �ڵ尡 Win32 �ý��۰� ȣȯ�ǵ���
-//    �Ϸ��� ��쿡�� �� �Լ��� ����մϴ�. �� �Լ��� ȣ���ؾ�
-//    �ش� ���� ���α׷��� �����
-//    '�ùٸ� ������' ���� �������� ������ �� �ֽ��ϴ�.
+//    Windows 95에서 추가된 'RegisterClassEx' 함수보다 먼저
+//    해당 코드가 Win32 시스템과 호환되도록
+//    하려는 경우에만 이 함수를 사용합니다. 이 함수를 호출해야
+//    해당 응용 프로그램에 연결된
+//    '올바른 형식의' 작은 아이콘을 가져올 수 있습니다.
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
@@ -127,21 +127,21 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 }
 
 //
-//   �Լ�: InitInstance(HINSTANCE, int)
+//   함수: InitInstance(HINSTANCE, int)
 //
-//   ����: �ν��Ͻ� �ڵ��� �����ϰ� �� â�� ����ϴ�.
+//   목적: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
 //
-//   ����:
+//   설명:
 //
-//        �� �Լ��� ���� �ν��Ͻ� �ڵ��� ���� ������ �����ϰ�
-//        �� ���α׷� â�� ���� ���� ǥ���մϴ�.
+//        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
+//        주 프로그램 창을 만든 다음 표시합니다.
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    HWND hWnd;
    RECT rc = {0, 0, WINSIZEX, WINSIZEY};
 
-   hInst = hInstance; // �ν��Ͻ� �ڵ��� ���� ������ �����մϴ�.
+   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
@@ -160,13 +160,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 }
 
 //
-//  �Լ�: WndProc(HWND, UINT, WPARAM, LPARAM)
+//  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
-//  ����: �� â�� �޽����� ó���մϴ�.
+//  목적: 주 창의 메시지를 처리합니다.
 //
-//  WM_COMMAND	- ���� ���α׷� �޴��� ó���մϴ�.
-//  WM_PAINT	- �� â�� �׸��ϴ�.
-//  WM_DESTROY	- ���� �޽����� �Խ��ϰ� ��ȯ�մϴ�.
+//  WM_COMMAND	- 응용 프로그램 메뉴를 처리합니다.
+//  WM_PAINT	- 주 창을 그립니다.
+//  WM_DESTROY	- 종료 메시지를 게시하고 반환합니다.
 //
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -188,7 +188,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
-		// �޴� ������ ���� �м��մϴ�.
+		// 메뉴 선택을 구문 분석합니다.
 		switch (wmId)
 		{
 		case IDM_ABOUT:
@@ -203,7 +203,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		// TODO: ���⿡ �׸��� �ڵ带 �߰��մϴ�.
+		// TODO: 여기에 그리기 코드를 추가합니다.
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_GETMINMAXINFO:
@@ -227,7 +227,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-// ���� ��ȭ ������ �޽��� ó�����Դϴ�.
+// 정보 대화 상자의 메시지 처리기입니다.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(lParam);

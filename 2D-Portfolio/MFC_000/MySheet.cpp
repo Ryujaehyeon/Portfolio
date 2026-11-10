@@ -1,4 +1,4 @@
-// MySheet.cpp : ±¸Çö ÆÄÀÏÀÔ´Ï´Ù.
+ï»¿// MySheet.cpp : êµ¬í˜„ íŒŒì¼ì…ë‹ˆë‹¤.
 //
 
 #include "stdafx.h"
@@ -24,9 +24,9 @@ MySheet::MySheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
 
 MySheet::MySheet()
 {
-	AddPage(&m_Page3); // ¸ó½ºÅÍ
-	AddPage(&m_Page1); // Å¸ÀÏ
-	AddPage(&m_Page2); // ½Ã½ºÅÛ
+	AddPage(&m_Page3); // ëª¬ìŠ¤í„°
+	AddPage(&m_Page1); // íƒ€ì¼
+	AddPage(&m_Page2); // ì‹œìŠ¤í…œ
 }
 
 MySheet::~MySheet()
@@ -38,4 +38,4 @@ BEGIN_MESSAGE_MAP(MySheet, CPropertySheet)
 END_MESSAGE_MAP()
 
 
-// MySheet ¸Ş½ÃÁö Ã³¸®±âÀÔ´Ï´Ù.
+// MySheet ë©”ì‹œì§€ ì²˜ë¦¬ê¸°ì…ë‹ˆë‹¤.

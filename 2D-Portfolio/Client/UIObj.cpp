@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UIObj.h"
 #include "Include.h"
 
@@ -180,9 +180,9 @@ HRESULT CUIObj::Initialize()
 
 SCENEID CUIObj::Progress()
 {
-	// ½Ã°£
+	// ì‹œê°„
 	static float fTime = 0.0f;
-	// ½Ã°£°ª ´©Àû
+	// ì‹œê°„ê°’ ëˆ„ì 
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 	
 	CheckKey();
@@ -278,8 +278,8 @@ SCENEID CUIObj::Progress()
 
 void CUIObj::Render()
 {
-	// ÅØ½ºÃÄ¸Å´ÏÀú¸¦ ÅëÇØ ÅØ½ºÃÄ¸¦ °¡Á®¿Â´Ù.
-	// ÀÌ¹Ì Initialize¿¡¼­ Á¤ÇØÁø ¿ÀºêÁ§Æ®ÀÇ ÀÌ¸§À¸·Î ±¸ÇØ¿Â´Ù.
+	// í…ìŠ¤ì³ë§¤ë‹ˆì €ë¥¼ í†µí•´ í…ìŠ¤ì³ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+	// ì´ë¯¸ Initializeì—ì„œ ì •í•´ì§„ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ìœ¼ë¡œ êµ¬í•´ì˜¨ë‹¤.
 	D3DXVECTOR3 Mouse = MouseInfoDX();
 
 	for (list<CObj*>::iterator iter = m_PlayerData->begin();
@@ -310,18 +310,18 @@ void CUIObj::Render()
 			= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, NULL, 1);
 	}
 
-	// ¾øÀ¸¸é ½ÇÆÐÇÏ¿© ¸®ÅÏ
+	// ì—†ìœ¼ë©´ ì‹¤íŒ¨í•˜ì—¬ ë¦¬í„´
 	if(pTexInfo == NULL)
 		return;
 
-	// Ãâ·ÂÃ¢¿¡¼­ ÇØ´ç ÇÔ¼ö¸¦ °ÅÃÆ´ÂÁö È®ÀÎ °¡´É
+	// ì¶œë ¥ì°½ì—ì„œ í•´ë‹¹ í•¨ìˆ˜ë¥¼ ê±°ì³¤ëŠ”ì§€ í™•ì¸ ê°€ëŠ¥
 	// DEBUG_ENTRY_EXIT;
-	// ÇØ´ç ¶óÀÎÀ» Áö³µ´ÂÁö
+	// í•´ë‹¹ ë¼ì¸ì„ ì§€ë‚¬ëŠ”ì§€
 	// DEBUG_LINE;
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 
-	//// &GetRect() ±×¸®´Â ÀÌ¹ÌÁöÀÇ ÁÂÇ¥
+	//// &GetRect() ê·¸ë¦¬ëŠ” ì´ë¯¸ì§€ì˜ ì¢Œí‘œ
 
 	if(m_pObjKey == L"HP" ||m_pObjKey == L"MP" )
 	{
@@ -387,7 +387,7 @@ void CUIObj::Render()
 	{
 		if(m_InvenKey == true)
 		{
-			// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+			// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
@@ -399,7 +399,7 @@ void CUIObj::Render()
 	{
 		if(m_SkillTree == true)
 		{
-			// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+			// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
@@ -411,7 +411,7 @@ void CUIObj::Render()
 	{
 		if(m_Bank == true)
 		{
-			// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+			// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
@@ -425,7 +425,7 @@ void CUIObj::Render()
 			pTexInfo->ImgInfo.Height * 0.5f, 0);
 		if(m_Character == true)
 		{
-			// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+			// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
@@ -436,7 +436,7 @@ void CUIObj::Render()
 	{
 		if(m_SkillTree == true)
 		{
-			// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+			// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
@@ -450,7 +450,7 @@ void CUIObj::Render()
 	{
 		if(m_SkillTree == true)
 		{
-			// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+			// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
@@ -464,7 +464,7 @@ void CUIObj::Render()
 	{
 		if(m_SkillTree == true)
 		{
-			// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+			// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
@@ -476,7 +476,7 @@ void CUIObj::Render()
 	}
 	else
 	{
-		// ÀÌ¹ÌÁöÀÇ Å©±â¸¦ ¹ÝÀ¸·Î ÇÏ¿© Áß¾Ó°ªÀ» ÀúÀåÇÑ´Ù.
+		// ì´ë¯¸ì§€ì˜ í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ í•˜ì—¬ ì¤‘ì•™ê°’ì„ ì €ìž¥í•œë‹¤.
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * 0.5f, 0);
 
@@ -537,13 +537,13 @@ float CUIObj::VelueToPercentage(TCHAR* VelueName)
 
 void CUIObj::CheckKey()
 {
-	// ½Ã°£
+	// ì‹œê°„
 	static float fTimeButton = 0.0f;
 
-	// ½Ã°£°ª ´©Àû
+	// ì‹œê°„ê°’ ëˆ„ì 
 	fTimeButton += GET_SINGLE(CTimeMgr)->DeltaTime();
 
-	// Å°¸Å´ÏÀú
+	// í‚¤ë§¤ë‹ˆì €
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
 
 	if ( m_dwKey & KEY_I && fTimeButton > 3.f)
@@ -699,7 +699,7 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 			if((*iter)->GetSelect() == true)
 			{
 				{
-					// ·¹º§
+					// ë ˆë²¨
 					int temp = 0;
 					int temp2 = 0;
 					temp = ((CPlayer*)(*iter))->GetStatas().iLevel % 10;
@@ -728,7 +728,7 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 					}
 				}
 				{
-					// ½ºÅÝ Æ÷ÀÎÆ®
+					// ìŠ¤í…Ÿ í¬ì¸íŠ¸
 					int temp = 0;
 					int temp2 = 0;
 					temp = ((CPlayer*)(*iter))->GetStatas().iStatPoint % 10;
@@ -757,7 +757,7 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 					}
 				}
 				{
-					//½ºÅ³Æ÷ÀÎÆ®
+					//ìŠ¤í‚¬í¬ì¸íŠ¸
 					int temp = 0;
 					int temp2 = 0;
 					temp = ((CPlayer*)(*iter))->GetStatas().iSKillPoint % 10;

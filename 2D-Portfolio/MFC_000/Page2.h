@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 
 
-// CPage2 ´ëÈ­ »óÀÚÀÔ´Ï´Ù.
+// CPage2 ëŒ€í™” ìƒìì…ë‹ˆë‹¤.
 
 class CPage2 : public CPropertyPage
 {
@@ -11,11 +11,11 @@ public:
 	CPage2();
 	virtual ~CPage2();
 
-// ´ëÈ­ »óÀÚ µ¥ÀÌÅÍÀÔ´Ï´Ù.
+// ëŒ€í™” ìƒì ë°ì´í„°ì…ë‹ˆë‹¤.
 	enum { IDD = IDD_PAGE2 };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Áö¿øÀÔ´Ï´Ù.
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ì§€ì›ì…ë‹ˆë‹¤.
 
 	DECLARE_MESSAGE_MAP()
 public:

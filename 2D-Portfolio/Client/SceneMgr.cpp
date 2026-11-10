@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "SceneMgr.h"
 #include "Include.h"
 
@@ -13,7 +13,7 @@ CSceneMgr::~CSceneMgr(void)
 
 HRESULT CSceneMgr::InitScene(SCENEID ID)
 {
-	// Logo¿¡¼­ ¹ŞÀº ¾ÀID¸¦ ÇØ´ç ¾ÀÀ¸·Î ¹Ù²Ş(»ı¼º ¹× ÃÊ±âÈ­) 
+	// Logoì—ì„œ ë°›ì€ ì”¬IDë¥¼ í•´ë‹¹ ì”¬ìœ¼ë¡œ ë°”ê¿ˆ(ìƒì„± ë° ì´ˆê¸°í™”) 
 	SAFE_DELETE<CSceneObj>(&m_pSceneObj);
 	switch(ID)
 	{

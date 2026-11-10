@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "BoneSpear.h"
 #include "Include.h"
 
@@ -62,7 +62,7 @@ HRESULT CBoneSpear::Initialize()
 
 
 	m_vMousePos = D3DXVECTOR3(0.f, 0.f, 0.f);
-	// ¸¶¿ì½º¸¦ ¹Ù¶óº¸´Â ¹æÇâ
+	// ë§ˆìš°ìŠ¤ë¥¼ ë°”ë¼ë³´ëŠ” ë°©í–¥
 	m_dwKey = 0;
 	return S_OK;
 }
@@ -73,7 +73,7 @@ SCENEID CBoneSpear::Progress()
 
 	if(m_dwKey & KEY_RBUTTON && m_fTime == 0)
 		m_vMousePos = MouseInfoDX();
-	// ½Ã°£
+	// ì‹œê°„
 	m_fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
 	if(m_sPlayInfo.fHealthPoint <= 0)
@@ -92,27 +92,27 @@ SCENEID CBoneSpear::Progress()
 
 	m_vTagetInfo = m_vMousePos;
 
-	// ¹æÇâÀ» ¸¶¿ì½º°¡ ÀÖ´Â ¹æÇâÀ¸·Î ³Ö´Â´Ù.
+	// ë°©í–¥ì„ ë§ˆìš°ìŠ¤ê°€ ìžˆëŠ” ë°©í–¥ìœ¼ë¡œ ë„£ëŠ”ë‹¤.
 	m_Info.vDir = m_vTagetInfo - m_Info.vPos;
 
-	// °Å¸®¸¦ ±¸ÇÑ´Ù.
+	// ê±°ë¦¬ë¥¼ êµ¬í•œë‹¤.
 	float fDistance = D3DXVec3Length(&m_Info.vDir);
 
-	// º¤ÅÍ Á¤±ÔÈ­
+	// ë²¡í„° ì •ê·œí™”
 	D3DXVec3Normalize(&m_Info.vDir, &m_Info.vDir);
 
-	// ÀÚ½ÅÀÇ À§Ä¡¿Í ¸¶¿ì½ºÀÇ À§Ä¡°¡ °°Áö ¾ÊÀ»¶§, 
-	// °°À¸¸é À§¸¦ º¸±â ‹š¹® dir°ªÀÌ 0ÀÌµÇ 90µµÀÎ À§¸¦ º¸±â¶§¹®
+	// ìžì‹ ì˜ ìœ„ì¹˜ì™€ ë§ˆìš°ìŠ¤ì˜ ìœ„ì¹˜ê°€ ê°™ì§€ ì•Šì„ë•Œ, 
+	// ê°™ìœ¼ë©´ ìœ„ë¥¼ ë³´ê¸° ë–„ë¬¸ dirê°’ì´ 0ì´ë˜ 90ë„ì¸ ìœ„ë¥¼ ë³´ê¸°ë•Œë¬¸
 	if(m_Info.vPos != m_vTagetInfo)
-		// °¢µµ°ªÀ» ±¸ÇÑ´Ù
+		// ê°ë„ê°’ì„ êµ¬í•œë‹¤
 		m_fAngle = acosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
 
-	// ³»ÀûÀ» ±¸ÇÑ´Ù.
+	// ë‚´ì ì„ êµ¬í•œë‹¤.
 	if (m_vTagetInfo.y > m_Info.vPos.y)
 	{
 		m_fAngle = 2 * D3DX_PI - m_fAngle;
 	}
-	// °¢µµÀÇ ¶óµð¾È °ªÀ» µð±×¸®°ª(0~360)À¸·Î º¯°æ
+	// ê°ë„ì˜ ë¼ë””ì•ˆ ê°’ì„ ë””ê·¸ë¦¬ê°’(0~360)ìœ¼ë¡œ ë³€ê²½
 	m_iDegree = D3DXToDegree(m_fAngle);
 	m_fChaterDirect = m_iDegree;
 
@@ -128,7 +128,7 @@ SCENEID CBoneSpear::Progress()
 
 	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, m_Info.vPos.z );
 	
-	// Å©±â ÀÚÀü ÀÌµ¿ °øÀü ºÎ¸ð
+	// í¬ê¸° ìžì „ ì´ë™ ê³µì „ ë¶€ëª¨
 	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 
 	DirectAction(m_pMotion);
@@ -141,7 +141,7 @@ void CBoneSpear::Render()
 {
 	const TEXINFO* pTexInfo 	// first key == SKILL  // second key == m_pStateKey
 		= GET_SINGLE(CTextureMgr)->GetTexture(SKILL, m_pStateKey, int(m_tFrame.fStart));
-	// ÇÁ·¹ÀÓ °ªÀÌ ÀúÀåÇÑ ÀÌ¹ÌÁö º¤ÅÍÅ©±â¸¦ ¹þ¾î³­ °ªÀÌ µé¾î°¡¸é ¿¡·¯
+	// í”„ë ˆìž„ ê°’ì´ ì €ìž¥í•œ ì´ë¯¸ì§€ ë²¡í„°í¬ê¸°ë¥¼ ë²—ì–´ë‚œ ê°’ì´ ë“¤ì–´ê°€ë©´ ì—ëŸ¬
 
 	if(pTexInfo == NULL)
 		return;
@@ -173,48 +173,48 @@ CObj* CBoneSpear::Clone()
 
 void CBoneSpear::DirectAction( TCHAR* _pObjStatas )
 {
-	// 0808 09:00 m_pMotion¸¸ ¹Ù²Ù°í _pObjStatas¹Ù²ÙÁö ¾Ê¾Æ¼­ ¿¡·¯
+	// 0808 09:00 m_pMotionë§Œ ë°”ê¾¸ê³  _pObjStatasë°”ê¾¸ì§€ ì•Šì•„ì„œ ì—ëŸ¬
 	m_pMotion = _pObjStatas;
-	// ¼­ÀÖ±â
+	// ì„œìžˆê¸°
 	if(_pObjStatas == L"BoneSpear")
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ëž˜ RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"BoneSpear_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ëž˜ D
 		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"BoneSpear_D";
 		}
-		// ¿ÞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ëž˜ LD
 		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"BoneSpear_LD";
 		}
-		// ¿ÞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"BoneSpear_L";
 		}
-		// ¿ÞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"BoneSpear_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"BoneSpear_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
 			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
 		{			
 			m_pStateKey = L"BoneSpear_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"BoneSpear_RU";

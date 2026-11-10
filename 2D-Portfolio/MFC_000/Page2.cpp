@@ -1,4 +1,4 @@
-// Page2.cpp : ���� �����Դϴ�.
+﻿// Page2.cpp : 구현 파일입니다.
 //
 
 #include "stdafx.h"
@@ -8,7 +8,7 @@
 #include "MainFrm.h"
 #include "MFC_000View.h"
 
-// CPage2 ��ȭ �����Դϴ�.
+// CPage2 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(CPage2, CPropertyPage)
 
@@ -36,12 +36,12 @@ BEGIN_MESSAGE_MAP(CPage2, CPropertyPage)
 END_MESSAGE_MAP()
 
 
-// CPage2 �޽��� ó�����Դϴ�.
+// CPage2 메시지 처리기입니다.
 
 
 void CPage2::OnBnClickedButton1()
 {
-	// Ÿ�� �����ϱ�
+	// 타일 저장하기
 	CFileDialog Dlg(FALSE, L"dat", L"*.dat"
 		, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
 		, L"*.dat", this);
@@ -69,7 +69,7 @@ void CPage2::OnBnClickedButton1()
 
 void CPage2::OnBnClickedButton2()
 {
-	// Ÿ�� �ҷ�����
+	// 타일 불러오기
 	CFileDialog Dlg(TRUE, L"dat", L"*.dat"
 		, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
 		, L"*.dat", this);
@@ -117,8 +117,8 @@ void CPage2::OnBnClickedButton2()
 
 void CPage2::OnBnClickedButton3()
 {
-	// TODO: ���⿡ ��Ʈ�� �˸� ó���� �ڵ带 �߰��մϴ�.
-	// ���� �����ϱ�
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// 몬스터 저장하기
 	CFileDialog Dlg(FALSE, L"dat", L"*.dat"
 		, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
 		, L"*.dat", this);
@@ -148,8 +148,8 @@ void CPage2::OnBnClickedButton3()
 
 void CPage2::OnBnClickedButton4()
 {
-	// TODO: ���⿡ ��Ʈ�� �˸� ó���� �ڵ带 �߰��մϴ�.
-	// ���� �ҷ�����
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// 몬스터 불러오기
 	CFileDialog Dlg(TRUE, L"dat", L"*.dat"
 		, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
 		, L"*.dat", this);

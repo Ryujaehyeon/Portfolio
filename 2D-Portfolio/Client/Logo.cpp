@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Logo.h"
 #include "Include.h"
 
@@ -12,11 +12,11 @@ CLogo::~CLogo(void)
 
 HRESULT CLogo::Initialize()
 {
-	// ·Î°í ÆäÀÌÁö¿¡¼­ ·Î°í¿¡ ÇÊ¿äÇÑ °´Ã¼ÀÇ ¿øÇüÀ» °¡Á®¿Â´Ù.
+	// ë¡œê³  íŽ˜ì´ì§€ì—ì„œ ë¡œê³ ì— í•„ìš”í•œ ê°ì²´ì˜ ì›í˜•ì„ ê°€ì ¸ì˜¨ë‹¤.
 	m_pPrototype = new CLogoObjProto;
 	if(FAILED(m_pPrototype->InitProtoInstance()))
 	{
-		ERR_MSG(g_hWnd, L"¿øÇü °´Ã¼ »ý¼º ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ì›í˜• ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -24,14 +24,14 @@ HRESULT CLogo::Initialize()
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Back")))
 	{
-		ERR_MSG(g_hWnd, L"°´Ã¼ »ý¼º ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
 	if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pPrototype
 		, L"Ball")))
 	{
-		ERR_MSG(g_hWnd, L"°´Ã¼ »ý¼º ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -39,7 +39,7 @@ HRESULT CLogo::Initialize()
 		L"../Resource/Texture/Logo/LogoBack.png"
 		, L"Back", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"ÅØ½ºÃÄ ÀÐ¾î¿À±â ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -47,7 +47,7 @@ HRESULT CLogo::Initialize()
 		L"../Resource/Texture/Logo/Ball.png"
 		, L"Ball", TEXTYPE_SINGLE)))
 	{
-		ERR_MSG(g_hWnd, L"ÅØ½ºÃÄ ÀÐ¾î¿À±â ½ÇÆÐ");
+		ERR_MSG(g_hWnd, L"í…ìŠ¤ì³ ì½ì–´ì˜¤ê¸° ì‹¤íŒ¨");
 		return E_FAIL;
 	}
 
@@ -58,13 +58,13 @@ SCENEID CLogo::Progress()
 {
 	//int iScene = GET_SINGLE(CObjMgr)->Progress();
 
-	//// ¾ÀID°¡ NONPASS°¡ ¾Æ´Ï¸é ¾À¸Å´ÏÁ®¿¡¼­ ÇØ´çIDÀÇ ¾ÀÀ» »ý¼º ¹× ÃÊ±âÈ­
+	//// ì”¬IDê°€ NONPASSê°€ ì•„ë‹ˆë©´ ì”¬ë§¤ë‹ˆì ¸ì—ì„œ í•´ë‹¹IDì˜ ì”¬ì„ ìƒì„± ë° ì´ˆê¸°í™”
 	//if(iScene > -1)
 	//	GET_SINGLE(CSceneMgr)->InitScene((SCENEID)iScene);
 	
 	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
 	
-	// ¾ÀID°¡ NONPASS°¡ ¾Æ´Ï¸é ¾À¸Å´ÏÁ®¿¡¼­ ÇØ´çIDÀÇ ¾ÀÀ» »ý¼º ¹× ÃÊ±âÈ­
+	// ì”¬IDê°€ NONPASSê°€ ì•„ë‹ˆë©´ ì”¬ë§¤ë‹ˆì ¸ì—ì„œ í•´ë‹¹IDì˜ ì”¬ì„ ìƒì„± ë° ì´ˆê¸°í™”
 	if(iScene > SCENEID_NONPASS)
 		GET_SINGLE(CSceneMgr)->InitScene(iScene);
 

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Monster.h"
 #include "Include.h"
 
@@ -46,7 +46,7 @@ HRESULT CMonster::Initialize()
 	m_sPlayInfo.iGold = 0;
 	m_sPlayInfo.fSpeed = (100.0f) + (m_sPlayInfo.fDexterity * 3.0f);
 
-	// ±âº»ÀûÀ¸·Î Ä³¸¯ÅÍ´Â ¾Æ·¡¸¦ º¸°íÀÖ°Ô ¼³Á¤.
+	// ê¸°ë³¸ì ìœ¼ë¡œ ìºë¦­í„°ëŠ” ì•„ë˜ë¥¼ ë³´ê³ ìˆê²Œ ì„¤ì •.
 	m_iDegree = 280.f;
 	m_bSelect = true;
 	m_eLayer = LAYER_OBJECT;
@@ -62,9 +62,9 @@ HRESULT CMonster::Initialize()
 SCENEID CMonster::Progress()
 {
 	
-	// ½Ã°£
+	// ì‹œê°„
 	static float fTime = 0.0f;
-	// ½Ã°£°ª ´©Àû
+	// ì‹œê°„ê°’ ëˆ„ì 
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 	
 	//m_Info.vPos = m_Info.vPos + CObj::g_tScroll;
@@ -73,51 +73,51 @@ SCENEID CMonster::Progress()
 
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
 
-	// ÀÔ·Â¹Ş´Â Å°¸¦ Ã¼Å©ÇØ »óÅÂ¸¦ º¯°æ
+	// ì…ë ¥ë°›ëŠ” í‚¤ë¥¼ ì²´í¬í•´ ìƒíƒœë¥¼ ë³€ê²½
 	CheckKey();
 
-	// °Å¸®¸¦ ±¸ÇÑ´Ù.
+	// ê±°ë¦¬ë¥¼ êµ¬í•œë‹¤.
 	float fDistance = D3DXVec3Length(&m_Info.vDir);
 
-	// º¤ÅÍ Á¤±ÔÈ­
+	// ë²¡í„° ì •ê·œí™”
 	D3DXVec3Normalize(&m_Info.vDir, &m_Info.vDir);
 
-	// ÀÌµ¿ÇÒ À§Ä¡¿Í ÀÚ½ÅÀÇ À§Ä¡°¡ °°À¸¸é °¢µµ¸¦ ±¸ÇÏÁö ¾ÊÀ½
-	// ±¸ÇÏ°Ô µÇ¸é À§¸¦ º¸°Å³ª ¾Æ·¡¸¦ º¸°Ô ¸¸µë
+	// ì´ë™í•  ìœ„ì¹˜ì™€ ìì‹ ì˜ ìœ„ì¹˜ê°€ ê°™ìœ¼ë©´ ê°ë„ë¥¼ êµ¬í•˜ì§€ ì•ŠìŒ
+	// êµ¬í•˜ê²Œ ë˜ë©´ ìœ„ë¥¼ ë³´ê±°ë‚˜ ì•„ë˜ë¥¼ ë³´ê²Œ ë§Œë“¬
 	if (m_vTagetInfo != m_Info.vPos)
-		// °¢µµ°ªÀ» ±¸ÇÑ´Ù
+		// ê°ë„ê°’ì„ êµ¬í•œë‹¤
 		m_fAngle = acosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
 
-	// ³»ÀûÀ» ±¸ÇÑ´Ù.
+	// ë‚´ì ì„ êµ¬í•œë‹¤.
 	if (m_vTagetInfo.y > m_Info.vPos.y)
 	{
 		m_fAngle = 2 * D3DX_PI - m_fAngle;
 	}
-	// °¢µµÀÇ ¶óµğ¾È °ªÀ» µğ±×¸®°ª(0~360)À¸·Î º¯°æ
+	// ê°ë„ì˜ ë¼ë””ì•ˆ ê°’ì„ ë””ê·¸ë¦¬ê°’(0~360)ìœ¼ë¡œ ë³€ê²½
 	m_iDegree = D3DXToDegree(m_fAngle);
 
-	// ÀÌµ¿ ¹æÇâÀÌ Á¤ÇØÁö¸é °¢µµ¸¦ ³ÖÀ½
+	// ì´ë™ ë°©í–¥ì´ ì •í•´ì§€ë©´ ê°ë„ë¥¼ ë„£ìŒ
 	m_fChaterDirect = m_iDegree;
 
-	// ÀÌµ¿°Å¸®
+	// ì´ë™ê±°ë¦¬
 	if ( m_pMotion == RUN && m_pMotion != CAST)
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.001f);
 
-	// ÀÚ½ÅÀÇ À§Ä¡¿¡¼­ ¸ñÇ¥ÁöÁ¡°Å¸®º¸´Ù ÀÌµ¿°Å¸®°¡ Å©¸é ÀÚ½ÅÀÇ À§Ä¡¸¦ ¸ñÇ¥ÁöÁ¡À¸·Î ÁöÁ¤
+	// ìì‹ ì˜ ìœ„ì¹˜ì—ì„œ ëª©í‘œì§€ì ê±°ë¦¬ë³´ë‹¤ ì´ë™ê±°ë¦¬ê°€ í¬ë©´ ìì‹ ì˜ ìœ„ì¹˜ë¥¼ ëª©í‘œì§€ì ìœ¼ë¡œ ì§€ì •
 	if (fDistance < 1.0f && m_pMotion != DEATH)
 		m_Info.vPos = m_vTagetInfo;
 
 	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, 0.f);
 
-	// Å©±â ÀÚÀü ÀÌµ¿ °øÀü ºÎ¸ğ
+	// í¬ê¸° ìì „ ì´ë™ ê³µì „ ë¶€ëª¨
 	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 
 	DirectAction(m_pMotion);
 
-	//Ã¹¹øÂ° ÀÎÀÚ°ªÀº ÃÊ´ç ¸îÇÁ·¹ÀÓÀ» Ãâ·ÂÇÒ°ÇÁö, µÎ¹øÂ°´Â ÃÖ´ë Àå¼ö
+	//ì²«ë²ˆì§¸ ì¸ìê°’ì€ ì´ˆë‹¹ ëª‡í”„ë ˆì„ì„ ì¶œë ¥í• ê±´ì§€, ë‘ë²ˆì§¸ëŠ” ìµœëŒ€ ì¥ìˆ˜
 	FrameStatas();
 
-	// ÇÃ·¹ÀÌ¾î¿¡°Ô Á×À»¶§ °æÇèÄ¡¸¦ ÁÜ
+	// í”Œë ˆì´ì–´ì—ê²Œ ì£½ì„ë•Œ ê²½í—˜ì¹˜ë¥¼ ì¤Œ
 	ExpAcquired();
 
 	return SCENEID_NONPASS;
@@ -127,13 +127,13 @@ void CMonster::Render()
 {
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, m_pStateKey, int(m_tFrame.fStart));
-	// ÇÁ·¹ÀÓ °ªÀÌ ÀúÀåÇÑ ÀÌ¹ÌÁö º¤ÅÍÅ©±â¸¦ ¹ş¾î³­ °ªÀÌ µé¾î°¡¸é ¿¡·¯
+	// í”„ë ˆì„ ê°’ì´ ì €ì¥í•œ ì´ë¯¸ì§€ ë²¡í„°í¬ê¸°ë¥¼ ë²—ì–´ë‚œ ê°’ì´ ë“¤ì–´ê°€ë©´ ì—ëŸ¬
 
 	if(pTexInfo == NULL)
 		return;
 	
 	//////////////////////////////////////////////////////////////////////////
-	// ±×¸²ÀÚ
+	// ê·¸ë¦¼ì
 	if (m_pMotion != RUN)
 	{
 		const TEXINFO* pTexInfo 
@@ -166,7 +166,7 @@ void CMonster::Render()
 	}
 	//////////////////////////////////////////////////////////////////////////
 
-	// º»Ã¼ 
+	// ë³¸ì²´ 
 	{
 		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
 			(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
@@ -212,30 +212,30 @@ void CMonster::Render()
 }
 void CMonster::CheckKey()
 {
-	// Á¦¾îÇÒ Ä³¸¯ÅÍ ¼±ÅÃ
+	// ì œì–´í•  ìºë¦­í„° ì„ íƒ
 	static float fTime = 0.0f;
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
-	// Á¦¾îÇÒ Ä³¸¯ÅÍ ¼±ÅÃ
+	// ì œì–´í•  ìºë¦­í„° ì„ íƒ
 	static float fTimeSkill = 0.0f;
 	fTimeSkill += GET_SINGLE(CTimeMgr)->DeltaTime();
 
-	// ¼­ÀÖÀ»¶§ ¸îÃÊÈÄ °È°ÔÇÒÁö
+	// ì„œìˆì„ë•Œ ëª‡ì´ˆí›„ ê±·ê²Œí• ì§€
 	
 	m_fWaitTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
-	// ÀÌµ¿ÇÒ °Å¸®
+	// ì´ë™í•  ê±°ë¦¬
 	float moveLength = rand()%100+1;
-	// ¸îÃÊ¿¡ ÇÑ¹ø ÀÌµ¿ÇÒÁö
+	// ëª‡ì´ˆì— í•œë²ˆ ì´ë™í• ì§€
 	
 	//
 	if(m_sPlayInfo.fHealthPoint <= 0)
 	{
 
-		// ºÁ¾ßÇÒ ÀûÀ» Å¸°ÙÀ¸·Î Àâ°í
+		// ë´ì•¼í•  ì ì„ íƒ€ê²Ÿìœ¼ë¡œ ì¡ê³ 
 		Tageting();
 
-		// ¹Ù¶óº¸´Â ¹æÇâ
+		// ë°”ë¼ë³´ëŠ” ë°©í–¥
 		if(m_pTagetObj != NULL)
 			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 
@@ -243,16 +243,16 @@ void CMonster::CheckKey()
 		
 		return;
 	}
-	// 3ÃÊ¿¡ ÇÑ¹ø ¹æÇâ°ú ÀÌµ¿À» Á¤ÇÔ, Ãæµ¹ÇÏÁö ¾Ê¾ÒÀ»¶§
+	// 3ì´ˆì— í•œë²ˆ ë°©í–¥ê³¼ ì´ë™ì„ ì •í•¨, ì¶©ëŒí•˜ì§€ ì•Šì•˜ì„ë•Œ
 	if(m_Crash == false)
 	{
-		// ¼­±â
+		// ì„œê¸°
 		if( m_pMotion == STAND) 
 		{	
-			// ÀÌµ¿ÇÒ ÁöÁ¡À» °¡Á®¿È
+			// ì´ë™í•  ì§€ì ì„ ê°€ì ¸ì˜´
 			m_vTagetInfo = m_vMovePoint;
 
-			// ÀÌµ¿ÇÒ ÁöÁ¡À» ¹Ù¶óº¸´Â ¹æÇâ
+			// ì´ë™í•  ì§€ì ì„ ë°”ë¼ë³´ëŠ” ë°©í–¥
 			m_Info.vDir = m_vTagetInfo - m_Info.vPos;
 
 			if (m_fWaitTime > 3.f)
@@ -266,7 +266,7 @@ void CMonster::CheckKey()
 				m_iDir = rand()%8;
 				switch(m_iDir)
 				{
-					//  ¹æÇâÀ» Á¤ÇÔ
+					//  ë°©í–¥ì„ ì •í•¨
 				case 0:
 					// RD
 					m_vMovePoint = D3DXVECTOR3(m_Info.vPos.x + moveLength, m_Info.vPos.y + moveLength, 0);
@@ -302,18 +302,18 @@ void CMonster::CheckKey()
 				}
 			}
 		}
-		// °È±â
+		// ê±·ê¸°
 		if( m_pMotion == RUN )
 		{
 			m_vTagetInfo = m_vMovePoint;
 			m_Info.vDir = m_vTagetInfo - m_Info.vPos;
 			if ( m_vTagetInfo == m_Info.vPos )
 			{
-				// µµ´ŞÇßÀ» ½Ã ¼­ÀÖ´Â »óÅÂ
+				// ë„ë‹¬í–ˆì„ ì‹œ ì„œìˆëŠ” ìƒíƒœ
 				m_pMotion = STAND;
 			}
 		}
-		// °ø°İÁß
+		// ê³µê²©ì¤‘
 		if (m_pMotion == ATTACK)
 		{
 			m_pMotion = STAND;
@@ -321,11 +321,11 @@ void CMonster::CheckKey()
 	}
 	else if( m_Crash == true )
 	{
-		// Ãæµ¹ÇßÀ»¶§
+		// ì¶©ëŒí–ˆì„ë•Œ
 		if(int(m_sPlayInfo.fHealthPoint) <= 0)
 			m_pMotion = DEATH;
 		
-		// ¹Ù¶óº¸´Â ¹æÇâ
+		// ë°”ë¼ë³´ëŠ” ë°©í–¥
 		//m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 		Tageting();
 		float fDistance = (m_pTagetObj->Setinfo()->fCX * 0.5f) +
@@ -335,14 +335,14 @@ void CMonster::CheckKey()
 
 		if (m_pObjName == SUMMONER)
 		{
-			// °Å¸®°¡ ±âº»°ø°İ »ç°Å¸®º¸´Ù ¸Ö°í 3¹èÀÇ °Å¸®º¸´Ù °¡±î¿ì¸é ½ºÅ³»ç¿ë
+			// ê±°ë¦¬ê°€ ê¸°ë³¸ê³µê²© ì‚¬ê±°ë¦¬ë³´ë‹¤ ë©€ê³  3ë°°ì˜ ê±°ë¦¬ë³´ë‹¤ ê°€ê¹Œìš°ë©´ ìŠ¤í‚¬ì‚¬ìš©
 			if(fDistance * 1.2f < fRealDistance && fDistance * 5.f > fRealDistance && m_pMotion != DEATH)
 			{
 					fTimeSkill = 0.f;
 					m_pMotion = CAST;
 					MonSKill();
 			}
-			// °Å¸®°¡ ±âº»°ø°İ »ç°Å¸®º¸´Ù °¡±î¿ì¸é
+			// ê±°ë¦¬ê°€ ê¸°ë³¸ê³µê²© ì‚¬ê±°ë¦¬ë³´ë‹¤ ê°€ê¹Œìš°ë©´
 			else if (fDistance * 1.2f > fRealDistance)
 			{
 				m_pMotion = ATTACK;
@@ -350,11 +350,11 @@ void CMonster::CheckKey()
 			}
 			else if(fDistance * 5.0f < fRealDistance)
 			{
-				// ±âº»°ø°İ »ç°Å¸®ÀÎ Ãæµ¹°Å¸®º¸´Ù ¸Ö¸é ÂÑ¾Æ°£´Ù.
+				// ê¸°ë³¸ê³µê²© ì‚¬ê±°ë¦¬ì¸ ì¶©ëŒê±°ë¦¬ë³´ë‹¤ ë©€ë©´ ì«“ì•„ê°„ë‹¤.
 				m_pMotion = RUN;
 			}
 		}
-		// °Å¸®¿¡ µû¶ó ´Ù¸¥ °´Ã¼¿Í Ãæµ¹ÇßÀ» ¶§ °ø°İ(ÀÚ½ÅÀÇ Å©±âº¸´Ù 1.2¹è´Â °ø°İ »ç°Å¸®)
+		// ê±°ë¦¬ì— ë”°ë¼ ë‹¤ë¥¸ ê°ì²´ì™€ ì¶©ëŒí–ˆì„ ë•Œ ê³µê²©(ìì‹ ì˜ í¬ê¸°ë³´ë‹¤ 1.2ë°°ëŠ” ê³µê²© ì‚¬ê±°ë¦¬)
 		else if(fDistance * 1.2f > fRealDistance && m_pMotion != DEATH)
 		{
 			m_pMotion = ATTACK;
@@ -362,14 +362,14 @@ void CMonster::CheckKey()
 		}
 		else if(fDistance < fRealDistance)
 		{
-			// ±âº»°ø°İ »ç°Å¸®ÀÎ Ãæµ¹°Å¸®º¸´Ù ¸Ö¸é ÂÑ¾Æ°£´Ù.
+			// ê¸°ë³¸ê³µê²© ì‚¬ê±°ë¦¬ì¸ ì¶©ëŒê±°ë¦¬ë³´ë‹¤ ë©€ë©´ ì«“ì•„ê°„ë‹¤.
 			m_pMotion = RUN;
 		}
 		
 
 		if(fDistance * 5.f < fRealDistance)
 		{
-			// Ãæµ¹°Å¸®ÀÇ 5¹èÀÇ °Å¸®º¸´Ù Å©¸é Ãæµ¹»óÅÂ¸¦ Ç¬´Ù
+			// ì¶©ëŒê±°ë¦¬ì˜ 5ë°°ì˜ ê±°ë¦¬ë³´ë‹¤ í¬ë©´ ì¶©ëŒìƒíƒœë¥¼ í‘¼ë‹¤
 			if(int(m_tFrame.fStart) < 0.f )
 				m_pMotion = STAND;
 			m_Crash = false;
@@ -377,7 +377,7 @@ void CMonster::CheckKey()
 		}
 		if(m_pMotion == RUN && m_fWaitTime > 5.f)
 		{
-			// ÂÑ¾Æ°¡´Â »óÅÂ¿¡¼­ 5ÃÊ ÀÌ»ó Áö³ª¸é Ãæµ¹»óÅÂ¸¦ Ç¬´Ù
+			// ì«“ì•„ê°€ëŠ” ìƒíƒœì—ì„œ 5ì´ˆ ì´ìƒ ì§€ë‚˜ë©´ ì¶©ëŒìƒíƒœë¥¼ í‘¼ë‹¤
 			m_fWaitTime = 0.f;
 			if(int(m_tFrame.fStart) < 0.f )
 				m_pMotion = STAND;
@@ -399,28 +399,28 @@ void CMonster::MonSKill()
 	list<CObj*>::iterator iter = m_pTagetList->begin();
 	for (;iter != m_pTagetList->end(); ++iter)
 	{
-		// ¸®½ºÆ® ³»¿¡ Ãæµ¹ÇÑ ³à¼®ÀÌ ÀÖÀ»¶§
+		// ë¦¬ìŠ¤íŠ¸ ë‚´ì— ì¶©ëŒí•œ ë…€ì„ì´ ìˆì„ë•Œ
 		if ((*iter)->GetCrash() == true)
 		{
-			// ÇØ´ç °´Ã¼¸¦ Å¸°ÙÆÃ
+			// í•´ë‹¹ ê°ì²´ë¥¼ íƒ€ê²ŸíŒ…
 			m_pTagetObj = (*iter);
 			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 
-			// Å¸°ÙÀ» º¸°í °ø°İÇÏ°Ô ¹æÇâÀ» Á¤ÇØÁÜ
+			// íƒ€ê²Ÿì„ ë³´ê³  ê³µê²©í•˜ê²Œ ë°©í–¥ì„ ì •í•´ì¤Œ
 			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
 
-			// °ø°İ ¸ğ¼Ç ÇÁ·¹ÀÓÀÌ ³¡³¯¶§ µ¥¹ÌÁö°¡ Àû¿ë
+			// ê³µê²© ëª¨ì…˜ í”„ë ˆì„ì´ ëë‚ ë•Œ ë°ë¯¸ì§€ê°€ ì ìš©
 			if (m_tFrame.fStart <= 0.f)
 			{
-				// ¸ó½ºÅÍ ¹æ¾î·ÂÀÌ ÇÃ·¹ÀÌ¾î °ø°İ·Âº¸´Ù Å©¸é µ¥¹ÌÁö 1
+				// ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì´ í”Œë ˆì´ì–´ ê³µê²©ë ¥ë³´ë‹¤ í¬ë©´ ë°ë¯¸ì§€ 1
 				if((*iter)->GetStatas().fDefence >= m_sPlayInfo.fAttack)
 					(*iter)->SetStatas()->fHealthPoint -= 1;
-				// ÇÃ·¹ÀÌ¾î °ø°İ·ÂÀÌ ´õ Å©¸é ¸ó½ºÅÍ ¹æ¾î·ÂÀ» »« ³ª¸ÓÁö ¸¸Å­ÀÇ µ¥¹ÌÁö¸¸ Àû¿ë 
+				// í”Œë ˆì´ì–´ ê³µê²©ë ¥ì´ ë” í¬ë©´ ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì„ ëº€ ë‚˜ë¨¸ì§€ ë§Œí¼ì˜ ë°ë¯¸ì§€ë§Œ ì ìš© 
 				else if((*iter)->GetStatas().fDefence < m_sPlayInfo.fAttack)
 					(*iter)->SetStatas()->fHealthPoint -= 
 					m_sPlayInfo.fAttack*1.5f - (*iter)->GetStatas().fDefence;
 
-				// ´ë»óÀÌ Á×À¸¸é Å¸°ÙÆÃ ÇØÁ¦
+				// ëŒ€ìƒì´ ì£½ìœ¼ë©´ íƒ€ê²ŸíŒ… í•´ì œ
 				if ((*iter)->GetStatas().fHealthPoint <= 0)
 				{
 					m_pTagetObj = nullptr;
@@ -437,28 +437,28 @@ void CMonster::FuncAttack()
 	list<CObj*>::iterator iter = m_pTagetList->begin();
 	for (;iter != m_pTagetList->end(); ++iter)
 	{
-		// ¸®½ºÆ® ³»¿¡ Ãæµ¹ÇÑ ³à¼®ÀÌ ÀÖÀ»¶§
+		// ë¦¬ìŠ¤íŠ¸ ë‚´ì— ì¶©ëŒí•œ ë…€ì„ì´ ìˆì„ë•Œ
 		if ((*iter)->GetCrash() == true)
 		{
-			// ÇØ´ç ¸ó½ºÅÍÀÇ °´Ã¼¸¦ Å¸°ÙÆÃ
+			// í•´ë‹¹ ëª¬ìŠ¤í„°ì˜ ê°ì²´ë¥¼ íƒ€ê²ŸíŒ…
 			m_pTagetObj = (*iter);
 			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 
-			// Å¸°ÙÀ» º¸°í °ø°İÇÏ°Ô ¹æÇâÀ» Á¤ÇØÁÜ
+			// íƒ€ê²Ÿì„ ë³´ê³  ê³µê²©í•˜ê²Œ ë°©í–¥ì„ ì •í•´ì¤Œ
 			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
 
-			// °ø°İ ¸ğ¼Ç ÇÁ·¹ÀÓÀÌ ³¡³¯¶§ µ¥¹ÌÁö°¡ Àû¿ë
+			// ê³µê²© ëª¨ì…˜ í”„ë ˆì„ì´ ëë‚ ë•Œ ë°ë¯¸ì§€ê°€ ì ìš©
 			if (m_tFrame.fStart <= 0.f)
 			{
-				// ¸ó½ºÅÍ ¹æ¾î·ÂÀÌ ÇÃ·¹ÀÌ¾î °ø°İ·Âº¸´Ù Å©¸é µ¥¹ÌÁö 1
+				// ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì´ í”Œë ˆì´ì–´ ê³µê²©ë ¥ë³´ë‹¤ í¬ë©´ ë°ë¯¸ì§€ 1
 				if((*iter)->GetStatas().fDefence >= m_sPlayInfo.fAttack)
 					(*iter)->SetStatas()->fHealthPoint -= 1;
-				// ÇÃ·¹ÀÌ¾î °ø°İ·ÂÀÌ ´õ Å©¸é ¸ó½ºÅÍ ¹æ¾î·ÂÀ» »« ³ª¸ÓÁö ¸¸Å­ÀÇ µ¥¹ÌÁö¸¸ Àû¿ë 
+				// í”Œë ˆì´ì–´ ê³µê²©ë ¥ì´ ë” í¬ë©´ ëª¬ìŠ¤í„° ë°©ì–´ë ¥ì„ ëº€ ë‚˜ë¨¸ì§€ ë§Œí¼ì˜ ë°ë¯¸ì§€ë§Œ ì ìš© 
 				else if((*iter)->GetStatas().fDefence < m_sPlayInfo.fAttack)
 					(*iter)->SetStatas()->fHealthPoint -= 
 					m_sPlayInfo.fAttack - (*iter)->GetStatas().fDefence;
 
-				// ´ë»óÀÌ Á×À¸¸é Å¸°ÙÆÃ ÇØÁ¦
+				// ëŒ€ìƒì´ ì£½ìœ¼ë©´ íƒ€ê²ŸíŒ… í•´ì œ
 				if ((*iter)->GetStatas().fHealthPoint <= 0)
 				{
 					m_pTagetObj = nullptr;
@@ -538,43 +538,43 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	m_pMotion = _pObjStatas;
 	if(_pObjStatas == STAND)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
 		{
 			m_pStateKey = L"Stand_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect >= 247.5f && m_fChaterDirect <= 292.5f)
 		{
 			m_pStateKey = L"Stand_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect >= 202.5f && m_fChaterDirect <= 247.5f)
 		{
 			m_pStateKey = L"Stand_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect >= 157.5f && m_fChaterDirect <= 202.5f)
 		{
 			m_pStateKey = L"Stand_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect >= 112.5f && m_fChaterDirect <= 157.5f)
 		{
 			m_pStateKey = L"Stand_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect >= 67.5f && m_fChaterDirect <= 112.5f)
 		{
 			m_pStateKey = L"Stand_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect >= 0 &&  m_fChaterDirect <= 22.5f
 			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Stand_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
 		{
 			m_pStateKey = L"Stand_RU";
@@ -582,43 +582,43 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	}
 	else if (_pObjStatas == RUN)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
 		{
 			m_pStateKey = L"Run_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect >= 247.5f && m_fChaterDirect <= 292.5f)
 		{
 			m_pStateKey = L"Run_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect >= 202.5f && m_fChaterDirect <= 247.5f)
 		{
 			m_pStateKey = L"Run_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect >= 157.5f && m_fChaterDirect <= 202.5f)
 		{
 			m_pStateKey = L"Run_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect >= 112.5f && m_fChaterDirect <= 157.5f)
 		{
 			m_pStateKey = L"Run_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect >= 67.5f && m_fChaterDirect <= 112.5f)
 		{
 			m_pStateKey = L"Run_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect >= 0 &&  m_fChaterDirect <= 22.5f
 			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Run_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
 		{
 			m_pStateKey = L"Run_RU";
@@ -626,43 +626,43 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	}	
 	else if (_pObjStatas == ATTACK)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
 		{
 			m_pStateKey = L"Attack_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect >= 247.5f && m_fChaterDirect <= 292.5f)
 		{
 			m_pStateKey = L"Attack_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect >= 202.5f && m_fChaterDirect <= 247.5f)
 		{
 			m_pStateKey = L"Attack_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect >= 157.5f && m_fChaterDirect <= 202.5f)
 		{
 			m_pStateKey = L"Attack_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect >= 112.5f && m_fChaterDirect <= 157.5f)
 		{
 			m_pStateKey = L"Attack_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect >= 67.5f && m_fChaterDirect <= 112.5f)
 		{
 			m_pStateKey = L"Attack_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect >= 0 &&  m_fChaterDirect <= 22.5f
 			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Attack_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
 		{
 			m_pStateKey = L"Attack_RU";
@@ -670,43 +670,43 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	}
 	else if (_pObjStatas == ATTACKSKILL)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
 		{
 			m_pStateKey = L"Attack_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect >= 247.5f && m_fChaterDirect <= 292.5f)
 		{
 			m_pStateKey = L"Attack_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect >= 202.5f && m_fChaterDirect <= 247.5f)
 		{
 			m_pStateKey = L"Attack_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect >= 157.5f && m_fChaterDirect <= 202.5f)
 		{
 			m_pStateKey = L"Attack_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect >= 112.5f && m_fChaterDirect <= 157.5f)
 		{
 			m_pStateKey = L"Attack_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect >= 67.5f && m_fChaterDirect <= 112.5f)
 		{
 			m_pStateKey = L"Attack_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect >= 0 &&  m_fChaterDirect <= 22.5f
 			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Attack_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
 		{
 			m_pStateKey = L"Attack_RU";
@@ -714,42 +714,42 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	}
 	else if (_pObjStatas == DEATH)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		{
 			m_pStateKey = L"Death_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect >= 247.5f && m_fChaterDirect <= 292.5f)
 		{
 			m_pStateKey = L"Death_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect >= 202.5f && m_fChaterDirect <= 247.5f)
 		{
 			m_pStateKey = L"Death_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect >= 157.5f && m_fChaterDirect <= 202.5f)
 		{
 			m_pStateKey = L"Death_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect >= 112.5f && m_fChaterDirect <= 157.5f)
 		{
 			m_pStateKey = L"Death_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect >= 67.5f && m_fChaterDirect <= 112.5f)
 		{
 			m_pStateKey = L"Death_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect >= 0 &&  m_fChaterDirect <= 22.5f
 			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Death_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
 		{
 			m_pStateKey = L"Death_RU";
@@ -757,42 +757,42 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 	}
 	else if (_pObjStatas == CAST)
 	{
-		// ¿À¸¥ÂÊ ¾Æ·¡ RD
+		// ì˜¤ë¥¸ìª½ ì•„ë˜ RD
 		{
 			m_pStateKey = L"Cast_RD";
 		}
-		// ¾Æ·¡ D
+		// ì•„ë˜ D
 		if (m_fChaterDirect >= 247.5f && m_fChaterDirect <= 292.5f)
 		{
 			m_pStateKey = L"Cast_D";
 		}
-		// ¿ŞÂÊ ¾Æ·¡ LD
+		// ì™¼ìª½ ì•„ë˜ LD
 		if (m_fChaterDirect >= 202.5f && m_fChaterDirect <= 247.5f)
 		{
 			m_pStateKey = L"Cast_LD";
 		}
-		// ¿ŞÂÊ L
+		// ì™¼ìª½ L
 		if (m_fChaterDirect >= 157.5f && m_fChaterDirect <= 202.5f)
 		{
 			m_pStateKey = L"Cast_L";
 		}
-		// ¿ŞÂÊ À§ LU
+		// ì™¼ìª½ ìœ„ LU
 		if (m_fChaterDirect >= 112.5f && m_fChaterDirect <= 157.5f)
 		{
 			m_pStateKey = L"Cast_LU";
 		}
-		// À§ U
+		// ìœ„ U
 		if (m_fChaterDirect >= 67.5f && m_fChaterDirect <= 112.5f)
 		{
 			m_pStateKey = L"Cast_U";
 		}
-		// ¿À¸¥ÂÊ R
+		// ì˜¤ë¥¸ìª½ R
 		if (m_fChaterDirect >= 0 &&  m_fChaterDirect <= 22.5f
 			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Cast_R";
 		}
-		// ¿À¸¥ÂÊ À§ RU
+		// ì˜¤ë¥¸ìª½ ìœ„ RU
 		if (m_fChaterDirect >= 22.5f && m_fChaterDirect <= 67.5f)
 		{
 			m_pStateKey = L"Cast_RU";
@@ -803,18 +803,18 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 
 void CMonster::Tageting()
 {
-	// ºÁ¾ßÇÒ ÀûÀ» Å¸°ÙÀ¸·Î Àâ°í
+	// ë´ì•¼í•  ì ì„ íƒ€ê²Ÿìœ¼ë¡œ ì¡ê³ 
 	list<CObj*>::iterator iter = m_pTagetList->begin();
 	for (;iter != m_pTagetList->end(); ++iter)
 	{
-		// ¸®½ºÆ® ³»¿¡ Ãæµ¹ÇÏ°í ¸¶¿ì½º°¡ ¸ó½ºÅÍ À§¿¡ ÀÖÀ»¶§
+		// ë¦¬ìŠ¤íŠ¸ ë‚´ì— ì¶©ëŒí•˜ê³  ë§ˆìš°ìŠ¤ê°€ ëª¬ìŠ¤í„° ìœ„ì— ìˆì„ë•Œ
 		if ((*iter)->GetCrash() == true)
 		{
-			// ÇØ´ç ¸ó½ºÅÍÀÇ °´Ã¼¸¦ Å¸°ÙÆÃ
+			// í•´ë‹¹ ëª¬ìŠ¤í„°ì˜ ê°ì²´ë¥¼ íƒ€ê²ŸíŒ…
 			m_pTagetObj = (*iter);
 			m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 
-			// Å¸°ÙÀ» º¸°í °ø°İÇÏ°Ô ¹æÇâÀ» Á¤ÇØÁÜ
+			// íƒ€ê²Ÿì„ ë³´ê³  ê³µê²©í•˜ê²Œ ë°©í–¥ì„ ì •í•´ì¤Œ
 			m_vTagetInfo = m_pTagetObj->GetInfo().vPos;
 		}
 		else 

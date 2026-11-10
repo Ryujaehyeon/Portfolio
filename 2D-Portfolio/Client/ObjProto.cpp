@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "ObjProto.h"
 
 
@@ -17,7 +17,7 @@ CObj* CObjProto::GetProto(wstring pObjKey)
 		= m_MapProto.find(pObjKey);
 	if(iter == m_MapProto.end())
 	{
-		ERR_MSG(g_hWnd, L"º¹»çÇÏ·Á´Â ¿øÇü °´Ã¼°¡ ¾ø½À´Ï´Ù.");
+		ERR_MSG(g_hWnd, L"ë³µì‚¬í•˜ë ¤ëŠ” ì›í˜• ê°ì²´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 		return NULL;
 	}
 	return iter->second->Clone();

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Defines.h"
 
@@ -6,9 +6,9 @@ class CDevice
 {
 	SINGLETON(CDevice);
 private:
-	// ��ġ�� ������ �����ϴ� ��ü.
+	// 장치의 성능을 조사하는 객체.
 	LPDIRECT3D9 m_p3D;
-	// ��ġ�� ��ǥ�ϴ� ��ü
+	// 장치를 대표하는 객체
 	LPDIRECT3DDEVICE9 m_pDevice;
 	LPD3DXSPRITE m_pSprite;
 public:

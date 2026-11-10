@@ -1,4 +1,4 @@
-// MiniView.cpp : ±¸Çö ÆÄÀÏÀÔ´Ï´Ù.
+ï»¿// MiniView.cpp : êµ¬í˜„ íŒŒì¼ì…ë‹ˆë‹¤.
 //
 
 #include "stdafx.h"
@@ -27,12 +27,12 @@ BEGIN_MESSAGE_MAP(CMiniView, CView)
 END_MESSAGE_MAP()
 
 
-// CMiniView ±×¸®±âÀÔ´Ï´Ù.
+// CMiniView ê·¸ë¦¬ê¸°ì…ë‹ˆë‹¤.
 
 void CMiniView::OnDraw(CDC* pDC)
 {
 	CDocument* pDoc = GetDocument();
-	// TODO: ¿©±â¿¡ ±×¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ê·¸ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	GET_SINGLE(CDevice)->Render_Begin();
 
 	CMainFrame* pMainFrm = (CMainFrame*)AfxGetMainWnd();
@@ -48,7 +48,7 @@ void CMiniView::OnDraw(CDC* pDC)
 
 	const TEXINFO* pTex;
 
-	// ¹Ì´Ï¸Ê Å¸ÀÏ±×¸®±â
+	// ë¯¸ë‹ˆë§µ íƒ€ì¼ê·¸ë¦¬ê¸°
 	for(int i = 0; i < TILECNTY; ++i)
 	{
 		for(int j = 0; j < TILECNTX; ++j)
@@ -77,9 +77,9 @@ void CMiniView::OnDraw(CDC* pDC)
 		}
 	}
 
-	// ¹Ì´Ï¸Ê ¸ó½ºÅÍ ±×¸®±â
+	// ë¯¸ë‹ˆë§µ ëª¬ìŠ¤í„° ê·¸ë¦¬ê¸°
 	
-	// ¸ó½ºÅÍ ÆäÀÌÁö(page3)¿¡¼­ Á¶ÀıÇÑ °ªÀ¸·Î 
+	// ëª¬ìŠ¤í„° í˜ì´ì§€(page3)ì—ì„œ ì¡°ì ˆí•œ ê°’ìœ¼ë¡œ 
 	float miniScale = ((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_fScrollval;
 	D3DXMatrixScaling(&matScale, 0.1f, 0.1f, 0.1f);
 	
@@ -100,8 +100,8 @@ void CMiniView::OnDraw(CDC* pDC)
 			if(pTex == NULL)
 				continue;
 						
-			// ¹Ì´Ï¸Ê Å©±â¿¡ ¸Â°Ô ½ºÄÉÀÏÀ» ÀçÁ¶Á¤
-			// 0724 °³º° ½ºÄÉÀÏ 
+			// ë¯¸ë‹ˆë§µ í¬ê¸°ì— ë§ê²Œ ìŠ¤ì¼€ì¼ì„ ì¬ì¡°ì •
+			// 0724 ê°œë³„ ìŠ¤ì¼€ì¼ 
 			 //if( (*pMonster)[idx] != NULL && (*pMonster)[idx]->unitSelect == true)
 			 //{
 				// D3DXMatrixScaling(&matScale, miniScale, miniScale, miniScale);
@@ -126,7 +126,7 @@ void CMiniView::OnDraw(CDC* pDC)
 }
 
 
-// CMiniView Áø´ÜÀÔ´Ï´Ù.
+// CMiniView ì§„ë‹¨ì…ë‹ˆë‹¤.
 
 #ifdef _DEBUG
 void CMiniView::AssertValid() const
@@ -143,4 +143,4 @@ void CMiniView::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 
-// CMiniView ¸Ş½ÃÁö Ã³¸®±âÀÔ´Ï´Ù.
+// CMiniView ë©”ì‹œì§€ ì²˜ë¦¬ê¸°ì…ë‹ˆë‹¤.

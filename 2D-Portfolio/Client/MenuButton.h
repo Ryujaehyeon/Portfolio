@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "menudynamic.h"
 class CMenuButton :
 	public CMenuDynamic
@@ -7,7 +7,7 @@ protected:
 	TCHAR* m_DrawID;
 	bool m_bMouseOver;
 
-	// ºÒ·¯¿Â ÀÌ¹ÌÁöÀÇ ¾ó¸¶¸¸Å­ÀÇ Å©±â·Î ±×¸±Áö¸¦ °áÁ¤
+	// ë¶ˆëŸ¬ì˜¨ ì´ë¯¸ì§€ì˜ ì–¼ë§ˆë§Œí¼ì˜ í¬ê¸°ë¡œ ê·¸ë¦´ì§€ë¥¼ ê²°ì •
 	RECT GetRect()
 	{
 		RECT rc =
@@ -20,7 +20,7 @@ protected:
 		return rc;
 	}
 
-	// ½ÇÁ¦ Ãæµ¹ÇÏ´Â ÁÂÇ¥¸¦ Ã¼Å©
+	// ì‹¤ì œ ì¶©ëŒí•˜ëŠ” ì¢Œí‘œë¥¼ ì²´í¬
 	//RECT RealRect()
 	//{
 	//	RECT rc =
