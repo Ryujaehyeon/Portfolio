@@ -93,7 +93,10 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - `2D-Portfolio/Resource/` (약 76MB 텍스처·리소스) — 코드 작업에서 수정·재배치하지 않는다.
 - `Client/*.dat` (`Map.dat`, `Monster.dat`, `Monster1.dat`) — MFC_000 툴이 만든 바이너리 데이터. 직접 편집하지 않는다.
   구조체(`Headers/Struct.h`)를 바꾸면 기존 `.dat` 와 호환이 깨진다.
-- `Client/fmod/`, 커밋돼 있는 `*.dll`·`*.lib` — 서드파티/빌드 산출물. 교체는 사용자 결정.
+- 커밋된 바이너리는 이것뿐이다 — 서드파티라 소스가 없다. 교체·삭제는 사용자 결정.
+  - FMOD Ex(단종, 재배포처 없음): `Client/fmodexL.dll`+`fmod/lib/fmodexL_vc.lib`(Win32), `Client/fmodex64.dll`+`fmod/lib/fmodex64_vc.lib`(x64), `fmod/inc/`
+  - `Client/Debug.dll`+`Debug.lib`(x86 전용, `MSVCR100D` 의존) — `intent/debug-dll-removal` 에서 제거 예정
+  - 지운 바이너리는 이력에서 복원: `git show <삭제 커밋>^:<경로> > <파일>` (repo-cleanup 참고)
 
 ## Claude 가 반복하는 실수
 
