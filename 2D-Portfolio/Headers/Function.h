@@ -9,3 +9,13 @@ void SAFE_DELETE(T** pObj)
 		*pObj = nullptr;
 	}
 }
+
+inline void ErrMsgBox(const HWND _hWnd, const TCHAR* const _pFormat, ...)
+{
+	TCHAR szMsg[256];
+	va_list ap;
+	va_start(ap, _pFormat);
+	_vsnwprintf_s(szMsg, _TRUNCATE, _pFormat, ap);
+	va_end(ap);
+	MessageBox(_hWnd, szMsg, L"system err", MB_OK);
+}

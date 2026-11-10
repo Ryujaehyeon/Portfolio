@@ -7,7 +7,6 @@
 *.opensdf
 *.ipch
 *.pdb
-2D-Portfolio/Debug/Client.exe
 *.ilk
 *.cache
 *.res
@@ -15,12 +14,10 @@
 *.log
 *.idb
 *.sdf
-2D-Portfolio/Debug/MFC_000.exe
-2D-Portfolio/Client/Debug/Client_manifest.rc
-2D-Portfolio/MFC_000/Debug/MFC_000_manifest.rc
 # VS2026 빌드 산출물 (Directory.Build.props)
 2D-Portfolio/Exe/
 2D-Portfolio/Temp/
 2D-Portfolio/packages/
 2D-Portfolio/.vs/
 *.user
+*.suo

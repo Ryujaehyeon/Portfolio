@@ -146,9 +146,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <PostBuildEvent>
-      <Command>copy /Y "$(ProjectDir)Debug.dll" "$(OutDir)" &gt; nul
-copy /Y "$(ProjectDir)fmodexL.dll" "$(OutDir)" &gt; nul</Command>
-      <Message>런타임 DLL 복사 (Debug.dll, fmodexL.dll)</Message>
+      <Command>copy /Y "$(ProjectDir)fmodexL.dll" "$(OutDir)" &gt; nul</Command>
+      <Message>런타임 DLL 복사 (fmodexL.dll)</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

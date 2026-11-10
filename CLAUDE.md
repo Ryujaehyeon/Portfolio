@@ -26,7 +26,7 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
   직접 적지 않는다 — 패키지가 구성별로 `d3dx9.lib`/`d3dx9d.lib` 를 넣고 DLL 도 복사한다.
 - 출력·중간 경로는 `2D-Portfolio/Directory.Build.props` 한 곳에서 정한다(vcxproj 에 OutDir/IntDir 를 쓰지 않는다).
   산출물 `Exe\<플랫폼>\<구성>\<프로젝트>\`, 중간 `Temp\<플랫폼>\<프로젝트>\<구성>\` — 둘 다 gitignore.
-- Client 런타임 DLL(`Debug.dll`, `fmodexL.dll`)은 Post-Build 가 OutDir 로 복사한다.
+- Client 런타임 DLL(`fmodexL.dll`)은 Post-Build 가 OutDir 로 복사한다. 실행하면 FMOD 로깅판이 작업 디렉터리에 `fmod.log` 를 남긴다(gitignore).
 - `ConformanceMode`(`/permissive-`)는 꺼져 있다. 켜면 `TCHAR*` ← 리터럴 등에서 대량 오류 — 별도 작업으로 다룬다.
 
 ```
@@ -58,6 +58,23 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - `using namespace std;` 가 `stdafx.h` 에 있다 — 기존 코드는 `std::` 없이 쓴다.
 - 포매터: 없음. 탭 들여쓰기, 중괄호는 다음 줄(Allman). 주변 코드 스타일을 따른다.
 - 주석·문서 언어: 한국어, 식별자는 원문.
+- 디버그 출력은 `Headers/Debug.hpp` 만 쓴다: `DebugLog(L"fmt", ...)`(콘솔), `DEBUG_ENTRY_EXIT`·`DEBUG_LINE`(VS 출력 창).
+  `_DEBUG` 밖에서는 빈 매크로라 Release 에 남지 않는다 — 포맷 조립·임시 버퍼도 매크로 인자 안에 둔다. 별도 디버그 DLL 을 만들지 않는다.
+
+### C++ 코딩 표준
+
+- 표준: [.harness/standards/cpp11-coding-standard.md](.harness/standards/cpp11-coding-standard.md) (항목 번호 `I-56` = I장 56번, 분류는 `coding-standard` 스킬 참고)
+- 언어 표준: C++14 (MSVC 기본값, `/std` 미지정)
+- 검사 제외 경로: `2D-Portfolio/Client/fmod/`(FMOD Ex 서드파티), `2D-Portfolio/packages/`(NuGet), `2D-Portfolio/Client/Resource.h`·`2D-Portfolio/MFC_000/resource.h`(리소스 편집기 생성 파일)
+
+| 대상 | 적용 |
+|---|---|
+| 기존 코드의 **명명·구조 관례**(위 목록: `C` 접두사, `m_`+헝가리안, `SCENEID_*` enum, `SAFE_DELETE` 등) | **기존 관례 유지** — 표준의 I-1·I-10·I-11·I-16·I-40 등과 달라도 일괄 개명·재구조화하지 않는다 |
+| 인텐트에서 **고치는 코드** | 표준의 품질 규칙 적용: 경고 0(I-56), `const`(I-26·27), `nullptr`(III-4), `override`(III-1), `constexpr`(III-10), 한 줄 블록도 중괄호(II-4), `default:`(I-23), 변수 가리기 금지(I-57) |
+| **새로 만드는** 클래스·파일 | 위 품질 규칙 + 이름은 주변 기존 관례에 맞춘다(한 파일 안에서 두 스타일을 섞지 않는다) |
+| 표준이 「미정」으로 둔 항목(I-62, III-11, III-12) | 규칙으로 해석하지 않는다 |
+
+충돌하면 이 CLAUDE.md → 표준 순으로 따른다(표준 문서도 「프로젝트 규칙 우선」을 명시).
 
 ## 커밋 규약
 
@@ -93,7 +110,9 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - `2D-Portfolio/Resource/` (약 76MB 텍스처·리소스) — 코드 작업에서 수정·재배치하지 않는다.
 - `Client/*.dat` (`Map.dat`, `Monster.dat`, `Monster1.dat`) — MFC_000 툴이 만든 바이너리 데이터. 직접 편집하지 않는다.
   구조체(`Headers/Struct.h`)를 바꾸면 기존 `.dat` 와 호환이 깨진다.
-- `Client/fmod/`, 커밋돼 있는 `*.dll`·`*.lib` — 서드파티/빌드 산출물. 교체는 사용자 결정.
+- 커밋된 바이너리는 이것뿐이다 — 서드파티라 소스가 없다. 교체·삭제는 사용자 결정.
+  - FMOD Ex(단종, 재배포처 없음): `Client/fmodexL.dll`+`fmod/lib/fmodexL_vc.lib`(Win32), `Client/fmodex64.dll`+`fmod/lib/fmodex64_vc.lib`(x64), `fmod/inc/`
+  - 지운 바이너리는 이력에서 복원: `git show <삭제 커밋>^:<경로> > <파일>` (repo-cleanup 참고)
 
 ## Claude 가 반복하는 실수
 
@@ -106,3 +125,4 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - 변경 1개 = `intent/<기능-슬러그>/` 폴더 1개. 그 안에 `intent.md` → `spec.md` → `plan.md`.
 - 폴더 규칙·SSOT 표는 `intent/README.md`.
 - 단계별 운영 지침은 `.harness/sdlc/`.
+- 직접 수정할 때의 순서·명령·확인 체크리스트는 [docs/FIX-GUIDE.md](docs/FIX-GUIDE.md).

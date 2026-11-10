@@ -406,7 +406,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Stand/D/Stand_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_D", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand D 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Stand D 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -415,7 +415,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Stand/LD/Stand_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_LD", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand LD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Stand LD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -424,7 +424,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Stand/RD/Stand_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_RD", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand RD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Stand RD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -433,7 +433,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Stand/U/Stand_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_U", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand U 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Stand U 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -442,7 +442,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Stand/LU/Stand_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_LU", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand LU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Stand LU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -451,7 +451,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Stand/RU/Stand_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_RU", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand RU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Stand RU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -460,7 +460,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Stand/L/Stand_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_L", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand L 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Stand L 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -469,7 +469,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Stand/R/Stand_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Stand_R", PLAYER_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand R 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Stand R 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 #pragma endregion Stand
@@ -482,7 +482,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Walk/D/Walk_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_D", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk D 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk D 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -491,7 +491,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Walk/LD/Walk_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_LD", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk LD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -500,7 +500,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Walk/RD/Walk_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_RD", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk RD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -509,7 +509,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Walk/U/Walk_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_U", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk U 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk U 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -518,7 +518,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Walk/LU/Walk_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_LU", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk LU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -527,7 +527,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Walk/RU/Walk_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_RU", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk RU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -536,7 +536,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Walk/L/Walk_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_L", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk L 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk L 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -545,7 +545,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Walk/R/Walk_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Walk_R", PLAYER_WALK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk R 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk R 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 #pragma endregion Walk
@@ -558,7 +558,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Run/D/Run_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_D", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk D 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk D 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -567,7 +567,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Run/LD/Run_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_LD", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk LD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -576,7 +576,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Run/RD/Run_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_RD", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk RD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -585,7 +585,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Run/U/Run_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_U", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk U 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk U 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -594,7 +594,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Run/LU/Run_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_LU", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk LU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -603,7 +603,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Run/RU/Run_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_RU", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk RU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -612,7 +612,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Run/L/Run_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_L", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk L 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk L 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -621,7 +621,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Run/R/Run_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Run_R", PLAYER_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk R 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk R 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 #pragma endregion Run
@@ -634,7 +634,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Attack/D/Attack_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_D", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack D 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Attack D 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -643,7 +643,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Attack/LD/Attack_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_LD", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk LD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -652,7 +652,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Attack/RD/Attack_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_RD", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk RD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -661,7 +661,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Attack/U/Attack_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_U", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk U 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk U 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -670,7 +670,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Attack/LU/Attack_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_LU", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk LU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -679,7 +679,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Attack/RU/Attack_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_RU", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk RU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -688,7 +688,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Attack/L/Attack_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_L", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk L 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk L 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -697,7 +697,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Attack/R/Attack_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Attack_R", PLAYER_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk R 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk R 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -711,7 +711,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Cast/D/Cast_D_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_D", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Cast D 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Cast D 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -720,7 +720,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Cast/LD/Cast_LD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_LD", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk LD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -729,7 +729,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Cast/RD/Cast_RD_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_RD", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RD 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk RD 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -738,7 +738,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Cast/U/Cast_U_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_U", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk U 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk U 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -747,7 +747,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Cast/LU/Cast_LU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_LU", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk LU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk LU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -756,7 +756,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Cast/RU/Cast_RU_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_RU", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk RU 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk RU 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -765,7 +765,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Cast/L/Cast_L_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_L", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk L 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk L 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 
@@ -774,7 +774,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Player/Cast/R/Cast_R_%02d.png",
 			Charter[i], TEXTYPE_MULTI, L"Cast_R", PLAYER_CAST)))
 		{
-			ERR_MSG(g_hWnd, L"%d Walk R 로드 실패" , Charter[i]);
+			ERR_MSG(g_hWnd, L"%s Walk R 로드 실패" , Charter[i]);
 			return E_FAIL;
 		}
 #pragma endregion Cast
@@ -794,7 +794,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/D/Stand_D_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_D", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand D 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Stand D 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -803,7 +803,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/LD/Stand_LD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_LD", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand LD 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Stand LD 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -812,7 +812,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/RD/Stand_RD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_RD", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand RD 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Stand RD 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -821,7 +821,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/U/Stand_U_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_U", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand U 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Stand U 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -830,7 +830,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/LU/Stand_LU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_LU", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand LU 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Stand LU 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -839,7 +839,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/RU/Stand_RU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_RU", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand RU 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Stand RU 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -848,7 +848,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/L/Stand_L_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_L", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand L 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Stand L 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -857,7 +857,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Stand/R/Stand_R_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Stand_R", SKELETON_STAND)))
 		{
-			ERR_MSG(g_hWnd, L"%d Stand R 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Stand R 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -949,7 +949,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/D/Run_D_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_D", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run D 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Run D 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -958,7 +958,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/LD/Run_LD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_LD", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run LD 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Run LD 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -967,7 +967,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/RD/Run_RD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_RD", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run RD 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Run RD 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -976,7 +976,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/U/Run_U_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_U", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run U 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Run U 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -985,7 +985,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/LU/Run_LU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_LU", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run LU 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Run LU 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -994,7 +994,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/RU/Run_RU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_RU", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run RU 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Run RU 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1003,7 +1003,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/L/Run_L_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_L", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run L 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Run L 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1012,7 +1012,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Run/R/Run_R_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Run_R", SKELETON_RUN)))
 		{
-			ERR_MSG(g_hWnd, L"%d Run R 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Run R 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1102,7 +1102,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/D/Attack_D_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_D", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack D 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Attack D 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1111,7 +1111,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/LD/Attack_LD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_LD", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack LD 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Attack LD 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1120,7 +1120,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/RD/Attack_RD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_RD", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack RD 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Attack RD 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1129,7 +1129,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/U/Attack_U_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_U", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack U 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Attack U 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1138,7 +1138,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/LU/Attack_LU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_LU", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack LU 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Attack LU 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1147,7 +1147,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/RU/Attack_RU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_RU", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack RU 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Attack RU 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1156,7 +1156,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/L/Attack_L_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_L", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack L 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Attack L 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1165,7 +1165,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Attack/R/Attack_R_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Attack_R", SKELETON_ATTACK)))
 		{
-			ERR_MSG(g_hWnd, L"%d Attack R 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Attack R 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1255,7 +1255,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/D/Death_D_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_D", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death D 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Death D 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1264,7 +1264,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/LD/Death_LD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_LD", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death LD 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Death LD 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1273,7 +1273,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/RD/Death_RD_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_RD", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death RD 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Death RD 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1282,7 +1282,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/U/Death_U_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_U", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death U 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Death U 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1291,7 +1291,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/LU/Death_LU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_LU", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death LU 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Death LU 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1300,7 +1300,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/RU/Death_RU_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_RU", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death RU 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Death RU 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1309,7 +1309,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/L/Death_L_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_L", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death L 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Death L 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1318,7 +1318,7 @@ HRESULT CStage::Initialize()
 			L"../Resource/Texture/Stage/Monster/Skeleton/Death/R/Death_R_%02d.png",
 			Monster[i], TEXTYPE_MULTI, L"Death_R", SKELETON_DEATH)))
 		{
-			ERR_MSG(g_hWnd, L"%d Death R 로드 실패" , Monster[i]);
+			ERR_MSG(g_hWnd, L"%s Death R 로드 실패" , Monster[i]);
 			return E_FAIL;
 		}
 
@@ -1543,7 +1543,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/D/Missile_D_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_D", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear D 로드 실패" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%s BoneSpear D 로드 실패" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1552,7 +1552,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/LD/Missile_LD_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_LD", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear LD 로드 실패" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%s BoneSpear LD 로드 실패" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1561,7 +1561,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/RD/Missile_RD_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_RD", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear RD 로드 실패" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%s BoneSpear RD 로드 실패" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1570,7 +1570,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/U/Missile_U_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_U", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear U 로드 실패" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%s BoneSpear U 로드 실패" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1579,7 +1579,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/LU/Missile_LU_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_LU", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear LU 로드 실패" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%s BoneSpear LU 로드 실패" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1588,7 +1588,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/RU/Missile_RU_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_RU", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear RU 로드 실패" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%s BoneSpear RU 로드 실패" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1597,7 +1597,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/L/Missile_L_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_L", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear L 로드 실패" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%s BoneSpear L 로드 실패" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1606,7 +1606,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/BoneSpear/Missile/R/Missile_R_%02d.png",
 					SKILL, TEXTYPE_MULTI, L"BoneSpear_R", PLAYER_BoneSpear_Missile)))
 				{
-					ERR_MSG(g_hWnd, L"%d BoneSpear R 로드 실패" , BONESPEAR);
+					ERR_MSG(g_hWnd, L"%s BoneSpear R 로드 실패" , BONESPEAR);
 					return E_FAIL;
 				}
 
@@ -1620,7 +1620,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/FireWall/FireWall_%02d.png",
 					SKILL, TEXTYPE_MULTI, FIREWALL, PLAYER_FireWall)))
 				{
-					ERR_MSG(g_hWnd, L"%d 로드 실패" , FIREWALL);
+					ERR_MSG(g_hWnd, L"%s 로드 실패" , FIREWALL);
 					return E_FAIL;
 				}
 
@@ -1633,7 +1633,7 @@ HRESULT CStage::Initialize()
 					L"../Resource/Texture/Skill/Blizzard/Blizzard_%02d.png",
 					SKILL, TEXTYPE_MULTI, BLIZZARD, PLAYER_Blizzard)))
 				{
-					ERR_MSG(g_hWnd, L"%d 로드 실패" , BLIZZARD);
+					ERR_MSG(g_hWnd, L"%s 로드 실패" , BLIZZARD);
 					return E_FAIL;
 				}
 			}

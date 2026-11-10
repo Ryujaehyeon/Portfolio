@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 #include "sceneobj.h"
 class CMenuD2 :
 	public CSceneObj
 {
 public:
 	virtual HRESULT Initialize();
-	virtual SCENEID Progress();
+	virtual SCENEID Progress() override;
 	virtual void Render();
 	virtual void Release();
 public:
