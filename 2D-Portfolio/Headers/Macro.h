@@ -19,6 +19,6 @@
 	}
 
 #define GET_SINGLE(type) (*type::GetInstance())
-#define ERR_MSG(hwnd, sz) MessageBox(hwnd, sz, L"system err", MB_OK)
+#define ERR_MSG(hwnd, fmt, ...) ErrMsgBox(hwnd, fmt, __VA_ARGS__)
 #define DESTROY_SINGLE(type) (*type::GetInstance())->DestroyInstance()
 
