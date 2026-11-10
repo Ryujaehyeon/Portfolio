@@ -73,7 +73,7 @@ git switch -c feature/ship-tracking
 ## 스킬
 
 `.claude/skills/` 의 스킬은 설명(description)에 맞으면 자동 트리거되고, `/deep-interview` 처럼 직접
-부를 수도 있다. Hermes 는 `.hermes/skills/` 를 프로필 설정이 있을 때만 읽는다. 프로젝트의 `.hermes/skills/` 는
+부를 수도 있다. 세션은 저장소 루트에서 연다 — 상위 폴더에서 열면 저장소의 스킬이 로드되지 않는다. Hermes 는 `.hermes/skills/` 를 프로필 설정이 있을 때만 읽는다. 프로젝트의 `.hermes/skills/` 는
 `.git` 이 있는 root 가 `skills.trusted_project_dirs` 에 있을 때만 로드된다. 하네스 원본
 (`<하네스>/.hermes/skills`)을 `skills.external_dirs` 에 지정하면 SVN 작업본을 포함해 어디서든 로드된다.
 같은 이름이면 프로젝트 > 프로필 로컬 > external 순으로 우선한다.
