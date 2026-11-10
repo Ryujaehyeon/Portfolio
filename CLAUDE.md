@@ -70,6 +70,9 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 
 ## 아키텍처 패턴
 
+구조·흐름·다이어그램 전체는 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). 아래는 작업 시 필요한 요약.
+
+
 - **게임 루프**: `CMainGame::Initialize/Progress/Render/Release`. `Progress()` 가 `SCENEID` 를 반환해 장면 전환을 알린다.
   객체·장면 모두 같은 수명주기(`Initialize` → `Progress` → `Render` → `Release`)를 따른다.
 - **매니저 = 싱글톤**: `SINGLETON(type)` 매크로(`Headers/Macro.h`) + `GET_SINGLE(type)->...` 로 접근,

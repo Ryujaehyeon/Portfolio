@@ -125,6 +125,14 @@
 
 합계 357줄. `Client/KeyMgr.h:3-4` 의 주석 처리된 `SingletonTemplate` 흔적도 함께.
 
+**도달 불가 장면** (2026-11-10 아키텍처 문서 작성 중 발견): `SCENEID_STAGE2`·`SCENEID_STAGE3` 를 반환하는 코드가 없다
+(장면 전환은 `Ball.cpp:41` → MENU, `MenuButton.cpp:51` → STAGE, `:59` → END 뿐). `CSceneMgr::InitScene` 의 case 만 있고
+`CStage2`·`CStage3` 는 실행되지 않는다. 둘 다 `Initialize()` 가 `return S_OK;` 뿐이고 `CSceneObj::CSceneObj`(`SceneObj.cpp:5`)도
+`m_pPrototype` 을 초기화하지 않아, 도달하면 `AddObject(m_pPrototype, …)` 가 **쓰레기 포인터로 크래시**한다.
+보스 소환 등 의도가 담겨 있으면 백로그 메모로 옮기고 제거.
+
+**툴 미사용 페이지**: `MFC_000/Page4.*` — `CMySheet` 에 붙지 않는다(`MySheet.cpp:27-29` 는 Page3·1·2 만).
+
 ### 6. 주석 처리된 코드 — 확인
 
 코드처럼 보이는 주석 줄이 약 185줄. 많은 곳: `ObjMgr.cpp`(`:257-271` 디버그 출력 15줄 등), `Stage2.cpp:39-52`(보스 소환),
@@ -142,6 +150,7 @@ git 이력에 남아 있으므로 지운다. 의도를 남길 가치가 있는 �
 | `Client/fmodex.dll`, `fmodex64.dll`, `fmodexL64.dll` | Win32 는 `fmodexL_vc.lib`→`fmodexL.dll` 만 쓴다(`GameSound.hpp:6-8`). x64 를 안 하면 삭제 |
 | `Client/fmod/lib/fmodex64_vc.lib` | 위와 같음 |
 | `Client/Monster.dat` (0 바이트), `Client/Monster1.dat` | 코드 참조 0건(`Map.dat` 만 읽음) → 툴 산출물 잔재, 삭제 |
+| `Client/Rogue.mp3` | 코드 참조 0건. `Cave.mp3` 는 도달 불가한 `Stage2.cpp:9` 에서만 → 5번 처리 시 함께 |
 
 `Resource/`(8220 파일, 76MB) 중 실제로 쓰는 파일은 **미조사** — 경로가 `%02d` 포맷으로 조립돼 정적 분석이 어렵다.
 런타임 파일 접근 로그로 판정해야 한다(별도 작업).
