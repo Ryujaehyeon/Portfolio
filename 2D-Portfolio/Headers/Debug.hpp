@@ -128,6 +128,9 @@ public: ~__debugclass(){FreeConsole();CloseHandle(_hconsole);}
 #define DebugLogA(str, ...) (*__debugclass::_getinst())->__writea(str, __VA_ARGS__)
 #define DebugLog DebugLogA
 #endif
+#define DebugOut(fmt, ...) do { wchar_t dbgOutBuf_[256]; \
+	_snwprintf_s(dbgOutBuf_, _TRUNCATE, fmt, __VA_ARGS__); \
+	OutputDebugStringW(dbgOutBuf_); OutputDebugStringW(L"\n"); } while (0)
 
 #else
 #define DEBUG_ENTRY_EXIT
@@ -138,6 +141,7 @@ public: ~__debugclass(){FreeConsole();CloseHandle(_hconsole);}
 #define DebugLogW(str, ...)
 #define DebugLogA(str, ...)
 #define DebugLog(str, ...)
+#define DebugOut(fmt, ...)
 #endif
 
 #endif

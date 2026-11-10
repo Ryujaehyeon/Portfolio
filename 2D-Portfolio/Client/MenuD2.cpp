@@ -74,7 +74,7 @@ HRESULT CMenuD2::Initialize()
 
 SCENEID CMenuD2::Progress()
 {
-	SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
+	const SCENEID iScene = GET_SINGLE(CObjMgr)->Progress();
 
 	// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화
 	if(iScene > SCENEID_NONPASS)
@@ -82,11 +82,6 @@ SCENEID CMenuD2::Progress()
 		GET_SINGLE(CSceneMgr)->InitScene(iScene);
 	}
 	
-	if(iScene > SCENEID_NONPASS )
-	{
-		DebugLog(_T("Scene : %d"), iScene);
-	}
-
 	if (iScene == SCENEID_END)
 	{
 		return SCENEID_END;

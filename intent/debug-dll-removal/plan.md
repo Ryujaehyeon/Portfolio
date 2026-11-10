@@ -1,7 +1,7 @@
 # Plan: debug-dll-removal
 
 Author: Ryu Jahyeon
-Status: approved (사용자, 2026-11-10) · 1차 구현 커밋 `45682f8` · **B안 반영 중**
+Status: approved (사용자, 2026-11-10) · 1차 구현 커밋 `45682f8` · B안 구현 완료(2026-11-10)
 
 <!-- 구현은 개발자(본인)가 직접 한다. 경로는 2D-Portfolio/ 기준. 소스는 UTF-8 BOM 유지(.editorconfig). -->
 
@@ -51,7 +51,7 @@ Status: approved (사용자, 2026-11-10) · 1차 구현 커밋 `45682f8` · **B�
      - `<stdio.h>`·`<Windows.h>` 는 `Debug.hpp` 가 이미 include 한다.
    - **2-b. `Client/SceneMgr.cpp` `InitScene` 맨 앞**: `DebugOut(L"Scene : %d", ID);`
    - **2-c. `Client/MenuD2.cpp`**: 장면 로그 코드 없음 — `wsprintf` 두 줄·`DebugMsg`(원래)와 `DebugLog` 블록(1차 구현) 모두 삭제.
-   - **진행 상황(2026-11-10)**: 2-c 완료, 2-b 는 `DebugLog` 로 들어가 있음(미커밋) → **2-a 추가 후 2-b 의 `DebugLog` 를 `DebugOut` 으로 바꾸면 끝.**
+   - **진행 상황(2026-11-10)**: 2-a·2-b·2-c 완료.
    → 확인: VS 에서 F5 → 출력 창(「디버그」)에 `Scene : 0`, `Scene : 1` 이 바로 찍히고, 「시작」을 누르면 `Scene : 2`.
      콘솔 창에는 장면 로그가 없고 스테이지에서 좌표 로그만 갱신된다.
      `git grep -n "Scene : " -- 2D-Portfolio` → `SceneMgr.cpp` 1건.
@@ -91,18 +91,21 @@ dumpbin /dependents 2D-Portfolio\Exe\Win32\Debug\Client\Client.exe
 
 **x64 링크 확인**(x64 구성이 이미 있으면): `-p:Platform=x64` 빌드에서 LNK4272·`DebugMsgw` LNK2019 가 사라짐.
 
-## 검증 결과 (2026-11-10, 1차 구현 `45682f8` 기준 — B안 반영 후 R4·R5·R9·R10 재검증)
+## 검증 결과 (2026-11-10, 1차 구현 `45682f8` 기준 — R4·R5·R9·R10 은 B안 반영 후 재검증)
 
 | ID | 결과 |
 |---|---|
 | R1 참조 0 | ✅ `git grep` 결과 `intent/`·`docs/` 밖 0건 |
 | R2 파일 제거 | ✅ `Debug.lib`·`Debug.dll`·`Headers/Debug.h` 삭제 (`Client/Debug/Debug.dll` 은 repo-cleanup 에서) |
 | R3 의존 DLL | ✅ `dumpbin /dependents` Debug·Release 모두 `Debug.dll`·`MSVCR100D.dll` 없음 (CRT 는 `VCRUNTIME140(D)`·`ucrtbase(d)`) |
-| R4 Debug 콘솔·로그 | ⚠️ 1차: 콘솔 생성·`Debug.dll` 미로드 확인, `Scene : N` 관찰 불가(아래) → **B안으로 재검증 예정** |
+| R4 Debug 콘솔·로그 | ⚠️ B안: `DBWIN_BUFFER` 리스너(DebugView 와 같은 방식)로 Debug `Client.exe` 를 8초 실행 → `Scene : 0`, `Scene : 1` 수신, 창 응답. 「시작」 클릭 후 `Scene : 2` 와 스테이지 콘솔 로그(`Player.cpp:98`)는 **수동 확인 남음** |
 | R5 Release 무콘솔 | ✅ `AttachConsole` 실패(콘솔 없음), 창 응답 |
 | R6 C4005 제거 | ✅ 0건, 고유 경고 283 → 282 |
 | R7 빌드·실행 | ✅ `Exe/`·`Temp/` 삭제 후 Debug·Release 종료 코드 0, 두 구성 창 응답·`fmodexL.dll` 로드 |
 | R8 x64 링크 | — x64 구성은 아직 WIP 브랜치 (x64-migration 에서 확인) |
+| R9 `DebugOut` | ✅ `Headers/Debug.hpp` `_DEBUG` 블록(`_snwprintf_s` + `_TRUNCATE` → `OutputDebugStringW`, `do { } while (0)`)과 `#else` 빈 매크로. Debug 수신은 R4, Release 는 같은 리스너로 6초 실행해 출력 0줄·창(`Client`) 응답 |
+| R10 로그 한 곳 | ✅ `git grep -n "Scene : "` → `Client/SceneMgr.cpp:16` 1건 |
+| 경고 (B안 후) | ✅ Debug `/W3` Rebuild 282건(기준과 같음), Release 빌드 종료 코드 0·오류 0 |
 
 **R4 관찰 불가 이유**: 로그는 `iScene > SCENEID_NONPASS` 일 때만 찍히는데, 메뉴에서 그 경우는 「시작」으로 스테이지에 들어가는 순간뿐이다.
 스테이지에서는 `CPlayer::Progress()` 가 매 프레임 `DebugLogClear`(`Player.cpp:97`)로 콘솔을 지우므로 `Scene : 2` 는 다음 프레임에 사라진다.

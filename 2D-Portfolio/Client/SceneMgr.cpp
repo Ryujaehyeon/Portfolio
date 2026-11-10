@@ -13,6 +13,8 @@ CSceneMgr::~CSceneMgr(void)
 
 HRESULT CSceneMgr::InitScene(SCENEID ID)
 {
+	DebugOut(L"Scene : %d", ID);
+
 	// Logo에서 받은 씬ID를 해당 씬으로 바꿈(생성 및 초기화) 
 	SAFE_DELETE<CSceneObj>(&m_pSceneObj);
 	switch(ID)
@@ -36,10 +38,16 @@ HRESULT CSceneMgr::InitScene(SCENEID ID)
 	case SCENEID_STAGE3:
 		m_pSceneObj = new CStage3;
 		break;
+
+	default:
+		return E_FAIL;
+		break;
 	}
 
 	if(FAILED(m_pSceneObj->Initialize()))
+	{
 		return E_FAIL;
+	}
 
 	return S_OK;
 }
