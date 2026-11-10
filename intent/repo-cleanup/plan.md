@@ -17,11 +17,13 @@ Status: draft
 | `Client/Client.vcxproj.user`, `MFC_000/MFC_000.vcxproj.user` | 작음 | 삭제 | 사용자별 설정(내용은 `ShowAllFiles` 뿐). `*.user` 로 이미 ignore |
 | `Client/Debug/Debug.dll` | — | 삭제 | `Client/Debug.dll` 과 sha256 동일한 중복. Post-Build 는 `Client/Debug.dll` 을 복사 |
 | `Client/fmodex.dll` | — | 삭제 | 짝인 import lib(`fmodex_vc.lib`)가 repo 에 없어 링크 불가 — 쓸 수 없는 파일 |
-| `Client/fmodex64.dll`, `Client/fmodexL64.dll`, `Client/fmod/lib/fmodex64_vc.lib` | — | 삭제(권장) | x64 전용. 플랫폼은 Win32 뿐. intent 「Open questions」 2 |
+| `Client/fmodexL64.dll` | — | 삭제 | x64 로깅판. 짝인 `fmodexL64_vc.lib` 가 없어 링크 불가. x64 는 `fmodex64.dll` 을 쓴다(`GameSound.hpp:6`) |
 | `Client/Monster.dat`, `Client/Monster1.dat` | 0B·464B | **결정 필요** | Client 미참조. intent 「Open questions」 1 |
 
 **남기는 것**: `Client/Debug.dll`·`Client/Debug.lib`(링크됨, `debug-dll-removal` 에서 처리),
-`Client/fmodexL.dll`·`Client/fmod/lib/fmodexL_vc.lib`(Win32 링크·실행, `GameSound.hpp:8`), `Client/Map.dat`(게임이 읽음).
+`Client/fmodexL.dll`·`Client/fmod/lib/fmodexL_vc.lib`(Win32 링크·실행, `GameSound.hpp:8`),
+`Client/fmodex64.dll`·`Client/fmod/lib/fmodex64_vc.lib`(x64 링크·실행, `GameSound.hpp:6` — [x64-migration](../x64-migration/plan.md) 에서 사용),
+`Client/Map.dat`(게임이 읽음).
 
 `.gitignore`(repo 루트):
 - 추가: `*.suo`
@@ -39,7 +41,7 @@ Status: draft
    git rm MyProgram.suo .vs/MyProgram/v14/.suo
    git rm Client/Client.vcxproj.user MFC_000/MFC_000.vcxproj.user
    git rm Client/Debug/Debug.dll
-   git rm Client/fmodex.dll Client/fmodex64.dll Client/fmodexL64.dll Client/fmod/lib/fmodex64_vc.lib
+   git rm Client/fmodex.dll Client/fmodexL64.dll
    # Monster*.dat: 결정에 따라 — 삭제면 git rm, 이동이면 git mv
    ```
    - `.vcxproj.user` 는 VS 를 열면 다시 생긴다(이제 ignore 되므로 문제없음). 디스크에 남기고 싶으면 `git rm --cached`.
@@ -77,12 +79,13 @@ Release 도 같은 방법으로. MFC_000 은 `cd 2D-Portfolio/MFC_000` 에서 �
 # 3) 남은 바이너리 목록이 의도와 같은지
 git ls-files | grep -i -E '\.(exe|dll|lib|pdb|suo|user)$'
 ```
-기대: `Client/Debug.dll`, `Client/Debug.lib`, `Client/fmodexL.dll`, `Client/fmod/lib/fmodexL_vc.lib` 4개뿐.
+기대: `Client/Debug.dll`, `Client/Debug.lib`, `Client/fmodexL.dll`, `Client/fmod/lib/fmodexL_vc.lib`,
+`Client/fmodex64.dll`, `Client/fmod/lib/fmodex64_vc.lib` 6개뿐(`Debug.*` 는 `debug-dll-removal` 에서 빠진다).
 
 ## 리스크
 
-- **x64 FMOD 파일 삭제**: x64 를 나중에 추가할 때 필요. FMOD Ex 는 단종이라 공식 재배포처가 없다 →
-  `git show <이 커밋>^:2D-Portfolio/Client/fmodex64.dll > fmodex64.dll` 로 이력에서 복원. 삭제 커밋 해시를 PR 에 적어 둔다.
+- **FMOD 파일은 단종품**: FMOD Ex 는 공식 재배포처가 없다. 지운 파일이 필요해지면
+  `git show <이 커밋>^:2D-Portfolio/Client/<파일> > <파일>` 로 이력에서 복원한다. 삭제 커밋 해시를 PR 에 적어 둔다.
 - **`Monster1.dat` 가 의미 있는 툴 데이터일 가능성**: 지우기 전에 MFC_000 에서 열어(`Page2` 몬스터 불러오기) 내용 확인 권장.
 - **이력 용량은 줄지 않는다**: 이력 재작성은 범위 밖. 작업 트리·클론 이후 체크아웃 크기만 준다.
 - 실패 시 되돌리기: 커밋 전 `git restore --staged --worktree <경로>`, 커밋 후 `git revert`.
