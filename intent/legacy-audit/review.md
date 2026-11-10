@@ -149,7 +149,13 @@ git 이력에 남아 있으므로 지운다. 의도를 남길 가치가 있는 �
 ### 8. 소스 없는 `Debug.dll` 의존 — 확인
 
 - `Client/Client.cpp:8` `#pragma comment(lib, "Debug.lib")` 가 **Release 에도** 링크된다. Release 배포물에 디버그 DLL 이 따라간다.
-- 쓰는 곳은 `Client/MenuD2.cpp:84` `DebugMsg(Info)` 한 곳(`Headers/Debug.h` 의 `DebugMsgw`). `CreateConsole` 은 호출처 0.
+- **배포 차단 요소**(2026-11-10 추가): `Debug.dll` 은 2016-07-21 VS2010 **디버그 CRT `MSVCR100D.dll`** 에 링크돼 있다(import 테이블 확인).
+  디버그 CRT 는 재배포가 허용되지 않고 VS2010 이 없는 PC 엔 없다 → 그런 PC 에선 **Release 빌드조차 시작되지 않는다**
+  (개발 PC 는 `System32`·`SysWOW64` 에 2011년 사본이 있어 드러나지 않음). 또한 PE32(x86) 라 x64 링크 불가.
+- 정체: export 는 `DebugMsgw/a`, `CreateConsole`, `DestroyConsole` + `DebugClass`(콘솔 생성·`WriteConsoleW`·파일 쓰기).
+  즉 `AllocConsole` 로 띄운 디버그 콘솔에 문자열을 찍는 로깅 헬퍼다.
+- 쓰는 곳은 `Client/MenuD2.cpp:84` `DebugMsg(Info)` 한 곳 — 메뉴 장면에서 **매 프레임** `"Scene : %d"` 를 보낸다(`Headers/Debug.h` 의 `DebugMsgw`).
+  `CreateConsole` 은 호출처 0 이라 콘솔이 없는 상태로 호출된다.
 - 같은 역할을 헤더 전용 `Headers/Debug.hpp` 의 `DebugLog` 가 이미 한다(`Player.cpp:97-98`).
 - `Headers/Debug.h:12` 의 `EXPORT` 매크로가 MFC 쪽 정의와 충돌한다(C4005).
 
@@ -212,6 +218,8 @@ exe 위치 기준 경로 해석 함수 하나로 모으고, 리소스·데이터
 1. `repo-cleanup` (7) — 코드 무관, 위험 0. 저장소부터 가볍게.
 2. `dead-code-removal` (5, 6) — 동작 불변. 이후 작업 대상 코드량이 줄어든다.
 3. `debug-dll-removal` (8)
+   → `x64-migration` — 2026-11-10 추가. 32비트 전용 `Debug.lib` 가 유일한 차단 요소라 **반드시 8번 뒤**.
+     이후 수정들을 x64 에서 검증하도록 버그 수정보다 앞에 둔다. [x64-migration](../x64-migration/plan.md)
 4. `err-msg-format` (4) — 작고 독립적, 경고 84건 감소.
 5. `ub-fixes` (3)
 6. `objmgr-lifetime` (1) — 가장 위험한 버그. 3번의 `erase` 교정과 맞물린다.
