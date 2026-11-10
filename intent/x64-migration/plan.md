@@ -76,3 +76,18 @@ MSBuild.exe 2D-Portfolio/MyProgram.sln -p:Configuration=Release -p:Platform=Win3
 - **`.dat` 호환**: 현재 구조체엔 포인터가 없어 호환된다. 이후 `TILE`/`OBJINFO` 에 포인터·`size_t`·`long double` 을 넣으면
   플랫폼 간 파일 호환이 깨진다 → CLAUDE.md 「건드리면 안 되는 부분」에 이미 구조체 변경 경고가 있다.
 - 구성 관리자 복제는 Win32 의 잘못된 설정도 그대로 복제한다(예: 이미 고친 Release 링크 누락 같은 것) → 1단계 확인 항목대로 눈으로 본다.
+
+## 검증 진행 (2026-11-10, 보류 중)
+
+| spec | 결과 |
+|---|---|
+| R1 4개 구성 빌드 | ✅ `Exe`·`Temp` 삭제 후 restore + 4개 구성(`-m:1 -nodeReuse:false`) 종료 코드 0·오류 0 |
+| R2 PE32+ | ✅ x64 Client·MFC_000 Debug·Release |
+| R3 플랫폼별 DLL | ✅ Win32 출력 `fmodexL.dll` 만, x64 출력 `fmodex64.dll` 만 |
+| R4 x64 Client 실행 | ⏸ 8초 스모크만 통과(Debug·Release 창 응답, `system err` 없음). 스테이지·배경음·타일·몬스터·스킬은 `smoke-log` 완료 후 자동 검증 |
+| R5 x64 MFC_000 `Map.dat` | ⏸ 툴 창 뜸(Debug·Release). 타일 불러오기는 `smoke-log` 후 |
+| R6 Win32 회귀 | ⏸ 8초 스모크만 통과 |
+| R7 새 경고 | ✅ x64 는 Win32(198) 대비 C4267 13곳뿐(Debug 276·Release 208 줄), C4311·C4312·C4302 0, C4018 은 x64 에서 사라짐 |
+| R8 CLAUDE.md | ✅ |
+
+보류 이유: 수동 확인 대신 자동 검증용 로그·실행 모드(`smoke-log` 인텐트)를 먼저 만들기로 사용자 결정(2026-11-10).

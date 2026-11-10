@@ -25,6 +25,10 @@
     <VCProjectVersion>18.0</VCProjectVersion>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <FmodDll Condition="'$(Platform)'=='Win32'">fmodexL.dll</FmodDll>
+    <FmodDll Condition="'$(Platform)'=='x64'">fmodex64.dll</FmodDll>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -146,8 +150,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <PostBuildEvent>
-      <Command>copy /Y "$(ProjectDir)fmodexL.dll" "$(OutDir)" &gt; nul</Command>
-      <Message>런타임 DLL 복사 (fmodexL.dll)</Message>
+      <Command>copy /Y "$(ProjectDir)$(FmodDll)" "$(OutDir)" &gt; nul</Command>
+      <Message>런타임 DLL 복사 ($(FmodDll))</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
