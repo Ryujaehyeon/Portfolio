@@ -10,13 +10,11 @@
 
 | # | 인텐트 | 브랜치 | 상태 | 선행 |
 |---|---|---|---|---|
-| 1 | [repo-cleanup](../intent/repo-cleanup/plan.md) | — | ✅ 완료 (PR #8, `7c94bb0`) | — |
-| 2 | [debug-dll-removal](../intent/debug-dll-removal/plan.md) | `feature/debug-dll-removal` | 진행 중 — **코드 4곳 수정 대기**(4.2) | 1 ✅ |
-| 3 | [x64-migration](../intent/x64-migration/plan.md) | `feature/x64-migration` (**WIP 커밋 `6c6b963` 있음**) | 진행 중 보관 | **2 머지 필수** |
+| 1 | [x64-migration](../intent/x64-migration/plan.md) | `feature/x64-migration` (**WIP 커밋 `6c6b963` 있음**) | 진행 중 보관 | — (`debug-dll-removal` 머지로 차단 해제) |
 
-그다음은 오딧 「제안 순서」: `dead-code-removal` → `err-msg-format` → `ub-fixes` → `objmgr-lifetime` →
+그다음은 오딧 「제안 순서」: `dead-code-removal` → `ub-fixes` → `objmgr-lifetime` →
 `string-key-compare`+`const-tchar` → `warning-cleanup` → `shared-render-lib` → `input-unify` → `resource-path` → DirectX 전환.
-이것들은 아직 intent/spec/plan 이 없다 — 착수할 때 3번 절대로 만든다.
+이것들은 아직 intent/spec/plan 이 없다 — 착수할 때 3번 절대로 만든다. 완료한 인텐트는 이 표에서 지운다(기록은 `intent/<슬러그>/` 와 PR).
 
 ## 2. 인텐트 하나를 처리하는 공통 사이클
 
@@ -66,26 +64,10 @@ VS 에서는 그냥 빌드(F7)해도 같다. x64 가 생긴 뒤에는 `-p:Platfo
 
 ## 4. 인텐트별 요령
 
-### 4.1 repo-cleanup
-- **VS 를 닫고** 시작(`.suo` 잠김).
-- `Monster.dat`·`Monster1.dat` 는 **삭제 권장** — `Monster1.dat` 는 이력상 어떤 코드로도 못 읽는 구버전 형식의 시험 배치 4개(spec 「설계」 근거).
-- 남길 바이너리 6개를 지우지 않도록 plan 의 `git rm` 줄을 그대로 쓴다. 특히 `fmodex64.dll`·`fmodex64_vc.lib` 는 x64 용으로 **남긴다**.
-- 확인: `git ls-files | grep -i -E '\.(exe|dll|lib|pdb|suo|user)$'` → 6줄.
-- 커밋 예: `chore(repo-cleanup): 커밋된 빌드 산출물과 미사용 바이너리 제거` — PR 에 삭제 커밋 해시 기록(FMOD 복원용).
-
-### 4.2 debug-dll-removal
-- **변경 전에** Debug 로 메뉴까지 실행해 `Scene :` 로그가 어디에도 안 나오는지 본다(plan 1단계). 결과를 PR 에 적는다.
-- `MenuD2.cpp:82-84` 는 `if(iScene > SCENEID_NONPASS) DebugLog(L"Scene : %d", iScene);` 로. `wsprintf` 두 줄을 꼭 지운다.
-- 코드 외 작업(1단계 확인, sln·Post-Build, 바이너리 삭제, 문서)은 브랜치에 **미커밋으로 반영돼 있다**. 남은 건 코드 4곳:
-  `MenuD2.cpp:82-84` 교체, `Client.cpp:8` pragma 삭제, `Include.h:2` 삭제, `git rm Headers/Debug.h`.
-  (그 전까지는 `Debug.lib` 가 없어 Client 링크가 실패하는 게 정상.)
-- 확인: VS 개발자 명령 프롬프트에서 `dumpbin /dependents 2D-Portfolio\Exe\Win32\Release\Client\Client.exe` 에 `Debug.dll` 없음.
-- 커밋 예: `refactor(debug-dll-removal): 소스 없는 Debug.dll 의존 제거, 디버그 로그를 Debug.hpp 로 통일`
-
-### 4.3 x64-migration (WIP 이어 하기)
+### 4.1 x64-migration (WIP 이어 하기)
 ```bash
 git switch feature/x64-migration
-git rebase master          # debug-dll-removal 머지 후
+git rebase master
 ```
 - 충돌은 `Client.vcxproj` 의 Post-Build 부근에서 날 가능성이 높다 — **master 쪽(Debug.dll 복사 줄 없음)** 을 택하고 x64 블록은 유지.
 - 남은 일은 plan 2단계(`$(FmodDll)`)와 CLAUDE.md. x64 구성 자체는 WIP 에 이미 있다.
@@ -98,12 +80,12 @@ git rebase master          # debug-dll-removal 머지 후
 |---|---|
 | 새 `.cpp/.h` 를 만들었다 | **UTF-8 BOM** 이어야 한다. VS 는 `.editorconfig` 로 자동 처리. 다른 편집기면 BOM 확인 — 없으면 한글이 CP949 로 읽혀 깨진다 |
 | 문자열 비교를 새로 쓴다 | `==` 금지(주소 비교). `lstrcmp(a, b) == 0` 또는 `wstring` 비교 — 오딧 2번 |
-| `ERR_MSG` 에 포맷 인자를 넘긴다 | 지금 매크로는 3번째 인자를 버린다. `err-msg-format` 전까지는 `swprintf` 로 먼저 조립 |
+| `ERR_MSG` 에 포맷 인자를 넘긴다 | `ERR_MSG(g_hWnd, L"%s 로드 실패", pKey)` 처럼 쓴다. 지정자와 인자 타입 불일치는 컴파일러가 못 잡는다 — `TCHAR*` 는 `%s` |
 | `TILE`·`OBJINFO` 를 고치고 싶다 | `.dat` 호환이 깨진다. 포인터·`size_t` 를 넣으면 x86/x64 간에도 깨진다 |
 | `Client/fmod.log` 가 생긴다 | FMOD 로깅판(`fmodexL`)이 실행마다 남기는 로그. `*.log` 로 gitignore — 무시 |
 | exe 를 더블클릭했더니 리소스 오류 | 정상(작업 디렉터리 문제). VS F5 나 `cd Client` 후 실행 |
 | `git status` 에 vcxproj 가 통째로 바뀐 것처럼 보임 | VS 가 줄바꿈을 CRLF 로 저장 — `.gitattributes`(`text=auto`)가 커밋 시 정규화하므로 실제 diff 는 작다. `git diff --stat` 로 확인 |
-| 경고 수가 늘었다 | 새로 생긴 경고는 고치고 커밋. 기존 283건(Debug)은 `warning-cleanup` 몫 |
+| 경고 수가 늘었다 | 새로 생긴 경고는 고치고 커밋. 기존 198건(Debug)은 `ub-fixes`(C4715)·`warning-cleanup` 몫 |
 | 빌드 산출물이 `git status` 에 보인다 | 산출물은 `Exe/`·`Temp/` 로만 나와야 한다. 다른 곳에 생기면 vcxproj 에 OutDir 이 박혔는지 확인(경로는 `Directory.Build.props` 한 곳에서만) |
 | 새 코드를 어떤 스타일로 쓸지 | 이름은 주변 기존 관례(`C` 접두사·`m_` 헝가리안), 품질은 [C++ 표준](../.harness/standards/cpp11-coding-standard.md) — 경고 0·`const`·`nullptr`·`override`·한 줄 블록도 중괄호. 범위는 CLAUDE.md 「C++ 코딩 표준」 |
 
