@@ -1,7 +1,7 @@
 # Plan: debug-dll-removal
 
 Author: Ryu Jahyeon
-Status: draft
+Status: approved (사용자, 2026-11-10) · 구현 완료
 
 <!-- 구현은 개발자(본인)가 직접 한다. 경로는 2D-Portfolio/ 기준. 소스는 UTF-8 BOM 유지(.editorconfig). -->
 
@@ -26,6 +26,10 @@ Status: draft
 0. 브랜치: `git switch master && git pull && git switch -c feature/debug-dll-removal`
    - 작업 트리에 x64 작업(sln·vcxproj 미커밋 변경)이 있으면 먼저 커밋해 두거나 별도 브랜치로 옮긴다 — 두 작업이 같은 파일을 건드린다.
 1. **현재 동작 기록(변경 전)** — `DebugMsg` 가 정말 아무것도 안 하는지 확인.
+   - **결과(2026-11-10, 완료)**: 출력 없음 확인. Win32 Debug 를 `Client/` 에서 실행 → 1초 후 메뉴(`Ball.cpp:40`) → 8초 시점에
+     32비트 PowerShell 로 게임 콘솔에 `AttachConsole` 해 화면 버퍼(120×9001)를 읽음 → **비어 있음, `Scene` 0줄**.
+     실행 중 새로 생긴 파일은 `Client/fmod.log`(FMOD 로깅판, gitignore)뿐. `Debug.dll` 에 로그 파일명 문자열·`OutputDebugString` import 없음.
+     → 교체 후 `Scene : <번호>` 가 콘솔에 나오면 기능이 **늘어난** 것(회귀 아님).
    - Win32 Debug 빌드 → VS 에서 F5(작업 디렉터리 기본값 `$(ProjectDir)`) → 메뉴 화면까지 진입.
    - 디버그 콘솔 창에 `Scene : ` 줄이 나오는지, VS 출력 창에 나오는지 본다.
    - 기대: 둘 다 안 나옴(= DLL 호출이 무효). 만약 나온다면 어디에 나왔는지 PR 에 기록 — 2단계 이후 같은 곳/콘솔에 나오면 동등.
@@ -46,7 +50,7 @@ Status: draft
 3. **링크·헤더 제거** — `Client.cpp:8` pragma, `Include.h:2`, `Headers/Debug.h`(`git rm`), `MyProgram.sln:11`.
    → 확인: `git grep -n -E "Debug\.h\b|Debug\.lib|DebugMsg|CreateConsole|DestroyConsole"` 결과가 문서(`intent/`)뿐.
 4. **Post-Build 수정** — `Client.vcxproj` 의 복사 줄·메시지. x64 작업을 이미 했다면 `$(FmodDll)` 줄만 남는다.
-5. **바이너리 삭제** — `git rm Client/Debug.lib Client/Debug.dll Client/Debug/Debug.dll`
+5. **바이너리 삭제** — `git rm Client/Debug.lib Client/Debug.dll` (`Client/Debug/Debug.dll` 은 repo-cleanup `7c94bb0` 에서 삭제됨)
    - `Client/Debug/Debug.dll` 은 [repo-cleanup](../repo-cleanup/plan.md) 에도 있다. 먼저 머지되는 쪽이 지우고, 나중 쪽은 그 줄을 뺀다.
 6. **CLAUDE.md 갱신** (위 표).
 7. **커밋** — `refactor(debug-dll-removal): 소스 없는 Debug.dll 의존 제거, 디버그 로그를 Debug.hpp 로 통일` → PR.
@@ -77,6 +81,24 @@ dumpbin /dependents 2D-Portfolio\Exe\Win32\Debug\Client\Client.exe
   `MSVCR100D.dll` 오류 없이 시작. (VC++ 2015-2022+ 재배포 패키지는 필요)
 
 **x64 링크 확인**(x64 구성이 이미 있으면): `-p:Platform=x64` 빌드에서 LNK4272·`DebugMsgw` LNK2019 가 사라짐.
+
+## 검증 결과 (2026-11-10)
+
+| ID | 결과 |
+|---|---|
+| R1 참조 0 | ✅ `git grep` 결과 `intent/`·`docs/` 밖 0건 |
+| R2 파일 제거 | ✅ `Debug.lib`·`Debug.dll`·`Headers/Debug.h` 삭제 (`Client/Debug/Debug.dll` 은 repo-cleanup 에서) |
+| R3 의존 DLL | ✅ `dumpbin /dependents` Debug·Release 모두 `Debug.dll`·`MSVCR100D.dll` 없음 (CRT 는 `VCRUNTIME140(D)`·`ucrtbase(d)`) |
+| R4 Debug 콘솔·로그 | ⚠️ 콘솔 생성·`Debug.dll` 미로드 확인. 단 `Scene : N` 은 **관찰 불가** — 아래 참고 |
+| R5 Release 무콘솔 | ✅ `AttachConsole` 실패(콘솔 없음), 창 응답 |
+| R6 C4005 제거 | ✅ 0건, 고유 경고 283 → 282 |
+| R7 빌드·실행 | ✅ `Exe/`·`Temp/` 삭제 후 Debug·Release 종료 코드 0, 두 구성 창 응답·`fmodexL.dll` 로드 |
+| R8 x64 링크 | — x64 구성은 아직 WIP 브랜치 (x64-migration 에서 확인) |
+
+**R4 관찰 불가 이유**: 로그는 `iScene > SCENEID_NONPASS` 일 때만 찍히는데, 메뉴에서 그 경우는 「시작」으로 스테이지에 들어가는 순간뿐이다.
+스테이지에서는 `CPlayer::Progress()` 가 매 프레임 `DebugLogClear`(`Player.cpp:97`)로 콘솔을 지우므로 `Scene : 2` 는 다음 프레임에 사라진다.
+변경 전에는 아무 출력도 없었으므로 회귀는 아니다. 장면 전환 로그를 실제로 보려면 콘솔 대신 VS 출력 창(`OutputDebugString`) 쪽으로
+보내는 매크로가 필요하다 — 후속 과제(사용자 결정).
 
 ## 리스크
 

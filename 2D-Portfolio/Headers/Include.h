@@ -1,5 +1,4 @@
-#pragma once
-#include "Debug.h"
+﻿#pragma once
 #include "Debug.hpp"
 
 

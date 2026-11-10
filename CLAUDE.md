@@ -26,7 +26,7 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
   직접 적지 않는다 — 패키지가 구성별로 `d3dx9.lib`/`d3dx9d.lib` 를 넣고 DLL 도 복사한다.
 - 출력·중간 경로는 `2D-Portfolio/Directory.Build.props` 한 곳에서 정한다(vcxproj 에 OutDir/IntDir 를 쓰지 않는다).
   산출물 `Exe\<플랫폼>\<구성>\<프로젝트>\`, 중간 `Temp\<플랫폼>\<프로젝트>\<구성>\` — 둘 다 gitignore.
-- Client 런타임 DLL(`Debug.dll`, `fmodexL.dll`)은 Post-Build 가 OutDir 로 복사한다.
+- Client 런타임 DLL(`fmodexL.dll`)은 Post-Build 가 OutDir 로 복사한다. 실행하면 FMOD 로깅판이 작업 디렉터리에 `fmod.log` 를 남긴다(gitignore).
 - `ConformanceMode`(`/permissive-`)는 꺼져 있다. 켜면 `TCHAR*` ← 리터럴 등에서 대량 오류 — 별도 작업으로 다룬다.
 
 ```
@@ -58,6 +58,8 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - `using namespace std;` 가 `stdafx.h` 에 있다 — 기존 코드는 `std::` 없이 쓴다.
 - 포매터: 없음. 탭 들여쓰기, 중괄호는 다음 줄(Allman). 주변 코드 스타일을 따른다.
 - 주석·문서 언어: 한국어, 식별자는 원문.
+- 디버그 출력은 `Headers/Debug.hpp` 만 쓴다: `DebugLog(L"fmt", ...)`(콘솔), `DEBUG_ENTRY_EXIT`·`DEBUG_LINE`(VS 출력 창).
+  `_DEBUG` 밖에서는 빈 매크로라 Release 에 남지 않는다 — 포맷 조립·임시 버퍼도 매크로 인자 안에 둔다. 별도 디버그 DLL 을 만들지 않는다.
 
 ## 커밋 규약
 
@@ -95,7 +97,6 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
   구조체(`Headers/Struct.h`)를 바꾸면 기존 `.dat` 와 호환이 깨진다.
 - 커밋된 바이너리는 이것뿐이다 — 서드파티라 소스가 없다. 교체·삭제는 사용자 결정.
   - FMOD Ex(단종, 재배포처 없음): `Client/fmodexL.dll`+`fmod/lib/fmodexL_vc.lib`(Win32), `Client/fmodex64.dll`+`fmod/lib/fmodex64_vc.lib`(x64), `fmod/inc/`
-  - `Client/Debug.dll`+`Debug.lib`(x86 전용, `MSVCR100D` 의존) — `intent/debug-dll-removal` 에서 제거 예정
   - 지운 바이너리는 이력에서 복원: `git show <삭제 커밋>^:<경로> > <파일>` (repo-cleanup 참고)
 
 ## Claude 가 반복하는 실수
