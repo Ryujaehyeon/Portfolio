@@ -38,6 +38,9 @@ void CStageBackGround::InitTileFromFile()
 	}
 
 	CloseHandle(hFile);
+
+	const int iTileCount = static_cast<int>(m_vecTile.size());
+	SmokeCheck(iTileCount == 800, L"map tiles=%d", iTileCount);
 }
 
 HRESULT CStageBackGround::Initialize()
