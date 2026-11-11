@@ -195,7 +195,6 @@ SCENEID CObjMgr::Progress()
 			bool bErased = false;
 			map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
 			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
-			map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
 						
 			iScene = (*iter2)->Progress();
 			switch((*iter2)->GetObjType())
@@ -239,10 +238,6 @@ SCENEID CObjMgr::Progress()
 					if(iterPlayer != m_MapObject.end())
 						(*iter2)->Setlist(
 						&m_MapObject.find(PLAYER)->second);
-
-					if(iterMonster != m_MapObject.end() && 
-						iterSkill != m_MapObject.end())
-						ColCircle(&iterSkill->second, &iterMonster->second);
 				}
 				ObjInteraction((*iter2));
 				// iter 삭제시 
@@ -289,6 +284,14 @@ SCENEID CObjMgr::Progress()
 			GET_SINGLE(CSortMgr)->SetLayer(*iter2);
 			++iter2;
 		}
+	}
+
+	// 스킬·몬스터 충돌은 한 프레임에 한 번, 모든 쌍을 검사한다(스킬 객체마다 부르면 데미지가 스킬 수만큼 겹친다)
+	map<wstring, list<CObj*>>::iterator iterMonsterList = m_MapObject.find(MONSTER);
+	map<wstring, list<CObj*>>::iterator iterSkillList = m_MapObject.find(SKILL);
+	if (iterMonsterList != m_MapObject.end() && iterSkillList != m_MapObject.end())
+	{
+		ColCircle(&iterSkillList->second, &iterMonsterList->second);
 	}
 
 	return iScene;
@@ -414,53 +417,54 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 void CObjMgr::ColCircle(list<CObj*> *pSkill, 
 	list<CObj*> *pMonsterList)
 {
+	// 모든 스킬 × 모든 몬스터를 한 번씩 검사한다. 각 루프는 자기 반복자만 증가시킨다
 	for (list<CObj*>::iterator iter = pSkill->begin();
 		iter != pSkill->end(); ++iter)
 	{
-		for (list<CObj*>::iterator iter2 = pMonsterList->begin();
-			iter2 != pMonsterList->end();)
+		CObj* const pSkillObj = *iter;
+		if (pSkillObj == nullptr)
 		{
-			if ((*iter) == nullptr || (*iter2) == nullptr)
-				break;
-
-			if (CrashAndSlide(*iter, *iter2))
-			{
-				// 몬스터 방어력이 플레이어 공격력보다 크면 데미지 
-				if((*iter2)->GetStatas().fDefence >= (*iter)->GetStatas().fAttack)
-					(*iter2)->SetStatas()->fHealthPoint -= 1;
-				// 플레이어 공격력이 더 크면 몬스터 방어력을 뺀 나머지 만큼의 데미지만 적용 
-				else if((*iter2)->GetStatas().fDefence < (*iter)->GetStatas().fAttack)
-					(*iter2)->SetStatas()->fHealthPoint -= 
-					(*iter)->GetStatas().fAttack - (*iter2)->GetStatas().fDefence;
-
-				if((*iter)->GetName() == BONESPEAR)
-					(*iter)->SetStatas()->fHealthPoint = -1.f;
-
-				++iter;
-				++iter2;
-			}
-			else //충돌 실패시
-			{
-				//좌표를 받아 화면 밖을 벗어날 시
-				if( (*iter)->GetInfo().vPos.y < 0		 + CObj::g_tScroll.y  ||
-					(*iter)->GetInfo().vPos.y > WINSIZEY + CObj::g_tScroll.y  ||
-					(*iter)->GetInfo().vPos.x < 0		 + CObj::g_tScroll.x  ||
-					(*iter)->GetInfo().vPos.x > WINSIZEX + CObj::g_tScroll.x	)
-				{
-					if((*iter)->GetName() == BONESPEAR)
-						(*iter)->SetStatas()->fHealthPoint = -1.f;
-					++iter;
-				}
-				//다음 노드를 가르킨다.
-				++iter2;
-			}
-			//iter가 끝을 가르키면 반복문을 끝냄
-			if (iter == pSkill->end())
-				break;
+			continue;
 		}
-		//iter가 끝을 가르키면 반복문을 끝냄
-		if (iter == pSkill->end())
-			break;
+
+		for (list<CObj*>::iterator iter2 = pMonsterList->begin();
+			iter2 != pMonsterList->end(); ++iter2)
+		{
+			CObj* const pMonster = *iter2;
+			if (pMonster == nullptr || !CrashAndSlide(pSkillObj, pMonster))
+			{
+				continue;
+			}
+
+			// 몬스터 방어력이 플레이어 공격력보다 크면 데미지 
+			if(pMonster->GetStatas().fDefence >= pSkillObj->GetStatas().fAttack)
+			{
+				pMonster->SetStatas()->fHealthPoint -= 1;
+			}
+			// 플레이어 공격력이 더 크면 몬스터 방어력을 뺀 나머지 만큼의 데미지만 적용 
+			else if(pMonster->GetStatas().fDefence < pSkillObj->GetStatas().fAttack)
+			{
+				pMonster->SetStatas()->fHealthPoint -= 
+					pSkillObj->GetStatas().fAttack - pMonster->GetStatas().fDefence;
+			}
+
+			// BoneSpear 는 첫 명중에서 소멸한다 — 한 대상만 맞힌다. 그 밖의 스킬은 범위 안 몬스터를 모두 맞힌다
+			if(pSkillObj->GetName() == BONESPEAR)
+			{
+				pSkillObj->SetStatas()->fHealthPoint = -1.f;
+				break;
+			}
+		}
+
+		//좌표를 받아 화면 밖을 벗어날 시
+		if( pSkillObj->GetName() == BONESPEAR &&
+			(pSkillObj->GetInfo().vPos.y < 0		 + CObj::g_tScroll.y  ||
+			pSkillObj->GetInfo().vPos.y > WINSIZEY + CObj::g_tScroll.y  ||
+			pSkillObj->GetInfo().vPos.x < 0		 + CObj::g_tScroll.x  ||
+			pSkillObj->GetInfo().vPos.x > WINSIZEX + CObj::g_tScroll.x) )
+		{
+			pSkillObj->SetStatas()->fHealthPoint = -1.f;
+		}
 	}
 }
 
