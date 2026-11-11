@@ -88,9 +88,6 @@
     <Filter Include="01.Scene\Stage\Stage3">
       <UniqueIdentifier>{37c1487a-d79f-49da-b71c-f5d009d502bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="98.Manager\Collision">
-      <UniqueIdentifier>{d50cb565-d912-47ad-8da4-0af3e2520717}</UniqueIdentifier>
-    </Filter>
     <Filter Include="94. Algorithm\AStar">
       <UniqueIdentifier>{7d22dbf4-7014-40e8-a4ae-91dd531c9d10}</UniqueIdentifier>
     </Filter>
@@ -160,9 +157,6 @@
     <Filter Include="02.Object\03. Stage\Dynamic\Moster">
       <UniqueIdentifier>{64e9671f-2c2b-40f5-8ae5-d5f07cc55761}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Object\03. Stage\Dynamic\NPC">
-      <UniqueIdentifier>{48352adb-7ad3-4dbe-bfa4-4cfe96d1ac0c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Object\Skill\Buff">
       <UniqueIdentifier>{b122edcf-74ab-49da-848c-15eb01bda9d2}</UniqueIdentifier>
     </Filter>
@@ -183,9 +177,6 @@
     </Filter>
     <Filter Include="02.Object\Skill\Buff\Aura">
       <UniqueIdentifier>{b536766f-c698-41c0-bf43-2de8e4a0c67d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Object\SkillTree">
-      <UniqueIdentifier>{9ab6c811-969f-4696-b69a-474605030953}</UniqueIdentifier>
     </Filter>
     <Filter Include="97.Design\Prototype\Object\Skill">
       <UniqueIdentifier>{91930e38-611d-40c6-af27-3c3eca3fda1d}</UniqueIdentifier>
@@ -316,14 +307,8 @@
     <ClInclude Include="MenuButton.h">
       <Filter>02.Object\02. Menu\Dynamic\MenuBurton</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionMgr.h">
-      <Filter>98.Manager\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>02.Object\03. Stage\Dynamic\Moster</Filter>
-    </ClInclude>
-    <ClInclude Include="NonPlayer.h">
-      <Filter>02.Object\03. Stage\Dynamic\NPC</Filter>
     </ClInclude>
     <ClInclude Include="AStar.h">
       <Filter>94. Algorithm\AStar</Filter>
@@ -339,9 +324,6 @@
     </ClInclude>
     <ClInclude Include="Skill.h">
       <Filter>02.Object\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillTree.h">
-      <Filter>02.Object\SkillTree</Filter>
     </ClInclude>
     <ClInclude Include="BoneSpear.h">
       <Filter>02.Object\Skill\AttackSkill\Missile</Filter>
@@ -462,14 +444,8 @@
     <ClCompile Include="MenuButton.cpp">
       <Filter>02.Object\02. Menu\Dynamic\MenuBurton</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionMgr.cpp">
-      <Filter>98.Manager\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>02.Object\03. Stage\Dynamic\Moster</Filter>
-    </ClCompile>
-    <ClCompile Include="NonPlayer.cpp">
-      <Filter>02.Object\03. Stage\Dynamic\NPC</Filter>
     </ClCompile>
     <ClCompile Include="AStar.cpp">
       <Filter>94. Algorithm\AStar</Filter>
@@ -488,9 +464,6 @@
     </ClCompile>
     <ClCompile Include="Skill.cpp">
       <Filter>02.Object\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillTree.cpp">
-      <Filter>02.Object\SkillTree</Filter>
     </ClCompile>
     <ClCompile Include="BoneSpear.cpp">
       <Filter>02.Object\Skill\AttackSkill\Missile</Filter>

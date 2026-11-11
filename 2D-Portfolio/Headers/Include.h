@@ -17,7 +17,6 @@
 #include "ObjMgr.h"
 #include "TimeMgr.h"
 #include "AStar.h"
-#include "CollisionMgr.h"
 
 //===========Scene Header==============//
 #include "Logo.h"
@@ -36,7 +35,6 @@
 
 #include "Player.h"
 #include "Monster.h"
-#include "NonPlayer.h"
 #include "UIObj.h"
 
 //==========Prototype Header============//
@@ -47,7 +45,6 @@
 
 //================Skill=================//
 #include "Skill.h"
-#include "SkillTree.h"
 #include "BoneSpear.h"
 #include "FireWall.h"
 #include "Blizzard.h"
