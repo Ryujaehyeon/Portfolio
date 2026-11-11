@@ -101,7 +101,7 @@ WSL 에서 Windows exe 의 종료 코드는 그대로 전달된다. 실행 확�
 |---|---|---|
 | 스킬 시전을 `Progress` 앞부분이 아니라 우클릭 시전과 같은 자리(목표 도달 → `STAND` 설정 뒤)에서 | 앞에서 부르면 같은 프레임에 `STAND` 로 덮여 `CAST` 프레임이 시작되지 않는다 | 구체화 |
 | **범위 확장**: 종료 크래시 2건 수정 — `CPlayer` 생성자 2개·`CSceneObj` 생성자에서 `m_pSkillPrototype = nullptr` | 스테이지 해제 시 초기화 안 된 포인터를 `SAFE_DELETE` 해 접근 위반(`C0000005`). 스모크와 무관한 기존 버그로, 스테이지에서 게임을 끝내면 항상 발생(cdb 스택으로 확인: `CPlayer::Release` → `Player.cpp:737`, `CStage::Release` → `Stage.cpp:1786`) | 사용자 결정 — 이 2건만, 더 나오면 `objmgr-lifetime` |
-| **알려진 실패**: Release 에서 `missing skill BoneSpear` | `CObj::FrameMove`(`Obj.cpp:59-75`)가 Debug 는 `fStart = 0` 리셋, Release 는 `fStart -= fMax` → 생성 조건 `fStart <= 0`(`Player.cpp` `SkillActive`)이 Release 에서 거의 성립하지 않는다. **실제 게임에서도 Release 스킬이 나가지 않는 기존 버그** | 사용자 결정 — 별도 인텐트(`ub-fixes` 에 포함). 이 인텐트에서는 고치지 않음 |
+| **알려진 실패**: Release 에서 `missing skill BoneSpear` | `CObj::FrameMove`(`Obj.cpp:59-75`)가 Debug 는 `fStart = 0` 리셋, Release 는 `fStart -= fMax` → 생성 조건 `fStart <= 0`(`Player.cpp` `SkillActive`)이 Release 에서 거의 성립하지 않는다. **실제 게임에서도 Release 스킬이 나가지 않는 기존 버그** — 2026-11-11 [ub-fixes](../ub-fixes/plan.md) 에서 수정(4개 구성 스모크 PASS) | 사용자 결정 — 별도 인텐트(`ub-fixes` 에 포함). 이 인텐트에서는 고치지 않음 |
 | `Function.h`·`SceneObj.cpp` 에 UTF-8 BOM 추가 | 한글 주석이 들어가 BOM 이 필요(CLAUDE.md 인코딩 규칙). `StageBackground.cpp`·`GameSound.hpp` 는 ASCII 만 추가해 그대로 | 관례 |
 
 ## 검증 결과 (2026-11-11)
