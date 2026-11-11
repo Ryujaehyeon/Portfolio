@@ -8,11 +8,9 @@
 
 ## 1. 지금 할 일 (순서 고정)
 
-| # | 인텐트 | 브랜치 | 상태 | 선행 |
-|---|---|---|---|---|
-| 1 | [x64-migration](../intent/x64-migration/plan.md) | `feature/x64-migration` (**WIP 커밋 `6c6b963` 있음**) | 진행 중 보관 | — (`debug-dll-removal` 머지로 차단 해제) |
+진행 중인 인텐트 없음(2026-11-11 `x64-migration` 완료). 착수하면 여기에 표(인텐트·브랜치·상태·선행)로 적는다.
 
-그다음은 오딧 「제안 순서」: `dead-code-removal` → `ub-fixes` → `objmgr-lifetime` →
+다음은 오딧 「제안 순서」: `dead-code-removal` → `ub-fixes` → `objmgr-lifetime` →
 `string-key-compare`+`const-tchar` → `warning-cleanup` → `shared-render-lib` → `input-unify` → `resource-path` → DirectX 전환.
 이것들은 아직 intent/spec/plan 이 없다 — 착수할 때 3번 절대로 만든다. 완료한 인텐트는 이 표에서 지운다(기록은 `intent/<슬러그>/` 와 PR).
 
@@ -39,13 +37,14 @@ rm -rf 2D-Portfolio/Exe 2D-Portfolio/Temp                         # 깨끗한 �
 "$M" 2D-Portfolio/MyProgram.sln -p:Configuration=Release -p:Platform=Win32 -m -nologo -v:m > build-release.log
 grep -c "warning C" build-debug.log                               # 경고 수 — 변경 전후 비교
 ```
-VS 에서는 그냥 빌드(F7)해도 같다. x64 가 생긴 뒤에는 `-p:Platform=x64` 도.
+VS 에서는 그냥 빌드(F7)해도 같다. x64 는 `-p:Platform=x64` — 구성 4개(Win32·x64 × Debug·Release)를 모두 본다.
 
 ### 실행 확인
 
 리소스가 상대 경로라 **작업 디렉터리가 `2D-Portfolio/Client/`** 여야 한다(툴은 `MFC_000/`).
 - VS: F5 (작업 디렉터리 기본값이 프로젝트 폴더라 그대로 됨)
 - 직접: `cd 2D-Portfolio/Client && ../Exe/Win32/Debug/Client/Client.exe`
+- 자동: `Client.exe -smoke`·`MFC_000.exe -smoke ../Client/Map.dat` — 명령·판정은 CLAUDE.md 「테스트」. 장면·배경음 로드·타일·몬스터·스킬 생성까지 본다(화면·소리·조작은 아래 체크리스트로).
 
 매번 볼 것(회귀 체크리스트):
 - [ ] 로고 → 메뉴 → 「시작」 → 스테이지
@@ -64,15 +63,7 @@ VS 에서는 그냥 빌드(F7)해도 같다. x64 가 생긴 뒤에는 `-p:Platfo
 
 ## 4. 인텐트별 요령
 
-### 4.1 x64-migration (WIP 이어 하기)
-```bash
-git switch feature/x64-migration
-git rebase master
-```
-- 충돌은 `Client.vcxproj` 의 Post-Build 부근에서 날 가능성이 높다 — **master 쪽(Debug.dll 복사 줄 없음)** 을 택하고 x64 블록은 유지.
-- 남은 일은 plan 2단계(`$(FmodDll)`)와 CLAUDE.md. x64 구성 자체는 WIP 에 이미 있다.
-- WIP 커밋은 그대로 둬도 되고, 하나로 합치려면 `git reset --soft master` 후 다시 커밋한다.
-- 확인: 4개 구성 빌드, `Exe/x64/Debug/Client/` 에 `fmodex64.dll` 만 있고 `fmodexL.dll` 없음, x64 로 2번 절 체크리스트 + 툴에서 `Map.dat` 열기.
+(진행 중인 인텐트가 없어 비어 있다.)
 
 ## 5. 함정 모음
 
