@@ -61,17 +61,12 @@ void CObj::FrameMove( const float& fCnt, const float& fMax )
 	m_tFrame.fStart += fCnt * GET_SINGLE(CTimeMgr)->DeltaTime();
 	m_tFrame.fLast = fMax;
 
-#if _DEBUG
-	// 디버그 모드 시 브레이크로 정지 후 다시 진행할때 
-	// 들어오는 타임값이 max값을 초과해 프레임값으로 인해 에러가 나지 않게
-	// 초기화
+	// 한 바퀴가 끝나면 0 으로 되돌린다. 「fStart <= 0」 을 한 바퀴의 시작으로 보는 판정(스킬 생성·공격·경험치·시체 삭제)이
+	// 리셋 직후 한 프레임 동안 참이 된다 — 구성과 무관하게 같아야 한다(intent/ub-fixes).
 	if (m_tFrame.fStart > fMax)
+	{
 		m_tFrame.fStart = 0.f;
-#else
-	// 오차값을 줄이기 위해
-	if (m_tFrame.fStart > fMax)
-		m_tFrame.fStart -= fMax;
-#endif
+	}
 
 }
 
