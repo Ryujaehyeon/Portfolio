@@ -48,9 +48,14 @@ HRESULT CSceneMgr::InitScene(SCENEID ID)
 
 SCENEID CSceneMgr::Progress()
 {
-	SCENEID iScene = m_pSceneObj->Progress();
+	const SCENEID iScene = m_pSceneObj->Progress();
 
-
+	// 씬ID가 NONPASS가 아니면 해당ID의 씬을 생성 및 초기화한다.
+	// 장면 안이 아니라 여기서 바꿔야 실행 중인 장면 객체가 자신의 Progress 안에서 지워지지 않는다.
+	if (iScene > SCENEID_NONPASS)
+	{
+		InitScene(iScene);
+	}
 
 	if (iScene == SCENEID_END)
 		return SCENEID_END;

@@ -1720,12 +1720,9 @@ SCENEID CStage::Progress()
 			ERR_MSG(g_hWnd, L"SUMMONER 몬스터 객체 생성 실패");
 		}
 	}
-	
 
-	// 씬ID가 NONPASS가 아니면 씬매니져에서 해당ID의 씬을 생성 및 초기화
-	if(iScene > SCENEID_NONPASS)
-		GET_SINGLE(CSceneMgr)->InitScene(iScene);
 
+	// 다음 장면 교체는 CSceneMgr::Progress 가 한다(실행 중인 장면이 자신을 지우지 않게)
 	if (iScene == SCENEID_END)
 		return SCENEID_END;
 	return iScene;
