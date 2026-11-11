@@ -32,6 +32,7 @@ std::map<std::string, Channel*> _channel;
 private:
 bool _errcheck(FMOD_RESULT result){
 if(result!=FMOD_OK){
+if(IsSmokeMode()){SmokeCheck(false, L"fmod error %d", result);return false;}
 #ifdef _WINDOW
 TCHAR str[256];
 wsprintf(str, _TEXT_STR("FMOD error! (%d) %d\n"), result, FMOD_ErrorString(result));
@@ -78,6 +79,7 @@ bool LoadSound(std::string _key, std::string _path, bool IsBgm = FMOD_EFFECT){
 Sound* pSound;
 if(IsBgm)_result=_system->createStream((const char*)_path.data(),FMOD_2D|FMOD_HARDWARE|FMOD_LOOP_NORMAL|FMOD_UNICODE,0,&pSound);
 else _result=_system->createSound((const char*)_path.data(),FMOD_2D|FMOD_HARDWARE|FMOD_LOOP_OFF|FMOD_UNICODE,0,&pSound);
+SmokeCheck(_result==FMOD_OK, L"sound load %s", _key.c_str());
 if(!_errcheck(_result))return false;
 _sound.insert(std::make_pair(_key,pSound));
 if(IsBgm){
@@ -99,10 +101,10 @@ else{
 Channel* pChannel;
 _errcheck(_system->playSound(FMOD_CHANNEL_FREE,siter->second,true,&pChannel));
 _errcheck(pChannel->setVolume(_volume));
-_errcheck(pChannel->setPaused(false));}}
+SmokeCheck(_errcheck(pChannel->setPaused(false)), L"sound play %s", _key.c_str());}}
 else{
 _errcheck(citer->second->setVolume(_volume));
-_errcheck(citer->second->setPaused(false));}}
+SmokeCheck(_errcheck(citer->second->setPaused(false)), L"sound play %s", _key.c_str());}}
 #ifdef _UNICODE
 void Pause(std::wstring _key){
 std::map<std::wstring, Channel*>::iterator citer=_channel.find(_key);

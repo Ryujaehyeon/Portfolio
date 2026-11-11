@@ -44,7 +44,13 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 실행:   작업 디렉터리를 `2D-Portfolio/Client/`(툴은 `MFC_000/`)로 두고 exe 실행 — 리소스가 상대 경로.
         WSL 스모크: cd 2D-Portfolio/Client && timeout 8 ../Exe/<플랫폼>/Debug/Client/Client.exe → exit 124(살아 있음)
         단, 오류 메시지박스("system err")가 떠도 살아 있으므로 창 제목까지 확인한다.
-테스트: 없음 (자동화 테스트 없음 — 실행해서 눈으로 확인)
+테스트: 스모크 모드 (경위 `intent/smoke-log/`) — 입력 없이 로고→메뉴→스테이지→스킬까지 진행하고 스스로 종료한다.
+        cd 2D-Portfolio/Client && timeout 60 ../Exe/<플랫폼>/<구성>/Client/Client.exe -smoke; echo $?   → 0 (약 9초)
+        cd 2D-Portfolio/MFC_000 && ../Exe/<플랫폼>/<구성>/MFC_000/MFC_000.exe -smoke ../Client/Map.dat; echo $?   → 0
+        결과는 작업 디렉터리의 smoke.log(UTF-8, gitignore): 줄마다 PASS/FAIL/INFO, 마지막 줄 "RESULT PASS (fail=0)".
+        실패 시 종료 코드 1, FAIL 줄에 원인(ERR_MSG·FMOD 오류는 메시지박스 대신 여기). -smoke 없이 실행하면 아무것도 남기지 않는다.
+        알려진 실패: Release 의 "missing skill BoneSpear"(Release 에서 스킬이 안 나가는 기존 버그 — ub-fixes).
+        소리가 실제로 들리는지·화면이 제대로 그려지는지는 로그로 판정하지 못한다 — 필요할 때만 눈으로 확인.
 린트:   없음 (컴파일러 경고 /W3 이 유일한 정적 검사)
 ```
 

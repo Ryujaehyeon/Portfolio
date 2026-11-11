@@ -2,8 +2,13 @@
 #include "Player.h"
 #include "Include.h"
 
+// 스모크 모드에서 BoneSpear 시전이 한 번 끝났는지
+static bool s_bSmokeSkillCast = false;
+
 CPlayer::CPlayer(void)
 {
+	// 프로토타입 원본은 Initialize 를 거치지 않으므로 소멸자의 SAFE_DELETE 가 쓰레기 값을 지우지 않게 한다
+	m_pSkillPrototype = nullptr;
 }
 
 CPlayer::CPlayer( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
@@ -12,6 +17,7 @@ CPlayer::CPlayer( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType 
 	m_pObjKey = _ObjName;
 	m_pObjName = _ObjName;
 	m_pTagetList = NULL;
+	m_pSkillPrototype = nullptr;
 }
 
 CPlayer::~CPlayer(void)
@@ -245,6 +251,18 @@ void CPlayer::CheckKey()
 	// 키매니저로 키값 받아옴
 	m_dwKey = GET_SINGLE(CKeyMgr)->GetKey();
 
+	// 스모크 모드: 스테이지 2초 뒤부터 BoneSpear 가 한 번 생성될 때까지 시전한다(시전은 아래 우클릭 자리에서)
+	bool bSmokeCast = false;
+	if (IsSmokeMode() && !s_bSmokeSkillCast)
+	{
+		static const ULONGLONG s_ullSmokeStart = GetTickCount64();
+		if (GetTickCount64() - s_ullSmokeStart >= 2000)
+		{
+			m_SkillTree.sBoneSpear.iLevel = 1;
+			bSmokeCast = true;
+		}
+	}
+
 	//if((*CDevice::GetInstance())->GetKeyBoardState(DIK_LEFTARROW)
 	//	& 0x80)
 	//	m_Info.vPos.x -= fTime * 8.0f;
@@ -299,6 +317,10 @@ void CPlayer::CheckKey()
 				m_fChaterDirect = m_iDegree;
 				m_vTagetInfo = m_Info.vPos;
 				SkillActive(m_SkillActiveName);
+			}
+			else if (bSmokeCast)
+			{
+				SkillActive(BONESPEAR);
 			}
 		}
 		// 목표위치에 도달하지 못했을때
@@ -816,8 +838,14 @@ void CPlayer::SkillActive(TCHAR* _SkillName)
 			m_pMotion = CAST;
 			if (m_tFrame.fStart <= 0)
 			{
-				if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-					, BONESPEAR)))
+				const HRESULT hr = GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
+					, BONESPEAR);
+				if (IsSmokeMode())
+				{
+					SmokeCheck(SUCCEEDED(hr), L"skill BoneSpear");
+					s_bSmokeSkillCast = true;
+				}
+				if(FAILED(hr))
 				{
 					ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
 				}

@@ -44,7 +44,9 @@ HRESULT CSceneMgr::InitScene(SCENEID ID)
 		break;
 	}
 
-	if(FAILED(m_pSceneObj->Initialize()))
+	const HRESULT hr = m_pSceneObj->Initialize();
+	SmokeCheck(SUCCEEDED(hr), L"scene %d init", ID);
+	if(FAILED(hr))
 	{
 		return E_FAIL;
 	}

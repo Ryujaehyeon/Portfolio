@@ -10,6 +10,7 @@
 
 #include "MFC_000Doc.h"
 #include "MFC_000View.h"
+#include "Page2.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -55,6 +56,9 @@ CMFC_000App::CMFC_000App()
 
 CMFC_000App theApp;
 
+// 스모크 모드(-smoke)의 종료 코드. -1 이면 스모크가 아니다.
+static int s_iSmokeExitCode = -1;
+
 
 // CMFC_000App 초기화
 
@@ -71,6 +75,22 @@ BOOL CMFC_000App::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	CWinAppEx::InitInstance();
+
+	// 스모크 모드(-smoke <타일 파일>): 창 없이 타일 파일만 읽어 smoke.log 에 남기고 종료한다
+	if (__argc >= 3 && wcscmp(__wargv[1], L"-smoke") == 0)
+	{
+		SmokeBegin(L"smoke.log");
+		vector<TILE*> vecTile;
+		const int iTileCount = ReadTileFile(__wargv[2], vecTile);
+		SmokeCheck(iTileCount == 800, L"map tiles=%d (%s)", iTileCount, __wargv[2]);
+		for (TILE* pTile : vecTile)
+		{
+			SAFE_DELETE<TILE>(&pTile);
+		}
+		const TCHAR* const pRequired[] = { L"map tiles" };
+		s_iSmokeExitCode = SmokeEnd(pRequired, _countof(pRequired));
+		return FALSE;
+	}
 
 
 	// OLE 라이브러리를 초기화합니다.
@@ -150,7 +170,8 @@ int CMFC_000App::ExitInstance()
 	//TODO: 추가한 추가 리소스를 처리합니다.
 	AfxOleTerm(FALSE);
 
-	return CWinAppEx::ExitInstance();
+	const int iExitCode = CWinAppEx::ExitInstance();
+	return (s_iSmokeExitCode >= 0) ? s_iSmokeExitCode : iExitCode;
 }
 
 // CMFC_000App 메시지 처리기
