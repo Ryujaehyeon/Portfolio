@@ -76,3 +76,22 @@ MSBuild.exe 2D-Portfolio/MyProgram.sln -p:Configuration=Release -p:Platform=Win3
 - **`.dat` 호환**: 현재 구조체엔 포인터가 없어 호환된다. 이후 `TILE`/`OBJINFO` 에 포인터·`size_t`·`long double` 을 넣으면
   플랫폼 간 파일 호환이 깨진다 → CLAUDE.md 「건드리면 안 되는 부분」에 이미 구조체 변경 경고가 있다.
 - 구성 관리자 복제는 Win32 의 잘못된 설정도 그대로 복제한다(예: 이미 고친 Release 링크 누락 같은 것) → 1단계 확인 항목대로 눈으로 본다.
+
+## 검증 결과 (2026-11-11)
+
+`master`(smoke-log 포함) 머지 후 `Exe`·`Temp` 삭제 → restore → 4개 구성 빌드(`-m:1 -nodeReuse:false`) → 4개 구성 스모크.
+
+| spec | 결과 |
+|---|---|
+| R1 4개 구성 빌드 | ✅ 4개 모두 종료 코드 0·오류 0 |
+| R2 PE32+ | ✅ x64 Client·MFC_000 Debug·Release |
+| R3 플랫폼별 DLL | ✅ Win32 출력 `fmodexL.dll` 만, x64 출력 `fmodex64.dll` 만 |
+| R4 x64 Client 실행 | ✅ Debug `-smoke` 종료 코드 0 — 장면 0·1·2, 배경음 로드·재생, 타일 800, 몬스터 10, 스킬 BoneSpear, 메시지박스 없음. ⚠️ Release 는 알려진 실패 `missing skill BoneSpear` 1건뿐(Win32 Release 와 동일한 기존 버그 — `ub-fixes`) |
+| R5 x64 MFC_000 `Map.dat` | ✅ Debug·Release `-smoke ../Client/Map.dat` → `tiles=800`, 종료 코드 0 (32비트 툴이 저장한 데이터) |
+| R6 Win32 회귀 | ✅ Debug 스모크 PASS, Release 는 위와 같은 알려진 실패 1건 — x64 와 결과 동일 |
+| R7 새 경고 | ✅ Win32 Debug·Release 198, x64 Debug 276·Release 208 — x64 추가분은 C4267 뿐, C4311·C4312·C4302 0 |
+| R8 CLAUDE.md | ✅ smoke-log 의 「테스트」 절과 함께 머지, 스모크 명령이 `<플랫폼>` 을 받음 |
+
+- 소리가 실제로 들리는지·화면이 제대로 그려지는지는 스모크로 판정하지 못한다(눈·귀 확인은 하지 않음).
+- 클린 빌드 직후 첫 Win32 Debug 스모크만 스테이지 진입이 느려(`scene 2 init` 25초, 전체 29.4초) 스모크 타임아웃 30초에 근접했다.
+  재실행 2회는 8.6초 — 리소스 첫 읽기(디스크 캐시) 탓으로 보인다. 첫 실행에서 타임아웃 FAIL 이 나면 한 번 더 돌려 본다.
