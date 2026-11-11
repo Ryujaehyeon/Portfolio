@@ -170,10 +170,8 @@
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillProto.h" />
-    <ClInclude Include="SkillTree.h" />
     <ClInclude Include="UIObj.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="LogoBackGround.h" />
@@ -189,7 +187,6 @@
     <ClInclude Include="MenuStatic.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MultiTexture.h" />
-    <ClInclude Include="NonPlayer.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
     <ClInclude Include="ObjProto.h" />
@@ -201,8 +198,6 @@
     <ClInclude Include="SingleTexture.h" />
     <ClInclude Include="SortMgr.h" />
     <ClInclude Include="Stage.h" />
-    <ClInclude Include="Stage2.h" />
-    <ClInclude Include="Stage3.h" />
     <ClInclude Include="StageBackground.h" />
     <ClInclude Include="StageDynamic.h" />
     <ClInclude Include="StageObjProto.h" />
@@ -223,10 +218,8 @@
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillProto.cpp" />
-    <ClCompile Include="SkillTree.cpp" />
     <ClCompile Include="UIObj.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="LogoBackGround.cpp" />
@@ -242,7 +235,6 @@
     <ClCompile Include="MenuStatic.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
-    <ClCompile Include="NonPlayer.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="ObjProto.cpp" />
@@ -253,8 +245,6 @@
     <ClCompile Include="SingleTexture.cpp" />
     <ClCompile Include="SortMgr.cpp" />
     <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="Stage2.cpp" />
-    <ClCompile Include="Stage3.cpp" />
     <ClCompile Include="StageBackground.cpp" />
     <ClCompile Include="StageDynamic.cpp" />
     <ClCompile Include="StageObjProto.cpp" />

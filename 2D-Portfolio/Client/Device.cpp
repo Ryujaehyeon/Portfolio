@@ -69,7 +69,6 @@ HRESULT CDevice::InitDevice(WINMODE Mode)
 		return E_FAIL;
 
 	m_pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-	//m_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 	DirectInput8Create(hInst, DIRECTINPUT_VERSION,
 		IID_IDirectInput8, (void**)&m_pInput, NULL);

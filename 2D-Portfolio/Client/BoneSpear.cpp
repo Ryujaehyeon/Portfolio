@@ -157,7 +157,6 @@ void CBoneSpear::Render()
 void CBoneSpear::FrameStatas()
 {
 	FrameMove(PLAYER_BoneSpear_Missile, PLAYER_BoneSpear_Missile);
-	//FrameMove(PLAYER_BoneSpear_Tail, PLAYER_BoneSpear_Tail);
 }
 
 void CBoneSpear::Release()

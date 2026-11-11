@@ -101,11 +101,6 @@ void CMiniView::OnDraw(CDC* pDC)
 				continue;
 						
 			// 미니맵 크기에 맞게 스케일을 재조정
-			// 0724 개별 스케일 
-			 //if( (*pMonster)[idx] != NULL && (*pMonster)[idx]->unitSelect == true)
-			 //{
-				// D3DXMatrixScaling(&matScale, miniScale, miniScale, miniScale);
-			 //}
 
 			D3DXMatrixTranslation(&matWorld
 				, (*pMonster)[idx]->vPos.x * 0.3f

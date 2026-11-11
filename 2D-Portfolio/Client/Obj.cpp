@@ -150,7 +150,6 @@ POINT CObj::MouseInfo()
 	pt.x = (pt.x + CObj::g_tScroll.x);
 	pt.y = (pt.y + CObj::g_tScroll.y);
 	return pt;
-	//return D3DXVECTOR3(pt.x , pt.y , 0);
 }
 
 D3DXVECTOR3 CObj::MouseInfoDX()

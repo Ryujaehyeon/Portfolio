@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "Defines.h"
 #include "Obj.h"
 
 class CSkill : public CObj

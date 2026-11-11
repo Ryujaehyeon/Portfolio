@@ -55,12 +55,6 @@ BOOL CPage3::OnInitDialog()
 	// 사용영역 값 설정한다.
 	m_ctrSlider.SetRange(0, 300);
 
-	// 최소 값 설정.
-	//m_ctrSlider.SetRangeMin(-300);
-	// 최대 값을 설정.
-	//m_ctrSlider.SetRangeMax(300);
-
-
 	// 위치 설정.
 	m_ctrSlider.SetPos(30);
 
@@ -73,19 +67,6 @@ BOOL CPage3::OnInitDialog()
 
 	// 키보드의 PgUp, PgDn키를 누르거나 마우스로 슬라이더의 몸동을 클릭시 움직일 크기 
 	m_ctrSlider.SetPageSize(5);
-
-	// 슬라이더의 특정 영역 선택.
-	// 속성의 Enable Selection Range가 True로 되어 있어야 한다.
-	//m_ctrSlider.SetSelection(-100, 100);
-
-	// 선택영역 지운기.
-	//m_ctrSlider.ClearSel();
-
-	//4. 슬라이더가 이동 되었을때.
-	//	- 슬라이더 컨트롤의 이벤트 NM_RELEASEDCAPTURE를 사용한다.
-	//	- 마우스로 슬라이더의 이동이 끝난 후 발생한다.
-
-	//	int nPos = m_ctrSlider.GetPos();   // 현재 슬라이더의 위치를 알아낸다.
 
 	// 콤보박스
 	TCHAR szTmp[128] = L"";

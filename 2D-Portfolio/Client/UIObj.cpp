@@ -314,11 +314,6 @@ void CUIObj::Render()
 	if(pTexInfo == NULL)
 		return;
 
-	// 출력창에서 해당 함수를 거쳤는지 확인 가능
-	// DEBUG_ENTRY_EXIT;
-	// 해당 라인을 지났는지
-	// DEBUG_LINE;
-
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 
 	//// &GetRect() 그리는 이미지의 좌표
@@ -575,7 +570,6 @@ POINT CUIObj::UIMouseInfo()
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
 	return pt;
-	//return D3DXVECTOR3(pt.x , pt.y , 0);
 }
 
 void CUIObj::FontOutput( TCHAR* _pObjKey )

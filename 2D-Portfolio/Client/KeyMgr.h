@@ -1,7 +1,6 @@
 #pragma once
 #include "Defines.h"
-//#include "SingletonTemplate.h"
-class CKeyMgr //: public SingletonTemplate<CKeyMgr>
+class CKeyMgr
 {
 	SINGLETON(CKeyMgr);
 private:

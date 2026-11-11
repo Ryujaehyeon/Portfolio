@@ -52,18 +52,12 @@ typedef struct tagFrame
 {
 	float fStart;
 	float fLast;
-	//float fScene;
-	//DWORD dwTime;
 	tagFrame(){}
 	tagFrame(float _fStart
-		, float _fLast
-		/*, float _fScene
-		, DWORD _dwTime*/)
+		, float _fLast)
 	{
 		fStart = _fStart;
 		fLast  = _fLast;
-		//fScene = _fScene;
-		//dwTime = _dwTime;
 	}
 }FRAME;
 

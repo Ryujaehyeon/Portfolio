@@ -121,65 +121,6 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 			break;
 		}
 
-	//case OBJ_NONPLAYER:
-	//	{
-	//		map<wstring, list<CObj*>>::iterator iterNONPLAYER = 
-	//			m_MapObject.find(L"Npc");
-	//		// 키가 플레이어인 리스트가 없으면
-	//		if (iterNONPLAYER == m_MapObject.end())
-	//		{
-	//			// 추가 생성 후
-	//			list<CObj*> objlist;
-	//			// 리스트에 넣고
-	//			objlist.push_back(pProtoInst);
-	//			// 맵에 리스트를 넣음
-	//			m_MapObject.insert(make_pair(L"Npc", objlist));
-	//		}
-	//		else
-	//			iterNONPLAYER->second.push_back(pProtoInst);
-
-	//		break;
-	//	}
-
-	//case OBJ_BROKENBUILDING:
-	//	{
-	//		map<wstring, list<CObj*>>::iterator iterBROKENOBJ = 
-	//			m_MapObject.find(L"BrokenObj");
-	//		// 키가 플레이어인 리스트가 없으면
-	//		if (iterBROKENOBJ == m_MapObject.end())
-	//		{
-	//			// 추가 생성 후
-	//			list<CObj*> objlist;
-	//			// 리스트에 넣고
-	//			objlist.push_back(pProtoInst);
-	//			// 맵에 리스트를 넣음
-	//			m_MapObject.insert(make_pair(L"BrokenObj", objlist));
-	//		}
-	//		else
-	//			iterBROKENOBJ->second.push_back(pProtoInst);
-
-	//		break;
-	//	}
-
-	//case OBJ_BUILDING:
-	//	{
-	//		map<wstring, list<CObj*>>::iterator iterBUILDING = 
-	//			m_MapObject.find(L"Building");
-	//		// 키가 플레이어인 리스트가 없으면
-	//		if (iterBUILDING == m_MapObject.end())
-	//		{
-	//			// 추가 생성 후
-	//			list<CObj*> objlist;
-	//			// 리스트에 넣고
-	//			objlist.push_back(pProtoInst);
-	//			// 맵에 리스트를 넣음
-	//			m_MapObject.insert(make_pair(L"Building", objlist));
-	//		}
-	//		else
-	//			iterBUILDING->second.push_back(pProtoInst);
-
-	//		break;
-	//	}
 	case OBJ_BUTTON:
 		{
 			map<wstring, list<CObj*>>::iterator iterBUTTON = 
@@ -254,22 +195,6 @@ SCENEID CObjMgr::Progress()
 			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
 			map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
 						
-			//// 플레이어 정보를 보기 위함
-			//if((*iter2)->GetName() == PLAYER)
-			//DebugLog(L"레벨 : %d \n체력 : %8.3f,%8.3f \n경험치 : %8.3f/%8.3f \n공격력 : %8.2f \n방어력 : %8.2f \n힘 : %8.2f \n체질 : %8.2f \n민첩 : %8.2f \n통찰 : %8.2f \n지능 : %8.2f \n결의 %8.2f \n능력포인트 : %d \n기술포인트 : %d",
-			//(*iter2)->GetStatas().iLevel, 
-			//(*iter2)->GetStatas().fHealthPoint, (*iter2)->GetStatas().fHealthPointMAX, 
-			//(*iter2)->GetStatas().fExp,(*iter2)->GetStatas().fMaxExp,
-			//(*iter2)->GetStatas().fAttack,(*iter2)->GetStatas().fDefence, 
-			//(*iter2)->GetStatas().fMight, 
-			//(*iter2)->GetStatas().fConstitution, 
-			//(*iter2)->GetStatas().fDexterity, 
-			//(*iter2)->GetStatas().fPerception, 
-			//(*iter2)->GetStatas().fIntellect, 
-			//(*iter2)->GetStatas().fResolve,
-			//(*iter2)->GetStatas().iStatPoint,(*iter2)->GetStatas().iSKillPoint);
-
-
 			iScene = (*iter2)->Progress();
 			switch((*iter2)->GetObjType())
 			{
@@ -437,10 +362,6 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 				// 충돌 여부
 				_pSour->SetCrash(true);
 				_pDest->SetCrash(true);
-
-				// 타겟 설정
-				//_pSour->SetTagetObj(_pDest);
-				//_pDest->SetTagetObj(_pSour);
 			}
 		}
 	}
@@ -511,14 +432,6 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 				if((*iter)->GetName() == BONESPEAR)
 					(*iter)->SetStatas()->fHealthPoint = -1.f;
 
-
-				//충돌시 데미지
-				//SAFE_DELETE(&(*iter));
-				//SAFE_DELETE(&(*iter2));
-				
-				//list의 노드를 삭제
-				//iter = pSkill->erase(iter);
-				//iter2 = pMonsterList->erase(iter2);
 				++iter;
 				++iter2;
 			}
@@ -530,10 +443,6 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 					(*iter)->GetInfo().vPos.x < 0		 + CObj::g_tScroll.x  ||
 					(*iter)->GetInfo().vPos.x > WINSIZEX + CObj::g_tScroll.x	)
 				{
-
-					//해제 및 노드 삭제
-					//SAFE_DELETE(&(*iter));
-					//iter = pSkill->erase(iter);
 					if((*iter)->GetName() == BONESPEAR)
 						(*iter)->SetStatas()->fHealthPoint = -1.f;
 					++iter;
@@ -557,7 +466,6 @@ POINT CObjMgr::MouseInfo()
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
 	return pt;
-	//return D3DXVECTOR3(pt.x , pt.y , 0);
 }
 
 D3DXVECTOR3 CObjMgr::MouseInfoDX()
@@ -617,7 +525,7 @@ void CObjMgr::IterRelease()
 				// 죽었는지 상태체크 후
 				// 0817 오전 몬스터가 제대로 삭제되지 않음
 				if((*iter2)->GetpMotion() == DEATH && 
-					(*iter2)->GetFrame().fStart <= 0.f/*>= (*iter2)->GetFrame().fLast-2*/)
+					(*iter2)->GetFrame().fStart <= 0.f)
 				{
 					// 할당된 몬스터 객체 삭제
 					SAFE_DELETE<CObj>(&(*iter2));

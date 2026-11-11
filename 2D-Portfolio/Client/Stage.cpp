@@ -1491,48 +1491,6 @@ HRESULT CStage::Initialize()
 
 #pragma region SkillProto
 	{
-/*
-#pragma region AddObj
-		{
-			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-				, BONESPEAR)))
-			{
-				ERR_MSG(g_hWnd, L"BoneSpear 객체 생성 실패");
-				return E_FAIL;
-			}
-			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-				, FIREWALL)))
-			{
-				ERR_MSG(g_hWnd, L"FireWall 객체 생성 실패");
-				return E_FAIL;
-			}
-			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-				, BLIZZARD)))
-			{
-				ERR_MSG(g_hWnd, L"Blizzard 객체 생성 실패");
-				return E_FAIL;
-			}
-			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-				, HEAL)))
-			{
-				ERR_MSG(g_hWnd, L"Heal 객체 생성 실패");
-				return E_FAIL;
-			}
-			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-				, AURA)))
-			{
-				ERR_MSG(g_hWnd, L"Aura 객체 생성 실패");
-				return E_FAIL;
-			}
-			if(FAILED(GET_SINGLE(CObjMgr)->AddObject(m_pSkillPrototype
-				, RIVIVE)))
-			{
-				ERR_MSG(g_hWnd, L"Rivive 객체 생성 실패");
-				return E_FAIL;
-			}
-		}
-#pragma endregion AddObj
-*/
 #pragma region AddTexture
 		{	
 #pragma region BoneSpear
