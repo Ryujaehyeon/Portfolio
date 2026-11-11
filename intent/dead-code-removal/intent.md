@@ -7,10 +7,13 @@ Status: draft
 실행되지 않는 코드가 빌드·문서·이후 작업 범위에 계속 끼어 있다. 근거: [legacy-audit/review.md](../legacy-audit/review.md) 5·6번,
 2026-11-11 `master`(`4568842`)에서 다시 확인. 경로는 `2D-Portfolio/` 기준.
 
-- **참조가 없는 클래스 5개** — 자기 `.h/.cpp` 밖에서 이름이 쓰이지 않는다(`git grep -w`). `Headers/Include.h` 가 include 만 한다.
-  `CCollisionMgr`(114줄, 같은 일은 `CObjMgr::ColCircle`), `CFullModeMgr`(128줄, 전체화면은 `CDevice::InitDevice`),
+- **참조가 없는 클래스 4개** — 자기 `.h/.cpp` 밖에서 이름이 쓰이지 않는다(`git grep -w`). `Headers/Include.h` 가 include 만 한다.
+  `CCollisionMgr`(114줄, 같은 일은 `CObjMgr::ColCircle`),
   `CNonPlayer`(29줄, 빈 클래스), `CSkillTree`(52줄, 빈 구현 — 실제 UI 는 `CUIObj` + `struct SkillTree`),
   `CMouse`(34줄, **vcxproj 에 없어 컴파일도 안 됨**).
+  - **정정(2026-11-11, spec 작성 중)**: 오딧과 이 문서 초안은 `CFullModeMgr` 도 미사용으로 적었으나 **사용 중이다** —
+    `Client.cpp:89-91` 이 같은 헤더의 접근 클래스 `ModeSetter` 로 `SetMode`·`ModeChange` 를 불러 시작 창의 스타일·위치·크기를 정한다.
+    클래스 이름만 검색해 놓쳤다. 삭제 대상에서 뺀다.
 - **도달할 수 없는 장면 2개** — `CStage2`(88줄)·`CStage3`(77줄). `SCENEID_STAGE2`·`SCENEID_STAGE3` 를 반환하는 코드가 없고
   `CSceneMgr::InitScene`(`SceneMgr.cpp:34-39`)의 case 만 있다. 둘 다 `Initialize()` 가 `return S_OK;` 뿐이라
   도달하면 초기화 안 된 `m_pPrototype` 으로 `AddObject` 를 불러 크래시한다.
@@ -18,7 +21,7 @@ Status: draft
 - **주석 처리된 코드 약 170줄**(코드처럼 보이는 `//` 줄, 휴리스틱 집계). 많은 곳: `ObjMgr.cpp` 51, `Stage2.cpp` 15, `Monster.cpp` 11,
   `MainGame.cpp` 10, `StageBackground.cpp` 9, `Player.cpp` 9. `KeyMgr.h:3-4` 의 `SingletonTemplate` 흔적 포함.
 - 이 코드가 만드는 부담:
-  - 경고 3건이 여기서 나온다(Win32 Debug 198 중 `FullModeMgr.cpp` C4838 2건, `Stage2.cpp` C4715 1건 — 반환 없는 경로).
+  - 경고 1건이 여기서 나온다(Win32 Debug 198 중 `Stage2.cpp` C4715 — 반환 없는 경로).
   - CLAUDE.md·`docs/ARCHITECTURE.md` 가 없는 것과 다름없는 클래스를 구조로 설명한다(「Stage1~3 장면」, `CCollisionMgr` 싱글톤 등).
   - 뒤따르는 `ub-fixes`·`objmgr-lifetime`·`warning-cleanup` 이 실행되지 않는 코드까지 읽고 고쳐야 한다.
 
@@ -26,12 +29,12 @@ Status: draft
 - 위 클래스·파일이 저장소와 프로젝트 파일(`Client.vcxproj`·`MFC_000.vcxproj`·`.filters`·`Include.h`)에서 사라진다.
 - 주석 처리된 코드가 사라지고, 설명 주석만 남는다. 의도가 담긴 것(보스 소환 등)은 문서 한 곳에 메모로 남는다.
 - **게임·툴 동작은 그대로다** — 4개 구성 스모크 결과가 변경 전과 같다(Debug PASS, Release 는 알려진 실패 1건 그대로).
-- 경고가 늘지 않고, 삭제한 파일에서 나던 만큼 줄어든다(Win32 198 → 195 예상).
+- 경고가 늘지 않고, 삭제한 파일에서 나던 만큼 줄어든다(Win32 198 → 197 예상).
 - CLAUDE.md 「아키텍처 패턴」·`docs/ARCHITECTURE.md` 가 남은 코드와 일치한다.
 
 ## Affected users and systems
 사용자: 이 repo 개발자(읽고 고칠 코드가 줄어든다). 게임·툴 사용자에게 보이는 변화는 없다.
-시스템: `Client/`(삭제 14파일 + `SceneMgr.cpp`·주석 정리 대상 파일), `MFC_000/`(`Page4.*`, 리소스), `Headers/Include.h`·`Constant.h`,
+시스템: `Client/`(삭제 12파일 + `SceneMgr.cpp`·주석 정리 대상 파일), `MFC_000/`(`Page4.*`, 리소스), `Headers/Include.h`·`Constant.h`,
 두 vcxproj·filters, CLAUDE.md, `docs/ARCHITECTURE.md`
 
 ## Constraints
