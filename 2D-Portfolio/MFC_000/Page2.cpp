@@ -117,7 +117,6 @@ void CPage2::OnBnClickedButton2()
 		SAFE_DELETE<TILE>(&(*pTile)[i]);
 	}
 	pTile->clear();
-	//pTile->~vector();
 
 	ReadTileFile(Dlg.GetPathName(), *pTile);
 	((CMainFrame*)AfxGetMainWnd()
@@ -174,7 +173,6 @@ void CPage2::OnBnClickedButton4()
 		SAFE_DELETE<OBJINFO>(&(*pMonster)[i]);
 	}
 	pMonster->clear();
-	//pMonster->~vector();
 
 	HANDLE hFile;
 	DWORD dwByte;
@@ -202,8 +200,6 @@ void CPage2::OnBnClickedButton4()
 				pInfo = NULL;
 				break;
 			}
-			//int x = (pInfo->vPos.x / TILESIZEX);
-			//int y = (pInfo->vPos.y / (TILESIZEY * 0.5f)) * TILECNTX;
 			int vecNum = (pInfo->vPos.x / TILESIZEX) + (pInfo->vPos.y / (TILESIZEY * 0.5f)) * TILECNTX;
 			memcpy(&(*pMonster)[vecNum], &pInfo, sizeof(pInfo));
 		}

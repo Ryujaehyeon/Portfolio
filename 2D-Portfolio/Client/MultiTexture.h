@@ -6,7 +6,6 @@ class CMultiTexture
 	: public CTexture
 {
 private:
-	// vector<TEXINFO*> m_vecTexture;
 	map<const TCHAR*, vector<TEXINFO*>> m_MapTexture;
 public:
 	virtual const TEXINFO* GetTexture(

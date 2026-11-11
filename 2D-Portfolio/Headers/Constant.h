@@ -13,12 +13,6 @@ enum TEXTYPE					 /*  텍스트타입           */
 	TEXTYPE_MULTI,				 /*                      */
 };								 /*                      */
 
-/*//const BYTE ITEM_GOLD			= 0x01;
-//const BYTE ITEM_WEAPON		= 0x02;
-//const BYTE ITEM_ARMOR			= 0x04;
-//const BYTE ITEM_ACCESSORY		= 0x08;*/
-
-
 enum WINMODE
 {	// 윈도우 모드, 풀모드
 	WINMODE_FULL,

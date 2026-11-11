@@ -83,8 +83,6 @@ HRESULT CStageObjProto::InitProtoInstance()
 	m_MapProto.insert(make_pair(L"BlizzardButton"
 		, new CUIObj(objInfo, L"BlizzardButton", OBJ_UI)));
 
-	//m_MapProto.insert(make_pair(L"ItemInfoRect"
-	//	, new CUIObj(objInfo, L"ItemInfoRect", OBJ_UI)));
 	//------------------------------------------------------------//
 	// 플레이어
 	m_MapProto.insert(make_pair(L"Player"

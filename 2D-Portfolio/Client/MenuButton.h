@@ -20,18 +20,6 @@ protected:
 		return rc;
 	}
 
-	// 실제 충돌하는 좌표를 체크
-	//RECT RealRect()
-	//{
-	//	RECT rc =
-	//	{
-	//		int(m_Info.vPos.x - (m_Info.fCX * 0.5f)), 
-	//		int(m_Info.vPos.y - (m_Info.fCY * 0.5f)),
-	//		int(m_Info.vPos.x + (m_Info.fCX * 0.5f)), 
-	//		int(m_Info.vPos.y + (m_Info.fCY * 0.5f))
-	//	};
-	//	return rc;
-	//}
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();

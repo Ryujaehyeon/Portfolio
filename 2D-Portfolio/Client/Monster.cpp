@@ -67,8 +67,6 @@ SCENEID CMonster::Progress()
 	// 시간값 누적
 	fTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 	
-	//m_Info.vPos = m_Info.vPos + CObj::g_tScroll;
-
 	RegenTime();
 
 	D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.0f);
@@ -192,22 +190,6 @@ void CMonster::Render()
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
-
-		//{
-		//	if(m_tFrame.fStart <= PLAYER_FireWall)
-		//		const TEXINFO* pTexInfo 
-		//		= GET_SINGLE(CTextureMgr)->GetTexture(SKILL, FIREWALL, int(m_tFrame.fStart));
-
-		//	if(pTexInfo == NULL)
-		//		return;
-
-		//	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
-		//		(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
-
-		//	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-		//	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-		//		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
-		//}
 	}
 }
 void CMonster::CheckKey()
@@ -326,7 +308,6 @@ void CMonster::CheckKey()
 			m_pMotion = DEATH;
 		
 		// 바라보는 방향
-		//m_Info.vDir = m_pTagetObj->GetInfo().vPos - m_Info.vPos;
 		Tageting();
 		float fDistance = (m_pTagetObj->Setinfo()->fCX * 0.5f) +
 						  (m_Info.fCX * 0.5f);

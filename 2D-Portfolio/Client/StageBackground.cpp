@@ -56,13 +56,6 @@ HRESULT CStageBackGround::Initialize()
 
 SCENEID CStageBackGround::Progress()
 {
-	//D3DXMATRIX matTrans;
-
-	//D3DXMatrixTranslation(&matTrans, m_Info.vPos.x
-	//	, m_Info.vPos.y, m_Info.vPos.z);
-
-	//m_Info.matWorld = matTrans;
-
 	return SCENEID_NONPASS;
 }
 
@@ -91,16 +84,6 @@ void CStageBackGround::Render()
 			NULL, &m_Info.vCenter, NULL
 			, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
-	//const TEXINFO* pTexInfo = 
-	//	GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
-	//if(pTexInfo == NULL)
-	//	return;
-	//m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
-	//	pTexInfo->ImgInfo.Height * 0.5f, 0.0f);
-
-	//GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-	//GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-	//	NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void CStageBackGround::Release()
