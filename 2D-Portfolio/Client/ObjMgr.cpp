@@ -188,9 +188,11 @@ SCENEID CObjMgr::Progress()
 	for(map<wstring, list<CObj*>>::iterator iter
 		= m_MapObject.begin(); iter != m_MapObject.end(); ++iter)
 	{
+		// 증가는 루프 끝에서 한다 — erase 한 경우는 erase 가 돌려준 다음 원소부터 계속한다
 		for(list<CObj*>::iterator iter2 = iter->second.begin();
-			iter2 != iter->second.end(); ++iter2)
+			iter2 != iter->second.end(); )
 		{
+			bool bErased = false;
 			map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
 			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
 			map<wstring, list<CObj*>>::iterator iterSkill = m_MapObject.find(SKILL);
@@ -249,9 +251,7 @@ SCENEID CObjMgr::Progress()
 				if(*iter2 == nullptr)
 				{
 					iter2 = iter->second.erase(iter2);
-					if (iter2 == iter->second.end())
-						break;
-					continue;
+					bErased = true;
 				}
 				break;
 			case OBJ_UI:
@@ -259,21 +259,24 @@ SCENEID CObjMgr::Progress()
 					// 플레이어 정보
 					if(iterPlayer != m_MapObject.end())
 					{
-						static_cast<CPlayer*>(*iter2)->Setlist(
+						(*iter2)->Setlist(
 							&m_MapObject.find(PLAYER)->second);
 					}
 
 					// 몬스터 정보
 					if(iterMonster != m_MapObject.end())
 					{
-						static_cast<CMonster*>(*iter2)->Setlist(
+						(*iter2)->Setlist(
 							&m_MapObject.find(MONSTER)->second);
 					}
 					break;
 				}
 			}
-			if(iter2 == iter->second.end())
-				break;
+			// 지운 객체는 장면 판정·정렬 등록을 하지 않는다(iter2 는 이미 다음 원소)
+			if (bErased)
+			{
+				continue;
+			}
 
 			if(iScene > SCENEID_NONPASS)
 				return iScene;
@@ -284,6 +287,7 @@ SCENEID CObjMgr::Progress()
 			}
 			// 0806
 			GET_SINGLE(CSortMgr)->SetLayer(*iter2);
+			++iter2;
 		}
 	}
 
