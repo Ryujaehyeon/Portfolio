@@ -61,9 +61,6 @@
     <Filter Include="View\FormView\Sheet\Page3">
       <UniqueIdentifier>{017849de-5c10-4f3c-bb6f-50aea710b72b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="View\FormView\Sheet\Page4">
-      <UniqueIdentifier>{0527b2e2-fb0e-45e7-8ee2-7e1667002ff8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -146,9 +143,6 @@
     <ClInclude Include="Page3.h">
       <Filter>View\FormView\Sheet\Page3</Filter>
     </ClInclude>
-    <ClInclude Include="Page4.h">
-      <Filter>View\FormView\Sheet\Page4</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFC_000.cpp">
@@ -198,9 +192,6 @@
     </ClCompile>
     <ClCompile Include="Page3.cpp">
       <Filter>View\FormView\Sheet\Page3</Filter>
-    </ClCompile>
-    <ClCompile Include="Page4.cpp">
-      <Filter>View\FormView\Sheet\Page4</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
