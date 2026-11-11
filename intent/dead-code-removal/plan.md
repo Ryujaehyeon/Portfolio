@@ -53,7 +53,7 @@ Status: approved (사용자 위임 — 「권장안으로 PR 머지까지 진행
 코드 설명이 딸린 주석(예: `// 타겟 설정`)은 그 코드와 함께 지운다. 삭제로 생기는 연속 빈 줄은 1줄로 줄인다.
 
 **남기는 것(설명 주석으로 판정)**: `MFC_000.cpp:107-108`(MFC 마법사 안내문), `MFC_000Doc.cpp:96-98`(마법사 안내문),
-`Obj.cpp:96-124`·`MFC_000View.cpp:455-473`(직선 방정식 설명), `Player.cpp:245`(`rgbButtons` 인덱스 설명), `ObjMgr.cpp:618`(작업 메모),
+`Obj.cpp:96-124`·`MFC_000View.cpp:455-473`(직선 방정식 설명), `ObjMgr.cpp:618`(작업 메모),
 `UIObj.cpp:324`(코드 아님), `MFC_000View.cpp` 의 `/*pDC*/` 류(미사용 인자 이름 — 관용 표기), `MainFrm.cpp:185`(설명), `Include.h` 의 구분선.
 
 ## 작업 순서
@@ -94,3 +94,29 @@ MSBuild.exe 2D-Portfolio/MyProgram.sln -p:Configuration=<Debug|Release> -p:Platf
 - **`.rc` 손상** — 인코딩·줄바꿈이 바뀌면 리소스 컴파일러가 깨진 문자열을 만들 수 있다. 3단계 확인 + 툴 빌드·실행으로 본다.
 - **vcxproj 항목 누락** — 파일만 지우고 항목을 남기면 빌드 오류(C1083)로 바로 드러난다.
 - **첫 스모크 타임아웃** — 클린 빌드 직후 첫 실행은 리소스 첫 읽기로 30초에 근접할 수 있다(x64-migration 기록). 타임아웃 FAIL 이면 한 번 더 돌린다.
+
+## 구현 중 변경
+
+- `Player.cpp:245`(`rgbButtons` 설명)는 남기기로 했으나, 설명하던 246행(주석 처리된 호출)이 지워지면 홀로 남아 함께 지웠다.
+- 주석 삭제로 `Player.cpp` 에 연속 빈 줄이 하나 늘어 1줄로 줄였다(바뀐 파일 전체에서 연속 빈 줄 구간 수를 변경 전과 비교해 찾음).
+- `Constant.h` 의 `ITEM_*` 블록은 16-19행이 `/* … */` 블록, 20-21행은 빈 줄이었다. `Struct.h` 60-61행 블록은 끝에 `)` 가 붙어 있어 59행 끝으로 옮겼다.
+
+## 검증 결과 (2026-11-11)
+
+`Exe`·`Temp` 삭제 → restore → 4개 구성 빌드(`-m:1 -nodeReuse:false`) → 4개 구성 스모크 → `-smoke` 없이 8초 실행.
+
+| spec | 결과 |
+|---|---|
+| R1·R2·R3 파일 삭제 | ✅ 14개 파일 없음. `.rc`·`resource.h` 는 UTF-16 LE·CRLF(`file`), UTF-8 변환 diff 는 `IDD_PAGE4` DIALOGEX 블록·DESIGNINFO 항목·`#define` 뿐 |
+| R4 이름 잔존 | ✅ `git grep -w` 0줄, `.rc`·`resource.h` 변환 후 `PAGE4` 0줄 |
+| R5 `CFullModeMgr` 유지 | ✅ |
+| R6 주석 처리된 코드 | ✅ 23개 파일 297줄 삭제. 휴리스틱 재집계에 남은 줄은 위 「남기는 것」뿐 |
+| R7 코드 불변 | ✅ 23개 파일 모두 「주석·공백 제거 후 같음」(검사기 음성 시험: 코드 차이는 다르다고 판정) |
+| R8 4개 구성 빌드 | ✅ 종료 코드 0·오류 0 |
+| R9 경고 | ✅ Win32 Debug·Release 198 → 197, x64 Release 208 → 207 — 모두 C4715 1건 감소. x64 Debug 276 → **269**: C4715 1건 + `Debug.hpp` C4267 6건(이 헤더의 경고 2건이 번역 단위마다 반복되는데 지운 `.cpp` 3개분이 빠짐). spec 의 예측 275 는 이 반복을 빠뜨린 값. 새 종류 경고 0 |
+| R10 동작 불변 | ✅ Debug 스모크 Win32 8.6초·x64 7.9초 `RESULT PASS (fail=0)`. Release 는 두 플랫폼 모두 `FAIL missing skill BoneSpear` 1건뿐(기존). 툴 4개 구성 `tiles=800`·종료 코드 0. `-smoke` 없이 Client·툴 종료 코드 124(살아 있음), `smoke.log` 없음 |
+| R11 의도 메모 | ✅ `docs/ARCHITECTURE.md` 「12. 구현되지 않은 기능」 |
+| R12 문서 일치 | ✅ CLAUDE.md·`ARCHITECTURE.md` 에서 지운 이름은 12절에만. 경고 기준 갱신. 오딧 5번에 `CFullModeMgr` 정정 |
+| R13 종류별 커밋 | ✅ 미사용 클래스 / 도달 불가 장면 / 툴 Page4 / 주석 처리된 코드 / 문서 |
+
+- 화면·소리·조작, 툴 프로퍼티 시트 UI 는 눈으로 확인하지 않았다(spec 수용 항목).

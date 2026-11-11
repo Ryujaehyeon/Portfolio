@@ -6,7 +6,7 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 
 | 프로젝트 | 종류 | 역할 |
 |---|---|---|
-| `Client/` | Win32 Application | 게임 본체. Logo → Menu → Stage1~3 장면 |
+| `Client/` | Win32 Application | 게임 본체. Logo → Menu → Stage 장면 |
 | `MFC_000/` | MFC(Dynamic) Application | 맵·몬스터 배치 툴. `*.dat` 파일로 저장 → Client 가 읽음(`Map.dat`, `Monster.dat`) |
 | `Headers/` | 공유 헤더(솔루션 폴더) | `Constant.h`·`Struct.h`·`Macro.h`·`Function.h`·`Defines.h`·`Include.h` |
 
@@ -38,8 +38,8 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
         (WSL: "/mnt/c/Program Files/Microsoft Visual Studio/18/Insiders/MSBuild/Current/Bin/MSBuild.exe")
         정상 출력: "Client.vcxproj -> ...\Exe\<플랫폼>\Debug\Client\Client.exe", 오류 0, 종료 코드 0
         기존 경고(경고 줄 수 기준)는 정상 — 새로 늘어나면 안 된다:
-          Win32 Debug·Release 198(C4244 177·C4838 18·C4715 2·C4018 1)
-          x64 Debug 276 · Release 208 — Win32 대비 C4267(size_t→int) 13곳(Debug.hpp 2곳은 번역 단위마다 반복), C4018 은 없음
+          Win32 Debug·Release 197(C4244 177·C4838 18·C4715 1·C4018 1)
+          x64 Debug 269 · Release 207 — Win32 대비 C4267(size_t→int) 13곳(Debug.hpp 2곳은 번역 단위마다 반복 — .cpp 를 더하거나 지우면 x64 Debug 수가 2씩 변한다), C4018 은 없음
         경고 수를 비교할 빌드는 -m:1 -nodeReuse:false 로 — 재사용된 MSBuild 노드는 다른 환경(CL 등)을 물고 있을 수 있다.
 실행:   작업 디렉터리를 `2D-Portfolio/Client/`(툴은 `MFC_000/`)로 두고 exe 실행 — 리소스가 상대 경로.
         WSL 스모크: cd 2D-Portfolio/Client && timeout 8 ../Exe/<플랫폼>/Debug/Client/Client.exe → exit 124(살아 있음)
@@ -104,11 +104,11 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - **게임 루프**: `CMainGame::Initialize/Progress/Render/Release`. `Progress()` 가 `SCENEID` 를 반환해 장면 전환을 알린다.
   객체·장면 모두 같은 수명주기(`Initialize` → `Progress` → `Render` → `Release`)를 따른다.
 - **매니저 = 싱글톤**: `SINGLETON(type)` 매크로(`Headers/Macro.h`) + `GET_SINGLE(type)->...` 로 접근,
-  `DESTROY_SINGLE` 로 해제. `CDevice` `CTextureMgr` `CSceneMgr` `CObjMgr` `CTimeMgr` `CKeyMgr` `CCollisionMgr` `CAStar` `CSortMgr` 등.
-- **장면**: `CSceneObj` 파생 `CLogo` `CMenuD2` `CStage` `CStage2` `CStage3`, `CSceneMgr::InitScene(SCENEID)` 로 교체.
+  `DESTROY_SINGLE` 로 해제. `CDevice` `CTextureMgr` `CSceneMgr` `CObjMgr` `CTimeMgr` `CKeyMgr` `CAStar` `CSortMgr` 등.
+- **장면**: `CSceneObj` 파생 `CLogo` `CMenuD2` `CStage`, `CSceneMgr::InitScene(SCENEID)` 로 교체.
 - **오브젝트 계층**(장면 계층과 별개): `CObj` → 장면별 `C{Logo,Menu,Stage}{Static,Dynamic}` →
-  `CStageDynamic` → `CPlayer` `CMonster` `CNonPlayer`, `CStageStatic` → `CStageBackGround` `CUIObj`.
-  스킬은 `CObj` → `CSkill` → `CBoneSpear` `CFireWall` `CBlizzard`, 스킬트리는 `CSkillTree`.
+  `CStageDynamic` → `CPlayer` `CMonster`, `CStageStatic` → `CStageBackGround` `CUIObj`.
+  스킬은 `CObj` → `CSkill` → `CBoneSpear` `CFireWall` `CBlizzard`. 스킬트리는 객체가 아니라 `CUIObj` + `struct SkillTree`.
 - **프로토타입 패턴**: `CPrototype` → `CObjProto`(`map<wstring, CObj*>`) → `CLogoObjProto`/`CMenuObjProto`/`CStageObjProto`/`CSkillProto`.
   새 객체는 원본을 `Clone()` 해서 만든다.
 - **텍스처**: `CTexture` → `CSingleTexture`/`CMultiTexture`, `CTextureMgr` 가 키(`ObjKey`/`StateKey`/`Motion`)로 관리.

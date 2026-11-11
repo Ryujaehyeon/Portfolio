@@ -145,14 +145,6 @@ stateDiagram-v2
     Menu --> Stage: CMenuButton 「시작」<br/>SCENEID_STAGE (MenuButton.cpp:51)
     Menu --> [*]: CMenuButton 「종료」<br/>SCENEID_END (MenuButton.cpp:59)
     Stage --> [*]: 창 닫기 (WM_QUIT)
-
-    state "Stage2 (도달 불가)" as Stage2
-    state "Stage3 (도달 불가)" as Stage3
-    note right of Stage2
-        SCENEID_STAGE2 / STAGE3 를
-        반환하는 코드가 없다.
-        CSceneMgr 의 case 만 존재.
-    end note
 ```
 
 | 장면 | 클래스 | 원형 객체(Prototype) | 배경음 |
@@ -160,8 +152,6 @@ stateDiagram-v2
 | 로고 | `CLogo` | `CLogoObjProto` — 배경, `CBall` | — |
 | 메뉴 | `CMenuD2` | `CMenuObjProto` — 배경, 시작/종료 버튼 | `Wilderness.mp3` |
 | 스테이지 | `CStage` | `CStageObjProto` — 배경(타일) 1, UI 20종, 플레이어·동료 3, 몬스터 8종 | `Tristram.mp3` |
-| (스테이지2) | `CStage2` | 없음 — 도달 불가 | `Cave.mp3` |
-| (스테이지3) | `CStage3` | 없음 — 도달 불가 | — |
 
 `CStage::Initialize` 가 텍스처 수백 장(`../Resource/Texture/...`)과 객체를 한 번에 적재한다. `CStage::Release` 는
 `CTextureMgr`·`CObjMgr` 싱글턴을 통째로 파괴한다.
@@ -184,8 +174,6 @@ classDiagram
     CSceneObj <|-- CLogo
     CSceneObj <|-- CMenuD2
     CSceneObj <|-- CStage
-    CSceneObj <|-- CStage2
-    CSceneObj <|-- CStage3
     CSceneMgr o-- "1" CSceneObj : m_pSceneObj
 ```
 
@@ -219,7 +207,6 @@ classDiagram
     CObj <|-- CStageStatic
     CObj <|-- CStageDynamic
     CObj <|-- CSkill
-    CObj <|-- CSkillTree
 
     CLogoStatic <|-- CLogoBackGround
     CLogoDynamic <|-- CBall
@@ -229,14 +216,11 @@ classDiagram
     CStageStatic <|-- CUIObj
     CStageDynamic <|-- CPlayer
     CStageDynamic <|-- CMonster
-    CStageDynamic <|-- CNonPlayer
     CSkill <|-- CBoneSpear
     CSkill <|-- CFireWall
     CSkill <|-- CBlizzard
 
     note for CStageDynamic "CAStar 로 경로 탐색"
-    note for CSkillTree "미사용 (오딧 5번)"
-    note for CNonPlayer "미사용 (오딧 5번)"
 ```
 
 ### 6.3 원형(Prototype)과 텍스처
@@ -333,7 +317,7 @@ flowchart LR
 │ └──────────────┘ └─────────────────────────────────────┘ │
 └──────────────────────────────────────────────────────────┘
 ```
-`MainFrm.cpp:319-330` 이 스플리터를 만들고, `MySheet.cpp:27-29` 가 페이지를 붙인다. `Page4` 는 시트에 붙지 않는다(미사용).
+`MainFrm.cpp:319-330` 이 스플리터를 만들고, `MySheet.cpp:27-29` 가 페이지를 붙인다.
 툴은 Client 와 같은 이름의 `CDevice`·`CTextureMgr`·`C*Texture` 를 **별도 사본**으로 가진다(내용이 갈라짐, 오딧 9번).
 
 ## 10. 공용 헤더
@@ -365,4 +349,19 @@ flowchart TB
 | 결합도 | 모든 것이 전역 싱글턴 + `Include.h` 일괄 include | — |
 | 중복 | 렌더링 계층(Device·Texture) 5쌍이 Client·툴에 따로 | 9 |
 | 입력 | DirectInput(마우스) + `GetAsyncKeyState`(키보드) 혼용 | 10 |
-| 죽은 코드 | `CStage2`·`CStage3`(도달 불가), `CCollisionMgr`·`CFullModeMgr`·`CNonPlayer`·`CSkillTree`·`CMouse`, 툴 `CPage4` | 5 |
+
+## 12. 구현되지 않은 기능
+
+[dead-code-removal](../intent/dead-code-removal/plan.md)(2026-11-11)에서 실행되지 않는 코드를 지우며 남긴 의도. 코드는 git 이력에 있다
+(`git log --grep dead-code-removal`).
+
+| 기능 | 남아 있던 흔적 | 지운 커밋 종류 |
+|---|---|---|
+| 2·3 스테이지 | `CStage2`(배경음 `Cave.mp3`, 몬스터 Viper 10마리 유지), `CStage3`(SandRaider). 진입 경로(`SCENEID_STAGE2/3` 반환)가 없었고 `Initialize` 가 비어 있어 도달하면 크래시했다. `Resource/` 의 해당 리소스는 남아 있다 | 도달 불가 장면 |
+| 보스 | 2 스테이지 Izual·Andariel, 3 스테이지 Diablo 소환(주석, 「아직 몬스터 텍스쳐 추가 코드가 없음」). 이름 상수와 `ObjMgr.cpp` 의 보스 판정은 남아 있다 | 도달 불가 장면 |
+| 키보드 이동 | `CPlayer::CheckKey` 의 DirectInput 방향키 이동(주석). 지금 이동은 마우스 클릭뿐 | 주석 처리된 코드 |
+| 전체화면 전환 | `WndProc` 의 `WM_CHAR` → `ModeSetter` 로 창/전체화면 토글(주석), `CMainGame::Initialize` 의 Release 전체화면 분기(주석). `CFullModeMgr` 자체는 시작 창 설정에 쓰인다 | 주석 처리된 코드 |
+| NPC·건물 | `CObjMgr::AddObject` 의 `OBJ_NONPLAYER`·`OBJ_BROKENBUILDING`·`OBJ_BUILDING` 분기(주석), 빈 클래스 `CNonPlayer`. `OBJ_TYPE` enum 값은 남아 있다 | 주석 처리된 코드, 미사용 클래스 |
+| 스킬 객체 미리 생성 | `CStage::Initialize` 의 스킬 6종(BoneSpear·FireWall·Blizzard·Heal·Aura·Rivive) `AddObject` 블록(주석). 지금 스킬은 시전할 때 만든다 | 주석 처리된 코드 |
+| 아이템 | `ITEM_*` 비트 플래그(주석), `ItemInfoRect` UI 원형(주석) | 주석 처리된 코드 |
+| 툴 플레이어 페이지 | `CPage4`(캡션 「Player」, 슬라이더·그림 컨트롤 대화상자) — 시트에 붙지 않았다 | 툴 Page4 |

@@ -118,12 +118,12 @@
 | 클래스 | 파일 | 비고 |
 |---|---|---|
 | `CCollisionMgr` | `Client/CollisionMgr.*` | 같은 일을 `CObjMgr::ColCircle` 이 한다. `Include.h:21` |
-| `CFullModeMgr` | `Client/FullModeMgr.*` | 자체 싱글턴. 전체화면은 `CDevice::InitDevice(WINMODE_*)` 가 담당. `Include.h:58` |
+| ~~`CFullModeMgr`~~ | `Client/FullModeMgr.*` | **정정(2026-11-11): 사용 중** — `Client.cpp:89-91` 이 같은 헤더의 `ModeSetter` 로 시작 창을 설정한다. 클래스 이름만 검색해 놓쳤다(dead-code-removal 에서 제외). |
 | `CNonPlayer` | `Client/NonPlayer.*` | 생성자만 있는 빈 클래스. `Include.h:40` |
 | `CSkillTree` | `Client/SkillTree.*` | `CObj` 파생 빈 구현. 실제 스킬트리 UI 는 `CUIObj` + `struct SkillTree`. `Include.h:51` |
 | `CMouse` | `Client/Mouse.*` | **vcxproj 에 없음** — 컴파일조차 안 되는 파일. 마우스는 `CObjMgr::MouseInfo` 가 담당. |
 
-합계 357줄. `Client/KeyMgr.h:3-4` 의 주석 처리된 `SingletonTemplate` 흔적도 함께.
+합계 357줄(정정 후 229줄). `Client/KeyMgr.h:3-4` 의 주석 처리된 `SingletonTemplate` 흔적도 함께.
 
 **도달 불가 장면** (2026-11-10 아키텍처 문서 작성 중 발견): `SCENEID_STAGE2`·`SCENEID_STAGE3` 를 반환하는 코드가 없다
 (장면 전환은 `Ball.cpp:41` → MENU, `MenuButton.cpp:51` → STAGE, `:59` → END 뿐). `CSceneMgr::InitScene` 의 case 만 있고
