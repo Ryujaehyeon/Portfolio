@@ -67,6 +67,39 @@ void CPage2::OnBnClickedButton1()
 }
 
 
+int ReadTileFile(const TCHAR* const _pPath, vector<TILE*>& _rTiles)
+{
+	const HANDLE hFile = CreateFile(_pPath,
+		GENERIC_READ, 0, nullptr, OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL, nullptr);
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		return -1;
+	}
+
+	int iCount = 0;
+	DWORD dwByte;
+	while(true)
+	{
+		TILE* pInfo = new TILE;
+		ZeroMemory(pInfo, sizeof(TILE));
+		ReadFile(hFile, pInfo, sizeof(TILE)
+			, &dwByte, nullptr);
+
+		if(dwByte == 0)
+		{
+			delete pInfo;
+			break;
+		}
+
+		_rTiles.push_back(pInfo);
+		++iCount;
+	}
+
+	CloseHandle(hFile);
+	return iCount;
+}
+
 void CPage2::OnBnClickedButton2()
 {
 	// 타일 불러오기
@@ -86,30 +119,7 @@ void CPage2::OnBnClickedButton2()
 	pTile->clear();
 	//pTile->~vector();
 
-	HANDLE hFile;
-	DWORD dwByte;
-
-	hFile = CreateFile(Dlg.GetPathName(),
-		GENERIC_READ, 0, NULL, OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL, NULL);
-	while(true)
-	{
-		TILE* pInfo = new TILE;
-		ZeroMemory(pInfo, sizeof(TILE));
-		ReadFile(hFile, pInfo, sizeof(TILE)
-			, &dwByte, NULL);
-
-		if(dwByte == 0)
-		{
-			delete pInfo;
-			pInfo = NULL;
-			break;
-		}
-
-		pTile->push_back(pInfo);
-	}
-
-	CloseHandle(hFile);
+	ReadTileFile(Dlg.GetPathName(), *pTile);
 	((CMainFrame*)AfxGetMainWnd()
 		)->m_pMainView->Invalidate(FALSE);
 }

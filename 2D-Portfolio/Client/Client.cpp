@@ -20,13 +20,53 @@ BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
+// 스모크 모드(-smoke) 진행표: 스테이지 진입 1초 뒤 몬스터 수 확인, 4초 뒤 종료.
+// 전체 30초를 넘기면 실패로 끝낸다. true 를 반환하면 메인 루프를 빠져나간다.
+static bool SmokeTick(const SCENEID _eScene)
+{
+	if (!IsSmokeMode())
+	{
+		return false;
+	}
+	static const ULONGLONG s_ullBegin = GetTickCount64();
+	static ULONGLONG s_ullStageStart = 0;
+	static bool s_bMonsterChecked = false;
+	const ULONGLONG ullNow = GetTickCount64();
+
+	if (_eScene == SCENEID_STAGE && s_ullStageStart == 0)
+	{
+		s_ullStageStart = ullNow;
+		SmokeLog(L"stage entered");
+	}
+	if (ullNow - s_ullBegin > 30000)
+	{
+		SmokeCheck(false, L"timeout (30 s)");
+		return true;
+	}
+	if (s_ullStageStart == 0)
+	{
+		return false;
+	}
+	if (!s_bMonsterChecked && ullNow - s_ullStageStart >= 1000)
+	{
+		const int iMonsterCnt = GET_SINGLE(CObjMgr)->GetMonsterCnt();
+		SmokeCheck(iMonsterCnt >= 5, L"monsters=%d", iMonsterCnt);
+		s_bMonsterChecked = true;
+	}
+	return ullNow - s_ullStageStart >= 4000;
+}
+
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
-	UNREFERENCED_PARAMETER(lpCmdLine);
+
+	if (_tcsstr(lpCmdLine, L"-smoke") != nullptr)
+	{
+		SmokeBegin(L"smoke.log");
+	}
 
  	// TODO: 여기에 코드를 입력합니다.
 	MSG msg;
@@ -80,12 +120,26 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				
 				if (iScene == SCENEID_END)
 					break;
+				if (SmokeTick(iScene))
+				{
+					break;
+				}
 			}
 		}
 	}
 	Setter->Destroy();
 	Sound->Close();
 	DESTROY_DEBUG_CONSOLE;
+
+	if (IsSmokeMode())
+	{
+		const TCHAR* const pRequired[] = {
+			L"scene 0 init", L"scene 1 init", L"scene 2 init",
+			L"sound load Wilderness", L"sound play Wilderness",
+			L"sound load Tristram", L"sound play Tristram",
+			L"map tiles", L"monsters", L"skill BoneSpear" };
+		return SmokeEnd(pRequired, _countof(pRequired));
+	}
 	return (int) msg.wParam;
 }
 

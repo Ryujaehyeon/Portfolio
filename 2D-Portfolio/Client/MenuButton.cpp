@@ -40,6 +40,17 @@ SCENEID CMenuButton::Progress()
 
 	m_Info.matWorld =  matTrans;
 
+	// 스모크 모드: 메뉴에 들어온 지 1초 뒤 마우스 없이 「시작」을 누른 것으로 친다
+	if (IsSmokeMode() && m_pObjKey == L"MenuButton_Start")
+	{
+		static float s_fSmokeTime = 0.f;
+		s_fSmokeTime += GET_SINGLE(CTimeMgr)->DeltaTime();
+		if (s_fSmokeTime >= 1.f)
+		{
+			return SCENEID_STAGE;
+		}
+	}
+
 	SCENEID iScene;
 	// &RealRect() 실제 충돌하는 좌표를 체크
 	if(PtInRect(&RealRect(), MouseInfo()))
