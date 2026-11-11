@@ -184,7 +184,7 @@ SCENEID CObjMgr::Progress()
 {
 
 
-	SCENEID iScene;
+	SCENEID iScene = SCENEID_NONPASS;
 	for(map<wstring, list<CObj*>>::iterator iter
 		= m_MapObject.begin(); iter != m_MapObject.end(); ++iter)
 	{

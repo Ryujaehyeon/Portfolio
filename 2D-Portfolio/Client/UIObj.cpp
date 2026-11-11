@@ -528,6 +528,9 @@ float CUIObj::VelueToPercentage(TCHAR* VelueName)
 			}
 		}
 	}
+
+	// 대상(HPBar 면 마우스 아래 몬스터)이 없으면 음수 — 호출부가 >= 0 으로 표시 여부를 정한다
+	return -1.f;
 }
 
 void CUIObj::CheckKey()
