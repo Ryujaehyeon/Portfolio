@@ -198,8 +198,6 @@
     <ClInclude Include="SingleTexture.h" />
     <ClInclude Include="SortMgr.h" />
     <ClInclude Include="Stage.h" />
-    <ClInclude Include="Stage2.h" />
-    <ClInclude Include="Stage3.h" />
     <ClInclude Include="StageBackground.h" />
     <ClInclude Include="StageDynamic.h" />
     <ClInclude Include="StageObjProto.h" />
@@ -247,8 +245,6 @@
     <ClCompile Include="SingleTexture.cpp" />
     <ClCompile Include="SortMgr.cpp" />
     <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="Stage2.cpp" />
-    <ClCompile Include="Stage3.cpp" />
     <ClCompile Include="StageBackground.cpp" />
     <ClCompile Include="StageDynamic.cpp" />
     <ClCompile Include="StageObjProto.cpp" />

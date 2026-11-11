@@ -31,14 +31,6 @@ HRESULT CSceneMgr::InitScene(SCENEID ID)
 		m_pSceneObj = new CStage;
 		break;
 
-	case SCENEID_STAGE2:
-		m_pSceneObj = new CStage2;
-		break;
-
-	case SCENEID_STAGE3:
-		m_pSceneObj = new CStage3;
-		break;
-
 	default:
 		return E_FAIL;
 		break;

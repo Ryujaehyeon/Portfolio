@@ -3,7 +3,7 @@
 
 
 CSceneObj::CSceneObj(void)
-	// 장면 대부분이 m_pSkillPrototype 을 만들지 않는데 CStage·CStage3 의 Release 가 지우므로 nullptr 로 시작한다
+	// 장면 대부분이 m_pSkillPrototype 을 만들지 않는데 CStage 의 Release 가 지우므로 nullptr 로 시작한다
 	: m_pSkillPrototype(nullptr)
 {
 	

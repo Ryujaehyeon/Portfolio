@@ -22,8 +22,6 @@
 #include "Logo.h"
 #include "MenuD2.h"
 #include "Stage.h"
-#include "Stage2.h"
-#include "Stage3.h"
 
 //===========Object Header=============//
 #include "LogoBackGround.h"

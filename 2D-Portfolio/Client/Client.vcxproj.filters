@@ -82,12 +82,6 @@
     <Filter Include="01.Scene\Stage\Stage1">
       <UniqueIdentifier>{9efb887c-0b6b-45d0-80c6-e638eb2f630a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Scene\Stage\Stage2">
-      <UniqueIdentifier>{f43cc07d-40ab-4eae-9a27-73eae4e2ba36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Scene\Stage\Stage3">
-      <UniqueIdentifier>{37c1487a-d79f-49da-b71c-f5d009d502bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="94. Algorithm\AStar">
       <UniqueIdentifier>{7d22dbf4-7014-40e8-a4ae-91dd531c9d10}</UniqueIdentifier>
     </Filter>
@@ -298,12 +292,6 @@
     <ClInclude Include="Stage.h">
       <Filter>01.Scene\Stage\Stage1</Filter>
     </ClInclude>
-    <ClInclude Include="Stage2.h">
-      <Filter>01.Scene\Stage\Stage2</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage3.h">
-      <Filter>01.Scene\Stage\Stage3</Filter>
-    </ClInclude>
     <ClInclude Include="MenuButton.h">
       <Filter>02.Object\02. Menu\Dynamic\MenuBurton</Filter>
     </ClInclude>
@@ -434,12 +422,6 @@
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>01.Scene\Stage\Stage1</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage2.cpp">
-      <Filter>01.Scene\Stage\Stage2</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage3.cpp">
-      <Filter>01.Scene\Stage\Stage3</Filter>
     </ClCompile>
     <ClCompile Include="MenuButton.cpp">
       <Filter>02.Object\02. Menu\Dynamic\MenuBurton</Filter>
