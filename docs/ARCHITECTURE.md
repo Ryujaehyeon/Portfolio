@@ -113,17 +113,19 @@ sequenceDiagram
         G->>S: Progress()
         S->>Sc: Progress()
         Sc->>O: Progress()
+        O->>O: IterRelease() — 죽은 몬스터·스킬을 대상 끊기 → delete → 리스트에서 제거
         loop map 의 각 리스트, 리스트의 각 객체
             O->>Ob: Progress() → SCENEID
-            O->>O: 대상 리스트 연결(Setlist), ColCircle 충돌, ObjInteraction
-            O->>O: IterRelease() — 죽은 몬스터·스킬 delete
+            O->>O: 대상 리스트 연결(Setlist), ObjInteraction
             O->>Q: SetLayer(객체)
         end
+        O->>O: ColCircle() — 모든 스킬 × 몬스터 충돌, 프레임당 한 번
         O-->>Sc: SCENEID
+        Sc-->>S: SCENEID
         opt SCENEID > NONPASS
-            Sc->>S: InitScene(다음 장면) — 실행 중인 자기 자신을 delete
+            S->>S: InitScene(다음 장면) — 장면 밖에서 교체
         end
-        Sc-->>W: SCENEID (END 면 루프 종료)
+        S-->>W: SCENEID (END 면 루프 종료)
         W->>G: Render()
         G->>D: Render_Begin()
         G->>S: Render() → 장면 → O.Render() → Q.Render()
@@ -132,8 +134,8 @@ sequenceDiagram
     end
 ```
 
-- 장면 전환은 **객체의 `Progress()` 반환값**이 위로 전달돼 일어난다. 장면이 자기 `Progress()` 안에서 `InitScene` 을 불러
-  자신을 지우는 구조라, 그 뒤에 멤버를 건드리면 use-after-free 다(오딧 3번).
+- 장면 전환은 **객체의 `Progress()` 반환값**이 위로 전달돼 일어난다. 장면은 다음 장면 ID 를 반환만 하고,
+  교체(`InitScene`)는 `CSceneMgr::Progress` 가 장면의 `Progress()` 가 끝난 뒤에 한다([ub-fixes](../intent/ub-fixes/spec.md)).
 - `CSortMgr` 는 레이어 순서만 보장한다. 같은 레이어 안의 앞뒤(Y 정렬)는 `ObjMgr` 순회 순서를 따른다.
 
 ## 5. 장면 전환
@@ -269,14 +271,16 @@ sequenceDiagram
     O->>O: GetObjType() 로 리스트 선택<br/>PLAYER · MONSTER · SKILL · 그 외는 리터럴 키
     Note over O: m_MapObject[키].push_back(복제본)
 
-    Note over O,N: … 이후 매 프레임 …
-    O->>O: IterRelease(): DEATH 인 몬스터·스킬을 SAFE_DELETE<br/>→ 리스트엔 nullptr 이 남음
-    O->>O: 현재 원소가 nullptr 이면 erase
+    Note over O,N: … 이후 매 프레임, CObjMgr::Progress 시작 …
+    O->>O: IterRelease(): 죽은 몬스터(DEATH + 한 바퀴 끝)·스킬(DEATH) 수집
+    O->>O: 그 객체를 대상으로 가리키는 객체의 대상을 nullptr 로
+    O->>N: SAFE_DELETE, 리스트에서 제거
 ```
 
 - 원형(`m_MapProto`)은 장면이 소유하고 장면 `Release` 때 지워진다. 게임 객체는 `CObjMgr` 가 소유한다.
 - 객체 사이 참조(`m_pTagetObj`, `Setlist` 로 넘기는 리스트 포인터)는 소유권 없이 날 포인터다.
-- `nullptr` 잔류와 그 위험은 오딧 1번.
+- 객체는 **순회 중에 지워지지 않는다** — 죽은 객체는 다음 프레임 시작의 `IterRelease` 에서만 지워진다(그래서 같은 프레임에 `CSortMgr` 에 등록된 포인터는 그 프레임 `Render` 까지 유효).
+  죽은 객체는 삭제 조건을 만족한 프레임에 한 번 더 그려진다. 경위는 [objmgr-lifetime](../intent/objmgr-lifetime/spec.md).
 
 ## 8. 데이터 흐름 — 툴 → 게임
 
@@ -343,9 +347,7 @@ flowchart TB
 
 | 영역 | 문제 | 오딧 |
 |---|---|---|
-| 객체 수명 | `IterRelease` 가 nullptr 을 리스트에 남김, `erase` 후 원소 건너뜀 | 1, 3 |
 | 식별 | 이름·상태를 `TCHAR*` **주소**로 비교 — `/GF` 문자열 병합에 기대 동작 | 2 |
-| 장면 전환 | 장면이 자기 `Progress()` 안에서 자신을 delete | 3 |
 | 결합도 | 모든 것이 전역 싱글턴 + `Include.h` 일괄 include | — |
 | 중복 | 렌더링 계층(Device·Texture) 5쌍이 Client·툴에 따로 | 9 |
 | 입력 | DirectInput(마우스) + `GetAsyncKeyState`(키보드) 혼용 | 10 |
