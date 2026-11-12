@@ -18,7 +18,7 @@
 ```
 ① 읽기 ─ intent.md → spec.md(요구사항 표) → plan.md
 ② 브랜치 ─ git switch master && git pull && git switch -c feature/<슬러그>
-③ 변경 전 기록 ─ plan 의 「변경 전」 단계가 있으면 먼저(예: 현재 동작·경고 수)
+③ 변경 전 기록 ─ plan 의 「변경 전」 단계가 있으면 먼저(예: 현재 동작)
 ④ 수정 ─ plan 「작업 순서」대로, 단계마다 → 확인
 ⑤ 검증 ─ 빌드 + 실행 + spec 요구사항 R1… 를 하나씩 체크
 ⑥ 문서 ─ 규칙이 바뀌었으면 CLAUDE.md, 구조가 바뀌었으면 ARCHITECTURE.md
@@ -34,7 +34,7 @@ rm -rf 2D-Portfolio/Exe 2D-Portfolio/Temp                         # 깨끗한 �
 "$M" 2D-Portfolio/MyProgram.sln -t:restore -p:RestorePackagesConfig=true -nologo -v:m
 "$M" 2D-Portfolio/MyProgram.sln -p:Configuration=Debug   -p:Platform=Win32 -m -nologo -v:m > build-debug.log
 "$M" 2D-Portfolio/MyProgram.sln -p:Configuration=Release -p:Platform=Win32 -m -nologo -v:m > build-release.log
-grep -c "warning C" build-debug.log                               # 경고 수 — 변경 전후 비교
+grep -c "warning C" build-debug.log                               # 0 이어야 한다(/WX 라 경고가 있으면 빌드 실패)
 ```
 VS 에서는 그냥 빌드(F7)해도 같다. x64 는 `-p:Platform=x64` — 구성 4개(Win32·x64 × Debug·Release)를 모두 본다.
 
@@ -75,7 +75,7 @@ VS 에서는 그냥 빌드(F7)해도 같다. x64 는 `-p:Platform=x64` — 구�
 | `Client/fmod.log` 가 생긴다 | FMOD 로깅판(`fmodexL`)이 실행마다 남기는 로그. `*.log` 로 gitignore — 무시 |
 | exe 를 더블클릭했더니 리소스 오류 | 정상(작업 디렉터리 문제). VS F5 나 `cd Client` 후 실행 |
 | `git status` 에 vcxproj 가 통째로 바뀐 것처럼 보임 | VS 가 줄바꿈을 CRLF 로 저장 — `.gitattributes`(`text=auto`)가 커밋 시 정규화하므로 실제 diff 는 작다. `git diff --stat` 로 확인 |
-| 경고 수가 늘었다 | 새로 생긴 경고는 고치고 커밋. 기존 경고(CLAUDE.md 「빌드」의 기준 수)는 `warning-cleanup` 몫 |
+| 경고로 빌드가 실패한다(/WX) | 경고를 끄지 말고 코드를 고친다 — 축소 변환은 같은 결과의 `static_cast`. CLAUDE.md 「빌드」 |
 | 빌드 산출물이 `git status` 에 보인다 | 산출물은 `Exe/`·`Temp/` 로만 나와야 한다. 다른 곳에 생기면 vcxproj 에 OutDir 이 박혔는지 확인(경로는 `Directory.Build.props` 한 곳에서만) |
 | 새 코드를 어떤 스타일로 쓸지 | 이름은 주변 기존 관례(`C` 접두사·`m_` 헝가리안), 품질은 [C++ 표준](../.harness/standards/cpp11-coding-standard.md) — 경고 0·`const`·`nullptr`·`override`·한 줄 블록도 중괄호. 범위는 CLAUDE.md 「C++ 코딩 표준」 |
 
