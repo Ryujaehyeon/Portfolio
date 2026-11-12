@@ -553,6 +553,10 @@ void CObjMgr::IterRelease()
 		{
 			if (find(vecDead.begin(), vecDead.end(), *iter2) != vecDead.end())
 			{
+				if (IsSmokeMode() && (*iter2)->GetObjType() == OBJ_MONSTER)
+				{
+					SmokeCheck(true, L"removed monster %s", (*iter2)->GetName());
+				}
 				SAFE_DELETE<CObj>(&(*iter2));
 			}
 		}
