@@ -245,9 +245,6 @@ void CPlayer::CheckKey()
 	// 스킬 단축키
 	SkillHotKey();
 
-	// 키보드 입력
-	(*CInputDevice::GetInstance())->SetKey();
-
 	// 마우스 좌표 받아옴
 	m_vMousePos = MouseInfoDX();
 
@@ -271,7 +268,7 @@ void CPlayer::CheckKey()
 		fTime = 0;
 		m_bRun = !m_bRun;
 	}
-	if((*CInputDevice::GetInstance())->GetMouseState()->rgbButtons[0] & 0x80 && m_bSelect == true) 
+	if(m_dwKey & KEY_LBUTTON && m_bSelect == true) 
 	{	
 		// 우클릭시 클릭된 지점을 가져옴
 		m_vTagetInfo = m_vMousePos;
@@ -297,7 +294,7 @@ void CPlayer::CheckKey()
 			{
 				FuncAttack();
 			}
-			if( (*CInputDevice::GetInstance())->GetMouseState()->rgbButtons[1] & 0x80)
+			if( m_dwKey & KEY_RBUTTON)
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos;
@@ -314,7 +311,7 @@ void CPlayer::CheckKey()
 		// 목표위치에 도달하지 못했을때
 		else if ( m_vTagetInfo != m_Info.vPos )
 		{
-			if((*CInputDevice::GetInstance())->GetMouseState()->rgbButtons[0] & 0x80)
+			if(m_dwKey & KEY_LBUTTON)
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 
@@ -326,7 +323,7 @@ void CPlayer::CheckKey()
 				m_vTagetInfo = m_Info.vPos;
 
 			}
-			else if((*CInputDevice::GetInstance())->GetMouseState()->rgbButtons[1] & 0x80)
+			else if(m_dwKey & KEY_RBUTTON)
 			{
 				// 마우스를 바라보는 방향
 				m_Info.vDir = m_vMousePos - m_Info.vPos; 

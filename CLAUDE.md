@@ -47,13 +47,13 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
         남은 exe 때문에 다음 빌드가 LNK1168(쓰기용으로 열 수 없음)로 실패한다. PowerShell 로 띄우고 직접 끝낸다:
           powershell.exe -NoProfile -Command "$p=Start-Process -FilePath '<exe 의 Windows 경로>' -WorkingDirectory '<Client 폴더>' -PassThru; Start-Sleep 8; $p.HasExited; Stop-Process -Id $p.Id"
         단, 오류 메시지박스("system err")가 떠도 살아 있으므로 창 제목까지 확인한다. 자동 판정이 필요하면 아래 스모크 모드를 쓴다.
-        일반 실행은 게임 창이 비활성이어도 전역 입력(다른 창에서의 클릭·키)을 받는다 — 띄워 둔 채 다른 일을 하면 게임이 움직인다.
+        일반 실행은 게임 창이 활성일 때만 키·마우스 버튼을 받는다(`GameAsyncKeyState`, 경위 `intent/input-unify/`). 커서 좌표는 전역이다.
 테스트: 스모크 모드 (경위 `intent/smoke-log/`) — 입력 없이 로고→메뉴→스테이지→스킬 시전→몬스터 하나 죽여 정리까지 진행하고 스스로 종료한다.
         cd 2D-Portfolio/Client && timeout 60 ../Exe/<플랫폼>/<구성>/Client/Client.exe -smoke; echo $?   → 0 (약 9초)
         cd 2D-Portfolio/MFC_000 && ../Exe/<플랫폼>/<구성>/MFC_000/MFC_000.exe -smoke ../Client/Map.dat; echo $?   → 0
         결과는 작업 디렉터리의 smoke.log(UTF-8, gitignore): 줄마다 PASS/FAIL/INFO, 마지막 줄 "RESULT PASS (fail=0)".
         실패 시 종료 코드 1, FAIL 줄에 원인(ERR_MSG·FMOD 오류는 메시지박스 대신 여기). -smoke 없이 실행하면 아무것도 남기지 않는다.
-        스모크는 실제 마우스·키보드를 받지 않는다(키·버튼은 안 눌림, 커서는 창 가운데 고정 — `GameAsyncKeyState`·`GameCursorPos`·`CDevice::SetKey`).
+        스모크는 실제 마우스·키보드를 받지 않는다(키·버튼은 안 눌림, 커서는 창 가운데 고정 — `GameAsyncKeyState`·`GameCursorPos`).
         검증 중에도 PC 를 써도 된다. 입력 읽기를 새로 추가할 때는 `GetAsyncKeyState`·`GetCursorPos` 를 직접 부르지 말고 이 함수를 쓴다(경위 `intent/smoke-input-isolation/`).
         소리가 실제로 들리는지·화면이 제대로 그려지는지는 로그로 판정하지 못한다 — 필요할 때만 눈으로 확인.
 린트:   없음 (컴파일러 경고 /W3 이 유일한 정적 검사)
@@ -114,7 +114,7 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - **게임 루프**: `CMainGame::Initialize/Progress/Render/Release`. `Progress()` 가 `SCENEID` 를 반환해 장면 전환을 알린다.
   객체·장면 모두 같은 수명주기(`Initialize` → `Progress` → `Render` → `Release`)를 따른다.
 - **매니저 = 싱글톤**: `SINGLETON(type)` 매크로(`Headers/Macro.h`) + `GET_SINGLE(type)->...` 로 접근,
-  `DESTROY_SINGLE` 로 해제. `CDevice` `CTextureMgr`(Engine) `CInputDevice` `CSceneMgr` `CObjMgr` `CTimeMgr` `CKeyMgr` `CAStar` `CSortMgr` 등.
+  `DESTROY_SINGLE` 로 해제. `CDevice` `CTextureMgr`(Engine) `CSceneMgr` `CObjMgr` `CTimeMgr` `CKeyMgr` `CAStar` `CSortMgr` 등.
 - **장면**: `CSceneObj` 파생 `CLogo` `CMenuD2` `CStage`, `CSceneMgr::InitScene(SCENEID)` 로 교체.
 - **오브젝트 계층**(장면 계층과 별개): `CObj` → 장면별 `C{Logo,Menu,Stage}{Static,Dynamic}` →
   `CStageDynamic` → `CPlayer` `CMonster`, `CStageStatic` → `CStageBackGround` `CUIObj`.
@@ -126,7 +126,7 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - **공용 렌더링(`Engine/`)**: 그리기 장치·텍스처는 Engine 한 벌을 Client·툴이 함께 쓴다(경위 `intent/shared-render-lib/`).
   앱마다 다른 값은 앱이 넘긴다 — `InitDevice(창, 창 모드)`, `Render_Begin(지우는 색)`(Client 검정·툴 파랑),
   `CTextureMgr::SetMultiColorKey`(여러 장 텍스처의 투명색, 기본 검정·툴 흰색), 깊이 렌더 상태는 Client 의 `CMainGame`.
-  Engine 에 앱 전용 코드(Client 의 `Include.h`·MFC·DirectInput)를 넣지 않는다. DirectInput 은 Client 의 `CInputDevice`.
+  Engine 에 앱 전용 코드(Client 의 `Include.h`·MFC·DirectInput)를 넣지 않는다. 입력은 Client 의 `CKeyMgr`·`GameAsyncKeyState`·`GameCursorPos` 한 경로(DirectInput 은 쓰지 않는다, 경위 `intent/input-unify/`).
 
 ### 건드리면 안 되는 부분
 

@@ -1,7 +1,7 @@
 # Plan: input-unify
 
 Author: Ryu Jahyeon
-Status: draft
+Status: approved (PR #54)
 
 <!-- 입력: spec.md. 경로는 2D-Portfolio/ 기준. -->
 
@@ -29,3 +29,13 @@ Status: draft
 - R2·R3: `git grep -n -i -E "CInputDevice|dinput|DIRECTINPUT" -- 2D-Portfolio` → 결과 없음.
 - R6: CLAUDE.md 「빌드」·「테스트」 명령.
 - R4: 일반 실행 중 다른 창을 클릭해도 캐릭터가 움직이지 않는지 — 자동 주입은 하지 않는다(사용자 작업 방해 위험). 사용자 확인.
+
+## 검증 결과 (2026-11-12)
+
+| spec | 결과 |
+|---|---|
+| R1~R3 | ✅ Player 판정 4곳이 `KEY_LBUTTON`/`KEY_RBUTTON`. `CInputDevice`·`dinput`·`DIRECTINPUT` 은 코드에 없음(Engine `stdafx.h` 의 「넣지 않는다」 주석만). `dxguid.lib` 를 빼도 링크됨 |
+| R4 | ✅ `GameAsyncKeyState` 에 `GetActiveWindow() == nullptr` → 0(코드 검토) |
+| R5 | ⏳ 사용자 수동 확인 대기 — 활성 창 조작, 다른 창 클릭 시 캐릭터가 움직이지 않는지 |
+| R6 | 부분 — 클린 4개 구성 경고 0·오류 0, 툴 스모크 4개 구성 `tiles=800`, Client x64 Debug 20/20, Win32 Debug 스모크 PASS. Win32 Release·x64 Release 반복 스모크와 일반 실행은 사용자 지시로 중단(「테스트 그만하고 다음 작업으로」) |
+| R7 | ✅ CLAUDE.md·ARCHITECTURE.md·FIX-GUIDE.md |

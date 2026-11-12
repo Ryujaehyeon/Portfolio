@@ -29,12 +29,6 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <dinput.h>
-
-#ifndef DIRECTINPUT_VERSION
-#define DIRECTINPUT_VERSION 0x0800
-#endif
-
 using namespace std;
 
 #define __CLIENT__EXEC__

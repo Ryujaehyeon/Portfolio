@@ -55,9 +55,14 @@ inline float ClampedAcosf(const float _fCos)
 
 // 실제 입력 읽기 — 스모크 모드에서는 사용자의 마우스·키보드를 무시한다.
 // 전역 입력(GetAsyncKeyState·GetCursorPos)이라 다른 창에서의 조작도 들어오기 때문이다(intent/smoke-input-isolation).
+// 게임 창이 비활성일 때(이 스레드에 활성 창이 없을 때)도 키·버튼을 안 눌린 것으로 본다(intent/input-unify).
 inline SHORT GameAsyncKeyState(const int _iKey)
 {
 	if (IsSmokeMode())
+	{
+		return 0;
+	}
+	if (GetActiveWindow() == nullptr)
 	{
 		return 0;
 	}
