@@ -109,7 +109,7 @@ SCENEID CBoneSpear::Progress()
 	// 같으면 위를 보기 떄문 dir값이 0이되 90도인 위를 보기때문
 	if(m_Info.vPos != m_vTagetInfo)
 		// 각도값을 구한다
-		m_fAngle = acosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
+		m_fAngle = ClampedAcosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
 
 	// 내적을 구한다.
 	if (m_vTagetInfo.y > m_Info.vPos.y)
@@ -182,43 +182,43 @@ void CBoneSpear::DirectAction( const TCHAR* _pObjStatas )
 	if(IsSameKey(_pObjStatas, L"BoneSpear"))
 	{
 		// 오른쪽 아래 RD
-		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
+		if (m_fChaterDirect >= 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"BoneSpear_RD";
 		}
 		// 아래 D
-		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
+		if (m_fChaterDirect >= 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"BoneSpear_D";
 		}
 		// 왼쪽 아래 LD
-		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
+		if (m_fChaterDirect >= 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"BoneSpear_LD";
 		}
 		// 왼쪽 L
-		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
+		if (m_fChaterDirect >= 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"BoneSpear_L";
 		}
 		// 왼쪽 위 LU
-		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
+		if (m_fChaterDirect >= 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"BoneSpear_LU";
 		}
 		// 위 U
-		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
+		if (m_fChaterDirect >= 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"BoneSpear_U";
 		}
 		// 오른쪽 R
-		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
-			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
+		if (m_fChaterDirect >= 0 &&  m_fChaterDirect < 22.5f
+			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"BoneSpear_R";
 		}
 		// 오른쪽 위 RU
-		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
+		if (m_fChaterDirect >= 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"BoneSpear_RU";
 		}

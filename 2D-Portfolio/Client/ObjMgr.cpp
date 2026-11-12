@@ -458,7 +458,7 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 POINT CObjMgr::MouseInfo()
 {
 	POINT pt;
-	GetCursorPos(&pt);
+	GameCursorPos(g_hWnd, &pt);
 	ScreenToClient(g_hWnd, &pt);
 	return pt;
 }
@@ -466,7 +466,7 @@ POINT CObjMgr::MouseInfo()
 D3DXVECTOR3 CObjMgr::MouseInfoDX()
 {
 	POINT pt;
-	GetCursorPos(&pt);
+	GameCursorPos(g_hWnd, &pt);
 	ScreenToClient(g_hWnd, &pt);
 	return D3DXVECTOR3(static_cast<float>(pt.x) , static_cast<float>(pt.y) , 0);
 }

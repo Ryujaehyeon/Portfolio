@@ -133,7 +133,7 @@ SCENEID CPlayer::Progress()
 	// 같으면 위를 보기 떄문 dir값이 0이되 90도인 위를 보기때문
 	if(m_Info.vPos != m_vMousePos)
 		// 각도값을 구한다
-		m_fAngle = acosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
+		m_fAngle = ClampedAcosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
 
 	// 내적을 구한다.
 	if (m_vMousePos.y > m_Info.vPos.y)
@@ -444,43 +444,43 @@ void CPlayer::DirectAction( const TCHAR* _pObjStatas )
 	if(IsSameKey(_pObjStatas, STAND))
 	{
 		// 오른쪽 아래 RD
-		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
+		if (m_fChaterDirect >= 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Stand_RD";
 		}
 		// 아래 D
-		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
+		if (m_fChaterDirect >= 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Stand_D";
 		}
 		// 왼쪽 아래 LD
-		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
+		if (m_fChaterDirect >= 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Stand_LD";
 		}
 		// 왼쪽 L
-		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
+		if (m_fChaterDirect >= 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Stand_L";
 		}
 		// 왼쪽 위 LU
-		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
+		if (m_fChaterDirect >= 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Stand_LU";
 		}
 		// 위 U
-		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
+		if (m_fChaterDirect >= 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Stand_U";
 		}
 		// 오른쪽 R
-		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
-			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
+		if (m_fChaterDirect >= 0 &&  m_fChaterDirect < 22.5f
+			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Stand_R";
 		}
 		// 오른쪽 위 RU
-		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
+		if (m_fChaterDirect >= 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Stand_RU";
 		}
@@ -489,43 +489,43 @@ void CPlayer::DirectAction( const TCHAR* _pObjStatas )
 	if(IsSameKey(_pObjStatas, WALK))
 	{
 		// 오른쪽 아래 RD
-		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
+		if (m_fChaterDirect >= 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Walk_RD";
 		}
 		// 아래 D
-		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
+		if (m_fChaterDirect >= 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Walk_D";
 		}
 		// 왼쪽 아래 LD
-		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
+		if (m_fChaterDirect >= 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Walk_LD";
 		}
 		// 왼쪽 L
-		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
+		if (m_fChaterDirect >= 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Walk_L";
 		}
 		// 왼쪽 위 LU
-		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
+		if (m_fChaterDirect >= 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Walk_LU";
 		}
 		// 위 U
-		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
+		if (m_fChaterDirect >= 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Walk_U";
 		}
 		// 오른쪽 R
-		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
-			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
+		if (m_fChaterDirect >= 0 &&  m_fChaterDirect < 22.5f
+			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Walk_R";
 		}
 		// 오른쪽 위 RU
-		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
+		if (m_fChaterDirect >= 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Walk_RU";
 		}
@@ -533,43 +533,43 @@ void CPlayer::DirectAction( const TCHAR* _pObjStatas )
 	else if (IsSameKey(_pObjStatas, RUN))
 	{
 		// 오른쪽 아래 RD
-		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
+		if (m_fChaterDirect >= 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Run_RD";
 		}
 		// 아래 D
-		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
+		if (m_fChaterDirect >= 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Run_D";
 		}
 		// 왼쪽 아래 LD
-		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
+		if (m_fChaterDirect >= 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Run_LD";
 		}
 		// 왼쪽 L
-		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
+		if (m_fChaterDirect >= 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Run_L";
 		}
 		// 왼쪽 위 LU
-		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
+		if (m_fChaterDirect >= 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Run_LU";
 		}
 		// 위 U
-		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
+		if (m_fChaterDirect >= 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Run_U";
 		}
 		// 오른쪽 R
-		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
-			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
+		if (m_fChaterDirect >= 0 &&  m_fChaterDirect < 22.5f
+			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Run_R";
 		}
 		// 오른쪽 위 RU
-		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
+		if (m_fChaterDirect >= 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Run_RU";
 		}
@@ -577,43 +577,43 @@ void CPlayer::DirectAction( const TCHAR* _pObjStatas )
 	else if (IsSameKey(_pObjStatas, ATTACK))
 	{
 		// 오른쪽 아래 RD
-		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
+		if (m_fChaterDirect >= 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Attack_RD";
 		}
 		// 아래 D
-		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
+		if (m_fChaterDirect >= 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Attack_D";
 		}
 		// 왼쪽 아래 LD
-		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
+		if (m_fChaterDirect >= 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Attack_LD";
 		}
 		// 왼쪽 L
-		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
+		if (m_fChaterDirect >= 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Attack_L";
 		}
 		// 왼쪽 위 LU
-		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
+		if (m_fChaterDirect >= 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Attack_LU";
 		}
 		// 위 U
-		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
+		if (m_fChaterDirect >= 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Attack_U";
 		}
 		// 오른쪽 R
-		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
-			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
+		if (m_fChaterDirect >= 0 &&  m_fChaterDirect < 22.5f
+			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Attack_R";
 		}
 		// 오른쪽 위 RU
-		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
+		if (m_fChaterDirect >= 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Attack_RU";
 		}
@@ -621,43 +621,43 @@ void CPlayer::DirectAction( const TCHAR* _pObjStatas )
 	else if (IsSameKey(_pObjStatas, ATTACKSKILL))
 	{
 		// 오른쪽 아래 RD
-		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
+		if (m_fChaterDirect >= 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Attack_RD";
 		}
 		// 아래 D
-		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
+		if (m_fChaterDirect >= 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Attack_D";
 		}
 		// 왼쪽 아래 LD
-		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
+		if (m_fChaterDirect >= 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Attack_LD";
 		}
 		// 왼쪽 L
-		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
+		if (m_fChaterDirect >= 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Attack_L";
 		}
 		// 왼쪽 위 LU
-		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
+		if (m_fChaterDirect >= 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Attack_LU";
 		}
 		// 위 U
-		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
+		if (m_fChaterDirect >= 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Attack_U";
 		}
 		// 오른쪽 R
-		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
-			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
+		if (m_fChaterDirect >= 0 &&  m_fChaterDirect < 22.5f
+			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Attack_R";
 		}
 		// 오른쪽 위 RU
-		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
+		if (m_fChaterDirect >= 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Attack_RU";
 		}
@@ -665,43 +665,43 @@ void CPlayer::DirectAction( const TCHAR* _pObjStatas )
 	else if (IsSameKey(_pObjStatas, CAST))
 	{
 		// 오른쪽 아래 RD
-		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
+		if (m_fChaterDirect >= 292.5f && m_fChaterDirect < 337.5f)
 		{
 			m_pStateKey = L"Cast_RD";
 		}
 		// 아래 D
-		if (m_fChaterDirect > 247.5f && m_fChaterDirect < 292.5f)
+		if (m_fChaterDirect >= 247.5f && m_fChaterDirect < 292.5f)
 		{
 			m_pStateKey = L"Cast_D";
 		}
 		// 왼쪽 아래 LD
-		if (m_fChaterDirect > 202.5f && m_fChaterDirect < 247.5f)
+		if (m_fChaterDirect >= 202.5f && m_fChaterDirect < 247.5f)
 		{
 			m_pStateKey = L"Cast_LD";
 		}
 		// 왼쪽 L
-		if (m_fChaterDirect > 157.5f && m_fChaterDirect < 202.5f)
+		if (m_fChaterDirect >= 157.5f && m_fChaterDirect < 202.5f)
 		{
 			m_pStateKey = L"Cast_L";
 		}
 		// 왼쪽 위 LU
-		if (m_fChaterDirect > 112.5f && m_fChaterDirect < 157.5f)
+		if (m_fChaterDirect >= 112.5f && m_fChaterDirect < 157.5f)
 		{
 			m_pStateKey = L"Cast_LU";
 		}
 		// 위 U
-		if (m_fChaterDirect > 67.5f && m_fChaterDirect < 112.5f)
+		if (m_fChaterDirect >= 67.5f && m_fChaterDirect < 112.5f)
 		{
 			m_pStateKey = L"Cast_U";
 		}
 		// 오른쪽 R
-		if (m_fChaterDirect > 0 &&  m_fChaterDirect < 22.5f
-			|| m_fChaterDirect > 337.5f && m_fChaterDirect < 360.f )
+		if (m_fChaterDirect >= 0 &&  m_fChaterDirect < 22.5f
+			|| m_fChaterDirect >= 337.5f && m_fChaterDirect <= 360.f )
 		{			
 			m_pStateKey = L"Cast_R";
 		}
 		// 오른쪽 위 RU
-		if (m_fChaterDirect > 22.5f && m_fChaterDirect < 67.5f)
+		if (m_fChaterDirect >= 22.5f && m_fChaterDirect < 67.5f)
 		{
 			m_pStateKey = L"Cast_RU";
 		}

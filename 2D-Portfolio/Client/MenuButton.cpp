@@ -61,7 +61,7 @@ SCENEID CMenuButton::Progress()
 	{
 		m_bMouseOver = true;
 		if ( IsSameKey(m_pObjKey, L"MenuButton_Start") && 
-			GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			GameAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
 			iScene = SCENEID_STAGE;
 			return  SCENEID_STAGE;
@@ -69,7 +69,7 @@ SCENEID CMenuButton::Progress()
 		else 
 			 iScene = SCENEID_NONPASS;
 		if (IsSameKey(m_pObjKey, L"MenuButton_Exit")  && 
-			GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			GameAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
 			iScene = SCENEID_END;
 			return  SCENEID_END;

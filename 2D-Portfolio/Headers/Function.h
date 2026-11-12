@@ -38,3 +38,43 @@ inline void ErrMsgBox(const HWND _hWnd, const TCHAR* const _pFormat, ...)
 	}
 	MessageBox(_hWnd, szMsg, L"system err", MB_OK);
 }
+
+// acosf 의 입력을 [-1, 1] 로 자른다 — 정규화한 두 벡터의 내적이 부동소수점 오차로 1 을 살짝 넘으면 acosf 가 NaN 을 돌려준다(intent/frame-index-bounds).
+inline float ClampedAcosf(const float _fCos)
+{
+	if (_fCos > 1.f)
+	{
+		return acosf(1.f);
+	}
+	if (_fCos < -1.f)
+	{
+		return acosf(-1.f);
+	}
+	return acosf(_fCos);
+}
+
+// 실제 입력 읽기 — 스모크 모드에서는 사용자의 마우스·키보드를 무시한다.
+// 전역 입력(GetAsyncKeyState·GetCursorPos)이라 다른 창에서의 조작도 들어오기 때문이다(intent/smoke-input-isolation).
+inline SHORT GameAsyncKeyState(const int _iKey)
+{
+	if (IsSmokeMode())
+	{
+		return 0;
+	}
+	return GetAsyncKeyState(_iKey);
+}
+
+// 커서의 화면 좌표. 스모크 모드에서는 _hWnd 클라이언트 영역 가운데로 고정한다.
+inline void GameCursorPos(const HWND _hWnd, POINT* const _pPoint)
+{
+	if (IsSmokeMode())
+	{
+		RECT rcClient = {};
+		GetClientRect(_hWnd, &rcClient);
+		_pPoint->x = (rcClient.left + rcClient.right) / 2;
+		_pPoint->y = (rcClient.top + rcClient.bottom) / 2;
+		ClientToScreen(_hWnd, _pPoint);
+		return;
+	}
+	GetCursorPos(_pPoint);
+}

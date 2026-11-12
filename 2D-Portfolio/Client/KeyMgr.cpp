@@ -15,45 +15,45 @@ CKeyMgr::~CKeyMgr(void)
 void CKeyMgr::CheckKey()
 {
 		m_dwKey = 0;
-		if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+		if (GameAsyncKeyState(VK_RBUTTON) & 0x8000)
 			m_dwKey |= KEY_RBUTTON;
-		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		if (GameAsyncKeyState(VK_LBUTTON) & 0x8000)
 			m_dwKey |= KEY_LBUTTON;
-		if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+		if (GameAsyncKeyState(VK_LEFT) & 0x8000)
 			m_dwKey |= KEY_LEFT;
-		if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+		if (GameAsyncKeyState(VK_RIGHT) & 0x8000)
 			m_dwKey |= KEY_RIGHT;
-		if (GetAsyncKeyState(VK_UP) & 0x8000)
+		if (GameAsyncKeyState(VK_UP) & 0x8000)
 			m_dwKey |= KEY_UP;
-		if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+		if (GameAsyncKeyState(VK_DOWN) & 0x8000)
 			m_dwKey |= KEY_DOWN;
-		if (GetAsyncKeyState(VK_F1) & 0x8000)
+		if (GameAsyncKeyState(VK_F1) & 0x8000)
 			m_dwKey |= KEY_F1;
-		if (GetAsyncKeyState(VK_F2) & 0x8000)
+		if (GameAsyncKeyState(VK_F2) & 0x8000)
 			m_dwKey |= KEY_F2;
-		if (GetAsyncKeyState(VK_F3) & 0x8000)
+		if (GameAsyncKeyState(VK_F3) & 0x8000)
 			m_dwKey |= KEY_F3;
-		if (GetAsyncKeyState(VK_F4) & 0x8000)
+		if (GameAsyncKeyState(VK_F4) & 0x8000)
 			m_dwKey |= KEY_F4;
-		if (GetAsyncKeyState('I') & 0x8000)
+		if (GameAsyncKeyState('I') & 0x8000)
 			m_dwKey |= KEY_I;
-		if (GetAsyncKeyState('B') & 0x8000)
+		if (GameAsyncKeyState('B') & 0x8000)
 			m_dwKey |= KEY_B;
-		if (GetAsyncKeyState('C') & 0x8000)
+		if (GameAsyncKeyState('C') & 0x8000)
 			m_dwKey |= KEY_C;
-		if (GetAsyncKeyState('K') & 0x8000)
+		if (GameAsyncKeyState('K') & 0x8000)
 			m_dwKey |= KEY_K;
-		if (GetAsyncKeyState(VK_TAB) & 0x8000)
+		if (GameAsyncKeyState(VK_TAB) & 0x8000)
 			m_dwKey |= KEY_TAB;
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		if (GameAsyncKeyState(VK_SPACE) & 0x8000)
 			m_dwKey |= KEY_SPACE;
-		if (GetAsyncKeyState('1') & 0x8000)
+		if (GameAsyncKeyState('1') & 0x8000)
 			m_dwKey |= KEY_1;
-		if (GetAsyncKeyState('2') & 0x8000)
+		if (GameAsyncKeyState('2') & 0x8000)
 			m_dwKey |= KEY_2;
-		if (GetAsyncKeyState('3') & 0x8000)
+		if (GameAsyncKeyState('3') & 0x8000)
 			m_dwKey |= KEY_3;
-		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+		if (GameAsyncKeyState(VK_ESCAPE) & 0x8000)
 			m_dwKey |= KEY_ESC;
 }
 
