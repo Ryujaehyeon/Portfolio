@@ -3,20 +3,15 @@
 
 
 CDevice::CDevice(void)
-	: m_p3D(0)
-	, m_pDevice(0)
+	: m_p3D(nullptr)
+	, m_pDevice(nullptr)
 	, m_pSprite(nullptr)
-	, m_pInput(nullptr)
-	, m_pKeyBoard(nullptr)
-	, m_pMouse(nullptr)
-	, m_byKState()
-	, m_MState()
 {}
 
 CDevice::~CDevice(void)
 { Release(); }
 
-HRESULT CDevice::InitDevice(WINMODE Mode)
+HRESULT CDevice::InitDevice(const HWND hWnd, const WINMODE Mode)
 {
 	m_p3D = Direct3DCreate9(D3D_SDK_VERSION);
 
@@ -28,7 +23,7 @@ HRESULT CDevice::InitDevice(WINMODE Mode)
 	if(FAILED(m_p3D->GetDeviceCaps(D3DADAPTER_DEFAULT
 		, D3DDEVTYPE_HAL, &devicecaps)))
 	{
-		ERR_MSG(g_hWnd, L"장치정보얻어오기 실패");
+		ERR_MSG(hWnd, L"장치정보얻어오기 실패");
 		return E_FAIL;
 	}
 	DWORD BehaviorFlag = 0;
@@ -56,7 +51,7 @@ HRESULT CDevice::InitDevice(WINMODE Mode)
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
 	d3dpp.EnableAutoDepthStencil = true;
 
-	d3dpp.hDeviceWindow = g_hWnd;
+	d3dpp.hDeviceWindow = hWnd;
 	d3dpp.Windowed = Mode;
 
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
@@ -65,44 +60,23 @@ HRESULT CDevice::InitDevice(WINMODE Mode)
 
 	// 장치 생성
 	if(FAILED(m_p3D->CreateDevice(D3DADAPTER_DEFAULT,
-		D3DDEVTYPE_HAL, g_hWnd, BehaviorFlag, &d3dpp, &m_pDevice)))
+		D3DDEVTYPE_HAL, hWnd, BehaviorFlag, &d3dpp, &m_pDevice)))
 	{
-		ERR_MSG(g_hWnd, L"장치생성 실패");
+		ERR_MSG(hWnd, L"장치생성 실패");
 		return E_FAIL;
 	}
 
 	if(FAILED(D3DXCreateSprite(m_pDevice, &m_pSprite)))
 		return E_FAIL;
 
-	m_pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-
-	DirectInput8Create(hInst, DIRECTINPUT_VERSION,
-		IID_IDirectInput8, (void**)&m_pInput, NULL);
-
-	m_pInput->CreateDevice(
-		GUID_SysKeyboard, &m_pKeyBoard, NULL);
-	m_pKeyBoard->SetCooperativeLevel(
-		g_hWnd, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
-	m_pKeyBoard->SetDataFormat(
-		&c_dfDIKeyboard);
-	m_pKeyBoard->Acquire();
-
-	m_pInput->CreateDevice(
-		GUID_SysMouse, &m_pMouse, NULL);
-	m_pMouse->SetCooperativeLevel(
-		g_hWnd, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
-	m_pMouse->SetDataFormat(
-		&c_dfDIMouse);
-	m_pMouse->Acquire();
-
 	return S_OK;
 }
 
-void CDevice::Render_Begin()
+void CDevice::Render_Begin(const D3DCOLOR ClearColor)
 {
 	m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET
 		| D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL
-		, D3DCOLOR_ARGB(255, 0, 0, 0), 1.0f, 0);
+		, ClearColor, 1.0f, 0);
 	m_pDevice->BeginScene();
 	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 }
@@ -116,25 +90,7 @@ void CDevice::Render_End(HWND hWnd)
 
 void CDevice::Release()
 {
-	m_pMouse->Release();
-	m_pKeyBoard->Release();
-	m_pInput->Release();
-
 	m_pSprite->Release();
 	m_pDevice->Release();
 	m_p3D->Release();
-}
-void CDevice::SetKey()
-{
-	// 스모크 모드에서는 실제 키보드·마우스를 읽지 않는다 — 비활성 창에서도 입력을 받는 장치라서(intent/smoke-input-isolation)
-	if (IsSmokeMode())
-	{
-		memset(m_byKState, 0, sizeof(m_byKState));
-		memset(&m_MState, 0, sizeof(m_MState));
-		return;
-	}
-	m_pKeyBoard->GetDeviceState(
-		sizeof(m_byKState), m_byKState);
-	m_pMouse->GetDeviceState(
-		sizeof(m_MState), &m_MState);
 }

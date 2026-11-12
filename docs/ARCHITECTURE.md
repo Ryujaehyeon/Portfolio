@@ -14,7 +14,7 @@ Portfolio/
 ├── intent/<슬러그>/                # 변경별 intent · spec · plan (SSOT)
 ├── docs/ARCHITECTURE.md            # 이 문서
 └── 2D-Portfolio/
-    ├── MyProgram.sln               # 솔루션: Client, MFC_000 + 솔루션 폴더 Headers
+    ├── MyProgram.sln               # 솔루션: Client, MFC_000, Engine + 솔루션 폴더 Headers
     ├── Directory.Build.props       # 모든 프로젝트의 OutDir / IntDir
     ├── Headers/                    # 두 프로젝트 공용 헤더 (Constant · Struct · Macro · Function · Include · Debug.hpp)
     ├── Client/                     # 게임 (Win32 앱, ~100 파일)
@@ -23,6 +23,7 @@ Portfolio/
     │   ├── Map.dat                 # 툴이 만든 타일 맵 (게임이 읽음)
     │   └── *.mp3                   # 배경음
     ├── MFC_000/                    # 맵·몬스터 배치 툴 (MFC 앱)
+    ├── Engine/                     # 공용 렌더링 정적 라이브러리 (CDevice · CTextureMgr · *Texture)
     ├── Resource/Texture/           # 텍스처 8,220 파일 (76MB)
     ├── packages/                   # NuGet 복원 (gitignore)
     ├── Exe/<플랫폼>/<구성>/<프로젝트>/   # 빌드 산출물 (gitignore)
@@ -33,22 +34,27 @@ Portfolio/
 
 ```mermaid
 flowchart LR
-    subgraph sln["MyProgram.sln (VS2026 · v145 · Win32)"]
+    subgraph sln["MyProgram.sln (VS2026 · v145 · Win32 · x64)"]
         Client["Client.vcxproj<br/>Win32 Application"]
         Tool["MFC_000.vcxproj<br/>MFC Application"]
+        Engine["Engine.vcxproj<br/>Static Library<br/>(공용 렌더링)"]
     end
+    Engine -->|"프로젝트 참조 · Engine.lib"| Client
+    Engine -->|"프로젝트 참조 · Engine.lib"| Tool
     Headers["Headers/*.h<br/>(include 경로 ../Headers)"] --> Client
     Headers --> Tool
+    Headers --> Engine
     Props["Directory.Build.props<br/>OutDir · IntDir"] -.적용.-> Client
     Props -.적용.-> Tool
     NuGet["NuGet Microsoft.DXSDK.D3DX<br/>d3dx9(d).lib · d3dx9(d)_43.dll"] --> Client
     NuGet --> Tool
+    NuGet --> Engine
     SDK["Windows SDK<br/>d3d9 · dinput8 · dxguid"] --> Client
     SDK --> Tool
-    FMOD["fmod/lib/fmodexL_vc.lib<br/>+ fmodexL.dll"] --> Client
+    FMOD["fmod/lib/fmodexL_vc.lib · fmodex64_vc.lib<br/>+ 플랫폼별 DLL"] --> Client
     MFC["MFC (Dynamic)"] --> Tool
-    Client --> OutC["Exe/Win32/구성/Client/<br/>Client.exe + DLL"]
-    Tool --> OutT["Exe/Win32/구성/MFC_000/<br/>MFC_000.exe + DLL"]
+    Client --> OutC["Exe/플랫폼/구성/Client/<br/>Client.exe + DLL"]
+    Tool --> OutT["Exe/플랫폼/구성/MFC_000/<br/>MFC_000.exe + DLL"]
 
 ```
 
@@ -70,15 +76,16 @@ flowchart TB
         SceneMgr["CSceneMgr<br/>현재 장면 1개"]
         ObjMgr["CObjMgr<br/>map&lt;키, list&lt;CObj*&gt;&gt;<br/>갱신 · 상호작용 · 충돌 · 삭제"]
         SortMgr["CSortMgr<br/>레이어별 렌더 큐<br/>TERRAIN → OBJECT → UI"]
-        TexMgr["CTextureMgr<br/>키 → CTexture"]
-        Device["CDevice<br/>D3D9 장치 · ID3DXSprite<br/>DirectInput(마우스)"]
+        TexMgr["CTextureMgr (Engine)<br/>키 → CTexture"]
+        Device["CDevice (Engine)<br/>D3D9 장치 · ID3DXSprite"]
+        Input["CInputDevice<br/>DirectInput 키보드·마우스"]
         TimeMgr["CTimeMgr<br/>프레임 시간"]
         KeyMgr["CKeyMgr<br/>GetAsyncKeyState"]
         AStar["CAStar<br/>타일 경로 탐색"]
         Sound["SoundDevice (GameSound)<br/>FMOD Ex"]
     end
 
-    MainGame --> KeyMgr & TimeMgr & SceneMgr & Device
+    MainGame --> KeyMgr & TimeMgr & SceneMgr & Device & Input
     SceneMgr --> Scene["현재 장면<br/>CLogo / CMenuD2 / CStage"]
     Scene -->|Initialize: 텍스처 적재| TexMgr
     Scene -->|Initialize: 객체 생성| ObjMgr
@@ -88,7 +95,7 @@ flowchart TB
     SortMgr -->|Render| Objects
     Objects -->|텍스처 조회| TexMgr
     Objects -->|스프라이트 그리기| Device
-    Objects -->|마우스 버튼| Device
+    Objects -->|마우스 버튼| Input
     Objects -->|이동 경로| AStar
     TexMgr -->|"Single/MultiTexture: D3DXCreateTextureFromFileEx"| Device
 ```
@@ -322,7 +329,7 @@ flowchart LR
 └──────────────────────────────────────────────────────────┘
 ```
 `MainFrm.cpp:319-330` 이 스플리터를 만들고, `MySheet.cpp:27-29` 가 페이지를 붙인다.
-툴은 Client 와 같은 이름의 `CDevice`·`CTextureMgr`·`C*Texture` 를 **별도 사본**으로 가진다(내용이 갈라짐, 오딧 9번).
+툴은 Client 와 같은 Engine(`CDevice`·`CTextureMgr`·`C*Texture`)을 쓴다. 지우는 색(파랑)·여러 장 텍스처 투명색(흰색)만 툴이 정한다([shared-render-lib](../intent/shared-render-lib/spec.md)).
 
 ## 10. 공용 헤더
 
@@ -335,7 +342,7 @@ flowchart TB
     Defines --> Struct["Struct.h<br/>OBJINFO · INFO · FRAME · TILE · TEXINFO"]
     Defines --> stdafx
     Include["Headers/Include.h<br/>전 헤더 모음"] --> DebugHpp["Debug.hpp (헤더 전용 콘솔 로그, _DEBUG 전용)"]
-    Include --> Common["Device · TextureMgr · *Texture"]
+    Include --> Common["Device · TextureMgr · *Texture<br/>(Engine/ — include 경로 ../Engine)"]
     Include -->|"#ifdef __CLIENT__EXEC__<br/>(Client/stdafx.h 에서 정의)"| ClientOnly["Client 전용 헤더 전부<br/>매니저 · 장면 · 객체 · 원형 · 스킬 · 사운드"]
 ```
 
@@ -349,7 +356,6 @@ flowchart TB
 |---|---|---|
 | 식별 | 이름·상태를 `TCHAR*` **주소**로 비교 — `/GF` 문자열 병합에 기대 동작 | 2 |
 | 결합도 | 모든 것이 전역 싱글턴 + `Include.h` 일괄 include | — |
-| 중복 | 렌더링 계층(Device·Texture) 5쌍이 Client·툴에 따로 | 9 |
 | 입력 | DirectInput(마우스) + `GetAsyncKeyState`(키보드) 혼용 | 10 |
 
 ## 12. 구현되지 않은 기능

@@ -2,9 +2,11 @@
 #include "TextureMgr.h"
 
 #include "Texture.h"
-#include "Include.h"
+#include "SingleTexture.h"
+#include "MultiTexture.h"
 
 CTextureMgr::CTextureMgr(void)
+	: m_MultiColorKey(D3DCOLOR_ARGB(255, 0, 0, 0))
 {
 }
 
@@ -31,7 +33,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR* pFileName, const TCHAR* pObjKey,
 			pTexture = new CSingleTexture;
 			break;
 		case TEXTYPE_MULTI:
-			pTexture = new CMultiTexture;
+			pTexture = new CMultiTexture(m_MultiColorKey);
 			break;
 		}
 		if(pTexture == NULL)
