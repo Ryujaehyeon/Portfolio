@@ -93,6 +93,10 @@ BOOL CMFC_000App::InitInstance()
 		return FALSE;
 	}
 
+	// 어디서 실행해도 리소스를 찾게 작업 디렉터리를 MFC_000 폴더로 맞춘다.
+	// 스모크 분기 뒤에 둔다 — 스모크의 타일 파일 인자는 원래 작업 디렉터리 기준이다(intent/resource-path)
+	SetResourceWorkDir(L"MFC_000");
+
 
 	// OLE 라이브러리를 초기화합니다.
 	if (!AfxOleInit())

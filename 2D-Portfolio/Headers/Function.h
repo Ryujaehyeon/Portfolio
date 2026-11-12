@@ -83,3 +83,40 @@ inline void GameCursorPos(const HWND _hWnd, POINT* const _pPoint)
 	}
 	GetCursorPos(_pPoint);
 }
+
+// 폴더가 있는가
+inline bool IsDirectory(const TCHAR* const _pPath)
+{
+	const DWORD dwAttr = GetFileAttributes(_pPath);
+	return dwAttr != INVALID_FILE_ATTRIBUTES && (dwAttr & FILE_ATTRIBUTE_DIRECTORY) != 0;
+}
+
+// 리소스 상대 경로(../Resource/…, Map.dat, *.mp3)는 「2D-Portfolio/<앱 폴더>」가 작업 디렉터리라고 가정한다.
+// 작업 디렉터리에 ../Resource 가 없으면(탐색기에서 exe 를 더블클릭한 경우 등) exe 폴더부터 위로 올라가며
+// Resource 와 <앱 폴더> 를 함께 가진 폴더를 찾아 그 <앱 폴더> 로 옮긴다. 못 찾으면 그대로 둔다(intent/resource-path).
+inline void SetResourceWorkDir(const TCHAR* const _pAppFolder)
+{
+	if (IsDirectory(L"../Resource"))
+	{
+		return;
+	}
+	TCHAR szDir[MAX_PATH] = {};
+	const DWORD dwLen = GetModuleFileName(nullptr, szDir, MAX_PATH);
+	if (dwLen == 0 || dwLen >= MAX_PATH)
+	{
+		return;
+	}
+	TCHAR szCandidate[MAX_PATH] = {};
+	TCHAR* pSlash = _tcsrchr(szDir, L'\\');
+	while (pSlash != nullptr)
+	{
+		*pSlash = L'\0';	// 한 단계 위 폴더(처음에는 exe 파일 이름을 떼어 exe 폴더)
+		if (_stprintf_s(szCandidate, L"%s\\Resource", szDir) > 0 && IsDirectory(szCandidate)
+			&& _stprintf_s(szCandidate, L"%s\\%s", szDir, _pAppFolder) > 0 && IsDirectory(szCandidate))
+		{
+			SetCurrentDirectory(szCandidate);
+			return;
+		}
+		pSlash = _tcsrchr(szDir, L'\\');
+	}
+}
