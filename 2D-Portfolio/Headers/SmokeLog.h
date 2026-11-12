@@ -13,11 +13,18 @@ struct SMOKESTATE
 	ULONGLONG ullStart;
 	int iFailCount;
 	std::vector<std::wstring> vecPassed;
+
+	SMOKESTATE()
+		: hFile(INVALID_HANDLE_VALUE)
+		, ullStart(0)
+		, iFailCount(0)
+	{
+	}
 };
 
 inline SMOKESTATE& SmokeState()
 {
-	static SMOKESTATE tState = { INVALID_HANDLE_VALUE, 0, 0, std::vector<std::wstring>() };
+	static SMOKESTATE tState;
 	return tState;
 }
 

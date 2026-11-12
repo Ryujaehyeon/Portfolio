@@ -32,8 +32,9 @@ END_MESSAGE_MAP()
 // CMFC_000App 생성
 
 CMFC_000App::CMFC_000App()
+	: m_nAppLook(0)
+	, m_bHiColorIcons(TRUE)
 {
-	m_bHiColorIcons = TRUE;
 
 	// 다시 시작 관리자 지원
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_ALL_ASPECTS;

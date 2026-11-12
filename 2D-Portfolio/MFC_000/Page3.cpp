@@ -15,6 +15,7 @@ IMPLEMENT_DYNAMIC(CPage3, CPropertyPage)
 
 CPage3::CPage3()
 	: CPropertyPage(CPage3::IDD)
+	, m_BitMap()
 {
 
 }

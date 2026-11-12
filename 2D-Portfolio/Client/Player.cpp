@@ -6,13 +6,19 @@
 static bool s_bSmokeSkillCast = false;
 
 CPlayer::CPlayer(void)
+	: m_vMousePos(0.f, 0.f, 0.f)
+	, m_SkillTree()
+	, m_SkillActiveName(nullptr)
 {
 	// 프로토타입 원본은 Initialize 를 거치지 않으므로 소멸자의 SAFE_DELETE 가 쓰레기 값을 지우지 않게 한다
 	m_pSkillPrototype = nullptr;
 }
 
 CPlayer::CPlayer( const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType )
-	:CStageDynamic(Info, _ObjName, _ObjType)
+	: CStageDynamic(Info, _ObjName, _ObjType)
+	, m_vMousePos(0.f, 0.f, 0.f)
+	, m_SkillTree()
+	, m_SkillActiveName(nullptr)
 {
 	m_pObjKey = _ObjName;
 	m_pObjName = _ObjName;

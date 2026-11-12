@@ -3,12 +3,15 @@
 #include "Include.h"
 
 CMenuButton::CMenuButton(void)
+	: m_DrawID(nullptr)
+	, m_bMouseOver(false)
 {
 }
 
 CMenuButton::CMenuButton(const OBJINFO& Info, const TCHAR* ButtonName, const OBJ_TYPE _ObjType)
-	:CMenuDynamic(Info, _ObjType),
-	m_DrawID(ButtonName)
+	: CMenuDynamic(Info, _ObjType)
+	, m_DrawID(ButtonName)
+	, m_bMouseOver(false)
 {
 }
 

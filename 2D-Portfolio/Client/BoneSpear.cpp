@@ -3,12 +3,16 @@
 #include "Include.h"
 
 CBoneSpear::CBoneSpear(void)
+	: m_vMousePos(0.f, 0.f, 0.f)
+	, m_fTime(0.f)
 {
 
 }
 
 CBoneSpear::CBoneSpear(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType)
-	:CSkill(Info, _ObjName, _ObjType)
+	: CSkill(Info, _ObjName, _ObjType)
+	, m_vMousePos(0.f, 0.f, 0.f)
+	, m_fTime(0.f)
 {
 	m_pObjKey = _ObjName;
 	m_pObjName = _ObjName;

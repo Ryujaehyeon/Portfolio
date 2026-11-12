@@ -3,6 +3,7 @@
 #include "Include.h"
 
 CKeyMgr::CKeyMgr(void)
+	: m_dwKey(0)
 {
 }
 
