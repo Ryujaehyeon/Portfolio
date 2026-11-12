@@ -3,8 +3,9 @@
 
 
 CDevice::CDevice(void)
-	:m_p3D(0)
-	,m_pDevice(0)
+	: m_p3D(nullptr)
+	, m_pDevice(nullptr)
+	, m_pSprite(nullptr)
 {}
 
 CDevice::~CDevice(void)

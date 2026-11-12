@@ -3,6 +3,8 @@
 #include "Include.h"
 
 CAStar::CAStar(void)
+	: m_iStartIndex(0)
+	, m_iGoalIndex(0)
 {
 }
 

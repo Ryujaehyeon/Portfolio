@@ -5,9 +5,9 @@
 #include "SortMgr.h"
 
 CObjMgr::CObjMgr(void)
+	: m_MonsterCount(0)
+	, m_BossCount(0)
 {
-	m_MonsterCount = 0;
-	m_BossCount = 0;
 }
 
 CObjMgr::~CObjMgr(void)

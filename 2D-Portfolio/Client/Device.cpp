@@ -3,8 +3,14 @@
 
 
 CDevice::CDevice(void)
-	:m_p3D(0)
-	,m_pDevice(0)
+	: m_p3D(0)
+	, m_pDevice(0)
+	, m_pSprite(nullptr)
+	, m_pInput(nullptr)
+	, m_pKeyBoard(nullptr)
+	, m_pMouse(nullptr)
+	, m_byKState()
+	, m_MState()
 {}
 
 CDevice::~CDevice(void)

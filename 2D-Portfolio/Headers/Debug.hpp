@@ -114,7 +114,12 @@ public:
 		FillConsoleOutputCharacter(_hconsole, (TCHAR) ' ', 200 * 200, Pos, &dwByte );
 		SetConsoleCursorPosition(_hconsole, Pos);
 	}
-private: __debugclass(){_hconsole = 0;}
+private: __debugclass()
+		: _hconsole(nullptr)
+		, _tempa()
+		, _tempw()
+	{
+	}
 public: ~__debugclass(){FreeConsole();CloseHandle(_hconsole);}
 };
 

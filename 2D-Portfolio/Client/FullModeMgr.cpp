@@ -6,6 +6,11 @@
 CFullModeMgr* CFullModeMgr::_Instance = 0;
 
 CFullModeMgr::CFullModeMgr(void)
+	: _mode(0)
+	, _hwnd(nullptr)
+	, _saved()
+	, _user()
+	, _pos()
 {}
 
 CFullModeMgr::~CFullModeMgr(void)

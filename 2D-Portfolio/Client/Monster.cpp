@@ -6,11 +6,17 @@
 static bool s_bSmokeKilled = false;
 
 CMonster::CMonster(void)
+	: m_vMovePoint(0.f, 0.f, 0.f)
+	, m_iDir(0)
+	, m_fWaitTime(0.f)
 {
 }
 
 CMonster::CMonster( const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType )
-	:CStageDynamic(Info, _ObjName, _ObjType)
+	: CStageDynamic(Info, _ObjName, _ObjType)
+	, m_vMovePoint(0.f, 0.f, 0.f)
+	, m_iDir(0)
+	, m_fWaitTime(0.f)
 {
 		m_pObjKey = _ObjName;
 		m_pObjName = _ObjName;

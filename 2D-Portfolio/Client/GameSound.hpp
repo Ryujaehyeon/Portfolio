@@ -143,6 +143,12 @@ for(siter=_sound.begin();siter!=_sound.end();++siter){
 _errcheck(siter->second->release());}
 _sound.clear();_channel.clear();
 _errcheck(_system->close());}
-SoundDevice():_volume(1.0f){}~SoundDevice(){_release();}};
+SoundDevice()
+	: _system(nullptr)
+	, _result(FMOD_OK)
+	, _volume(1.0f)
+{
+}
+~SoundDevice(){_release();}};
 class GameSound {public:SoundDevice* operator->(){return *SoundDevice::_Instance();}};
 #endif

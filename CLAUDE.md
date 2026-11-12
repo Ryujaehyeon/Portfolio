@@ -69,6 +69,9 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - 문자열: `TCHAR*`/`wstring`, 리터럴은 `L"..."` (CharacterSet=Unicode). 읽기만 하는 문자열 포인터는 `const TCHAR*`(이름 상수는 `const TCHAR* const`).
   이름·키·모션(`TCHAR*`) 비교는 **`IsSameKey(a, b)`**(`Headers/Function.h`, 내용 비교) — `==`/`!=` 는 주소 비교라 쓰지 않는다. `TCHAR*` 를 `map` 키로 쓰지 않는다(`wstring` 키).
   Client Release 는 문자열 병합을 끈다(`StringPooling=false`, `/GF-`) — 주소 비교가 다시 생기면 Release 스모크가 실패한다. 경위는 `intent/string-key-compare/`.
+- 멤버 초기화: **모든 생성자**의 초기화 리스트에서 기본 타입·포인터·열거형·배열·값 구조체(`D3DX*`·`RECT`·Struct.h 구조체) 멤버를 모두 초기화한다
+  (`nullptr`·`0`·`false`·0번 열거자·영벡터·단위 행렬, 한 줄에 하나). 생성자가 여럿이면 각각에 — 기본 생성자의 리스트는 다른 생성자에서 실행되지 않는다.
+  파생 클래스는 자기 멤버만(기반 멤버는 기반 생성자 몫). 멤버를 추가하면 모든 생성자에 넣는다. 경위는 `intent/member-init/`.
 - 파일 구조: 클래스 1개 = `.h`/`.cpp` 1쌍, 프로젝트 폴더에 평평하게 둔다. 모든 `.cpp` 첫 줄은 `#include "StdAfx.h"`(PCH).
 - 공용 헤더는 `Headers/Include.h` 하나로 모은다. Client 전용 헤더는 `#ifdef __CLIENT__EXEC__` 블록 안에 추가한다
   (`Client/stdafx.h` 에서 정의).

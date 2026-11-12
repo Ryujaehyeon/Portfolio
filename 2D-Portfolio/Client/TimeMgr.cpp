@@ -3,7 +3,11 @@
 
 
 CTimeMgr::CTimeMgr(void)
-	:m_fTime(0.0f)
+	: m_FrameTime()
+	, m_FixTime()
+	, m_LastTime()
+	, m_CpuTime()
+	, m_fTime(0.0f)
 {}
 
 CTimeMgr::~CTimeMgr(void)

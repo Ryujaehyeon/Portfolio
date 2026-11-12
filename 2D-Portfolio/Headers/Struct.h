@@ -7,7 +7,12 @@ typedef struct AStarNode
 	int iIndex;
 	// 
 	AStarNode* pParent;
-
+	AStarNode()
+		: fCost(0.f)
+		, iIndex(0)
+		, pParent(nullptr)
+	{
+	}
 }NODE;
 typedef struct tagObjInfo
 {
@@ -41,23 +46,58 @@ typedef struct tagObjInfo
 	BYTE        byDrawID;
 	// 오브젝트의 옵션
 	BYTE        byOption;
-	tagObjInfo(){}
+	tagObjInfo()
+		: vPos(0.f, 0.f, 0.f)
+		, vDir(0.f, 0.f, 0.f)
+		, vLook(0.f, 0.f, 0.f)
+		, vCenter(0.f, 0.f, 0.f)
+		, fX(0.f)
+		, fY(0.f)
+		, fCX(0.f)
+		, fCY(0.f)
+		, matScale(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f)
+		, matRotz(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f)
+		, matTrans(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f)
+		, matWorld(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f)
+		, unitSelect(false)
+		, byDrawID(0)
+		, byOption(0)
+	{
+	}
 	tagObjInfo(const tagObjInfo& Info)
-		:vPos(Info.vPos), vDir(Info.vDir), vLook(Info.vLook)
-		,vCenter(Info.vCenter), matWorld(Info.matWorld)
-	{}
+		: vPos(Info.vPos)
+		, vDir(Info.vDir)
+		, vLook(Info.vLook)
+		, vCenter(Info.vCenter)
+		, fX(Info.fX)
+		, fY(Info.fY)
+		, fCX(Info.fCX)
+		, fCY(Info.fCY)
+		, matScale(Info.matScale)
+		, matRotz(Info.matRotz)
+		, matTrans(Info.matTrans)
+		, matWorld(Info.matWorld)
+		, unitSelect(Info.unitSelect)
+		, byDrawID(Info.byDrawID)
+		, byOption(Info.byOption)
+	{
+	}
 }OBJINFO;
 
 typedef struct tagFrame
 {
 	float fStart;
 	float fLast;
-	tagFrame(){}
+	tagFrame()
+		: fStart(0.f)
+		, fLast(0.f)
+	{
+	}
 	tagFrame(float _fStart
 		, float _fLast)
+		: fStart(_fStart)
+		, fLast(_fLast)
 	{
-		fStart = _fStart;
-		fLast  = _fLast;
 	}
 }FRAME;
 
@@ -89,6 +129,24 @@ typedef struct tagItem
 	int  iGold;
 	int  iCnt;
 	int  iType;
+	tagItem()
+		: szName()
+		, fMight(0.f)
+		, fConstitution(0.f)
+		, fDexterity(0.f)
+		, fPerception(0.f)
+		, fIntellect(0.f)
+		, fResolve(0.f)
+		, fAttack(0.f)
+		, fDefence(0.f)
+		, fHealthPoint(0.f)
+		, fMagikaPoint(0.f)
+		, iSKillPoint(0)
+		, iGold(0)
+		, iCnt(0)
+		, iType(0)
+	{
+	}
 }ITEM;
 typedef struct tagItem* PITEM;
 
@@ -137,6 +195,32 @@ typedef struct tagInfo
 	// 아이템
 	PITEM tItem[ITEM_END];
 	PITEM tInventory[50];
+	tagInfo()
+		: szName()
+		, iLevel(0)
+		, fExp(0.f)
+		, fMaxExp(0.f)
+		, fMight(0.f)
+		, fConstitution(0.f)
+		, fDexterity(0.f)
+		, fPerception(0.f)
+		, fIntellect(0.f)
+		, fResolve(0.f)
+		, fAttack(0.f)
+		, fDefence(0.f)
+		, fHealthPoint(0.f)
+		, fHealthPointMAX(0.f)
+		, fMagikaPoint(0.f)
+		, fMagikaPointMAX(0.f)
+		, iSKillPoint(0)
+		, iStatPoint(0)
+		, iGenderIdx(0)
+		, iGold(0)
+		, fSpeed(0.f)
+		, tItem()
+		, tInventory()
+	{
+	}
 }INFO;
 
 // 
@@ -154,6 +238,15 @@ typedef struct tagBoneSpear
 	float fHpCost;
 	// 소비 MP
 	float fMpCost;
+	tagBoneSpear()
+		: iLevel(0)
+		, iMinLevel(0)
+		, iLimitLevel(0)
+		, fCastTime(0.f)
+		, fHpCost(0.f)
+		, fMpCost(0.f)
+	{
+	}
 }BoneSpearSkill;
 
 typedef struct tagFireWall
@@ -170,6 +263,15 @@ typedef struct tagFireWall
 	float fHpCost;
 	// 소비 MP
 	float fMpCost;
+	tagFireWall()
+		: iLevel(0)
+		, iMinLevel(0)
+		, iLimitLevel(0)
+		, fCastTime(0.f)
+		, fHpCost(0.f)
+		, fMpCost(0.f)
+	{
+	}
 }FireWallSkill;
 
 typedef struct tagBlizzard
@@ -186,6 +288,15 @@ typedef struct tagBlizzard
 	float fHpCost;
 	// 소비 MP
 	float fMpCost;
+	tagBlizzard()
+		: iLevel(0)
+		, iMinLevel(0)
+		, iLimitLevel(0)
+		, fCastTime(0.f)
+		, fHpCost(0.f)
+		, fMpCost(0.f)
+	{
+	}
 }BlizzardSkill;
 
 typedef struct tagSkill
@@ -193,7 +304,12 @@ typedef struct tagSkill
 	BoneSpearSkill sBoneSpear;
 	FireWallSkill sFireWall;
 	BlizzardSkill sBlizzard;
-
+	tagSkill()
+		: sBoneSpear()
+		, sFireWall()
+		, sBlizzard()
+	{
+	}
 }SkillTree;
 
 
@@ -205,6 +321,11 @@ typedef struct tagTexture
 	LPDIRECT3DTEXTURE9 pTexture;
 	// 비슷한 이미지의 그룹명을 담는 변수
 	D3DXIMAGE_INFO     ImgInfo;
+	tagTexture()
+		: pTexture(nullptr)
+		, ImgInfo()
+	{
+	}
 }TEXINFO;
 
 typedef struct tagTile
@@ -216,5 +337,12 @@ typedef struct tagTile
 	BYTE        byOption;
 	// 타일 선택 여부
 	bool		TileSelect;
+	tagTile()
+		: vPos(0.f, 0.f, 0.f)
+		, byDrawID(0)
+		, byOption(0)
+		, TileSelect(false)
+	{
+	}
 }TILE;
 

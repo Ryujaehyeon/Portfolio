@@ -41,6 +41,9 @@ END_MESSAGE_MAP()
 // CMFC_000View 생성/소멸
 
 CMFC_000View::CMFC_000View()
+	: m_iSelDrawID(0)
+	, m_iCurrentID(0)
+	, m_fScrollval(0.f)
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
 
