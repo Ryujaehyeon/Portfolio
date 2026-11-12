@@ -63,6 +63,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 
+	// 어디서 실행해도 리소스를 찾게 작업 디렉터리를 Client 폴더로 맞춘다(스모크 로그도 그 기준)
+	SetResourceWorkDir(L"Client");
+
 	if (_tcsstr(lpCmdLine, L"-smoke") != nullptr)
 	{
 		SmokeBegin(L"smoke.log");

@@ -42,7 +42,8 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
         경고는 0 이고 두 프로젝트·4개 구성에 경고를 오류로(`/WX`, TreatWarningAsError) 둔다 — 경고 하나가 빌드를 실패시킨다.
         경고가 나면 끄지 말고(`#pragma warning(disable)`·`/wd` 금지) 코드를 고친다. 축소 변환은 같은 결과의 `static_cast` 로 명시한다.
         경위는 `intent/warning-cleanup/`. 컴파일러가 업데이트돼 새 경고가 생기면 그때 고친다.
-실행:   작업 디렉터리를 `2D-Portfolio/Client/`(툴은 `MFC_000/`)로 두고 exe 실행 — 리소스가 상대 경로.
+실행:   리소스는 `2D-Portfolio/Client/`(툴은 `MFC_000/`) 기준 상대 경로. 작업 디렉터리가 다르면(exe 더블클릭 등) 시작할 때
+        exe 위치에서 위로 찾아 그 폴더로 옮긴다(`SetResourceWorkDir`, 경위 `intent/resource-path/`) — exe 가 저장소 안에 있을 때만.
         WSL 에서 「살아 있는지」만 볼 때: `timeout 8 ….exe` 는 WSL 쪽만 끝내고 **Windows 프로세스(창)는 남는다** —
         남은 exe 때문에 다음 빌드가 LNK1168(쓰기용으로 열 수 없음)로 실패한다. PowerShell 로 띄우고 직접 끝낸다:
           powershell.exe -NoProfile -Command "$p=Start-Process -FilePath '<exe 의 Windows 경로>' -WorkingDirectory '<Client 폴더>' -PassThru; Start-Sleep 8; $p.HasExited; Stop-Process -Id $p.Id"
