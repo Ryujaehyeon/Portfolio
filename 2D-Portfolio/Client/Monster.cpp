@@ -98,7 +98,7 @@ SCENEID CMonster::Progress()
 	// 구하게 되면 위를 보거나 아래를 보게 만듬
 	if (m_vTagetInfo != m_Info.vPos)
 		// 각도값을 구한다
-		m_fAngle = acosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
+		m_fAngle = ClampedAcosf(D3DXVec3Dot(&m_Info.vDir, &m_Info.vLook));
 
 	// 내적을 구한다.
 	if (m_vTagetInfo.y > m_Info.vPos.y)

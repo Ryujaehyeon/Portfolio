@@ -23,7 +23,7 @@ void CStageDynamic::SetDirect( const D3DXVECTOR3& Dest )
 	D3DXVec3Normalize(&Dir, &Dir);
 	D3DXVec3Normalize( &m_Info.vLook, &m_Info.vLook );
 
-	m_fAngle = acosf(D3DXVec3Dot(&Dir, &m_Info.vLook));
+	m_fAngle = ClampedAcosf(D3DXVec3Dot(&Dir, &m_Info.vLook));
 
 	if (Dest.y < m_Info.vPos.y)
 		m_fAngle = 2 * D3DX_PI - m_fAngle;
