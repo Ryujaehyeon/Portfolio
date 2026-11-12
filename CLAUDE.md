@@ -64,6 +64,8 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - 네이밍: 클래스 `C` 접두(`CPlayer`, `CSceneMgr`), 멤버 `m_` + 헝가리안(`m_pObjKey`, `m_fAngle`, `m_bRun`, `m_iDegree`),
   인자 `_` 접두(`_ObjName`), 전역 `g_`(`g_hWnd`, `CObj::g_tScroll`), 상수 대문자(`WINSIZEX`), enum 값 `타입_값`(`SCENEID_LOGO`, `WINMODE_WIN`).
 - 문자열: `TCHAR*`/`wstring`, 리터럴은 `L"..."` (CharacterSet=Unicode).
+  이름·키·모션(`TCHAR*`) 비교는 **`IsSameKey(a, b)`**(`Headers/Function.h`, 내용 비교) — `==`/`!=` 는 주소 비교라 쓰지 않는다. `TCHAR*` 를 `map` 키로 쓰지 않는다(`wstring` 키).
+  Client Release 는 문자열 병합을 끈다(`StringPooling=false`, `/GF-`) — 주소 비교가 다시 생기면 Release 스모크가 실패한다. 경위는 `intent/string-key-compare/`.
 - 파일 구조: 클래스 1개 = `.h`/`.cpp` 1쌍, 프로젝트 폴더에 평평하게 둔다. 모든 `.cpp` 첫 줄은 `#include "StdAfx.h"`(PCH).
 - 공용 헤더는 `Headers/Include.h` 하나로 모은다. Client 전용 헤더는 `#ifdef __CLIENT__EXEC__` 블록 안에 추가한다
   (`Client/stdafx.h` 에서 정의).
