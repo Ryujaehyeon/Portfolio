@@ -217,11 +217,11 @@ SCENEID CObjMgr::Progress()
 					for (list<CObj*>::iterator iterCount = iterMonster->second.begin();
 						 iterCount != iterMonster->second.end() ; ++iterCount	)
 					{
-						if ((*iterCount)->GetName() == SUMMONER ||
-							(*iterCount)->GetName() == GRISWOLD ||
-							(*iterCount)->GetName() == ANDARIEL ||
-							(*iterCount)->GetName() == IZUAL ||
-							(*iterCount)->GetName() == DIABLO)
+						if (IsSameKey((*iterCount)->GetName(), SUMMONER) ||
+							IsSameKey((*iterCount)->GetName(), GRISWOLD) ||
+							IsSameKey((*iterCount)->GetName(), ANDARIEL) ||
+							IsSameKey((*iterCount)->GetName(), IZUAL) ||
+							IsSameKey((*iterCount)->GetName(), DIABLO))
 						{
 							if(m_BossCount < 1)
 								++m_BossCount; 
@@ -435,7 +435,7 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 			}
 
 			// BoneSpear 는 첫 명중에서 소멸한다 — 한 대상만 맞힌다. 그 밖의 스킬은 범위 안 몬스터를 모두 맞힌다
-			if(pSkillObj->GetName() == BONESPEAR)
+			if(IsSameKey(pSkillObj->GetName(), BONESPEAR))
 			{
 				pSkillObj->SetStatas()->fHealthPoint = -1.f;
 				break;
@@ -443,7 +443,7 @@ void CObjMgr::ColCircle(list<CObj*> *pSkill,
 		}
 
 		//좌표를 받아 화면 밖을 벗어날 시
-		if( pSkillObj->GetName() == BONESPEAR &&
+		if( IsSameKey(pSkillObj->GetName(), BONESPEAR) &&
 			(pSkillObj->GetInfo().vPos.y < 0		 + CObj::g_tScroll.y  ||
 			pSkillObj->GetInfo().vPos.y > WINSIZEY + CObj::g_tScroll.y  ||
 			pSkillObj->GetInfo().vPos.x < 0		 + CObj::g_tScroll.x  ||
@@ -515,9 +515,9 @@ void CObjMgr::IterRelease()
 		{
 			const CObj* const pObj = *iter2;
 			const bool bDeadMonster = pObj->GetObjType() == OBJ_MONSTER
-				&& pObj->GetpMotion() == DEATH && pObj->GetFrame().fStart <= 0.f;
+				&& IsSameKey(pObj->GetpMotion(), DEATH) && pObj->GetFrame().fStart <= 0.f;
 			const bool bDeadSkill = pObj->GetObjType() == OBJ_SKILL
-				&& pObj->GetpMotion() == DEATH;
+				&& IsSameKey(pObj->GetpMotion(), DEATH);
 			if (bDeadMonster || bDeadSkill)
 			{
 				vecDead.push_back(*iter2);

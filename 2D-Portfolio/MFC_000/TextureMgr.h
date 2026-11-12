@@ -8,7 +8,7 @@ class CTextureMgr
 	SINGLETON(CTextureMgr);	
 public:
 	// Texture 관리 데이터
-	map<const TCHAR*, CTexture*> m_MapTexture;
+	map<wstring, CTexture*> m_MapTexture;
 public:
 	const TEXINFO* GetTexture(const TCHAR* pObjKey, int iCnt = 0);
 public:

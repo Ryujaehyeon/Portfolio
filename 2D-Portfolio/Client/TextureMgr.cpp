@@ -16,7 +16,7 @@ CTextureMgr::~CTextureMgr(void)
 HRESULT CTextureMgr::InsertTexture(const TCHAR* pFileName, const TCHAR* pObjKey, 
 	TEXTYPE TypeID, const TCHAR* pStateKey, int iCnt)
 {
-	map<const TCHAR*, CTexture*>::iterator iter	= m_MapTexture.find(pObjKey);
+	map<wstring, CTexture*>::iterator iter	= m_MapTexture.find(pObjKey);
 	if(iter != m_MapTexture.end())
 	{
 		if(FAILED((iter->second)->InsertTexture(pFileName, pStateKey, iCnt)))
@@ -45,7 +45,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR* pFileName, const TCHAR* pObjKey,
 
 void CTextureMgr::Release()
 {
-	for(map<const TCHAR*, CTexture*>::iterator iter 
+	for(map<wstring, CTexture*>::iterator iter 
 		= m_MapTexture.begin();
 		iter != m_MapTexture.end(); ++iter)
 	{
@@ -57,7 +57,7 @@ void CTextureMgr::Release()
 const TEXINFO* CTextureMgr::GetTexture(const TCHAR* pObjKey,
 	const TCHAR* pStateKey, int iCnt)
 {
-	map<const TCHAR*, CTexture*>::iterator iter
+	map<wstring, CTexture*>::iterator iter
 		= m_MapTexture.find(pObjKey);
 	if(iter == m_MapTexture.end())
 		return NULL;

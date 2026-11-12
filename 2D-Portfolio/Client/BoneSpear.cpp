@@ -175,7 +175,7 @@ void CBoneSpear::DirectAction( TCHAR* _pObjStatas )
 	// 0808 09:00 m_pMotion만 바꾸고 _pObjStatas바꾸지 않아서 에러
 	m_pMotion = _pObjStatas;
 	// 서있기
-	if(_pObjStatas == L"BoneSpear")
+	if(IsSameKey(_pObjStatas, L"BoneSpear"))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)

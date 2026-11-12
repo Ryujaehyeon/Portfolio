@@ -57,115 +57,115 @@ HRESULT CUIObj::Initialize()
 		L"BlizzardButton"
 	};
 
-	if(m_pObjKey == UI[0])
+	if(IsSameKey(m_pObjKey, UI[0]))
 	{
 		m_Info.vPos  = D3DXVECTOR3(512.f, 512.f, 0.f);
 		m_Info.fCX = 1024.f;
 		m_Info.fCY = 1024.f;
 	}
-	if(m_pObjKey == UI[1])
+	if(IsSameKey(m_pObjKey, UI[1]))
 	{
 		m_Info.vPos  = D3DXVECTOR3(93.f, 635.f, 0.f);
 		m_Info.fCX = 128.f;
 		m_Info.fCY = 128.f;
 	}
-	if(m_pObjKey == UI[2])
+	if(IsSameKey(m_pObjKey, UI[2]))
 	{
 		m_Info.vPos  = D3DXVECTOR3(400.f, 20.f, 0.f);
 		m_Info.fCX = 100.f;
 		m_Info.fCY = 10.f;
 	}
-	if(m_pObjKey == UI[3])
+	if(IsSameKey(m_pObjKey, UI[3]))
 	{
 		m_Info.vPos  = D3DXVECTOR3(400.f, 20.f, 0.f);
 		m_Info.fCX = 100.f;
 		m_Info.fCY = 10.f;
 	}
-	if(m_pObjKey == UI[4])
+	if(IsSameKey(m_pObjKey, UI[4]))
 	{
 		m_Info.vPos  = D3DXVECTOR3(755.f, 635.f, 0.f);
 		m_Info.fCX = 128.f;
 		m_Info.fCY = 128.f;
 	}
-	if(m_pObjKey == UI[5])
+	if(IsSameKey(m_pObjKey, UI[5]))
 	{	
 		m_Info.vPos  = D3DXVECTOR3(336.f, 589.f, 0.f);
 		m_Info.fCX = 128.f;
 		m_Info.fCY = 32.f;
 	}
-	if(m_pObjKey == UI[6])
+	if(IsSameKey(m_pObjKey, UI[6]))
 	{	
 		m_Info.vPos  = D3DXVECTOR3(263.f, 581.f, 0.f);
 		m_Info.fCX = 32.f;
 		m_Info.fCY = 32.f;
 	}
-	if(m_pObjKey == UI[7])
+	if(IsSameKey(m_pObjKey, UI[7]))
 	{	
 		m_Info.vPos  = D3DXVECTOR3(578.f, 578.f, 0.f);
 		m_Info.fCX = 64.f;
 		m_Info.fCY = 64.f;
 	}
-	if(m_pObjKey == UI[8])	
+	if(IsSameKey(m_pObjKey, UI[8]))	
 	{	
 		m_Info.vPos  = D3DXVECTOR3(578.f, 578.f, 0.f);
 		m_Info.fCX = 64.f;
 		m_Info.fCY = 64.f;
 	}
-	if(m_pObjKey == UI[9])				 
+	if(IsSameKey(m_pObjKey, UI[9]))				 
 	{	
 		m_Info.vPos  = D3DXVECTOR3(221.f, 577.f, 0.f);
 		m_Info.fCX = 64.f;
 		m_Info.fCY = 64.f;
 	}
-	if(m_pObjKey == UI[10])				 
+	if(IsSameKey(m_pObjKey, UI[10]))				 
 	{	
 		m_Info.vPos  = D3DXVECTOR3(221.f, 577.f, 0.f);
 		m_Info.fCX = 64.f;
 		m_Info.fCY = 64.f;
 	}
-	if(m_pObjKey == UI[11])				 
+	if(IsSameKey(m_pObjKey, UI[11]))				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(316, 564.f, 0.f);
 		m_Info.fCX = 120.f;
 		m_Info.fCY = 3.f;
 	}
-	if(m_pObjKey == UI[12])				 
+	if(IsSameKey(m_pObjKey, UI[12]))				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
 		m_Info.fCX = 1024.f;
 		m_Info.fCY = 1024.f;
 	}
-	if(m_pObjKey == UI[13])				 
+	if(IsSameKey(m_pObjKey, UI[13]))				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
 		m_Info.fCX = 1024.f;
 		m_Info.fCY = 1024.f;
 	}
-	if(m_pObjKey == UI[14])				 
+	if(IsSameKey(m_pObjKey, UI[14]))				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
 		m_Info.fCX = 1024.f;
 		m_Info.fCY = 1024.f;
 	}
-	if(m_pObjKey == UI[15])				 
+	if(IsSameKey(m_pObjKey, UI[15]))				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(512, 512.f, 0.f);
 		m_Info.fCX = 1024.f;
 		m_Info.fCY = 1024.f;
 	}
-	if(m_pObjKey == UI[16])				 
+	if(IsSameKey(m_pObjKey, UI[16]))				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(530.f, 48.f, 0.f);
 		m_Info.fCX = 64.f;
 		m_Info.fCY = 64.f;
 	}
-	if(m_pObjKey == UI[17])				 
+	if(IsSameKey(m_pObjKey, UI[17]))				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(530.f, 135.f, 0.f);
 		m_Info.fCX = 64.f;
 		m_Info.fCY = 64.f;
 	}
-	if(m_pObjKey == UI[18])				 
+	if(IsSameKey(m_pObjKey, UI[18]))				 
 	{
 		m_Info.vPos  = D3DXVECTOR3(530.f, 310.f, 0.f);
 		m_Info.fCX = 64.f;
@@ -189,7 +189,7 @@ SCENEID CUIObj::Progress()
 	
 	if (m_SkillTree == true)
 	{
-		if (m_pObjKey == L"BoneSpearButton" && PtInRect(&RealRect(), UIMouseInfo()) )
+		if (IsSameKey(m_pObjKey, L"BoneSpearButton") && PtInRect(&RealRect(), UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -211,7 +211,7 @@ SCENEID CUIObj::Progress()
 				}
 			}
 		}
-		else if(m_pObjKey == L"FireWallButton" && PtInRect(&RealRect(), UIMouseInfo()) )
+		else if(IsSameKey(m_pObjKey, L"FireWallButton") && PtInRect(&RealRect(), UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -234,7 +234,7 @@ SCENEID CUIObj::Progress()
 				}
 			}
 		}
-		else if(m_pObjKey == L"BlizzardButton" && PtInRect(&RealRect(), UIMouseInfo()) )
+		else if(IsSameKey(m_pObjKey, L"BlizzardButton") && PtInRect(&RealRect(), UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -304,7 +304,7 @@ void CUIObj::Render()
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
 
-	if (m_pObjKey == L"SkillPoint")
+	if (IsSameKey(m_pObjKey, L"SkillPoint"))
 	{
 		const TEXINFO* pTexInfo 
 			= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey, NULL, 1);
@@ -318,7 +318,7 @@ void CUIObj::Render()
 
 	//// &GetRect() 그리는 이미지의 좌표
 
-	if(m_pObjKey == L"HP" ||m_pObjKey == L"MP" )
+	if(IsSameKey(m_pObjKey, L"HP") ||IsSameKey(m_pObjKey, L"MP") )
 	{
 		RECT rc = {
 					int(0), 
@@ -333,7 +333,7 @@ void CUIObj::Render()
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
-	else if ( m_pObjKey == L"ExpBar" )
+	else if ( IsSameKey(m_pObjKey, L"ExpBar") )
 	{
 		RECT rc = {
 			float(0), 
@@ -347,7 +347,7 @@ void CUIObj::Render()
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
-	else if ( m_pObjKey == L"HPBar" )
+	else if ( IsSameKey(m_pObjKey, L"HPBar") )
 	{
 		RECT rc = {
 			float(0), 
@@ -358,12 +358,12 @@ void CUIObj::Render()
 		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f),
 			(pTexInfo->ImgInfo.Height * 0.5), 0);
 
-		if( VelueToPercentage(m_pObjKey) >= 0.f && m_pObjKey == L"HPBar")
+		if( VelueToPercentage(m_pObjKey) >= 0.f && IsSameKey(m_pObjKey, L"HPBar"))
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 				&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	}
-	else if (m_pObjKey == L"HPBarBack")
+	else if (IsSameKey(m_pObjKey, L"HPBarBack"))
 	{
 		RECT rc = {
 			float(0), 
@@ -378,7 +378,7 @@ void CUIObj::Render()
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
-	else if (m_pObjKey == L"Inven")
+	else if (IsSameKey(m_pObjKey, L"Inven"))
 	{
 		if(m_InvenKey == true)
 		{
@@ -390,7 +390,7 @@ void CUIObj::Render()
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
-	else if (m_pObjKey == L"SkillTree")
+	else if (IsSameKey(m_pObjKey, L"SkillTree"))
 	{
 		if(m_SkillTree == true)
 		{
@@ -402,7 +402,7 @@ void CUIObj::Render()
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
-	else if (m_pObjKey == L"Bank")
+	else if (IsSameKey(m_pObjKey, L"Bank"))
 	{
 		if(m_Bank == true)
 		{
@@ -414,7 +414,7 @@ void CUIObj::Render()
 				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
-	else if (m_pObjKey == L"Character")
+	else if (IsSameKey(m_pObjKey, L"Character"))
 	{
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * 0.5f, 0);
@@ -427,7 +427,7 @@ void CUIObj::Render()
 			FontOutput(m_pObjKey);
 		}
 	}
-	else if (m_pObjKey == L"BoneSpearButton")
+	else if (IsSameKey(m_pObjKey, L"BoneSpearButton"))
 	{
 		if(m_SkillTree == true)
 		{
@@ -441,7 +441,7 @@ void CUIObj::Render()
 			FontOutput(m_pObjKey);
 		}
 	}
-	else if (m_pObjKey == L"FireWallButton")
+	else if (IsSameKey(m_pObjKey, L"FireWallButton"))
 	{
 		if(m_SkillTree == true)
 		{
@@ -455,7 +455,7 @@ void CUIObj::Render()
 			FontOutput(m_pObjKey);
 		}
 	}
-	else if (m_pObjKey == L"BlizzardButton")
+	else if (IsSameKey(m_pObjKey, L"BlizzardButton"))
 	{
 		if(m_SkillTree == true)
 		{
@@ -501,16 +501,16 @@ void CUIObj::Setlist( list<CObj*>* _list )
 
 float CUIObj::VelueToPercentage(TCHAR* VelueName)
 {
-	if(L"HP" == VelueName)
+	if(IsSameKey(L"HP", VelueName))
 		return m_PlayerObj->GetStatas().fHealthPoint/m_PlayerObj->GetStatas().fHealthPointMAX;
 
-	if (L"MP" == VelueName)
+	if (IsSameKey(L"MP", VelueName))
 		return m_PlayerObj->GetStatas().fMagikaPoint/m_PlayerObj->GetStatas().fMagikaPointMAX;
 
-	if (L"ExpBar" == VelueName)
+	if (IsSameKey(L"ExpBar", VelueName))
 		return m_PlayerObj->GetStatas().fExp/m_PlayerObj->GetStatas().fMaxExp;
 
-	if (L"HPBar" == VelueName )
+	if (IsSameKey(L"HPBar", VelueName) )
 	{
 		list<CObj*>::iterator iter = m_MonsterData->begin();
 		for (; iter != m_MonsterData->end(); ++iter)
@@ -580,7 +580,7 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 
 	TCHAR* NumberFont[] = {FONT0, FONT1, FONT2, FONT3, FONT4, FONT5, FONT6, FONT7, FONT8, FONT9 };
 
-	if (m_pObjKey == L"BoneSpearButton")
+	if (IsSameKey(m_pObjKey, L"BoneSpearButton"))
 	{
 		for (list<CObj*>::iterator iter = m_PlayerData->begin();
 			iter != m_PlayerData->end(); ++iter)
@@ -616,7 +616,7 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 			}
 		}
 	}
-	else if (m_pObjKey == L"FireWallButton")
+	else if (IsSameKey(m_pObjKey, L"FireWallButton"))
 	{
 		for (list<CObj*>::iterator iter = m_PlayerData->begin();
 			iter != m_PlayerData->end(); ++iter)
@@ -652,7 +652,7 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 			}
 		}
 	}
-	else if (m_pObjKey == L"BlizzardButton")
+	else if (IsSameKey(m_pObjKey, L"BlizzardButton"))
 	{
 		for (list<CObj*>::iterator iter = m_PlayerData->begin();
 			iter != m_PlayerData->end(); ++iter)
@@ -688,7 +688,7 @@ void CUIObj::FontOutput( TCHAR* _pObjKey )
 			}
 		}
 	}
-	else if (m_pObjKey == L"Character")
+	else if (IsSameKey(m_pObjKey, L"Character"))
 	{
 		for (list<CObj*>::iterator iter = m_PlayerData->begin();
 			iter != m_PlayerData->end(); ++iter)

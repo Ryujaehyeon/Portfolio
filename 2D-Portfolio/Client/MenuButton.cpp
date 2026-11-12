@@ -41,7 +41,7 @@ SCENEID CMenuButton::Progress()
 	m_Info.matWorld =  matTrans;
 
 	// 스모크 모드: 메뉴에 들어온 지 1초 뒤 마우스 없이 「시작」을 누른 것으로 친다
-	if (IsSmokeMode() && m_pObjKey == L"MenuButton_Start")
+	if (IsSmokeMode() && IsSameKey(m_pObjKey, L"MenuButton_Start"))
 	{
 		static float s_fSmokeTime = 0.f;
 		s_fSmokeTime += GET_SINGLE(CTimeMgr)->DeltaTime();
@@ -56,7 +56,7 @@ SCENEID CMenuButton::Progress()
 	if(PtInRect(&RealRect(), MouseInfo()))
 	{
 		m_bMouseOver = true;
-		if ( m_pObjKey == L"MenuButton_Start" && 
+		if ( IsSameKey(m_pObjKey, L"MenuButton_Start") && 
 			GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
 			iScene = SCENEID_STAGE;
@@ -64,7 +64,7 @@ SCENEID CMenuButton::Progress()
 		}
 		else 
 			 iScene = SCENEID_NONPASS;
-		if (m_pObjKey == L"MenuButton_Exit"  && 
+		if (IsSameKey(m_pObjKey, L"MenuButton_Exit")  && 
 			GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		{
 			iScene = SCENEID_END;
@@ -96,12 +96,12 @@ void CMenuButton::Render()
 	if(pTexInfo == NULL)
 		return;
 
-	if (m_pObjKey == L"MenuButton_Start")
+	if (IsSameKey(m_pObjKey, L"MenuButton_Start"))
 	{
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * 0.25f, 0);
 	}
-	else if (m_pObjKey == L"MenuButton_Exit")
+	else if (IsSameKey(m_pObjKey, L"MenuButton_Exit"))
 	{
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * 0.25f, 0);
