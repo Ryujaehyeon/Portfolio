@@ -14,7 +14,7 @@ public:
 public:
 	CStageStatic(void);
 	CStageStatic(const OBJINFO& Info, const OBJ_TYPE _ObjType);
-	CStageStatic(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType);
+	CStageStatic(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType);
 	virtual ~CStageStatic(void);
 };
 

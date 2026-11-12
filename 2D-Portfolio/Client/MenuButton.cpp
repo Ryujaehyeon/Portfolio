@@ -6,7 +6,7 @@ CMenuButton::CMenuButton(void)
 {
 }
 
-CMenuButton::CMenuButton(const OBJINFO& Info, TCHAR* ButtonName, const OBJ_TYPE _ObjType)
+CMenuButton::CMenuButton(const OBJINFO& Info, const TCHAR* ButtonName, const OBJ_TYPE _ObjType)
 	:CMenuDynamic(Info, _ObjType),
 	m_DrawID(ButtonName)
 {
@@ -52,8 +52,9 @@ SCENEID CMenuButton::Progress()
 	}
 
 	SCENEID iScene;
-	// &RealRect() 실제 충돌하는 좌표를 체크
-	if(PtInRect(&RealRect(), MouseInfo()))
+	// RealRect() 실제 충돌하는 좌표를 체크
+	const RECT rcReal = RealRect();
+	if(PtInRect(&rcReal, MouseInfo()))
 	{
 		m_bMouseOver = true;
 		if ( IsSameKey(m_pObjKey, L"MenuButton_Start") && 
@@ -108,9 +109,10 @@ void CMenuButton::Render()
 	}
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 
-	// &GetRect() 그리는 이미지의 좌표
+	// GetRect() 그리는 이미지의 좌표
+	const RECT rcDraw = GetRect();
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-		&GetRect(), &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		&rcDraw, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void CMenuButton::Release()

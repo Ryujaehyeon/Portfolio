@@ -8,7 +8,7 @@ protected:
 	float m_fTime;
 public:
 	void FrameStatas();
-	void DirectAction( TCHAR* _pObjStatas );
+	void DirectAction( const TCHAR* _pObjStatas );
 	void StateSkill();
 public:
 	virtual HRESULT Initialize();
@@ -18,7 +18,7 @@ public:
 	virtual CObj* Clone();
 public:
 	CFireWall(void);
-	CFireWall(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType);
+	CFireWall(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType);
 	virtual ~CFireWall(void);
 };
 

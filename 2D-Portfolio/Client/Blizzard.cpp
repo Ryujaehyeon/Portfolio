@@ -6,7 +6,7 @@ CBlizzard::CBlizzard(void)
 {
 }
 
-CBlizzard::CBlizzard(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType)
+CBlizzard::CBlizzard(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType)
 	:CSkill(Info, _ObjName, _ObjType)
 {
 	m_pObjKey = _ObjName;
@@ -170,7 +170,7 @@ CObj* CBlizzard::Clone()
 	return new CBlizzard(*this);
 }
 
-void CBlizzard::DirectAction(TCHAR* _pObjStatas)
+void CBlizzard::DirectAction(const TCHAR* _pObjStatas)
 {
 	m_pStateKey = m_pMotion = _pObjStatas;
 }

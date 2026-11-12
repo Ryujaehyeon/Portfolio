@@ -9,7 +9,7 @@ CMonster::CMonster(void)
 {
 }
 
-CMonster::CMonster( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
+CMonster::CMonster( const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType )
 	:CStageDynamic(Info, _ObjName, _ObjType)
 {
 		m_pObjKey = _ObjName;
@@ -525,10 +525,11 @@ bool CMonster::VecterInRect( D3DXVECTOR3& _Taget )
 	pt.x = _Taget.x;
 	pt.y = _Taget.y;
 
-	return PtInRect(&RealRect(), pt);
+	const RECT rcReal = RealRect();
+	return PtInRect(&rcReal, pt);
 }
 
-void CMonster::DirectAction( TCHAR* _pObjStatas )
+void CMonster::DirectAction( const TCHAR* _pObjStatas )
 {
 	m_pMotion = _pObjStatas;
 	if(IsSameKey(_pObjStatas, STAND))

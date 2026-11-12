@@ -83,7 +83,7 @@ public:
 			FreeConsole();
 	}
 #ifdef _UNICODE
-	void __writew(wchar_t* str, ...)
+	void __writew(const wchar_t* str, ...)
 	{
 		va_list ap;
 		va_start(ap, str);
@@ -94,7 +94,7 @@ public:
 		::WriteConsole(_hconsole, L"\n", wcslen(L"\n"), &dwByte, 0);
 	}
 #else
-	void __writea(char* str, ...)
+	void __writea(const char* str, ...)
 	{
 		va_list ap;
 		va_start(ap, str);

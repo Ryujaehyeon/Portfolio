@@ -12,9 +12,9 @@ public:
 	void FrameStatas();
 	// D3DVector를 가져와 POINT변환 후 체크
 	bool VecterInRect(D3DXVECTOR3& _Taget);
-	void SetMotionDirect(TCHAR* _MotionDirect);
+	void SetMotionDirect(const TCHAR* _MotionDirect);
 	// 취할 행동의 키값을 넣으면 _pObjKey를 m_pObjKey에 넣는다.
-	void DirectAction( TCHAR* _pObjStatas );
+	void DirectAction( const TCHAR* _pObjStatas );
 	void FuncAttack();
 	void ExpAcquired();
 	virtual void RegenTime();
@@ -32,7 +32,7 @@ public:
 public:
 	CMonster(void);
 	CMonster(const OBJINFO& Info);
-	CMonster(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType);
+	CMonster(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType);
 	virtual ~CMonster(void);
 };
 

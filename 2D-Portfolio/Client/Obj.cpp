@@ -31,7 +31,7 @@ CObj::CObj(const OBJINFO& Info, const OBJ_TYPE _ObjType)
 }
 
 
-CObj::CObj(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType)
+CObj::CObj(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType)
 	: m_Info(Info)
 	, m_sPlayInfo()
 	, m_ObjType(_ObjType)

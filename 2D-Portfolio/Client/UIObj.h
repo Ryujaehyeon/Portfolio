@@ -14,7 +14,7 @@ protected:
 	CObj* m_PlayerObj;
 public:
 	void CheckKey();
-	void FontOutput(TCHAR* _pObjKey);
+	void FontOutput(const TCHAR* _pObjKey);
 public:
 	virtual HRESULT Initialize();
 	virtual SCENEID Progress();
@@ -37,11 +37,11 @@ public:
 	}
 	virtual void Setlist(list<CObj*>* _list);
 
-	virtual float VelueToPercentage(TCHAR* VelueName);
+	virtual float VelueToPercentage(const TCHAR* VelueName);
 public:
 	CUIObj(void);
 	CUIObj(const OBJINFO& Info, const OBJ_TYPE _ObjType);
-	CUIObj( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType );
+	CUIObj( const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType );
 	virtual ~CUIObj(void);
 };
 

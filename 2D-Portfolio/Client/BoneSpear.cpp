@@ -7,7 +7,7 @@ CBoneSpear::CBoneSpear(void)
 
 }
 
-CBoneSpear::CBoneSpear(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType)
+CBoneSpear::CBoneSpear(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType)
 	:CSkill(Info, _ObjName, _ObjType)
 {
 	m_pObjKey = _ObjName;
@@ -170,7 +170,7 @@ CObj* CBoneSpear::Clone()
 }
 
 
-void CBoneSpear::DirectAction( TCHAR* _pObjStatas )
+void CBoneSpear::DirectAction( const TCHAR* _pObjStatas )
 {
 	// 0808 09:00 m_pMotion만 바꾸고 _pObjStatas바꾸지 않아서 에러
 	m_pMotion = _pObjStatas;
