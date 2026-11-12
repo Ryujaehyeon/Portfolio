@@ -71,7 +71,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
-	GET_SINGLE(CDevice)->Render_Begin();
+	GET_SINGLE(CDevice)->Render_Begin(D3DCOLOR_ARGB(255, 0, 0, 255));
 
 	D3DXMATRIX matWorld, matScale;
 	D3DXMatrixScaling(&matScale, 0.3f, 0.3f, 0.3f);
@@ -91,7 +91,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			if(idx >= TILECNTX * TILECNTY || idx < 0)
 				break;
 
-			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"Tile"
+			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"Tile", L"Tile"
 				, m_vecTile[idx]->byDrawID);
 
 			if(pTex == NULL)
@@ -123,7 +123,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			if(idx >= TILECNTX * TILECNTY || idx < 0)
 				break;
 
-			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"TileSelect"
+			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"TileSelect", L"TileSelect"
 				, 0);
 
 			if(pTex == NULL)
@@ -163,7 +163,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			if (m_vecMonster[idx] == 0)
 				continue;
 
-			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"Monster"
+			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"Monster", L"Monster"
 				, m_vecMonster[idx]->byDrawID);
 
 			if(pTex == NULL)
@@ -201,7 +201,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			if (m_vecMonster[idx] == 0)
 				continue;
 
-			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"ObjSelEffect"
+			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"ObjSelEffect", L"ObjSelEffect"
 				, m_vecMonster[idx]->byDrawID);
 
 			if(pTex == NULL)
@@ -241,29 +241,31 @@ void CMFC_000View::OnInitialUpdate()
 	sizeTotal.cy = static_cast<LONG>(TILESIZEY * TILECNTY * 0.5f);
 	// TODO: 이 뷰의 전체 크기를 계산합니다.
 	SetScrollSizes(MM_TEXT, sizeTotal);
-	if(FAILED(GET_SINGLE(CDevice)->InitDevice(m_hWnd)))
+	if(FAILED(GET_SINGLE(CDevice)->InitDevice(m_hWnd, WINMODE_WIN)))
 		return;
+	// 툴의 여러 장 텍스처는 흰색을 투명하게 한다(Client 는 검정 — 공용 Engine 이라 앱이 정한다)
+	GET_SINGLE(CTextureMgr)->SetMultiColorKey(D3DCOLOR_ARGB(255, 255, 255, 255));
 	
 	// 타일
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/Tile/Tile%03d.png", L"Tile", TEXTYPE_MULTI, 180)))
+		L"../Resource/Texture/Tile/Tile%03d.png", L"Tile", TEXTYPE_MULTI, L"Tile", 180)))
 		return;
 
 
 	//-----------------------------------------------------------------------------------------------
 	// 몬스터
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/Stage/Monster/Monster0%d.png", L"Monster", TEXTYPE_MULTI, 3)))
+		L"../Resource/Texture/Stage/Monster/Monster0%d.png", L"Monster", TEXTYPE_MULTI, L"Monster", 3)))
 		return;
 
 	// 타일 선택
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/Select/TileSelect%d.png", L"TileSelect", TEXTYPE_MULTI, 1)))
+		L"../Resource/Texture/Select/TileSelect%d.png", L"TileSelect", TEXTYPE_MULTI, L"TileSelect", 1)))
 		return;
 
 	// 몬스터 선택
 	if(FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(
-		L"../Resource/Texture/Select/SelectObj%d.png", L"ObjSelEffect", TEXTYPE_MULTI, 1)))
+		L"../Resource/Texture/Select/SelectObj%d.png", L"ObjSelEffect", TEXTYPE_MULTI, L"ObjSelEffect", 1)))
 		return;
 
 	// 타일 초기화

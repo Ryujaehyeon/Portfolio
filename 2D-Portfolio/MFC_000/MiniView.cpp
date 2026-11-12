@@ -33,7 +33,7 @@ void CMiniView::OnDraw(CDC* pDC)
 {
 	CDocument* pDoc = GetDocument();
 	// TODO: 여기에 그리기 코드를 추가합니다.
-	GET_SINGLE(CDevice)->Render_Begin();
+	GET_SINGLE(CDevice)->Render_Begin(D3DCOLOR_ARGB(255, 0, 0, 255));
 
 	CMainFrame* pMainFrm = (CMainFrame*)AfxGetMainWnd();
 
@@ -58,7 +58,7 @@ void CMiniView::OnDraw(CDC* pDC)
 			if(idx >= TILECNTX * TILECNTY || idx < 0)
 				break;
 
-			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"Tile"
+			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"Tile", L"Tile"
 				, (*pTile)[idx]->byDrawID);
 			if(pTex == NULL)
 				continue;
@@ -96,7 +96,7 @@ void CMiniView::OnDraw(CDC* pDC)
 			if((*pMonster)[idx] == 0)
 				continue;
 
-			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"Monster"
+			pTex = GET_SINGLE(CTextureMgr)->GetTexture(L"Monster", L"Monster"
 				, (*pMonster)[idx]->byDrawID);
 			if(pTex == NULL)
 				continue;
