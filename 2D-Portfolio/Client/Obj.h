@@ -16,13 +16,13 @@ protected:
 	// 대상이되는 리스트
 	list<CObj*>* m_pTagetList;
 	// 오브젝트의 이름
-	TCHAR* m_pObjName;
+	const TCHAR* m_pObjName;
 	// 오브젝트 이미지 키이름
-	TCHAR*  m_pObjKey;
+	const TCHAR*  m_pObjKey;
 	// 오브젝트 상태 
-	TCHAR*	m_pStateKey;
+	const TCHAR*	m_pStateKey;
 	// 오브젝트 방향
-	TCHAR*  m_pMotion;
+	const TCHAR*  m_pMotion;
 	// 오브젝트 회전값
 	float m_fAngle;
 	// 특정 지점을 볼때 그곳을 보는 오브젝트의 각도
@@ -81,7 +81,7 @@ public:
 	virtual INFO* SetStatas() {return &m_sPlayInfo;}
 	virtual void SetCrash(bool _bCrash){m_Crash = _bCrash;}
 	virtual void SetTagetObj(CObj* _pTagetObj);
-	virtual void SetMotion(TCHAR* _pMotion) { if(!IsSameKey(m_pMotion, DEATH)) m_pMotion = _pMotion; }
+	virtual void SetMotion(const TCHAR* _pMotion) { if(!IsSameKey(m_pMotion, DEATH)) m_pMotion = _pMotion; }
 	virtual void SetAngle(float _Angle){m_fAngle = _Angle;}
 	virtual void Setlist( list<CObj*>* _TagetList );
 
@@ -113,7 +113,7 @@ public:
 public:
 	CObj(void);
 	CObj(const OBJINFO& Info, const OBJ_TYPE _ObjType);
-	CObj(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType);
+	CObj(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType);
 	virtual ~CObj(void);
 };
 

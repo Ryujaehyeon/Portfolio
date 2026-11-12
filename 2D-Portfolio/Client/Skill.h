@@ -12,7 +12,7 @@ public:
 	virtual CObj* Clone();
 public:
 	CSkill(void);
-	CSkill(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType);
+	CSkill(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType);
 	virtual ~CSkill(void);
 };
 

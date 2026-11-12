@@ -17,7 +17,7 @@ CObjMgr::~CObjMgr(void)
 
 HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 {
-	TCHAR* Charter[3] = {L"Player", 
+	const TCHAR* Charter[3] = {L"Player", 
 		L"Fellow_First",
 		L"Fellow_Second"};
 
@@ -382,9 +382,10 @@ bool CObjMgr::CrashAndSlide( CObj* _pDest, CObj* _pSour )
 
 		// 외적을 구한다
 		// 밀고있는 대상의 방향의 옆으로 밀리는 대상의 방향을 잡아줌
+		const D3DXVECTOR3 vAxisZ(0.f, 0.f, -1.f);
 		D3DXVec3Cross(&_pDest->Setinfo()->vDir, 
 			&_pSour->GetInfo().vDir, 
-			&D3DXVECTOR3(0.f, 0.f, -1.f));
+			&vAxisZ);
 
 		// 충돌해서 겹친만큼 밀어주기 위해 겹친 거리를 구함
 		float fPushRange = fDistance - fRealDistance;

@@ -16,7 +16,7 @@ CUIObj::CUIObj( const OBJINFO& Info, const OBJ_TYPE _ObjType )
 
 }
 
-CUIObj::CUIObj( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
+CUIObj::CUIObj( const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType )
 	:CStageStatic(Info, _ObjType),
 	m_PlayerData(nullptr), m_MonsterData(nullptr),
 	SelectCount(0), m_PlayerObj(nullptr)
@@ -38,7 +38,7 @@ CUIObj::~CUIObj(void)
 
 HRESULT CUIObj::Initialize()
 {
-	TCHAR* UI[]=
+	const TCHAR* UI[]=
 	{
 		L"StatusBar",
 		L"HP",
@@ -193,7 +193,8 @@ SCENEID CUIObj::Progress()
 	
 	if (m_SkillTree == true)
 	{
-		if (IsSameKey(m_pObjKey, L"BoneSpearButton") && PtInRect(&RealRect(), UIMouseInfo()) )
+		const RECT rcReal = RealRect();
+		if (IsSameKey(m_pObjKey, L"BoneSpearButton") && PtInRect(&rcReal, UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -215,7 +216,7 @@ SCENEID CUIObj::Progress()
 				}
 			}
 		}
-		else if(IsSameKey(m_pObjKey, L"FireWallButton") && PtInRect(&RealRect(), UIMouseInfo()) )
+		else if(IsSameKey(m_pObjKey, L"FireWallButton") && PtInRect(&rcReal, UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -238,7 +239,7 @@ SCENEID CUIObj::Progress()
 				}
 			}
 		}
-		else if(IsSameKey(m_pObjKey, L"BlizzardButton") && PtInRect(&RealRect(), UIMouseInfo()) )
+		else if(IsSameKey(m_pObjKey, L"BlizzardButton") && PtInRect(&rcReal, UIMouseInfo()) )
 		{
 			if (m_dwKey & KEY_LBUTTON && fTime > 1.f)
 			{
@@ -508,7 +509,7 @@ void CUIObj::Setlist( list<CObj*>* _list )
 		m_MonsterData = _list;
 }
 
-float CUIObj::VelueToPercentage(TCHAR* VelueName)
+float CUIObj::VelueToPercentage(const TCHAR* VelueName)
 {
 	if(IsSameKey(L"HP", VelueName))
 		return m_PlayerObj->GetStatas().fHealthPoint/m_PlayerObj->GetStatas().fHealthPointMAX;
@@ -530,7 +531,8 @@ float CUIObj::VelueToPercentage(TCHAR* VelueName)
 				float(m_Info.vPos.x + CObj::g_tScroll.x), 
 				float(m_Info.vPos.y + CObj::g_tScroll.y)
 			};
-			if(PtInRect(&(*iter)->RealRect(), MouseInfo()))
+			const RECT rcMonster = (*iter)->RealRect();
+			if(PtInRect(&rcMonster, MouseInfo()))
 			{
 				return (*iter)->GetStatas().fHealthPoint/
 						(*iter)->GetStatas().fHealthPointMAX;
@@ -584,10 +586,10 @@ POINT CUIObj::UIMouseInfo()
 	return pt;
 }
 
-void CUIObj::FontOutput( TCHAR* _pObjKey )
+void CUIObj::FontOutput( const TCHAR* _pObjKey )
 {
 
-	TCHAR* NumberFont[] = {FONT0, FONT1, FONT2, FONT3, FONT4, FONT5, FONT6, FONT7, FONT8, FONT9 };
+	const TCHAR* NumberFont[] = {FONT0, FONT1, FONT2, FONT3, FONT4, FONT5, FONT6, FONT7, FONT8, FONT9 };
 
 	if (IsSameKey(m_pObjKey, L"BoneSpearButton"))
 	{

@@ -11,7 +11,7 @@ CPlayer::CPlayer(void)
 	m_pSkillPrototype = nullptr;
 }
 
-CPlayer::CPlayer( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
+CPlayer::CPlayer( const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType )
 	:CStageDynamic(Info, _ObjName, _ObjType)
 {
 	m_pObjKey = _ObjName;
@@ -370,7 +370,8 @@ void CPlayer::FuncAttack()
 	for (;iter != m_pTagetList->end(); ++iter)
 	{
 		// 리스트 내에 충돌하고 마우스가 몬스터 위에 있을때
-		if (PtInRect(&(*iter)->RealRect(), MouseInfo())
+		const RECT rcTaget = (*iter)->RealRect();
+		if (PtInRect(&rcTaget, MouseInfo())
 			&& (*iter)->GetCrash() == true)
 		{
 			// 해당 몬스터의 객체를 타겟팅
@@ -419,10 +420,11 @@ bool CPlayer::VecterInRect( D3DXVECTOR3& _Taget )
 	pt.x = _Taget.x;
 	pt.y = _Taget.y;
 	
-	return PtInRect(&RealRect(), pt);
+	const RECT rcReal = RealRect();
+	return PtInRect(&rcReal, pt);
 }
 
-void CPlayer::DirectAction( TCHAR* _pObjStatas )
+void CPlayer::DirectAction( const TCHAR* _pObjStatas )
 {
 	// 0808 09:00 m_pMotion만 바꾸고 _pObjStatas바꾸지 않아서 에러
 	m_pMotion = _pObjStatas;
@@ -806,7 +808,7 @@ void CPlayer::ScrollChange()
 	}
 }
 
-void CPlayer::SkillActive(TCHAR* _SkillName)
+void CPlayer::SkillActive(const TCHAR* _SkillName)
 {
 	DEBUG_ENTRY_EXIT;
 	DEBUG_LINE;

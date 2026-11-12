@@ -6,7 +6,7 @@ CFireWall::CFireWall(void)
 {
 }
 
-CFireWall::CFireWall(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType)
+CFireWall::CFireWall(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType)
 	:CSkill(Info, _ObjName, _ObjType)
 {
 	m_pObjKey = _ObjName;
@@ -124,7 +124,7 @@ CObj* CFireWall::Clone()
 	return new CFireWall(*this);
 }
 
-void CFireWall::DirectAction(TCHAR* _pObjStatas)
+void CFireWall::DirectAction(const TCHAR* _pObjStatas)
 {
 	m_pStateKey = m_pMotion = _pObjStatas;
 }

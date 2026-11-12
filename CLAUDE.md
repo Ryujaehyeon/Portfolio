@@ -28,7 +28,8 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
   산출물 `Exe\<플랫폼>\<구성>\<프로젝트>\`, 중간 `Temp\<플랫폼>\<프로젝트>\<구성>\` — 둘 다 gitignore.
 - Client 런타임 DLL 은 Post-Build 가 플랫폼에 맞는 것 하나만 OutDir 로 복사한다(`Client.vcxproj` 의 `$(FmodDll)`):
   Win32 → `fmodexL.dll`(로깅판, 실행하면 작업 디렉터리에 `fmod.log` 를 남김 — gitignore), x64 → `fmodex64.dll`(비로깅판).
-- `ConformanceMode`(`/permissive-`)는 꺼져 있다. 켜면 `TCHAR*` ← 리터럴 등에서 대량 오류 — 별도 작업으로 다룬다.
+- `ConformanceMode`(`/permissive-`)가 두 프로젝트·4개 구성에 켜져 있다 — 리터럴을 non-const `TCHAR*` 에 담거나 임시 값의 주소(`&RealRect()`, `&D3DXVECTOR3(…)`)를
+  넘기면 오류다. 임시 값은 지역 변수로 받는다. 경위는 `intent/const-tchar/`.
 
 ```
 복원:   MSBuild.exe 2D-Portfolio/MyProgram.sln -t:restore -p:RestorePackagesConfig=true -nologo -v:m
@@ -63,7 +64,7 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
   경위는 `intent/source-utf8/`. 줄바꿈은 `.gitattributes`(`* text=auto`)에 맡긴다.
 - 네이밍: 클래스 `C` 접두(`CPlayer`, `CSceneMgr`), 멤버 `m_` + 헝가리안(`m_pObjKey`, `m_fAngle`, `m_bRun`, `m_iDegree`),
   인자 `_` 접두(`_ObjName`), 전역 `g_`(`g_hWnd`, `CObj::g_tScroll`), 상수 대문자(`WINSIZEX`), enum 값 `타입_값`(`SCENEID_LOGO`, `WINMODE_WIN`).
-- 문자열: `TCHAR*`/`wstring`, 리터럴은 `L"..."` (CharacterSet=Unicode).
+- 문자열: `TCHAR*`/`wstring`, 리터럴은 `L"..."` (CharacterSet=Unicode). 읽기만 하는 문자열 포인터는 `const TCHAR*`(이름 상수는 `const TCHAR* const`).
   이름·키·모션(`TCHAR*`) 비교는 **`IsSameKey(a, b)`**(`Headers/Function.h`, 내용 비교) — `==`/`!=` 는 주소 비교라 쓰지 않는다. `TCHAR*` 를 `map` 키로 쓰지 않는다(`wstring` 키).
   Client Release 는 문자열 병합을 끈다(`StringPooling=false`, `/GF-`) — 주소 비교가 다시 생기면 Release 스모크가 실패한다. 경위는 `intent/string-key-compare/`.
 - 파일 구조: 클래스 1개 = `.h`/`.cpp` 1쌍, 프로젝트 폴더에 평평하게 둔다. 모든 `.cpp` 첫 줄은 `#include "StdAfx.h"`(PCH).

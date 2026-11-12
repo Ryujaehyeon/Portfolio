@@ -22,10 +22,10 @@ HRESULT CStage::Initialize()
 {
 	int PlayerCount = 1;
 	int MonsterCount = 5;
-	TCHAR* Charter[] = {L"Player", 
+	const TCHAR* Charter[] = {L"Player", 
 		L"Fellow_First",
 		L"Fellow_Second"};
-	TCHAR* Monster[] = {L"Skeleton", 
+	const TCHAR* Monster[] = {L"Skeleton", 
 		L"SandRaider", 
 		L"Viper",
 		L"Griswold",

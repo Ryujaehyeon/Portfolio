@@ -99,8 +99,9 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 				, m_vecTile[idx]->vPos.y - GetScrollPos(1)
 				, m_vecTile[idx]->vPos.z);
 			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
+			const D3DXVECTOR3 vCenter(TILESIZEX *0.5f, TILESIZEY *0.5f, 0);
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-				NULL, &D3DXVECTOR3(TILESIZEX *0.5f, TILESIZEY *0.5f, 0), NULL,
+				NULL, &vCenter, NULL,
 				D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
@@ -133,8 +134,9 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			if (m_vecTile[idx]->TileSelect == true)
 			{		
 				GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
+				const D3DXVECTOR3 vCenter(TILESIZEX *0.5f, TILESIZEY *0.5f, 0);
 				GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-					NULL, &D3DXVECTOR3(TILESIZEX *0.5f, TILESIZEY *0.5f, 0), NULL,
+					NULL, &vCenter, NULL,
 					D3DCOLOR_ARGB(255, 255, 255, 255));
 			}
 		}
@@ -173,8 +175,9 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			matWorld = m_vecMonster[idx]->matScale * matWorld;
 
 			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
+			const D3DXVECTOR3 vCenter(pTex->ImgInfo.Width*0.5f, pTex->ImgInfo.Height, 0);
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-				NULL, &D3DXVECTOR3(pTex->ImgInfo.Width*0.5f, pTex->ImgInfo.Height, 0), NULL,
+				NULL, &vCenter, NULL,
 				D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
@@ -212,8 +215,9 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			if (m_vecMonster[idx]->unitSelect == true)
 			{
 				GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
+				const D3DXVECTOR3 vCenter(pTex->ImgInfo.Width * 0.5f, pTex->ImgInfo.Height*0.9f, 0);
 				GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-					NULL, &D3DXVECTOR3(pTex->ImgInfo.Width * 0.5f, pTex->ImgInfo.Height*0.9f, 0), NULL,
+					NULL, &vCenter, NULL,
 					D3DCOLOR_ARGB(255, 255, 255, 255));
 			}
 		}

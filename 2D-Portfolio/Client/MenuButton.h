@@ -4,7 +4,7 @@ class CMenuButton :
 	public CMenuDynamic
 {
 protected:
-	TCHAR* m_DrawID;
+	const TCHAR* m_DrawID;
 	bool m_bMouseOver;
 
 	// 불러온 이미지의 얼마만큼의 크기로 그릴지를 결정
@@ -28,7 +28,7 @@ public:
 	virtual CObj* Clone();
 public:
 	CMenuButton(void);
-	CMenuButton(const OBJINFO& Info, TCHAR* ButtonName, const OBJ_TYPE _ObjType);
+	CMenuButton(const OBJINFO& Info, const TCHAR* ButtonName, const OBJ_TYPE _ObjType);
 	virtual ~CMenuButton(void);
 };
 

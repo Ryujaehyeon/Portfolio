@@ -17,7 +17,7 @@ public:
 	virtual CObj* Clone()PURE;
 public:
 	CStageDynamic(void);
-	CStageDynamic(const OBJINFO& Info,  TCHAR* _ObjName, const OBJ_TYPE _ObjType);
+	CStageDynamic(const OBJINFO& Info,  const TCHAR* _ObjName, const OBJ_TYPE _ObjType);
 	virtual ~CStageDynamic(void);
 };
 

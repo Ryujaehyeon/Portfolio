@@ -146,50 +146,50 @@ const float SUMMONER_ATTACK			= 12.0f;
 const float SUMMONER_DEATH			= 16.0f;
 
 // 모션 키워드
-TCHAR* const STAND					= L"Stand";
-TCHAR* const WALK					= L"Walk";
-TCHAR* const RUN					= L"Run";
-TCHAR* const ATTACK					= L"Attack";
-TCHAR* const DEATH					= L"Death";
-TCHAR* const ATTACKSKILL			= L"AttackSKill";
-TCHAR* const CAST					= L"CAST";
-TCHAR* const SUMMON					= L"SUMMON";
+const TCHAR* const STAND					= L"Stand";
+const TCHAR* const WALK					= L"Walk";
+const TCHAR* const RUN					= L"Run";
+const TCHAR* const ATTACK					= L"Attack";
+const TCHAR* const DEATH					= L"Death";
+const TCHAR* const ATTACKSKILL			= L"AttackSKill";
+const TCHAR* const CAST					= L"CAST";
+const TCHAR* const SUMMON					= L"SUMMON";
 
 
 // 플레이어 키워드
-TCHAR* const PLAYER					= L"Player";
-TCHAR* const FELLOW_1ST				= L"Fellow_First";
-TCHAR* const FELLOW_2ND				= L"Fellow_Second";
+const TCHAR* const PLAYER					= L"Player";
+const TCHAR* const FELLOW_1ST				= L"Fellow_First";
+const TCHAR* const FELLOW_2ND				= L"Fellow_Second";
 
-TCHAR* const MONSTER				= L"Monster";
-TCHAR* const BUTTON					= L"Button";
-TCHAR* const SKILL					= L"Skill";
+const TCHAR* const MONSTER				= L"Monster";
+const TCHAR* const BUTTON					= L"Button";
+const TCHAR* const SKILL					= L"Skill";
 
-TCHAR* const BONESPEAR				= L"BoneSpear";
-TCHAR* const FIREWALL				= L"FireWall";
-TCHAR* const BLIZZARD				= L"Blizzard";
-TCHAR* const HEAL					= L"Heal";
-TCHAR* const AURA					= L"Aura";
-TCHAR* const RIVIVE					= L"Rivive";
-
-
-TCHAR* const FONT0					= L"0";
-TCHAR* const FONT1					= L"1";
-TCHAR* const FONT2					= L"2";
-TCHAR* const FONT3					= L"3";
-TCHAR* const FONT4					= L"4";
-TCHAR* const FONT5					= L"5";
-TCHAR* const FONT6					= L"6";
-TCHAR* const FONT7					= L"7";
-TCHAR* const FONT8					= L"8";
-TCHAR* const FONT9					= L"9";
+const TCHAR* const BONESPEAR				= L"BoneSpear";
+const TCHAR* const FIREWALL				= L"FireWall";
+const TCHAR* const BLIZZARD				= L"Blizzard";
+const TCHAR* const HEAL					= L"Heal";
+const TCHAR* const AURA					= L"Aura";
+const TCHAR* const RIVIVE					= L"Rivive";
 
 
-TCHAR* const SKELETON	= L"Skeleton";
-TCHAR* const SANDRAIDER = L"SandRaider";
-TCHAR* const VIPER		= L"Viper";
-TCHAR* const GRISWOLD	= L"Griswold";
-TCHAR* const SUMMONER	= L"Summoner";
-TCHAR* const ANDARIEL	= L"Andariel";
-TCHAR* const IZUAL		= L"Izual";
-TCHAR* const DIABLO		= L"Diablo";
+const TCHAR* const FONT0					= L"0";
+const TCHAR* const FONT1					= L"1";
+const TCHAR* const FONT2					= L"2";
+const TCHAR* const FONT3					= L"3";
+const TCHAR* const FONT4					= L"4";
+const TCHAR* const FONT5					= L"5";
+const TCHAR* const FONT6					= L"6";
+const TCHAR* const FONT7					= L"7";
+const TCHAR* const FONT8					= L"8";
+const TCHAR* const FONT9					= L"9";
+
+
+const TCHAR* const SKELETON	= L"Skeleton";
+const TCHAR* const SANDRAIDER = L"SandRaider";
+const TCHAR* const VIPER		= L"Viper";
+const TCHAR* const GRISWOLD	= L"Griswold";
+const TCHAR* const SUMMONER	= L"Summoner";
+const TCHAR* const ANDARIEL	= L"Andariel";
+const TCHAR* const IZUAL		= L"Izual";
+const TCHAR* const DIABLO		= L"Diablo";

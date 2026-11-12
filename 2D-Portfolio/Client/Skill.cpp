@@ -7,7 +7,7 @@ CSkill::CSkill( void )
 
 }
 
-CSkill::CSkill(const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType)
+CSkill::CSkill(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType)
 	:CObj(Info, _ObjName, _ObjType)
 {
 }
