@@ -64,7 +64,8 @@ void CObj::FrameMove( const float& fCnt, const float& fMax )
 
 	// 한 바퀴가 끝나면 0 으로 되돌린다. 「fStart <= 0」 을 한 바퀴의 시작으로 보는 판정(스킬 생성·공격·경험치·시체 삭제)이
 	// 리셋 직후 한 프레임 동안 참이 된다 — 구성과 무관하게 같아야 한다(intent/ub-fixes).
-	if (m_tFrame.fStart > fMax)
+	// fMax 와 같을 때도 되돌린다 — 프레임 번호(int(fStart))가 텍스처 장 수(fMax)와 같아지면 범위를 넘는다(intent/frame-index-bounds).
+	if (m_tFrame.fStart >= fMax)
 	{
 		m_tFrame.fStart = 0.f;
 	}
