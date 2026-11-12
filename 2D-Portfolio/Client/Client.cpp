@@ -137,7 +137,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			L"scene 0 init", L"scene 1 init", L"scene 2 init",
 			L"sound load Wilderness", L"sound play Wilderness",
 			L"sound load Tristram", L"sound play Tristram",
-			L"map tiles", L"monsters", L"skill BoneSpear" };
+			L"map tiles", L"monsters", L"skill BoneSpear", L"removed monster" };
 		return SmokeEnd(pRequired, _countof(pRequired));
 	}
 	return (int) msg.wParam;

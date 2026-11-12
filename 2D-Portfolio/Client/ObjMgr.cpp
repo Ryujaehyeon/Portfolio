@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#include <algorithm>
 #include "ObjMgr.h"
 #include "Include.h"
 #include "SortMgr.h"
@@ -182,17 +183,16 @@ HRESULT CObjMgr::AddObject(CPrototype* pProto, wstring pObjKey)
 
 SCENEID CObjMgr::Progress()
 {
-
+	// 죽은 객체는 프레임 시작에 한 번만 정리한다 — 순회 중에는 지우지 않으므로 이 프레임의 갱신·정렬 등록·그리기는 살아 있는 객체만 본다
+	IterRelease();
 
 	SCENEID iScene = SCENEID_NONPASS;
 	for(map<wstring, list<CObj*>>::iterator iter
 		= m_MapObject.begin(); iter != m_MapObject.end(); ++iter)
 	{
-		// 증가는 루프 끝에서 한다 — erase 한 경우는 erase 가 돌려준 다음 원소부터 계속한다
 		for(list<CObj*>::iterator iter2 = iter->second.begin();
 			iter2 != iter->second.end(); )
 		{
-			bool bErased = false;
 			map<wstring, list<CObj*>>::iterator iterPlayer = m_MapObject.find(PLAYER);
 			map<wstring, list<CObj*>>::iterator iterMonster = m_MapObject.find(MONSTER);
 						
@@ -240,14 +240,6 @@ SCENEID CObjMgr::Progress()
 						&m_MapObject.find(PLAYER)->second);
 				}
 				ObjInteraction((*iter2));
-				// iter 삭제시 
-				IterRelease();
-				// 삭제된 데이터의 리스트 삭제;
-				if(*iter2 == nullptr)
-				{
-					iter2 = iter->second.erase(iter2);
-					bErased = true;
-				}
 				break;
 			case OBJ_UI:
 				{
@@ -267,12 +259,6 @@ SCENEID CObjMgr::Progress()
 					break;
 				}
 			}
-			// 지운 객체는 장면 판정·정렬 등록을 하지 않는다(iter2 는 이미 다음 원소)
-			if (bErased)
-			{
-				continue;
-			}
-
 			if(iScene > SCENEID_NONPASS)
 				return iScene;
 
@@ -519,56 +505,61 @@ const vector<TILE*>* CObjMgr::GetTileInfo()
 
 void CObjMgr::IterRelease()
 {
-	// 맵의 first, 처음부터 끝까지 도는 반복문
+	// 1. 죽은 객체를 모은다 — 몬스터: 죽음 모션의 한 바퀴가 끝남, 스킬: 죽음 모션
+	vector<CObj*> vecDead;
 	for(map<wstring, list<CObj*>>::iterator iter
 		= m_MapObject.begin(); iter != m_MapObject.end(); ++iter)
 	{
-		// 맵의 second, second엔 리스트가 있으며 리스트의 끝까지 도는 반복문
 		for(list<CObj*>::iterator iter2 = iter->second.begin();
-			iter2 != iter->second.end();)
+			iter2 != iter->second.end(); ++iter2)
 		{
-			// 몬스터면
-			if((*iter2)->GetObjType() == OBJ_MONSTER)
+			const CObj* const pObj = *iter2;
+			const bool bDeadMonster = pObj->GetObjType() == OBJ_MONSTER
+				&& pObj->GetpMotion() == DEATH && pObj->GetFrame().fStart <= 0.f;
+			const bool bDeadSkill = pObj->GetObjType() == OBJ_SKILL
+				&& pObj->GetpMotion() == DEATH;
+			if (bDeadMonster || bDeadSkill)
 			{
-				// 죽었는지 상태체크 후
-				// 0817 오전 몬스터가 제대로 삭제되지 않음
-				if((*iter2)->GetpMotion() == DEATH && 
-					(*iter2)->GetFrame().fStart <= 0.f)
-				{
-					// 할당된 몬스터 객체 삭제
-					SAFE_DELETE<CObj>(&(*iter2));
-					// 다음 노드로
-					++iter2;
-				}
-				else
-					// 다음 노드로
-					++iter2;
-				// iter2가 노드의 끝이면 벗어남 
-				if (iter2 == iter->second.end())
-					break;
+				vecDead.push_back(*iter2);
 			}
-			else if ((*iter2)->GetObjType() == OBJ_SKILL)
-			{
-				if((*iter2)->GetpMotion() == DEATH)
-				{
-					// 할당된 스킬 객체 삭제
-					SAFE_DELETE<CObj>(&(*iter2));
-					// 다음 노드로
-					++iter2;
-				}
-				else
-					// 다음 노드로
-					++iter2;
-				// iter2가 노드의 끝이면 벗어남 
-				if (iter2 == iter->second.end())
-					break;
-			}
-			else
-				// 몬스터가 아닌 노드면 다음 노드로
-				++iter2;
-			// 노드가 끝이면 벗어남
-			if (iter2 == iter->second.end())
-				break;
 		}
+	}
+	if (vecDead.empty())
+	{
+		return;
+	}
+
+	// 2. 죽은 객체를 대상으로 가리키는 객체의 대상을 끊는다
+	for(map<wstring, list<CObj*>>::iterator iter
+		= m_MapObject.begin(); iter != m_MapObject.end(); ++iter)
+	{
+		for(list<CObj*>::iterator iter2 = iter->second.begin();
+			iter2 != iter->second.end(); ++iter2)
+		{
+			const CObj* const pTaget = (*iter2)->GetTagetObj();
+			if (pTaget != nullptr && find(vecDead.begin(), vecDead.end(), pTaget) != vecDead.end())
+			{
+				(*iter2)->SetTagetObj(nullptr);
+			}
+		}
+	}
+
+	// 3. 지우고 리스트에서 뺀다 — 정리가 끝나면 리스트에 nullptr 이 남지 않는다
+	for(map<wstring, list<CObj*>>::iterator iter
+		= m_MapObject.begin(); iter != m_MapObject.end(); ++iter)
+	{
+		for(list<CObj*>::iterator iter2 = iter->second.begin();
+			iter2 != iter->second.end(); ++iter2)
+		{
+			if (find(vecDead.begin(), vecDead.end(), *iter2) != vecDead.end())
+			{
+				if (IsSmokeMode() && (*iter2)->GetObjType() == OBJ_MONSTER)
+				{
+					SmokeCheck(true, L"removed monster %s", (*iter2)->GetName());
+				}
+				SAFE_DELETE<CObj>(&(*iter2));
+			}
+		}
+		iter->second.remove(nullptr);
 	}
 }

@@ -2,6 +2,9 @@
 #include "Monster.h"
 #include "Include.h"
 
+// 스모크 모드에서 정리 경로 검증용으로 몬스터를 죽였는지(한 마리만)
+static bool s_bSmokeKilled = false;
+
 CMonster::CMonster(void)
 {
 }
@@ -61,7 +64,18 @@ HRESULT CMonster::Initialize()
 
 SCENEID CMonster::Progress()
 {
-	
+	// 스모크 모드: 몬스터가 처음 갱신된 뒤 1.5초가 지나면 이 몬스터를 죽인다 — 죽음 → 정리 경로를 스모크가 지나가게(intent/objmgr-lifetime)
+	if (IsSmokeMode() && !s_bSmokeKilled)
+	{
+		static const ULONGLONG s_ullSmokeStart = GetTickCount64();
+		if (GetTickCount64() - s_ullSmokeStart >= 1500)
+		{
+			m_sPlayInfo.fHealthPoint = 0.f;
+			s_bSmokeKilled = true;
+			SmokeLog(L"smoke kill %s", m_pObjName);
+		}
+	}
+
 	// 시간
 	static float fTime = 0.0f;
 	// 시간값 누적
