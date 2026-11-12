@@ -38,3 +38,29 @@ inline void ErrMsgBox(const HWND _hWnd, const TCHAR* const _pFormat, ...)
 	}
 	MessageBox(_hWnd, szMsg, L"system err", MB_OK);
 }
+
+// 실제 입력 읽기 — 스모크 모드에서는 사용자의 마우스·키보드를 무시한다.
+// 전역 입력(GetAsyncKeyState·GetCursorPos)이라 다른 창에서의 조작도 들어오기 때문이다(intent/smoke-input-isolation).
+inline SHORT GameAsyncKeyState(const int _iKey)
+{
+	if (IsSmokeMode())
+	{
+		return 0;
+	}
+	return GetAsyncKeyState(_iKey);
+}
+
+// 커서의 화면 좌표. 스모크 모드에서는 _hWnd 클라이언트 영역 가운데로 고정한다.
+inline void GameCursorPos(const HWND _hWnd, POINT* const _pPoint)
+{
+	if (IsSmokeMode())
+	{
+		RECT rcClient = {};
+		GetClientRect(_hWnd, &rcClient);
+		_pPoint->x = (rcClient.left + rcClient.right) / 2;
+		_pPoint->y = (rcClient.top + rcClient.bottom) / 2;
+		ClientToScreen(_hWnd, _pPoint);
+		return;
+	}
+	GetCursorPos(_pPoint);
+}

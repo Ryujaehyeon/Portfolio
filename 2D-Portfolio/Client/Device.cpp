@@ -120,6 +120,13 @@ void CDevice::Release()
 }
 void CDevice::SetKey()
 {
+	// 스모크 모드에서는 실제 키보드·마우스를 읽지 않는다 — 비활성 창에서도 입력을 받는 장치라서(intent/smoke-input-isolation)
+	if (IsSmokeMode())
+	{
+		memset(m_byKState, 0, sizeof(m_byKState));
+		memset(&m_MState, 0, sizeof(m_MState));
+		return;
+	}
 	m_pKeyBoard->GetDeviceState(
 		sizeof(m_byKState), m_byKState);
 	m_pMouse->GetDeviceState(
