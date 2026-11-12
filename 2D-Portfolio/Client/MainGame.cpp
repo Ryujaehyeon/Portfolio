@@ -36,6 +36,7 @@ SCENEID CMainGame::Progress()
 	GET_SINGLE(CKeyMgr)->CheckKey();
 	GET_SINGLE(CTimeMgr)->SetTime();
 	SCENEID iScene = GET_SINGLE(CSceneMgr)->Progress();
+	GET_SINGLE(CStateRecorder)->Record();
 	if (iScene == SCENEID_END)
 		return SCENEID_END;
 	return iScene;
@@ -51,6 +52,7 @@ void CMainGame::Render()
 void CMainGame::Release()
 {
 	GET_SINGLE(CTimeMgr)->DestroyInstance();
+	GET_SINGLE(CStateRecorder)->DestroyInstance();
 	GET_SINGLE(CSceneMgr)->DestroyInstance();
 	GET_SINGLE(CDevice)->DestroyInstance();
 	DESTROY_SINGLE(CTextureMgr);

@@ -16,6 +16,7 @@
 #include "SceneMgr.h"
 #include "ObjMgr.h"
 #include "TimeMgr.h"
+#include "StateRecorder.h"
 #include "AStar.h"
 
 //===========Scene Header==============//

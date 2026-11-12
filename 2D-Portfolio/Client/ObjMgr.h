@@ -30,6 +30,7 @@ public:
 	//Get
 	int GetMonsterCnt(){return m_MonsterCount;}
 	int GetBossCnt(){return m_BossCount;}
+	const map<wstring, list<CObj*>>& GetObjectMap() const { return m_MapObject; }
 public:
 	virtual POINT MouseInfo();
 	virtual D3DXVECTOR3 MouseInfoDX();

@@ -14,6 +14,7 @@ CSceneMgr::~CSceneMgr(void)
 HRESULT CSceneMgr::InitScene(SCENEID ID)
 {
 	DebugOut(L"Scene : %d", ID);
+	GET_SINGLE(CStateRecorder)->OnScene(ID);
 
 	// Logo에서 받은 씬ID를 해당 씬으로 바꿈(생성 및 초기화) 
 	SAFE_DELETE<CSceneObj>(&m_pSceneObj);

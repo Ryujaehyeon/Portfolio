@@ -232,6 +232,9 @@
     <ClInclude Include="TimeMgr.h">
       <Filter>98.Manager\Time</Filter>
     </ClInclude>
+    <ClInclude Include="StateRecorder.h">
+      <Filter>98.Manager</Filter>
+    </ClInclude>
     <ClInclude Include="StageStatic.h">
       <Filter>02.Object\03. Stage\Static</Filter>
     </ClInclude>
@@ -344,6 +347,9 @@
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
       <Filter>98.Manager\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="StateRecorder.cpp">
+      <Filter>98.Manager</Filter>
     </ClCompile>
     <ClCompile Include="StageStatic.cpp">
       <Filter>02.Object\03. Stage\Static</Filter>

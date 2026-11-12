@@ -70,6 +70,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	{
 		SmokeBegin(L"smoke.log");
 	}
+	if (_tcsstr(lpCmdLine, L"-log") != nullptr)
+	{
+		GET_SINGLE(CStateRecorder)->Begin(L"state.log");
+	}
 
  	// TODO: 여기에 코드를 입력합니다.
 	MSG msg;
