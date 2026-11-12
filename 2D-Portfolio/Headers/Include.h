@@ -13,7 +13,6 @@
 #ifdef __CLIENT__EXEC__
 
 //===========Manager Header============//
-#include "InputDevice.h"
 #include "SceneMgr.h"
 #include "ObjMgr.h"
 #include "TimeMgr.h"
