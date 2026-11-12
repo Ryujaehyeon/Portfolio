@@ -581,7 +581,7 @@ void CUIObj::CheckKey()
 POINT CUIObj::UIMouseInfo()
 {
 	POINT pt;
-	GetCursorPos(&pt);
+	GameCursorPos(g_hWnd, &pt);
 	ScreenToClient(g_hWnd, &pt);
 	return pt;
 }

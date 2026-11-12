@@ -141,7 +141,7 @@ void CObj::SetTagetObj( CObj* _pTagetObj )
 POINT CObj::MouseInfo()
 {
 	POINT pt;
-	GetCursorPos(&pt);
+	GameCursorPos(g_hWnd, &pt);
 	ScreenToClient(g_hWnd, &pt);
 	pt.x = static_cast<LONG>(pt.x + CObj::g_tScroll.x);
 	pt.y = static_cast<LONG>(pt.y + CObj::g_tScroll.y);
@@ -151,7 +151,7 @@ POINT CObj::MouseInfo()
 D3DXVECTOR3 CObj::MouseInfoDX()
 {
 	POINT pt;
-	GetCursorPos(&pt);
+	GameCursorPos(g_hWnd, &pt);
 	ScreenToClient(g_hWnd, &pt);
 	return D3DXVECTOR3((pt.x + CObj::g_tScroll.x) , ( pt.y + CObj::g_tScroll.y) , 0.f);
 }
