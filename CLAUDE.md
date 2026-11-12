@@ -57,6 +57,9 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
         스모크는 실제 마우스·키보드를 받지 않는다(키·버튼은 안 눌림, 커서는 창 가운데 고정 — `GameAsyncKeyState`·`GameCursorPos`).
         검증 중에도 PC 를 써도 된다. 입력 읽기를 새로 추가할 때는 `GetAsyncKeyState`·`GetCursorPos` 를 직접 부르지 말고 이 함수를 쓴다(경위 `intent/smoke-input-isolation/`).
         소리가 실제로 들리는지·화면이 제대로 그려지는지는 로그로 판정하지 못한다 — 필요할 때만 눈으로 확인.
+상태 기록: Client 를 `-log` 로 실행하면(`-smoke` 와 함께 써도 된다) 작업 디렉터리의 state.log(UTF-8, gitignore)에 객체 상태의 **변화**가
+        `[경과 ms #프레임]` 순으로 남는다 — 장면 전환, 생성 `+ #id`·삭제 `- #id`, 모션·HP·대상·충돌·선택 변화, 32px 이상 이동.
+        문제가 난 프레임 직전 줄을 거꾸로 읽는다. 기록 항목을 늘릴 때는 `CObj` 의 공개 const 접근자로 읽는다(`CStateRecorder::Capture`, 경위 `intent/state-log/`).
 린트:   없음 (컴파일러 경고 /W3 이 유일한 정적 검사)
 ```
 
