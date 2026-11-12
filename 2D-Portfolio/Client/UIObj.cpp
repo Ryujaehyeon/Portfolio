@@ -2,20 +2,24 @@
 #include "UIObj.h"
 #include "Include.h"
 
+// 대상 리스트·표시할 플레이어는 Setlist·Render 가 채운다 — 그 전에는 nullptr(쓰레기 포인터를 역참조하지 않게)
 CUIObj::CUIObj(void)
+	: m_PlayerData(nullptr), m_MonsterData(nullptr), SelectCount(0), m_PlayerObj(nullptr)
 {
 }
 
 CUIObj::CUIObj( const OBJINFO& Info, const OBJ_TYPE _ObjType )
 	:CStageStatic(Info, _ObjType),
-	SelectCount(0)
+	m_PlayerData(nullptr), m_MonsterData(nullptr),
+	SelectCount(0), m_PlayerObj(nullptr)
 {
 
 }
 
 CUIObj::CUIObj( const OBJINFO& Info, TCHAR* _ObjName, const OBJ_TYPE _ObjType )
 	:CStageStatic(Info, _ObjType),
-	SelectCount(0)
+	m_PlayerData(nullptr), m_MonsterData(nullptr),
+	SelectCount(0), m_PlayerObj(nullptr)
 {
 	m_pObjKey = _ObjName;
 
@@ -300,6 +304,11 @@ void CUIObj::Render()
 	{
 		m_PlayerObj = (*m_PlayerData->begin());
 	}
+	// 아직 선택된 플레이어가 없으면 첫 플레이어를 표시한다
+	if (m_PlayerObj == nullptr && !m_PlayerData->empty())
+	{
+		m_PlayerObj = m_PlayerData->front();
+	}
 		
 	const TEXINFO* pTexInfo 
 		= GET_SINGLE(CTextureMgr)->GetTexture(m_pObjKey);
@@ -510,7 +519,7 @@ float CUIObj::VelueToPercentage(TCHAR* VelueName)
 	if (IsSameKey(L"ExpBar", VelueName))
 		return m_PlayerObj->GetStatas().fExp/m_PlayerObj->GetStatas().fMaxExp;
 
-	if (IsSameKey(L"HPBar", VelueName) )
+	if (IsSameKey(L"HPBar", VelueName) && m_MonsterData != nullptr)
 	{
 		list<CObj*>::iterator iter = m_MonsterData->begin();
 		for (; iter != m_MonsterData->end(); ++iter)
