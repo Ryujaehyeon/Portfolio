@@ -46,11 +46,14 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
         남은 exe 때문에 다음 빌드가 LNK1168(쓰기용으로 열 수 없음)로 실패한다. PowerShell 로 띄우고 직접 끝낸다:
           powershell.exe -NoProfile -Command "$p=Start-Process -FilePath '<exe 의 Windows 경로>' -WorkingDirectory '<Client 폴더>' -PassThru; Start-Sleep 8; $p.HasExited; Stop-Process -Id $p.Id"
         단, 오류 메시지박스("system err")가 떠도 살아 있으므로 창 제목까지 확인한다. 자동 판정이 필요하면 아래 스모크 모드를 쓴다.
+        일반 실행은 게임 창이 비활성이어도 전역 입력(다른 창에서의 클릭·키)을 받는다 — 띄워 둔 채 다른 일을 하면 게임이 움직인다.
 테스트: 스모크 모드 (경위 `intent/smoke-log/`) — 입력 없이 로고→메뉴→스테이지→스킬 시전→몬스터 하나 죽여 정리까지 진행하고 스스로 종료한다.
         cd 2D-Portfolio/Client && timeout 60 ../Exe/<플랫폼>/<구성>/Client/Client.exe -smoke; echo $?   → 0 (약 9초)
         cd 2D-Portfolio/MFC_000 && ../Exe/<플랫폼>/<구성>/MFC_000/MFC_000.exe -smoke ../Client/Map.dat; echo $?   → 0
         결과는 작업 디렉터리의 smoke.log(UTF-8, gitignore): 줄마다 PASS/FAIL/INFO, 마지막 줄 "RESULT PASS (fail=0)".
         실패 시 종료 코드 1, FAIL 줄에 원인(ERR_MSG·FMOD 오류는 메시지박스 대신 여기). -smoke 없이 실행하면 아무것도 남기지 않는다.
+        스모크는 실제 마우스·키보드를 받지 않는다(키·버튼은 안 눌림, 커서는 창 가운데 고정 — `GameAsyncKeyState`·`GameCursorPos`·`CDevice::SetKey`).
+        검증 중에도 PC 를 써도 된다. 입력 읽기를 새로 추가할 때는 `GetAsyncKeyState`·`GetCursorPos` 를 직접 부르지 말고 이 함수를 쓴다(경위 `intent/smoke-input-isolation/`).
         소리가 실제로 들리는지·화면이 제대로 그려지는지는 로그로 판정하지 못한다 — 필요할 때만 눈으로 확인.
 린트:   없음 (컴파일러 경고 /W3 이 유일한 정적 검사)
 ```
