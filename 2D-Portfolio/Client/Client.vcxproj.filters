@@ -19,20 +19,11 @@
     <Filter Include="98.Manager">
       <UniqueIdentifier>{f64a5c9a-9638-4329-ada6-ef0a118552c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="98.Manager\Device">
-      <UniqueIdentifier>{a6227b2c-3bec-4be7-9c07-5ca5d996e305}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98.Manager\Texture">
       <UniqueIdentifier>{7ec981f7-e9cf-48f7-afe3-4a0d810b1bcc}</UniqueIdentifier>
     </Filter>
     <Filter Include="98.Manager\Texture\Texture">
       <UniqueIdentifier>{812d50a7-b135-4dcf-aec8-69ef714c631b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="98.Manager\Texture\Texture\Multi">
-      <UniqueIdentifier>{95757e42-ba9b-45b6-b562-17e67fd2a5a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="98.Manager\Texture\Texture\Single">
-      <UniqueIdentifier>{956dc1ba-3fb8-4f94-b20b-23db05b7987f}</UniqueIdentifier>
     </Filter>
     <Filter Include="01.Scene">
       <UniqueIdentifier>{31e17160-660d-4a89-89e7-dd5b56258e69}</UniqueIdentifier>
@@ -187,6 +178,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="InputDevice.h" />
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -201,21 +193,6 @@
     </ClInclude>
     <ClInclude Include="MainGame.h">
       <Filter>99.MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Device.h">
-      <Filter>98.Manager\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="MultiTexture.h">
-      <Filter>98.Manager\Texture\Texture\Multi</Filter>
-    </ClInclude>
-    <ClInclude Include="SingleTexture.h">
-      <Filter>98.Manager\Texture\Texture\Single</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>98.Manager\Texture\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureMgr.h">
-      <Filter>98.Manager\Texture</Filter>
     </ClInclude>
     <ClInclude Include="SceneObj.h">
       <Filter>01.Scene</Filter>
@@ -327,6 +304,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -335,21 +313,6 @@
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>99.MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Device.cpp">
-      <Filter>98.Manager\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="MultiTexture.cpp">
-      <Filter>98.Manager\Texture\Texture\Multi</Filter>
-    </ClCompile>
-    <ClCompile Include="SingleTexture.cpp">
-      <Filter>98.Manager\Texture\Texture\Single</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>98.Manager\Texture\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureMgr.cpp">
-      <Filter>98.Manager\Texture</Filter>
     </ClCompile>
     <ClCompile Include="SceneObj.cpp">
       <Filter>01.Scene</Filter>

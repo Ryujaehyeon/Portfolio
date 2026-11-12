@@ -12,25 +12,16 @@ private:
 	LPDIRECT3DDEVICE9 m_pDevice;
 	LPD3DXSPRITE m_pSprite;
 
-	LPDIRECTINPUT8 m_pInput;
-	LPDIRECTINPUTDEVICE8 m_pKeyBoard;
-	LPDIRECTINPUTDEVICE8 m_pMouse;
-	BYTE m_byKState[256];
-	DIMOUSESTATE m_MState;
-
 public:
-	HRESULT InitDevice(WINMODE Mode);
-public:
-	void SetKey();
-public:
-	BYTE GetKeyBoardState(short nKey){return m_byKState[nKey];}
-	const DIMOUSESTATE* GetMouseState(void) {return &m_MState;}
+	// 장치를 만든다 — 그릴 창과 창 모드는 앱이 정한다(Client·툴 공용, intent/shared-render-lib)
+	HRESULT InitDevice(const HWND hWnd, const WINMODE Mode);
 public:
 	LPD3DXSPRITE GetSprite()
 	{ return m_pSprite; }
 	LPDIRECT3DDEVICE9 GetDevice()
 	{ return m_pDevice; }
-	void Render_Begin();
+	// 화면을 ClearColor 로 지우고 그리기를 시작한다
+	void Render_Begin(const D3DCOLOR ClearColor);
 	void Render_End(HWND hWnd);
 	void Release();
 private:

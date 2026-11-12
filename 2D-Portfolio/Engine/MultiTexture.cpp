@@ -2,7 +2,8 @@
 #include "MultiTexture.h"
 #include "Device.h"
 
-CMultiTexture::CMultiTexture(void)
+CMultiTexture::CMultiTexture(const D3DCOLOR ColorKey)
+	: m_ColorKey(ColorKey)
 {}
 
 CMultiTexture::~CMultiTexture(void)
@@ -44,7 +45,7 @@ HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName,
 			m_pTexInfo->ImgInfo.Height, m_pTexInfo->ImgInfo.MipLevels,
 			0, m_pTexInfo->ImgInfo.Format, D3DPOOL_MANAGED, 
 			D3DX_DEFAULT, D3DX_DEFAULT,
-			D3DCOLOR_ARGB(255, 0, 0, 0),
+			m_ColorKey,
 			&m_pTexInfo->ImgInfo, NULL,
 			&m_pTexInfo->pTexture)))
 		{
