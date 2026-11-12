@@ -329,6 +329,12 @@ void CPlayer::CheckKey()
 				m_vTagetInfo = m_Info.vPos;
 				SkillActive(m_SkillActiveName);
 			}
+			else if (bSmokeCast)
+			{
+				// 우클릭 시전과 같이 그 자리에 멈춰 시전한다 — 몬스터에 밀려도 시전 애니메이션이 이어지게(intent/smoke-stabilize)
+				m_vTagetInfo = m_Info.vPos;
+				SkillActive(BONESPEAR);
+			}
 			else
 			{
 				if (m_bRun == true)

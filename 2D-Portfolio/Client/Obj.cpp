@@ -46,6 +46,7 @@ CObj::CObj(const OBJINFO& Info, const TCHAR* _ObjName, const OBJ_TYPE _ObjType)
 	, m_bSelect(false)
 	, m_bRun(true)
 	, m_Crash(false)
+	, m_dwKey(0)
 {
 	wcscpy_s(m_sPlayInfo.szName, _ObjName);
 }
