@@ -346,10 +346,10 @@ void CUIObj::Render()
 	else if ( IsSameKey(m_pObjKey, L"ExpBar") )
 	{
 		RECT rc = {
-			float(0), 
-			float(0),
-			float(m_Info.fCX * VelueToPercentage(m_pObjKey)), 
-			float(m_Info.fCY)
+			static_cast<LONG>(0), 
+			static_cast<LONG>(0),
+			static_cast<LONG>(m_Info.fCX * VelueToPercentage(m_pObjKey)), 
+			static_cast<LONG>(m_Info.fCY)
 		};
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * 0.5f, 0);
@@ -360,13 +360,13 @@ void CUIObj::Render()
 	else if ( IsSameKey(m_pObjKey, L"HPBar") )
 	{
 		RECT rc = {
-			float(0), 
-			float(0),
-			float(m_Info.fCX * VelueToPercentage(m_pObjKey)), 
-			float(m_Info.fCY)
+			static_cast<LONG>(0), 
+			static_cast<LONG>(0),
+			static_cast<LONG>(m_Info.fCX * VelueToPercentage(m_pObjKey)), 
+			static_cast<LONG>(m_Info.fCY)
 		};
 		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f),
-			(pTexInfo->ImgInfo.Height * 0.5), 0);
+			static_cast<float>(pTexInfo->ImgInfo.Height * 0.5), 0);
 
 		if( VelueToPercentage(m_pObjKey) >= 0.f && IsSameKey(m_pObjKey, L"HPBar"))
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -376,13 +376,13 @@ void CUIObj::Render()
 	else if (IsSameKey(m_pObjKey, L"HPBarBack"))
 	{
 		RECT rc = {
-			float(0), 
-			float(0),
-			float(m_Info.fCX), 
-			float(m_Info.fCY)
+			static_cast<LONG>(0), 
+			static_cast<LONG>(0),
+			static_cast<LONG>(m_Info.fCX), 
+			static_cast<LONG>(m_Info.fCY)
 		};
 		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f),
-			(pTexInfo->ImgInfo.Height * 0.5), 0);
+			static_cast<float>(pTexInfo->ImgInfo.Height * 0.5), 0);
 
 		if (VelueToPercentage(L"HPBar")>= 0.f)
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -526,10 +526,10 @@ float CUIObj::VelueToPercentage(const TCHAR* VelueName)
 		for (; iter != m_MonsterData->end(); ++iter)
 		{
 			RECT rc = 
-			{   float(m_Info.vPos.x + CObj::g_tScroll.x), 
-				float(m_Info.vPos.y + CObj::g_tScroll.y),
-				float(m_Info.vPos.x + CObj::g_tScroll.x), 
-				float(m_Info.vPos.y + CObj::g_tScroll.y)
+			{   static_cast<LONG>(m_Info.vPos.x + CObj::g_tScroll.x), 
+				static_cast<LONG>(m_Info.vPos.y + CObj::g_tScroll.y),
+				static_cast<LONG>(m_Info.vPos.x + CObj::g_tScroll.x), 
+				static_cast<LONG>(m_Info.vPos.y + CObj::g_tScroll.y)
 			};
 			const RECT rcMonster = (*iter)->RealRect();
 			if(PtInRect(&rcMonster, MouseInfo()))

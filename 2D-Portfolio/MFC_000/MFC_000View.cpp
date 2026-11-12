@@ -141,7 +141,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			}
 		}
 	}
-	int icnt = m_vecMonster.size();
+	int icnt = static_cast<int>(m_vecMonster.size());
 	
 
 	// 몬스터
@@ -175,7 +175,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			matWorld = m_vecMonster[idx]->matScale * matWorld;
 
 			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
-			const D3DXVECTOR3 vCenter(pTex->ImgInfo.Width*0.5f, pTex->ImgInfo.Height, 0);
+			const D3DXVECTOR3 vCenter(pTex->ImgInfo.Width*0.5f, static_cast<float>(pTex->ImgInfo.Height), 0);
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
 				NULL, &vCenter, NULL,
 				D3DCOLOR_ARGB(255, 255, 255, 255));
@@ -235,7 +235,7 @@ void CMFC_000View::OnInitialUpdate()
 
 	CSize sizeTotal;
 	sizeTotal.cx = TILESIZEX * TILECNTX;
-	sizeTotal.cy = TILESIZEY * TILECNTY * 0.5f;
+	sizeTotal.cy = static_cast<LONG>(TILESIZEY * TILECNTY * 0.5f);
 	// TODO: 이 뷰의 전체 크기를 계산합니다.
 	SetScrollSizes(MM_TEXT, sizeTotal);
 	if(FAILED(GET_SINGLE(CDevice)->InitDevice(m_hWnd)))
@@ -277,13 +277,13 @@ void CMFC_000View::OnInitialUpdate()
 		rcWindow.bottom - rcWindow.top);
 	RECT rcMainView;
 	GetClientRect(&rcMainView);
-	float fRowFrm = rcWindow.bottom - rcMainView.bottom;
-	float fColFrm = rcWindow.right - rcMainView.right;
+	float fRowFrm = static_cast<float>(rcWindow.bottom - rcMainView.bottom);
+	float fColFrm = static_cast<float>(rcWindow.right - rcMainView.right);
 
 	pMainFrm->SetWindowPos
 		(NULL, 0, 0,
-		WINSIZEX + fColFrm,
-		WINSIZEY + fRowFrm, SWP_NOZORDER);
+		static_cast<int>(WINSIZEX + fColFrm),
+		static_cast<int>(WINSIZEY + fRowFrm), SWP_NOZORDER);
 }
 
 void CMFC_000View::InitTile()
@@ -382,9 +382,9 @@ void CMFC_000View::OnLButtonDown(UINT nFlags
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	// 몬스터 및 타일 생성(원클릭), 삭제(다시 클릭)
 	D3DXVECTOR2 vMousePoint 
-		= D3DXVECTOR2(point.x + GetScrollPos(0)
-		, point.y + GetScrollPos(1));
-	int iSize = m_vecTile.size();
+		= D3DXVECTOR2(static_cast<float>(point.x + GetScrollPos(0))
+		, static_cast<float>(point.y + GetScrollPos(1)));
+	int iSize = static_cast<int>(m_vecTile.size());
 	for(int i = 0; i < iSize; ++i)
 	{
 		// 충돌 체크, 마우스가 클릭한 지점의 타일을 체크
@@ -503,7 +503,7 @@ void CMFC_000View::OnDestroy()
 	GET_SINGLE(CTextureMgr)->DestroyInstance();
 	GET_SINGLE(CDevice)->DestroyInstance();
 	
-	for(int i = 0; i < m_vecTile.size(); ++i)
+	for(int i = 0; i < static_cast<int>(m_vecTile.size()); ++i)
 	{
 		if (m_vecTile[i] != NULL )
 		{
@@ -533,9 +533,9 @@ void CMFC_000View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	D3DXVECTOR2 vMousePoint 
-		= D3DXVECTOR2(m_MousePoint.x + GetScrollPos(0)
-		, m_MousePoint.y + GetScrollPos(1));
-	int iSize = m_vecTile.size();
+		= D3DXVECTOR2(static_cast<float>(m_MousePoint.x + GetScrollPos(0))
+		, static_cast<float>(m_MousePoint.y + GetScrollPos(1)));
+	int iSize = static_cast<int>(m_vecTile.size());
 
 	// 몬스터 페이지가 활성화 되어있는 경우
 	if(m_iCurrentID == 1 )

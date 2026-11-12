@@ -75,7 +75,7 @@ int CObj::GetTileIndex( const D3DXVECTOR3& vPos )
 	const vector<TILE*>* pVecTile = 
 		GET_SINGLE(CObjMgr)->GetTileInfo();
 	
-	int iSize = pVecTile->size();
+	int iSize = static_cast<int>(pVecTile->size());
 	for (int i = 0; i < iSize; ++i)
 	{
 		if (CollisionMouseToTile(vPos, (*pVecTile)[i]))
@@ -142,8 +142,8 @@ POINT CObj::MouseInfo()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
-	pt.x = (pt.x + CObj::g_tScroll.x);
-	pt.y = (pt.y + CObj::g_tScroll.y);
+	pt.x = static_cast<LONG>(pt.x + CObj::g_tScroll.x);
+	pt.y = static_cast<LONG>(pt.y + CObj::g_tScroll.y);
 	return pt;
 }
 

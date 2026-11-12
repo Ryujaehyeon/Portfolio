@@ -211,7 +211,7 @@ SCENEID CObjMgr::Progress()
 				else if ((*iter2)->GetObjType() == OBJ_MONSTER)
 				{
 					// 몬스터 갯수를 측정후 몬스터 카운트에 넣어줌
-					m_MonsterCount = iterMonster->second.size();
+					m_MonsterCount = static_cast<int>(iterMonster->second.size());
 
 					m_BossCount = 0;
 					for (list<CObj*>::iterator iterCount = iterMonster->second.begin();
@@ -468,7 +468,7 @@ D3DXVECTOR3 CObjMgr::MouseInfoDX()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
-	return D3DXVECTOR3(pt.x , pt.y , 0);
+	return D3DXVECTOR3(static_cast<float>(pt.x) , static_cast<float>(pt.y) , 0);
 }
 
 

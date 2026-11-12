@@ -58,7 +58,7 @@ bool CFullModeMgr::ModeChange(const int& iWinMode)
 	{
 		if(ChangeDisplaySettings(&_saved, CDS_RESET) == DISP_CHANGE_SUCCESSFUL)
 		{
-			RECT rc = {0, 0, _user.dmPelsWidth, _user.dmPelsHeight};
+			RECT rc = {0, 0, static_cast<LONG>(_user.dmPelsWidth), static_cast<LONG>(_user.dmPelsHeight)};
 			AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 			_modechange(_pos.x, _pos.y, rc.right - rc.left, rc.bottom - rc.top, WS_OVERLAPPEDWINDOW);
 			_mode = iWinMode;
