@@ -49,7 +49,7 @@ flowchart LR
     NuGet["NuGet Microsoft.DXSDK.D3DX<br/>d3dx9(d).lib · d3dx9(d)_43.dll"] --> Client
     NuGet --> Tool
     NuGet --> Engine
-    SDK["Windows SDK<br/>d3d9 · dinput8 · dxguid"] --> Client
+    SDK["Windows SDK<br/>d3d9"] --> Client
     SDK --> Tool
     FMOD["fmod/lib/fmodexL_vc.lib · fmodex64_vc.lib<br/>+ 플랫폼별 DLL"] --> Client
     MFC["MFC (Dynamic)"] --> Tool
@@ -78,14 +78,13 @@ flowchart TB
         SortMgr["CSortMgr<br/>레이어별 렌더 큐<br/>TERRAIN → OBJECT → UI"]
         TexMgr["CTextureMgr (Engine)<br/>키 → CTexture"]
         Device["CDevice (Engine)<br/>D3D9 장치 · ID3DXSprite"]
-        Input["CInputDevice<br/>DirectInput 키보드·마우스"]
         TimeMgr["CTimeMgr<br/>프레임 시간"]
-        KeyMgr["CKeyMgr<br/>GetAsyncKeyState"]
+        KeyMgr["CKeyMgr<br/>GameAsyncKeyState 키·마우스 버튼"]
         AStar["CAStar<br/>타일 경로 탐색"]
         Sound["SoundDevice (GameSound)<br/>FMOD Ex"]
     end
 
-    MainGame --> KeyMgr & TimeMgr & SceneMgr & Device & Input
+    MainGame --> KeyMgr & TimeMgr & SceneMgr & Device
     SceneMgr --> Scene["현재 장면<br/>CLogo / CMenuD2 / CStage"]
     Scene -->|Initialize: 텍스처 적재| TexMgr
     Scene -->|Initialize: 객체 생성| ObjMgr
@@ -95,7 +94,7 @@ flowchart TB
     SortMgr -->|Render| Objects
     Objects -->|텍스처 조회| TexMgr
     Objects -->|스프라이트 그리기| Device
-    Objects -->|마우스 버튼| Input
+    Objects -->|키·마우스 버튼| KeyMgr
     Objects -->|이동 경로| AStar
     TexMgr -->|"Single/MultiTexture: D3DXCreateTextureFromFileEx"| Device
 ```
@@ -335,7 +334,7 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    stdafx["각 프로젝트 stdafx.h<br/>Windows · STL · d3d9 · d3dx9 · dinput<br/>using namespace std"]
+    stdafx["각 프로젝트 stdafx.h<br/>Windows · STL · d3d9 · d3dx9<br/>using namespace std"]
     Defines["Headers/Defines.h"] --> Constant["Constant.h<br/>창·타일 크기, enum(SCENEID·OBJ_TYPE·SORTLAYER),<br/>프레임 수, 이름 상수 TCHAR* const"]
     Defines --> Macro["Macro.h<br/>SINGLETON · GET_SINGLE · ERR_MSG"]
     Defines --> Function["Function.h<br/>SAFE_DELETE"]
@@ -356,7 +355,6 @@ flowchart TB
 |---|---|---|
 | 식별 | 이름·상태를 `TCHAR*` **주소**로 비교 — `/GF` 문자열 병합에 기대 동작 | 2 |
 | 결합도 | 모든 것이 전역 싱글턴 + `Include.h` 일괄 include | — |
-| 입력 | DirectInput(마우스) + `GetAsyncKeyState`(키보드) 혼용 | 10 |
 
 ## 12. 구현되지 않은 기능
 
