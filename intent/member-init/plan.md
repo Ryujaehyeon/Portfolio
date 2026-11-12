@@ -35,3 +35,21 @@ Status: approved (사용자 결정 — 클래스·구조체 모두, 생성자마
 
 - 스캐너가 놓치는 생성자 — 실제로 `GameSound.hpp` 끝의 한 줄짜리 `SoundDevice():_volume(1.0f){}` 를 놓쳐 중복 생성자 컴파일 오류(C2535)로 드러났다. 헤더 인라인 생성자를 정규식으로 따로 전수 확인했다.
 - 쓰레기 값에 기대던 동작 변화 — 스모크·일반 실행으로 확인.
+
+## 구현 중 변경
+
+- 스캐너가 `GameSound.hpp` 끝의 한 줄짜리 `SoundDevice():_volume(1.0f){}` 를 놓쳐 생성자를 하나 더 만들었고, 중복 생성자 오류(C2535)로 드러나 기존 생성자에 합쳤다(`_volume` 기존 값 1.0f 유지).
+- 첫 전체 검증에서 드문 실패(x64 Debug 경고창 1/96, Win32 Release `missing skill` 1/75)가 나왔다. 추적 결과 원인은 member-init 이 아니었다:
+  ① 스모크가 사용자의 실제 마우스·키보드 입력을 받고 있었다 → [smoke-input-isolation](../smoke-input-isolation/intent.md)(PR #45~#47),
+  ② 경고창은 각도 경계값에서 상태 키가 갱신되지 않아 텍스처 프레임 번호가 장 수를 넘던 기존 버그 → [frame-index-bounds](../frame-index-bounds/intent.md)(PR #48~#50).
+  두 인텐트를 먼저 머지한 뒤 이 브랜치에 `master` 를 머지해 다시 검증했다.
+
+## 검증 결과 (2026-11-12, `master` 49bd1d7 머지 후)
+
+| spec | 결과 |
+|---|---|
+| R1·R2 누락 0 | ✅ 검사 스크립트 — 남은 8건은 오탐(툴 `CDevice` 를 Client 헤더로 대조한 5건, 스캐너가 형식을 못 읽는 `SoundDevice` 3건 — 둘 다 직접 확인) + 헤더 인라인 생성자 전수 확인 |
+| R3·R4·R5 | ✅ 코드 검토 — 기본값 규칙, 한 줄에 하나·선언 순서(C5038 없음, 경고 0), `OBJINFO` 복사 생성자 전 멤버 |
+| R6 `.dat` 호환 | ✅ 툴 스모크 4개 구성 `tiles=800`, Client 스모크의 `map tiles=800` |
+| R7 | ✅ 클린 4개 구성 경고 0·오류 0. Client 스모크(입력 분리) x64 Debug 50/50, Win32 Release 50/50, Win32 Debug 5/5, x64 Release 5/5 — 변경 전(`master`) 같은 조건 50/50·50/50 과 동일. 일반 실행 4개 구성 × Client·툴 |
+| R8 | ✅ CLAUDE.md 「코드 관례」 |
