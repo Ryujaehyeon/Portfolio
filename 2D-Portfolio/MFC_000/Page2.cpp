@@ -57,7 +57,7 @@ void CPage2::OnBnClickedButton1()
 		FILE_ATTRIBUTE_NORMAL, NULL);
 	vector<TILE*>* pTile = 
 		&((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecTile;
-	int size = pTile->size();
+	int size = static_cast<int>(pTile->size());
 	for(int i = 0; i < size; ++i)
 	{
 		WriteFile(hFile, (*pTile)[i]
@@ -111,7 +111,7 @@ void CPage2::OnBnClickedButton2()
 		return;
 	vector<TILE*>* pTile = 
 		&((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecTile;
-	int size = pTile->size();
+	int size = static_cast<int>(pTile->size());
 	for(int i = 0; i < size; ++i)
 	{
 		SAFE_DELETE<TILE>(&(*pTile)[i]);
@@ -145,7 +145,7 @@ void CPage2::OnBnClickedButton3()
 	vector<OBJINFO*>* pMonster = 
 		&((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecMonster;
 
-	int size = pMonster->size();
+	int size = static_cast<int>(pMonster->size());
 	for(int i = 0; i < size; ++i)
 	{
 		if((*pMonster)[i] != NULL)
@@ -167,7 +167,7 @@ void CPage2::OnBnClickedButton4()
 		return;
 	vector<OBJINFO*>* pMonster = 
 		&((CMainFrame*)AfxGetMainWnd())->m_pMainView->m_vecMonster;
-	int size = pMonster->size();
+	int size = static_cast<int>(pMonster->size());
 	for(int i = 0; i < size; ++i)
 	{
 		SAFE_DELETE<OBJINFO>(&(*pMonster)[i]);
@@ -200,7 +200,7 @@ void CPage2::OnBnClickedButton4()
 				pInfo = NULL;
 				break;
 			}
-			int vecNum = (pInfo->vPos.x / TILESIZEX) + (pInfo->vPos.y / (TILESIZEY * 0.5f)) * TILECNTX;
+			int vecNum = static_cast<int>((pInfo->vPos.x / TILESIZEX) + (pInfo->vPos.y / (TILESIZEY * 0.5f)) * TILECNTX);
 			memcpy(&(*pMonster)[vecNum], &pInfo, sizeof(pInfo));
 		}
 	}

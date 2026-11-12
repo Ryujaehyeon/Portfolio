@@ -112,7 +112,7 @@ void CMiniView::OnDraw(CDC* pDC)
 
 			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
 			const D3DXVECTOR3 vCenter(pTex->ImgInfo.Width * 0.5f
-				, pTex->ImgInfo.Height, 0);
+				, static_cast<float>(pTex->ImgInfo.Height), 0);
 			GET_SINGLE(CDevice)->GetSprite()->Draw(
 				pTex->pTexture,	NULL
 				, &vCenter, NULL,

@@ -73,7 +73,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	HACCEL hAccelTable;
 	CMainGame MainGame;
 	static SCENEID iScene;
-	srand(time(0));
+	srand(static_cast<unsigned int>(time(0)));
 	// 전역 문자열을 초기화합니다.
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);

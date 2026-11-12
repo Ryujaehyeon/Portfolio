@@ -74,7 +74,7 @@ HRESULT CPlayer::Initialize()
 	m_sPlayInfo.fResolve = 5;
 	m_sPlayInfo.fPerception = 5;
 	m_sPlayInfo.fExp = 0;
-	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*20;
+	m_sPlayInfo.fMaxExp = static_cast<float>(m_sPlayInfo.iLevel*20);
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 5;
 	m_sPlayInfo.iSKillPoint = 12;
@@ -175,7 +175,7 @@ void CPlayer::Render()
 		return;
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
-		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
+		static_cast<float>((pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y), 0);
 
 	//////////////////////////////////////////////////////////////////////////
 	// 그림자
@@ -417,8 +417,8 @@ void CPlayer::FrameStatas()
 bool CPlayer::VecterInRect( D3DXVECTOR3& _Taget )
 {
 	POINT pt;
-	pt.x = _Taget.x;
-	pt.y = _Taget.y;
+	pt.x = static_cast<LONG>(_Taget.x);
+	pt.y = static_cast<LONG>(_Taget.y);
 	
 	const RECT rcReal = RealRect();
 	return PtInRect(&rcReal, pt);
@@ -779,7 +779,7 @@ void CPlayer::StatesChange()
 		// 경험치
 		m_sPlayInfo.fExp = 0;
 		// 필요경험치
-		m_sPlayInfo.fMaxExp = (m_sPlayInfo.iLevel * 20) + ((m_sPlayInfo.iLevel * 20) * 0.1); 
+		m_sPlayInfo.fMaxExp = static_cast<float>((m_sPlayInfo.iLevel * 20) + ((m_sPlayInfo.iLevel * 20) * 0.1)); 
 		// 스킬 포인트
 		++m_sPlayInfo.iSKillPoint;
 		// 스텟 포인트

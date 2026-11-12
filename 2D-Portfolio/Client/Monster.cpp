@@ -23,7 +23,7 @@ CMonster::~CMonster(void)
 HRESULT CMonster::Initialize()
 {
 	
-	m_Info.vPos = D3DXVECTOR3((rand()%1600), (rand()%800), 0.f);
+	m_Info.vPos = D3DXVECTOR3(static_cast<float>(rand()%1600), static_cast<float>(rand()%800), 0.f);
 	m_Info.vDir  = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_Info.vLook = D3DXVECTOR3(1.0f, 0.f, 0.f);
 	m_vTagetInfo = m_Info.vPos;
@@ -31,7 +31,7 @@ HRESULT CMonster::Initialize()
 	m_Info.fCY = 75.f;
 
 	m_sPlayInfo.iLevel = 1;
-	m_sPlayInfo.fExp = m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*10 + rand()%1000+1;
+	m_sPlayInfo.fExp = m_sPlayInfo.fMaxExp = static_cast<float>(m_sPlayInfo.iLevel*10 + rand()%1000+1);
 	m_sPlayInfo.fAttack = 20;
 	m_sPlayInfo.fDefence = 5;
 	m_sPlayInfo.fMight = 5;
@@ -155,7 +155,7 @@ void CMonster::Render()
 			return;
 
 		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
-			(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
+			static_cast<float>((pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y), 0);
 
 		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -170,7 +170,7 @@ void CMonster::Render()
 			return;
 
 		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
-			(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
+			static_cast<float>((pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y), 0);
 
 		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -181,7 +181,7 @@ void CMonster::Render()
 	// 본체 
 	{
 		m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
-			(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
+			static_cast<float>((pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y), 0);
 
 		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -198,7 +198,7 @@ void CMonster::Render()
 				return;
 
 			m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f) + CObj::g_tScroll.x,
-				(pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y, 0);
+				static_cast<float>((pTexInfo->ImgInfo.Height * 0.5) + CObj::g_tScroll.y), 0);
 
 			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
@@ -221,7 +221,7 @@ void CMonster::CheckKey()
 	m_fWaitTime += GET_SINGLE(CTimeMgr)->DeltaTime();
 
 	// 이동할 거리
-	float moveLength = rand()%100+1;
+	float moveLength = static_cast<float>(rand()%100+1);
 	// 몇초에 한번 이동할지
 	
 	//
@@ -522,8 +522,8 @@ void CMonster::FrameStatas()
 bool CMonster::VecterInRect( D3DXVECTOR3& _Taget )
 {
 	POINT pt;
-	pt.x = _Taget.x;
-	pt.y = _Taget.y;
+	pt.x = static_cast<LONG>(_Taget.x);
+	pt.y = static_cast<LONG>(_Taget.y);
 
 	const RECT rcReal = RealRect();
 	return PtInRect(&rcReal, pt);

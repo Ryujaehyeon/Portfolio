@@ -37,11 +37,10 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 빌드:   MSBuild.exe 2D-Portfolio/MyProgram.sln -p:Configuration=Debug -p:Platform=Win32 -m -nologo -v:m
         x64: -p:Platform=x64 (산출물 Exe\x64\<구성>\..., exe 는 PE32+)
         (WSL: "/mnt/c/Program Files/Microsoft Visual Studio/18/Insiders/MSBuild/Current/Bin/MSBuild.exe")
-        정상 출력: "Client.vcxproj -> ...\Exe\<플랫폼>\Debug\Client\Client.exe", 오류 0, 종료 코드 0
-        기존 경고(경고 줄 수 기준)는 정상 — 새로 늘어나면 안 된다:
-          Win32 Debug·Release 196(C4244 177·C4838 18·C4018 1)
-          x64 Debug 268 · Release 206 — Win32 대비 C4267(size_t→int) 13곳(Debug.hpp 2곳은 번역 단위마다 반복 — .cpp 를 더하거나 지우면 x64 Debug 수가 2씩 변한다), C4018 은 없음
-        경고 수를 비교할 빌드는 -m:1 -nodeReuse:false 로 — 재사용된 MSBuild 노드는 다른 환경(CL 등)을 물고 있을 수 있다.
+        정상 출력: "Client.vcxproj -> ...\Exe\<플랫폼>\Debug\Client\Client.exe", 오류 0, 경고 0, 종료 코드 0
+        경고는 0 이고 두 프로젝트·4개 구성에 경고를 오류로(`/WX`, TreatWarningAsError) 둔다 — 경고 하나가 빌드를 실패시킨다.
+        경고가 나면 끄지 말고(`#pragma warning(disable)`·`/wd` 금지) 코드를 고친다. 축소 변환은 같은 결과의 `static_cast` 로 명시한다.
+        경위는 `intent/warning-cleanup/`. 컴파일러가 업데이트돼 새 경고가 생기면 그때 고친다.
 실행:   작업 디렉터리를 `2D-Portfolio/Client/`(툴은 `MFC_000/`)로 두고 exe 실행 — 리소스가 상대 경로.
         WSL 에서 「살아 있는지」만 볼 때: `timeout 8 ….exe` 는 WSL 쪽만 끝내고 **Windows 프로세스(창)는 남는다** —
         남은 exe 때문에 다음 빌드가 LNK1168(쓰기용으로 열 수 없음)로 실패한다. PowerShell 로 띄우고 직접 끝낸다:

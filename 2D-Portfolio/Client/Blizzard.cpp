@@ -39,7 +39,7 @@ HRESULT CBlizzard::Initialize()
 	m_sPlayInfo.fResolve = 5;
 	m_sPlayInfo.fPerception = 5;
 	m_sPlayInfo.fExp = 0;
-	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*20;
+	m_sPlayInfo.fMaxExp = static_cast<float>(m_sPlayInfo.iLevel*20);
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 0;
 	m_sPlayInfo.iSKillPoint = 0;
@@ -181,7 +181,7 @@ void CBlizzard::FrameStatas()
 }
 void CBlizzard::StateSkill()
 {
-	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*20;
+	m_sPlayInfo.fMaxExp = static_cast<float>(m_sPlayInfo.iLevel*20);
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 50 + m_sPlayInfo.fMight * 10;
 	m_sPlayInfo.iSKillPoint = 1;
 	m_sPlayInfo.fHealthPoint = m_sPlayInfo.fHealthPointMAX = 1;

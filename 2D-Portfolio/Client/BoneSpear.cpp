@@ -40,7 +40,7 @@ HRESULT CBoneSpear::Initialize()
 	m_sPlayInfo.fResolve = 5;
 	m_sPlayInfo.fPerception = 5;
 	m_sPlayInfo.fExp = 0;
-	m_sPlayInfo.fMaxExp = m_sPlayInfo.iLevel*20;
+	m_sPlayInfo.fMaxExp = static_cast<float>(m_sPlayInfo.iLevel*20);
 	m_sPlayInfo.fAttack = m_sPlayInfo.iLevel * 10 + m_sPlayInfo.fMight * 1;
 	m_sPlayInfo.fDefence = 0;
 	m_sPlayInfo.iSKillPoint = 0;
@@ -147,7 +147,7 @@ void CBoneSpear::Render()
 		return;
 
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
-		(pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y, 0);
+		static_cast<float>((pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y), 0);
 
 	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,

@@ -90,8 +90,8 @@ public:
 		vswprintf_s(_tempw, str, ap);
 		va_end(ap);
 		DWORD dwByte;
-		::WriteConsole(_hconsole, _tempw, wcslen(_tempw), &dwByte, 0);
-		::WriteConsole(_hconsole, L"\n", wcslen(L"\n"), &dwByte, 0);
+		::WriteConsole(_hconsole, _tempw, static_cast<DWORD>(wcslen(_tempw)), &dwByte, 0);
+		::WriteConsole(_hconsole, L"\n", static_cast<DWORD>(wcslen(L"\n")), &dwByte, 0);
 	}
 #else
 	void __writea(const char* str, ...)

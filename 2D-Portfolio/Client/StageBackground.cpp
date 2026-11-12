@@ -62,7 +62,7 @@ SCENEID CStageBackGround::Progress()
 void CStageBackGround::Render()
 {
 	D3DXMATRIX matTrans;
-	int iSize = m_vecTile.size();
+	int iSize = static_cast<int>(m_vecTile.size());
 
 	for(int i = 0; i < iSize; ++i)
 	{
@@ -88,7 +88,7 @@ void CStageBackGround::Render()
 
 void CStageBackGround::Release()
 {
-	int iSize = m_vecTile.size();
+	int iSize = static_cast<int>(m_vecTile.size());
 	for (int i = 0 ; i < iSize ; ++i)
 	{
 		SAFE_DELETE<TILE>(&m_vecTile[i]);
