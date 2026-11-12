@@ -142,9 +142,9 @@ SCENEID CPlayer::Progress()
 
 	// 이동거리
 	// Run 또는 Walk 상태일때만 
-	if (m_pMotion == RUN)
+	if (IsSameKey(m_pMotion, RUN))
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.008f);
-	else if (m_pMotion == WALK)
+	else if (IsSameKey(m_pMotion, WALK))
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.005f);
 
 	// 자신의 위치에서 목표지점거리보다 이동거리가 크면 자신의 위치를 목표지점으로 지정
@@ -179,7 +179,7 @@ void CPlayer::Render()
 
 	//////////////////////////////////////////////////////////////////////////
 	// 그림자
-	if (m_pMotion != RUN)
+	if (!IsSameKey(m_pMotion, RUN))
 	{
 		const TEXINFO* pTexInfo 
 			= GET_SINGLE(CTextureMgr)->GetTexture(L"Shadow",L"Shadow",0);
@@ -209,7 +209,7 @@ void CPlayer::Render()
 	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
 		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	if (m_pMotion == CAST)
+	if (IsSameKey(m_pMotion, CAST))
 	{
 		const TEXINFO* pTexInfo 
 			= GET_SINGLE(CTextureMgr)->GetTexture(L"CastEffect",L"CastEffect",int(m_tFrame.fStart));
@@ -401,15 +401,15 @@ void CPlayer::FuncAttack()
 
 void CPlayer::FrameStatas()
 {
-	if (m_pMotion == ATTACK)
+	if (IsSameKey(m_pMotion, ATTACK))
 		FrameMove(PLAYER_ATTACK, PLAYER_ATTACK);
-	else if(m_pMotion == STAND)
+	else if(IsSameKey(m_pMotion, STAND))
 		FrameMove(PLAYER_STAND, PLAYER_STAND);
-	else if (m_pMotion == WALK)
+	else if (IsSameKey(m_pMotion, WALK))
 		FrameMove(PLAYER_WALK, PLAYER_WALK);
-	else if (m_pMotion == RUN)
+	else if (IsSameKey(m_pMotion, RUN))
 		FrameMove(PLAYER_RUN, PLAYER_RUN);
-	else if (m_pMotion == CAST)
+	else if (IsSameKey(m_pMotion, CAST))
 		FrameMove(PLAYER_CAST, PLAYER_CAST);
 }
 
@@ -427,7 +427,7 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 	// 0808 09:00 m_pMotion만 바꾸고 _pObjStatas바꾸지 않아서 에러
 	m_pMotion = _pObjStatas;
 	// 서있기
-	if(_pObjStatas == STAND)
+	if(IsSameKey(_pObjStatas, STAND))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
@@ -472,7 +472,7 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 		}
 	}
 	// 걷기
-	if(_pObjStatas == WALK)
+	if(IsSameKey(_pObjStatas, WALK))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
@@ -516,7 +516,7 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Walk_RU";
 		}
 	}
-	else if (_pObjStatas == RUN)
+	else if (IsSameKey(_pObjStatas, RUN))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
@@ -560,7 +560,7 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Run_RU";
 		}
 	}	
-	else if (_pObjStatas == ATTACK)
+	else if (IsSameKey(_pObjStatas, ATTACK))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
@@ -604,7 +604,7 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Attack_RU";
 		}
 	}
-	else if (_pObjStatas == ATTACKSKILL)
+	else if (IsSameKey(_pObjStatas, ATTACKSKILL))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
@@ -648,7 +648,7 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Attack_RU";
 		}
 	}
-	else if (_pObjStatas == CAST)
+	else if (IsSameKey(_pObjStatas, CAST))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect > 292.5f && m_fChaterDirect < 337.5f)
@@ -696,7 +696,7 @@ void CPlayer::DirectAction( TCHAR* _pObjStatas )
 
 void CPlayer::CharacterSelect()
 {
-	if (m_pObjKey == PLAYER)
+	if (IsSameKey(m_pObjKey, PLAYER))
 	{
 		if(m_dwKey & KEY_F1)
 			m_bSelect = true;
@@ -708,7 +708,7 @@ void CPlayer::CharacterSelect()
 			m_bSelect = true;
 		return;
 	}
-	else if (m_pObjKey == FELLOW_1ST)
+	else if (IsSameKey(m_pObjKey, FELLOW_1ST))
 	{
 		if(m_dwKey & KEY_F1)
 			m_bSelect = false;
@@ -720,7 +720,7 @@ void CPlayer::CharacterSelect()
 			m_bSelect = true;
 		return;
 	}
-	else if (m_pObjKey == FELLOW_2ND)
+	else if (IsSameKey(m_pObjKey, FELLOW_2ND))
 	{
 		if(m_dwKey & KEY_F1)
 			m_bSelect = false;
@@ -791,7 +791,7 @@ void CPlayer::StatesChange()
 
 void CPlayer::ScrollChange()
 {
-	if(m_pMotion != ATTACK && m_pMotion != CAST && m_pObjName == PLAYER)
+	if(!IsSameKey(m_pMotion, ATTACK) && !IsSameKey(m_pMotion, CAST) && IsSameKey(m_pObjName, PLAYER))
 	{
 		m_Info.vPos;
 		CObj::g_tScroll += m_Info.vDir;
@@ -811,9 +811,9 @@ void CPlayer::SkillActive(TCHAR* _SkillName)
 	DEBUG_ENTRY_EXIT;
 	DEBUG_LINE;
 
-	if(_SkillName != nullptr)
+	if(!IsSameKey(_SkillName, nullptr))
 	{
-		if( _SkillName == BONESPEAR && m_SkillTree.sBoneSpear.iLevel > 0 )
+		if( IsSameKey(_SkillName, BONESPEAR) && m_SkillTree.sBoneSpear.iLevel > 0 )
 		{
 			m_pMotion = CAST;
 			if (m_tFrame.fStart <= 0)
@@ -831,7 +831,7 @@ void CPlayer::SkillActive(TCHAR* _SkillName)
 				}
 			}
 		}
-		else if (_SkillName == FIREWALL && m_SkillTree.sFireWall.iLevel > 0 )
+		else if (IsSameKey(_SkillName, FIREWALL) && m_SkillTree.sFireWall.iLevel > 0 )
 		{
 			m_pMotion = CAST;
 			if (m_tFrame.fStart <= 0)
@@ -843,7 +843,7 @@ void CPlayer::SkillActive(TCHAR* _SkillName)
 				}
 			}
 		}
-		else if (_SkillName == BLIZZARD && m_SkillTree.sBlizzard.iLevel > 0)
+		else if (IsSameKey(_SkillName, BLIZZARD) && m_SkillTree.sBlizzard.iLevel > 0)
 		{
 			m_pMotion = CAST;
 			if (m_tFrame.fStart <= 0)

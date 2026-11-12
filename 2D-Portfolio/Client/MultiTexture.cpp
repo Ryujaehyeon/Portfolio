@@ -11,7 +11,7 @@ CMultiTexture::~CMultiTexture(void)
 const TEXINFO* CMultiTexture::GetTexture(
 	const TCHAR* pStateKey, int iCnt)
 {	
-	map<const TCHAR*, vector<TEXINFO*>>::iterator iter = m_MapTexture.find(pStateKey);
+	map<wstring, vector<TEXINFO*>>::iterator iter = m_MapTexture.find(pStateKey);
 	if (iter == m_MapTexture.end())
 		return NULL;
 
@@ -59,7 +59,7 @@ HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName,
 
 void CMultiTexture::Release()
 {
-	for (map<const TCHAR*, vector<TEXINFO*>>::iterator iter = m_MapTexture.begin();
+	for (map<wstring, vector<TEXINFO*>>::iterator iter = m_MapTexture.begin();
 		iter != m_MapTexture.end(); ++iter)
 	{
 		for(vector<TEXINFO*>::iterator iter2 = iter->second.begin();

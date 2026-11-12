@@ -37,7 +37,7 @@ HRESULT CMonster::Initialize()
 	m_sPlayInfo.fMight = 5;
 	m_sPlayInfo.fDexterity = 5;
 	m_sPlayInfo.fIntellect = 5;
-	if(m_pObjName == SUMMONER)
+	if(IsSameKey(m_pObjName, SUMMONER))
 		m_sPlayInfo.fConstitution = 700;
 	else
 		m_sPlayInfo.fConstitution = 50;
@@ -112,11 +112,11 @@ SCENEID CMonster::Progress()
 	m_fChaterDirect = m_iDegree;
 
 	// 이동거리
-	if ( m_pMotion == RUN && m_pMotion != CAST)
+	if ( IsSameKey(m_pMotion, RUN) && !IsSameKey(m_pMotion, CAST))
 		m_Info.vPos += m_Info.vDir * ((m_sPlayInfo.fSpeed + (m_sPlayInfo.fDexterity * 3.0f))*0.001f);
 
 	// 자신의 위치에서 목표지점거리보다 이동거리가 크면 자신의 위치를 목표지점으로 지정
-	if (fDistance < 1.0f && m_pMotion != DEATH)
+	if (fDistance < 1.0f && !IsSameKey(m_pMotion, DEATH))
 		m_Info.vPos = m_vTagetInfo;
 
 	D3DXMatrixTranslation(&m_Info.matTrans, m_Info.vPos.x, m_Info.vPos.y, 0.f);
@@ -146,7 +146,7 @@ void CMonster::Render()
 	
 	//////////////////////////////////////////////////////////////////////////
 	// 그림자
-	if (m_pMotion != RUN)
+	if (!IsSameKey(m_pMotion, RUN))
 	{
 		const TEXINFO* pTexInfo 
 			= GET_SINGLE(CTextureMgr)->GetTexture(L"Shadow", L"Shadow", 0);
@@ -188,7 +188,7 @@ void CMonster::Render()
 			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 
-	if (m_pMotion == CAST)
+	if (IsSameKey(m_pMotion, CAST))
 	{
 		{
 			const TEXINFO* pTexInfo 
@@ -243,7 +243,7 @@ void CMonster::CheckKey()
 	if(m_Crash == false)
 	{
 		// 서기
-		if( m_pMotion == STAND) 
+		if( IsSameKey(m_pMotion, STAND)) 
 		{	
 			// 이동할 지점을 가져옴
 			m_vTagetInfo = m_vMovePoint;
@@ -257,7 +257,7 @@ void CMonster::CheckKey()
 				m_fWaitTime = 0.f;
 			}
 
-			if(m_pMotion == RUN && m_vTagetInfo == m_Info.vPos)
+			if(IsSameKey(m_pMotion, RUN) && m_vTagetInfo == m_Info.vPos)
 			{
 				m_iDir = rand()%8;
 				switch(m_iDir)
@@ -299,7 +299,7 @@ void CMonster::CheckKey()
 			}
 		}
 		// 걷기
-		if( m_pMotion == RUN )
+		if( IsSameKey(m_pMotion, RUN) )
 		{
 			m_vTagetInfo = m_vMovePoint;
 			m_Info.vDir = m_vTagetInfo - m_Info.vPos;
@@ -310,7 +310,7 @@ void CMonster::CheckKey()
 			}
 		}
 		// 공격중
-		if (m_pMotion == ATTACK)
+		if (IsSameKey(m_pMotion, ATTACK))
 		{
 			m_pMotion = STAND;
 		}
@@ -328,10 +328,10 @@ void CMonster::CheckKey()
 
 		float fRealDistance = D3DXVec3Length(&m_Info.vDir);
 
-		if (m_pObjName == SUMMONER)
+		if (IsSameKey(m_pObjName, SUMMONER))
 		{
 			// 거리가 기본공격 사거리보다 멀고 3배의 거리보다 가까우면 스킬사용
-			if(fDistance * 1.2f < fRealDistance && fDistance * 5.f > fRealDistance && m_pMotion != DEATH)
+			if(fDistance * 1.2f < fRealDistance && fDistance * 5.f > fRealDistance && !IsSameKey(m_pMotion, DEATH))
 			{
 					fTimeSkill = 0.f;
 					m_pMotion = CAST;
@@ -350,7 +350,7 @@ void CMonster::CheckKey()
 			}
 		}
 		// 거리에 따라 다른 객체와 충돌했을 때 공격(자신의 크기보다 1.2배는 공격 사거리)
-		else if(fDistance * 1.2f > fRealDistance && m_pMotion != DEATH)
+		else if(fDistance * 1.2f > fRealDistance && !IsSameKey(m_pMotion, DEATH))
 		{
 			m_pMotion = ATTACK;
 			FuncAttack();
@@ -370,7 +370,7 @@ void CMonster::CheckKey()
 			m_Crash = false;
 			m_pTagetObj = NULL;
 		}
-		if(m_pMotion == RUN && m_fWaitTime > 5.f)
+		if(IsSameKey(m_pMotion, RUN) && m_fWaitTime > 5.f)
 		{
 			// 쫓아가는 상태에서 5초 이상 지나면 충돌상태를 푼다
 			m_fWaitTime = 0.f;
@@ -466,7 +466,7 @@ void CMonster::FuncAttack()
 
 void CMonster::RegenTime()
 {
-	if (m_pMotion == DEATH)
+	if (IsSameKey(m_pMotion, DEATH))
 		return;
 
 	static float i = 0.f;
@@ -493,28 +493,28 @@ CObj* CMonster::Clone()
 
 void CMonster::FrameStatas()
 {
-	if(m_pObjName == SKELETON)
+	if(IsSameKey(m_pObjName, SKELETON))
 	{
-		if (m_pMotion == ATTACK)
+		if (IsSameKey(m_pMotion, ATTACK))
 			FrameMove(SKELETON_ATTACK, SKELETON_ATTACK);
-		else if(m_pMotion == STAND)
+		else if(IsSameKey(m_pMotion, STAND))
 			FrameMove(SKELETON_STAND, SKELETON_STAND);
-		else if (m_pMotion == RUN)
+		else if (IsSameKey(m_pMotion, RUN))
 			FrameMove(SKELETON_RUN, SKELETON_RUN);
-		else if (m_pMotion == DEATH)
+		else if (IsSameKey(m_pMotion, DEATH))
 			FrameMove(SKELETON_DEATH, SKELETON_DEATH);
 	}
-	else if(m_pObjName == SUMMONER)
+	else if(IsSameKey(m_pObjName, SUMMONER))
 	{
-		if (m_pMotion == ATTACK)
+		if (IsSameKey(m_pMotion, ATTACK))
 			FrameMove(SUMMONER_ATTACK, SUMMONER_ATTACK);
-		else if(m_pMotion == STAND)
+		else if(IsSameKey(m_pMotion, STAND))
 			FrameMove(SUMMONER_STAND, SUMMONER_STAND);
-		else if (m_pMotion == RUN)
+		else if (IsSameKey(m_pMotion, RUN))
 			FrameMove(SUMMONER_RUN, SUMMONER_RUN);
-		else if (m_pMotion == DEATH)
+		else if (IsSameKey(m_pMotion, DEATH))
 			FrameMove(SUMMONER_DEATH, SUMMONER_DEATH);
-		else if (m_pMotion == CAST)
+		else if (IsSameKey(m_pMotion, CAST))
 			FrameMove(SUMMONER_CAST, SUMMONER_CAST);
 	}
 }
@@ -531,7 +531,7 @@ bool CMonster::VecterInRect( D3DXVECTOR3& _Taget )
 void CMonster::DirectAction( TCHAR* _pObjStatas )
 {
 	m_pMotion = _pObjStatas;
-	if(_pObjStatas == STAND)
+	if(IsSameKey(_pObjStatas, STAND))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
@@ -575,7 +575,7 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Stand_RU";
 		}
 	}
-	else if (_pObjStatas == RUN)
+	else if (IsSameKey(_pObjStatas, RUN))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
@@ -619,7 +619,7 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Run_RU";
 		}
 	}	
-	else if (_pObjStatas == ATTACK)
+	else if (IsSameKey(_pObjStatas, ATTACK))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
@@ -663,7 +663,7 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Attack_RU";
 		}
 	}
-	else if (_pObjStatas == ATTACKSKILL)
+	else if (IsSameKey(_pObjStatas, ATTACKSKILL))
 	{
 		// 오른쪽 아래 RD
 		if (m_fChaterDirect >= 292.5f && m_fChaterDirect <= 337.5f)
@@ -707,7 +707,7 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Attack_RU";
 		}
 	}
-	else if (_pObjStatas == DEATH)
+	else if (IsSameKey(_pObjStatas, DEATH))
 	{
 		// 오른쪽 아래 RD
 		{
@@ -750,7 +750,7 @@ void CMonster::DirectAction( TCHAR* _pObjStatas )
 			m_pStateKey = L"Death_RU";
 		}
 	}
-	else if (_pObjStatas == CAST)
+	else if (IsSameKey(_pObjStatas, CAST))
 	{
 		// 오른쪽 아래 RD
 		{
@@ -819,7 +819,7 @@ void CMonster::Tageting()
 
 void CMonster::ExpAcquired()
 {
-	if(m_pMotion == DEATH && m_tFrame.fStart <= 0)
+	if(IsSameKey(m_pMotion, DEATH) && m_tFrame.fStart <= 0)
 	{
 		for (list<CObj*>::iterator iter = m_pTagetList->begin();
 			iter != m_pTagetList->end(); ++iter)

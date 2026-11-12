@@ -81,7 +81,7 @@ public:
 	virtual INFO* SetStatas() {return &m_sPlayInfo;}
 	virtual void SetCrash(bool _bCrash){m_Crash = _bCrash;}
 	virtual void SetTagetObj(CObj* _pTagetObj);
-	virtual void SetMotion(TCHAR* _pMotion) { if(m_pMotion != DEATH) m_pMotion = _pMotion; }
+	virtual void SetMotion(TCHAR* _pMotion) { if(!IsSameKey(m_pMotion, DEATH)) m_pMotion = _pMotion; }
 	virtual void SetAngle(float _Angle){m_fAngle = _Angle;}
 	virtual void Setlist( list<CObj*>* _TagetList );
 
