@@ -123,27 +123,27 @@ const BYTE TILE_OPTION_DONT_MOVE = 0x01; // 0000 0001
 
 
 // 모션 프레임 매크로화
-const float PLAYER_STAND				= 8.0f;
-const float PLAYER_WALK					= 8.0f;
-const float PLAYER_RUN					= 8.0f;
-const float PLAYER_ATTACK				= 19.0f;
-const float PLAYER_CAST					= 16.0f;
+constexpr int PLAYER_STAND				= 8;
+constexpr int PLAYER_WALK					= 8;
+constexpr int PLAYER_RUN					= 8;
+constexpr int PLAYER_ATTACK				= 19;
+constexpr int PLAYER_CAST					= 16;
 
-const float PLAYER_BoneSpear_Missile	= 6.0f;
-const float PLAYER_BoneSpear_Tail		= 9.0f;
-const float PLAYER_FireWall				= 7.0f;
-const float PLAYER_Blizzard				= 8.0f;
+constexpr int PLAYER_BoneSpear_Missile	= 6;
+constexpr int PLAYER_BoneSpear_Tail		= 9;
+constexpr int PLAYER_FireWall				= 7;
+constexpr int PLAYER_Blizzard				= 8;
 
-const float SKELETON_STAND			= 8.0f;
-const float SKELETON_RUN			= 8.0f;
-const float SKELETON_ATTACK			= 16.0f;
-const float SKELETON_DEATH			= 19.0f;
+constexpr int SKELETON_STAND			= 8;
+constexpr int SKELETON_RUN			= 8;
+constexpr int SKELETON_ATTACK			= 16;
+constexpr int SKELETON_DEATH			= 19;
 
-const float SUMMONER_STAND			= 8.0f;
-const float SUMMONER_CAST			= 8.0f;
-const float SUMMONER_RUN			= 8.0f;
-const float SUMMONER_ATTACK			= 12.0f;
-const float SUMMONER_DEATH			= 16.0f;
+constexpr int SUMMONER_STAND			= 8;
+constexpr int SUMMONER_CAST			= 8;
+constexpr int SUMMONER_RUN			= 8;
+constexpr int SUMMONER_ATTACK			= 12;
+constexpr int SUMMONER_DEATH			= 16;
 
 // 모션 키워드
 const TCHAR* const STAND					= L"Stand";
