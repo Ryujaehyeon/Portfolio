@@ -1,7 +1,7 @@
 # Plan: render-capture
 
 Author: Ryu Jahyeon
-Status: draft
+Status: approved (PR #60)
 
 <!-- 입력: spec.md. 경로는 2D-Portfolio/ 기준. -->
 
@@ -33,7 +33,7 @@ Status: draft
    → 커밋 `feat(render-capture): 캡처 폴더를 픽셀 단위로 비교하는 스크립트`
 4. **마무리.** 4개 구성 빌드·기존 스모크(R7·R8), 문서, PR, 머지.
 
-## 캡처 시점(초안 — 2번에서 실제 화면을 보고 확정)
+## 캡처 시점(확정 — `Client.cpp` 의 `SHOT_POINTS`)
 
 | 장면 | 진입 후 프레임 | 담기는 것 |
 |---|---|---|
@@ -54,3 +54,23 @@ powershell.exe -NoProfile -File ../../scripts/compare-shots.ps1 -Expected shots/
 ```
 
 - R5 가 실패하면(같은 빌드인데 다르면) diff 이미지로 어느 객체가 다른지 보고, `state.log`(`-log`)를 두 실행에서 비교해 처음 갈라지는 프레임을 찾는다.
+
+## 구현 중 변경
+
+- 캡처 시점 표는 `FixedStep.h` 가 아니라 `Client.cpp` 의 `SHOT_POINTS` 에 둔다 — 장면 번호(`SCENEID`)는 Client 의 개념이라서다. `FixedStep.h` 는 모드·시계·프레임 수만 맡는다.
+- `CMainGame::Progress()` 는 장면이 바뀌는 프레임에만 새 장면 번호를, 평소에는 `SCENEID_NONPASS` 를 돌려준다. 그래서 메인 루프가 「지금 장면」을 따로 기억해 `FixedStepAdvance` 에 넘긴다.
+- 1·2번 작업(결정적 모드·캡처)은 한 커밋으로 묶었다.
+
+## 검증 결과 (2026-11-16)
+
+| spec | 결과 |
+|---|---|
+| R1·R2 | ✅ `-shot` 이면 `srand(1)`, `DeltaTime()` = 1/60, 스모크 일정(`SmokeTick`·몬스터 처치·스킬 시전)은 `GameTickMs()`. 30초 제한은 실제 시간 |
+| R3·R4 | ✅ 6장(`s0_f0005`·`s1_f0030`·`s2_f0010/0100/0150/0220`) 저장, 스모크 로그에 `PASS capture …`. 로고·메뉴·스테이지(플레이어·몬스터·UI)를 눈으로 확인 |
+| R5 | ✅ 같은 빌드 두 번 — Win32 Debug 6장 바이트 동일, x64 Release 비교 스크립트 다른 픽셀 0 |
+| R6 | ✅ 같은 폴더 PASS(종료 0). 한 장을 다른 장면으로 바꾸고 한 장을 지운 폴더는 FAIL 2(종료 1), diff 이미지가 바뀐 객체만 빨강으로 표시 |
+| R7 | ✅ 4개 구성 경고 0·오류 0. `-shot` 없는 스모크 Win32 Debug 10/10, 나머지 3개 구성 각 5/5, 툴 스모크 PASS |
+| R8 | ✅ `Client/shots/` gitignore, CLAUDE.md 「화면 비교」 |
+
+- 작업 초반 `-shot` 없는 Win32 Debug 스모크가 한 번 종료 코드 1 이었다. 다음 실행이 로그를 덮어써 원인을 남기지 못했고, 이후 25회 반복에서 재현되지 않았다.
+  다시 나오면 `smoke.log` 를 보존하고 `-log` 를 함께 켜서 원인을 본다.

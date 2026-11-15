@@ -60,6 +60,12 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 상태 기록: Client 를 `-log` 로 실행하면(`-smoke` 와 함께 써도 된다) 작업 디렉터리의 state.log(UTF-8, gitignore)에 객체 상태의 **변화**가
         `[경과 ms #프레임]` 순으로 남는다 — 장면 전환, 생성 `+ #id`·삭제 `- #id`, 모션·HP·대상·충돌·선택 변화, 32px 이상 이동.
         문제가 난 프레임 직전 줄을 거꾸로 읽는다. 기록 항목을 늘릴 때는 `CObj` 의 공개 const 접근자로 읽는다(`CStateRecorder::Capture`, 경위 `intent/state-log/`).
+화면 비교: `-smoke -shot <폴더>` 는 시드·프레임 시간을 고정해(결정적 실행) 매번 같은 장면을 만들고, `Client.cpp` 의 `SHOT_POINTS` 시점마다
+        `<폴더>/s<장면>_f<프레임>.png` 를 남긴다(`Client/shots/` 는 gitignore). 같은 빌드로 두 번 찍으면 완전히 같다.
+        비교: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ../../scripts/compare-shots.ps1 -Expected shots/a -Actual shots/b [-Tolerance 8 -MaxRatio 0.01]`
+        → 이미지마다 PASS/FAIL·다른 픽셀 비율, 마지막 줄 RESULT, 종료 코드 0/1. 다른 곳은 `<Actual>/diff/` 에 빨강으로 표시.
+        렌더링을 바꿀 때는 변경 전 빌드로 기준을 찍어 두고 비교한다(경위 `intent/render-capture/`, 로드맵 `docs/RENDER-ROADMAP.md`).
+        스모크 일정처럼 장면 진행에 영향을 주는 시간 판정은 `GetTickCount64` 가 아니라 `GameTickMs()` 를 쓴다 — 실제 시간을 쓰면 결정성이 깨진다.
 린트:   없음 (컴파일러 경고 /W3 이 유일한 정적 검사)
 ```
 
