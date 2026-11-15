@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "TimeMgr.h"
 
 
@@ -39,5 +39,10 @@ void CTimeMgr::SetTime()
 
 float CTimeMgr::DeltaTime() const
 {
+	// 결정적 모드에서는 실제 경과 시간 대신 고정 길이(intent/render-capture)
+	if (IsFixedStepMode())
+	{
+		return FIXED_STEP_DELTA;
+	}
 	return m_fTime;
 }

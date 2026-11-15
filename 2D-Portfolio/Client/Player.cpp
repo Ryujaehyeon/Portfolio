@@ -255,8 +255,8 @@ void CPlayer::CheckKey()
 	bool bSmokeCast = false;
 	if (IsSmokeMode() && !s_bSmokeSkillCast)
 	{
-		static const ULONGLONG s_ullSmokeStart = GetTickCount64();
-		if (GetTickCount64() - s_ullSmokeStart >= 2000)
+		static const ULONGLONG s_ullSmokeStart = GameTickMs();
+		if (GameTickMs() - s_ullSmokeStart >= 2000)
 		{
 			m_SkillTree.sBoneSpear.iLevel = 1;
 			bSmokeCast = true;

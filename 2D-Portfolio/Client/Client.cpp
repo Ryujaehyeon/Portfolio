@@ -22,6 +22,7 @@ INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
 // 스모크 모드(-smoke) 진행표: 스테이지 진입 1초 뒤 몬스터 수 확인, 4초 뒤 종료.
 // 전체 30초를 넘기면 실패로 끝낸다. true 를 반환하면 메인 루프를 빠져나간다.
+// 스테이지 일정은 게임 시계(GameTickMs), 30초 제한은 안전장치라 실제 시간이다(intent/render-capture).
 static bool SmokeTick(const SCENEID _eScene)
 {
 	if (!IsSmokeMode())
@@ -31,14 +32,14 @@ static bool SmokeTick(const SCENEID _eScene)
 	static const ULONGLONG s_ullBegin = GetTickCount64();
 	static ULONGLONG s_ullStageStart = 0;
 	static bool s_bMonsterChecked = false;
-	const ULONGLONG ullNow = GetTickCount64();
+	const ULONGLONG ullNow = GameTickMs();
 
 	if (_eScene == SCENEID_STAGE && s_ullStageStart == 0)
 	{
 		s_ullStageStart = ullNow;
 		SmokeLog(L"stage entered");
 	}
-	if (ullNow - s_ullBegin > 30000)
+	if (GetTickCount64() - s_ullBegin > 30000)
 	{
 		SmokeCheck(false, L"timeout (30 s)");
 		return true;
@@ -54,6 +55,42 @@ static bool SmokeTick(const SCENEID _eScene)
 		s_bMonsterChecked = true;
 	}
 	return ullNow - s_ullStageStart >= 4000;
+}
+
+// 결정적 모드에서 화면을 저장할 시점 — 장면과 「그 장면에 들어온 뒤 몇 번째 프레임」(intent/render-capture)
+struct SHOTPOINT
+{
+	SCENEID eScene;
+	int iFrame;
+};
+static const SHOTPOINT SHOT_POINTS[] =
+{
+	{ SCENEID_LOGO, 5 },		// 로고
+	{ SCENEID_MENU, 30 },		// 메뉴 배경·버튼
+	{ SCENEID_STAGE, 10 },		// 시작 직후 — 플레이어·몬스터, UI
+	{ SCENEID_STAGE, 100 },		// 몬스터 공격 중
+	{ SCENEID_STAGE, 150 },		// 스킬 시전 중(2초 = 120프레임 뒤)
+	{ SCENEID_STAGE, 220 },		// 몬스터 처치·스킬 이동 뒤
+};
+
+// 이번 프레임이 저장 시점이면 그리기 끝에 백버퍼를 저장하도록 걸어 둔다
+static void RequestShotIfDue()
+{
+	const FIXEDSTEPSTATE& rState = FixedStepState();
+	if (!rState.bOn)
+	{
+		return;
+	}
+	for (const SHOTPOINT& rPoint : SHOT_POINTS)
+	{
+		if (rPoint.eScene == rState.iScene && rPoint.iFrame == rState.iSceneFrame)
+		{
+			TCHAR szPath[MAX_PATH];
+			_snwprintf_s(szPath, _TRUNCATE, L"%s/s%d_f%04d.png", rState.strShotDir.c_str(), rPoint.eScene, rPoint.iFrame);
+			GET_SINGLE(CDevice)->RequestCapture(szPath);
+			return;
+		}
+	}
 }
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -74,13 +111,28 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	{
 		GET_SINGLE(CStateRecorder)->Begin(L"state.log");
 	}
+	// -shot <폴더>: 결정적 실행 + 화면 캡처(intent/render-capture)
+	for (int i = 1; i + 1 < __argc; ++i)
+	{
+		if (wcscmp(__wargv[i], L"-shot") == 0)
+		{
+			if (!FixedStepBegin(__wargv[i + 1]))
+			{
+				SmokeCheck(false, L"capture folder %s", __wargv[i + 1]);
+			}
+			break;
+		}
+	}
 
  	// TODO: 여기에 코드를 입력합니다.
 	MSG msg;
 	HACCEL hAccelTable;
 	CMainGame MainGame;
 	static SCENEID iScene;
-	srand(static_cast<unsigned int>(time(0)));
+	// 지금 장면 — Progress() 는 장면이 바뀌는 프레임에만 새 장면 번호를, 평소에는 SCENEID_NONPASS 를 돌려준다
+	SCENEID eCurScene = SCENEID_LOGO;
+	// 결정적 모드에서는 시드를 고정한다 — 몬스터 위치·방향이 매번 같다
+	srand(IsFixedStepMode() ? 1u : static_cast<unsigned int>(time(0)));
 	// 전역 문자열을 초기화합니다.
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
@@ -123,6 +175,12 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			{
 				// MainGame 시작
 				iScene = MainGame.Progress();
+				if (iScene > SCENEID_NONPASS)
+				{
+					eCurScene = iScene;
+				}
+				FixedStepAdvance(eCurScene);
+				RequestShotIfDue();
 				MainGame.Render();
 				
 				if (iScene == SCENEID_END)

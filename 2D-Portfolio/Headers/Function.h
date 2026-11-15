@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "SmokeLog.h"
+#include "FixedStep.h"
 
 // 이름·키·모션 문자열을 내용으로 비교한다. 주소(==)로 비교하면 컴파일러의 문자열 병합(/GF)에 기대게 된다(intent/string-key-compare).
 // 하나라도 nullptr 이면 두 포인터가 같을 때만 참.

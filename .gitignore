@@ -23,3 +23,6 @@
 *.suo
 # coding-standard 스킬 보고서 — 실행 시점의 결과라 커밋하지 않는다(필요하면 다시 생성)
 docs/coding-standard/
+
+# render-capture 화면 캡처(-shot)
+2D-Portfolio/Client/shots/
