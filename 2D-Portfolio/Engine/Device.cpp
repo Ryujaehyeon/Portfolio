@@ -85,7 +85,38 @@ void CDevice::Render_End(HWND hWnd)
 {
 	m_pSprite->End();
 	m_pDevice->EndScene();
+	// 백버퍼 내용은 Present 뒤에는 보장되지 않으므로(SWAPEFFECT_DISCARD) 그 전에 저장한다
+	if (!m_strCapturePath.empty())
+	{
+		const bool bSaved = SaveBackBuffer(m_strCapturePath.c_str());
+		SmokeCheck(bSaved, L"capture %s", m_strCapturePath.c_str());
+		m_strCapturePath.clear();
+	}
 	m_pDevice->Present(NULL, NULL, hWnd, NULL);
+}
+
+// 백버퍼 → 시스템 메모리 표면으로 복사 → PNG. 백버퍼는 직접 잠글 수 없어 복사본을 저장한다
+bool CDevice::SaveBackBuffer(const TCHAR* pPath)
+{
+	LPDIRECT3DSURFACE9 pBackBuffer = nullptr;
+	if (FAILED(m_pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer)))
+	{
+		return false;
+	}
+	D3DSURFACE_DESC tDesc = {};
+	pBackBuffer->GetDesc(&tDesc);
+
+	bool bSaved = false;
+	LPDIRECT3DSURFACE9 pSysMem = nullptr;
+	if (SUCCEEDED(m_pDevice->CreateOffscreenPlainSurface(tDesc.Width, tDesc.Height, tDesc.Format,
+		D3DPOOL_SYSTEMMEM, &pSysMem, nullptr)))
+	{
+		bSaved = SUCCEEDED(m_pDevice->GetRenderTargetData(pBackBuffer, pSysMem))
+			&& SUCCEEDED(D3DXSaveSurfaceToFile(pPath, D3DXIFF_PNG, pSysMem, nullptr, nullptr));
+		pSysMem->Release();
+	}
+	pBackBuffer->Release();
+	return bSaved;
 }
 
 void CDevice::Release()

@@ -73,8 +73,8 @@ SCENEID CMonster::Progress()
 	// 스모크 모드: 몬스터가 처음 갱신된 뒤 1.5초가 지나면 이 몬스터를 죽인다 — 죽음 → 정리 경로를 스모크가 지나가게(intent/objmgr-lifetime)
 	if (IsSmokeMode() && !s_bSmokeKilled)
 	{
-		static const ULONGLONG s_ullSmokeStart = GetTickCount64();
-		if (GetTickCount64() - s_ullSmokeStart >= 1500)
+		static const ULONGLONG s_ullSmokeStart = GameTickMs();
+		if (GameTickMs() - s_ullSmokeStart >= 1500)
 		{
 			m_sPlayInfo.fHealthPoint = 0.f;
 			s_bSmokeKilled = true;
