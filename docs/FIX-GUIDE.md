@@ -10,7 +10,7 @@
 
 진행 중인 인텐트 없음(2026-11-12 `shared-render-lib`·`input-unify`·`resource-path` 완료). 착수하면 여기에 표(인텐트·브랜치·상태·선행)로 적는다.
 
-다음은 오딧 「제안 순서」: DirectX 전환.
+다음은 오딧 「제안 순서」의 DirectX 전환 — [렌더링 전환 로드맵](RENDER-ROADMAP.md) 의 네 단계(`render-capture` → `render-backend` → `render-dxtk` → `render-guide`).
 이것들은 아직 intent/spec/plan 이 없다 — 착수할 때 3번 절대로 만든다. 완료한 인텐트는 이 표에서 지운다(기록은 `intent/<슬러그>/` 와 PR).
 
 ## 2. 인텐트 하나를 처리하는 공통 사이클
