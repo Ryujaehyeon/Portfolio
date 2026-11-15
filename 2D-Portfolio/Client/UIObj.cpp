@@ -324,8 +324,6 @@ void CUIObj::Render()
 	if(pTexInfo == NULL)
 		return;
 
-	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-
 	//// &GetRect() 그리는 이미지의 좌표
 
 	if(IsSameKey(m_pObjKey, L"HP") ||IsSameKey(m_pObjKey, L"MP") )
@@ -340,8 +338,8 @@ void CUIObj::Render()
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * VelueToPercentage(m_pObjKey), 0);
 
-		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, &rc,
+			m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	else if ( IsSameKey(m_pObjKey, L"ExpBar") )
 	{
@@ -354,8 +352,8 @@ void CUIObj::Render()
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, &rc,
+			m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	else if ( IsSameKey(m_pObjKey, L"HPBar") )
 	{
@@ -369,8 +367,8 @@ void CUIObj::Render()
 			static_cast<float>(pTexInfo->ImgInfo.Height * 0.5), 0);
 
 		if( VelueToPercentage(m_pObjKey) >= 0.f && IsSameKey(m_pObjKey, L"HPBar"))
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, &rc,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	}
 	else if (IsSameKey(m_pObjKey, L"HPBarBack"))
@@ -385,8 +383,8 @@ void CUIObj::Render()
 			static_cast<float>(pTexInfo->ImgInfo.Height * 0.5), 0);
 
 		if (VelueToPercentage(L"HPBar")>= 0.f)
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			&rc, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, &rc,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	else if (IsSameKey(m_pObjKey, L"Inven"))
 	{
@@ -396,8 +394,8 @@ void CUIObj::Render()
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
 	else if (IsSameKey(m_pObjKey, L"SkillTree"))
@@ -408,8 +406,8 @@ void CUIObj::Render()
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
 	else if (IsSameKey(m_pObjKey, L"Bank"))
@@ -420,8 +418,8 @@ void CUIObj::Render()
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
 	else if (IsSameKey(m_pObjKey, L"Character"))
@@ -431,8 +429,8 @@ void CUIObj::Render()
 		if(m_Character == true)
 		{
 			// 이미지의 크기를 반으로 하여 중앙값을 저장한다.
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 			FontOutput(m_pObjKey);
 		}
@@ -445,8 +443,8 @@ void CUIObj::Render()
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 			
 			FontOutput(m_pObjKey);
 		}
@@ -459,8 +457,8 @@ void CUIObj::Render()
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 			
 			FontOutput(m_pObjKey);
 		}
@@ -473,8 +471,8 @@ void CUIObj::Render()
 			m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 				pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-				NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+				m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 			
 			FontOutput(m_pObjKey);
 		}
@@ -485,8 +483,8 @@ void CUIObj::Render()
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * 0.5f, 0);
 
-		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+			m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 }
 
@@ -609,8 +607,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 62,
 					m_Info.vCenter.y - 60, 0);
 
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+					m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 
 				if(temp2 > 0)
@@ -621,8 +619,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
 						m_Info.vCenter.y , 0);
 
-					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+						m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 				}
 			}
 		}
@@ -645,8 +643,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 62,
 					m_Info.vCenter.y - 60, 0);
 
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+					m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 
 				if(temp2 > 0)
@@ -657,8 +655,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
 						m_Info.vCenter.y , 0);
 
-					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+						m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 				}
 			}
 		}
@@ -681,8 +679,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 				m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 62,
 					m_Info.vCenter.y - 60, 0);
 
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-					NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+				GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+					m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 
 				if(temp2 > 0)
@@ -693,8 +691,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
 						m_Info.vCenter.y , 0);
 
-					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+						m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 				}
 			}
 		}
@@ -719,8 +717,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 38,
 						m_Info.vCenter.y - 55, 0);
 
-					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+						m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 
 					if(temp2 > 0)
@@ -731,8 +729,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 						m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
 							m_Info.vCenter.y , 0);
 
-						GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-							NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+						GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+							m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 					}
 				}
 				{
@@ -748,8 +746,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 100,
 						m_Info.vCenter.y, 0);
 
-					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+						m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 
 					if(temp2 > 0 && temp2 < 10)
@@ -760,8 +758,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 						m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
 							m_Info.vCenter.y , 0);
 
-						GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-							NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+						GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+							m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 					}
 				}
 				{
@@ -777,8 +775,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 					m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x - 160,
 						m_Info.vCenter.y, 0);
 
-					GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-						NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+					GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+						m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 
 					if(temp2 > 0 && temp2 < 10)
@@ -789,8 +787,8 @@ void CUIObj::FontOutput( const TCHAR* _pObjKey )
 						m_Info.vCenter = D3DXVECTOR3(m_Info.vCenter.x + 10,
 							m_Info.vCenter.y , 0);
 
-						GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-							NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+						GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+							m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 					}
 				}
 			}

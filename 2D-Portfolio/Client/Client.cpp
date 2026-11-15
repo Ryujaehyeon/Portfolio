@@ -87,7 +87,7 @@ static void RequestShotIfDue()
 		{
 			TCHAR szPath[MAX_PATH];
 			_snwprintf_s(szPath, _TRUNCATE, L"%s/s%d_f%04d.png", rState.strShotDir.c_str(), rPoint.eScene, rPoint.iFrame);
-			GET_SINGLE(CDevice)->RequestCapture(szPath);
+			GET_SINGLE(CRenderer)->RequestCapture(szPath);
 			return;
 		}
 	}

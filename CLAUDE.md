@@ -8,7 +8,7 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 |---|---|---|
 | `Client/` | Win32 Application | 게임 본체. Logo → Menu → Stage 장면 |
 | `MFC_000/` | MFC(Dynamic) Application | 맵·몬스터 배치 툴. `*.dat` 파일로 저장 → Client 가 읽음(`Map.dat`, `Monster.dat`) |
-| `Engine/` | Static Library | Client·툴 공용 렌더링 — `CDevice`(그리기 장치)·`CTextureMgr`·`CTexture`/`CSingleTexture`/`CMultiTexture`. 두 앱이 링크 |
+| `Engine/` | Static Library | Client·툴 공용 렌더링 — `CRenderer`(렌더러 싱글턴)·`IRenderer`/`CRendererD3D9`(백엔드)·`CTextureMgr`·`CTexture`/`CSingleTexture`/`CMultiTexture`. 두 앱이 링크 |
 | `Headers/` | 공유 헤더(솔루션 폴더) | `Constant.h`·`Struct.h`·`Macro.h`·`Function.h`·`Defines.h`·`Include.h` |
 
 ## Claude Code 전용
@@ -124,7 +124,7 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - **게임 루프**: `CMainGame::Initialize/Progress/Render/Release`. `Progress()` 가 `SCENEID` 를 반환해 장면 전환을 알린다.
   객체·장면 모두 같은 수명주기(`Initialize` → `Progress` → `Render` → `Release`)를 따른다.
 - **매니저 = 싱글톤**: `SINGLETON(type)` 매크로(`Headers/Macro.h`) + `GET_SINGLE(type)->...` 로 접근,
-  `DESTROY_SINGLE` 로 해제. `CDevice` `CTextureMgr`(Engine) `CSceneMgr` `CObjMgr` `CTimeMgr` `CKeyMgr` `CAStar` `CSortMgr` 등.
+  `DESTROY_SINGLE` 로 해제. `CRenderer` `CTextureMgr`(Engine) `CSceneMgr` `CObjMgr` `CTimeMgr` `CKeyMgr` `CAStar` `CSortMgr` 등.
 - **장면**: `CSceneObj` 파생 `CLogo` `CMenuD2` `CStage`, `CSceneMgr::InitScene(SCENEID)` 로 교체.
 - **오브젝트 계층**(장면 계층과 별개): `CObj` → 장면별 `C{Logo,Menu,Stage}{Static,Dynamic}` →
   `CStageDynamic` → `CPlayer` `CMonster`, `CStageStatic` → `CStageBackGround` `CUIObj`.
@@ -134,8 +134,10 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - **텍스처**: `CTexture` → `CSingleTexture`/`CMultiTexture`, `CTextureMgr` 가 키(`ObjKey`/`StateKey`/`Motion`)로 관리.
 - **사운드**: FMOD Ex(`Client/fmod/`, `GameSound.hpp`).
 - **공용 렌더링(`Engine/`)**: 그리기 장치·텍스처는 Engine 한 벌을 Client·툴이 함께 쓴다(경위 `intent/shared-render-lib/`).
-  앱마다 다른 값은 앱이 넘긴다 — `InitDevice(창, 창 모드)`, `Render_Begin(지우는 색)`(Client 검정·툴 파랑),
-  `CTextureMgr::SetMultiColorKey`(여러 장 텍스처의 투명색, 기본 검정·툴 흰색), 깊이 렌더 상태는 Client 의 `CMainGame`.
+  게임 코드는 그래픽 API 를 모른다 — `GET_SINGLE(CRenderer)` 의 `BeginFrame(지우는 색)`·`EndFrame(창)`·`DrawSprite(텍스처, 원본 사각형, 중심점, 월드 행렬, 색)` 만 부른다.
+  백엔드(`IRenderer` 구현, 지금은 `CRendererD3D9`)는 **앱이 만들어** `CRenderer::Initialize(new …, 창, 창 모드)` 로 넘긴다 — Engine 은 어떤 백엔드가 있는지 모른다(경위 `intent/render-backend/`).
+  새 그리기 코드에서 `ID3DXSprite`·D3D 장치를 직접 쓰지 않는다. 앱마다 다른 값은 앱이 넘긴다 — 지우는 색(Client 검정·툴 파랑),
+  `CTextureMgr::SetMultiColorKey`(여러 장 텍스처의 투명색, 기본 검정·툴 흰색). 전환 계획은 `docs/RENDER-ROADMAP.md`.
   Engine 에 앱 전용 코드(Client 의 `Include.h`·MFC·DirectInput)를 넣지 않는다. 입력은 Client 의 `CKeyMgr`·`GameAsyncKeyState`·`GameCursorPos` 한 경로(DirectInput 은 쓰지 않는다, 경위 `intent/input-unify/`).
 
 ### 건드리면 안 되는 부분

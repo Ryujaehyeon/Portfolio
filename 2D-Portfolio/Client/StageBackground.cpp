@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "StageBackground.h"
 #include "Include.h"
 
@@ -79,10 +79,8 @@ void CStageBackGround::Render()
 
 		m_Info.vCenter = D3DXVECTOR3(65, 34, 0);
 
-		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matTrans);
-		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			NULL, &m_Info.vCenter, NULL
-			, D3DCOLOR_ARGB(255, 255, 255, 255));
+		GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+			m_Info.vCenter, matTrans, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 }
 

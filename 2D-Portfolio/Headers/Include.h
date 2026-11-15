@@ -3,7 +3,7 @@
 
 
 //===========Manager Header============//
-#include "Device.h"
+#include "RendererMgr.h"
 #include "TextureMgr.h"
 
 //=============ETC Header==============//

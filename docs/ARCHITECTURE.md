@@ -23,7 +23,7 @@ Portfolio/
     │   ├── Map.dat                 # 툴이 만든 타일 맵 (게임이 읽음)
     │   └── *.mp3                   # 배경음
     ├── MFC_000/                    # 맵·몬스터 배치 툴 (MFC 앱)
-    ├── Engine/                     # 공용 렌더링 정적 라이브러리 (CDevice · CTextureMgr · *Texture)
+    ├── Engine/                     # 공용 렌더링 정적 라이브러리 (CRenderer · IRenderer/CRendererD3D9 · CTextureMgr · *Texture)
     ├── Resource/Texture/           # 텍스처 8,220 파일 (76MB)
     ├── packages/                   # NuGet 복원 (gitignore)
     ├── Exe/<플랫폼>/<구성>/<프로젝트>/   # 빌드 산출물 (gitignore)
@@ -77,7 +77,7 @@ flowchart TB
         ObjMgr["CObjMgr<br/>map&lt;키, list&lt;CObj*&gt;&gt;<br/>갱신 · 상호작용 · 충돌 · 삭제"]
         SortMgr["CSortMgr<br/>레이어별 렌더 큐<br/>TERRAIN → OBJECT → UI"]
         TexMgr["CTextureMgr (Engine)<br/>키 → CTexture"]
-        Device["CDevice (Engine)<br/>D3D9 장치 · ID3DXSprite"]
+        Device["CRenderer (Engine)<br/>→ IRenderer 백엔드<br/>(CRendererD3D9: D3D9 · ID3DXSprite)"]
         TimeMgr["CTimeMgr<br/>프레임 시간"]
         KeyMgr["CKeyMgr<br/>GameAsyncKeyState 키·마우스 버튼"]
         AStar["CAStar<br/>타일 경로 탐색"]
@@ -96,7 +96,7 @@ flowchart TB
     Objects -->|스프라이트 그리기| Device
     Objects -->|키·마우스 버튼| KeyMgr
     Objects -->|이동 경로| AStar
-    TexMgr -->|"Single/MultiTexture: D3DXCreateTextureFromFileEx"| Device
+    TexMgr -->|"Single/MultiTexture: CreateTexture"| Device
 ```
 
 ## 4. 한 프레임의 흐름
@@ -111,7 +111,7 @@ sequenceDiagram
     participant O as CObjMgr
     participant Ob as 각 CObj
     participant Q as CSortMgr
-    participant D as CDevice
+    participant D as CRenderer
 
     loop PeekMessage 가 비었을 때마다 (프레임 제한 없음)
         W->>G: Progress()
@@ -133,10 +133,10 @@ sequenceDiagram
         end
         S-->>W: SCENEID (END 면 루프 종료)
         W->>G: Render()
-        G->>D: Render_Begin()
+        G->>D: BeginFrame()
         G->>S: Render() → 장면 → O.Render() → Q.Render()
         Q->>Ob: 레이어 순서대로 Render() 후 큐 비움
-        G->>D: Render_End(hWnd) — Present
+        G->>D: EndFrame(hWnd) — (캡처) · Present
     end
 ```
 
@@ -328,7 +328,7 @@ flowchart LR
 └──────────────────────────────────────────────────────────┘
 ```
 `MainFrm.cpp:319-330` 이 스플리터를 만들고, `MySheet.cpp:27-29` 가 페이지를 붙인다.
-툴은 Client 와 같은 Engine(`CDevice`·`CTextureMgr`·`C*Texture`)을 쓴다. 지우는 색(파랑)·여러 장 텍스처 투명색(흰색)만 툴이 정한다([shared-render-lib](../intent/shared-render-lib/spec.md)).
+툴은 Client 와 같은 Engine(`CRenderer`·`CRendererD3D9`·`CTextureMgr`·`C*Texture`)을 쓴다. 지우는 색(파랑)·여러 장 텍스처 투명색(흰색)만 툴이 정한다([shared-render-lib](../intent/shared-render-lib/spec.md)).
 
 ## 10. 공용 헤더
 
@@ -341,7 +341,7 @@ flowchart TB
     Defines --> Struct["Struct.h<br/>OBJINFO · INFO · FRAME · TILE · TEXINFO"]
     Defines --> stdafx
     Include["Headers/Include.h<br/>전 헤더 모음"] --> DebugHpp["Debug.hpp (헤더 전용 콘솔 로그, _DEBUG 전용)"]
-    Include --> Common["Device · TextureMgr · *Texture<br/>(Engine/ — include 경로 ../Engine)"]
+    Include --> Common["RendererMgr · TextureMgr · *Texture<br/>(Engine/ — include 경로 ../Engine)"]
     Include -->|"#ifdef __CLIENT__EXEC__<br/>(Client/stdafx.h 에서 정의)"| ClientOnly["Client 전용 헤더 전부<br/>매니저 · 장면 · 객체 · 원형 · 스킬 · 사운드"]
 ```
 

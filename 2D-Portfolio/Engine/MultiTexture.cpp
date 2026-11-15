@@ -1,6 +1,6 @@
 ﻿#include "StdAfx.h"
 #include "MultiTexture.h"
-#include "Device.h"
+#include "RendererMgr.h"
 
 CMultiTexture::CMultiTexture(const D3DCOLOR ColorKey)
 	: m_ColorKey(ColorKey)
@@ -33,21 +33,7 @@ HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName,
 		ZeroMemory(szPath, sizeof(szPath));
 		wsprintf(szPath, pFileName, i);
 
-		ZeroMemory(m_pTexInfo, sizeof(TEXINFO));
-		if(FAILED(D3DXGetImageInfoFromFile(szPath
-			,&m_pTexInfo->ImgInfo)))
-		{
-			return E_FAIL;
-		}
-		if(FAILED(D3DXCreateTextureFromFileEx(
-			GET_SINGLE(CDevice)->GetDevice(),
-			szPath, m_pTexInfo->ImgInfo.Width,
-			m_pTexInfo->ImgInfo.Height, m_pTexInfo->ImgInfo.MipLevels,
-			0, m_pTexInfo->ImgInfo.Format, D3DPOOL_MANAGED, 
-			D3DX_DEFAULT, D3DX_DEFAULT,
-			m_ColorKey,
-			&m_pTexInfo->ImgInfo, NULL,
-			&m_pTexInfo->pTexture)))
+		if(FAILED(GET_SINGLE(CRenderer)->CreateTexture(szPath, m_ColorKey, *m_pTexInfo)))
 		{
 			return E_FAIL;
 		}
@@ -67,7 +53,7 @@ void CMultiTexture::Release()
 			iter2 != iter->second.end(); ++iter2)
 		{
 			// 로드된 데이터를 해제
-			(*iter2)->pTexture->Release();
+			SAFE_DELETE<IRenderTexture>(&(*iter2)->pTexture);
 			SAFE_DELETE<TEXINFO>(&(*iter2));
 		}
 		iter->second.clear();

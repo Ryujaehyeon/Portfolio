@@ -1,7 +1,7 @@
 # Plan: render-backend
 
 Author: Ryu Jahyeon
-Status: draft — `render-capture` 완료 후 확정
+Status: approved (PR #60)
 
 <!-- 입력: spec.md. 경로는 2D-Portfolio/ 기준. -->
 
@@ -45,3 +45,25 @@ Status: draft — `render-capture` 완료 후 확정
 powershell.exe -NoProfile -File ../../scripts/compare-shots.ps1 -Expected shots/before -Actual shots/after   → 0
 git grep -n -E "GetSprite\(\)|GetDevice\(\)" -- 2D-Portfolio/Client 2D-Portfolio/MFC_000   → 결과 없음
 ```
+
+## 구현 중 변경
+
+- **`EndFrame` 을 둘로 나눴다.** 인터페이스는 `EndFrame()`(그리기 끝)과 `Present(창)` 을 따로 가진다.
+  캡처는 「그리기 끝 → 백버퍼 저장 → Present」 순서여야 하는데, 이 순서를 백엔드마다 반복하지 않고 `CRenderer::EndFrame(창)` 한 곳에서 맞추기 위해서다.
+- **깊이 테스트 인자(`bDepthTest`)를 만들지 않았다.** D3D9 는 자동 깊이 버퍼(`EnableAutoDepthStencil`)를 만들면 `D3DRS_ZENABLE` 기본값이 이미 TRUE 다.
+  Client 의 직접 설정은 중복이었으므로 지웠고, 캡처가 픽셀 단위로 같아 영향이 없음을 확인했다.
+- **임시 `GetSprite()` 단계(작업 순서 1~3)를 거치지 않았다.** 호출부 50곳을 스크립트로 한 번에 바꿨다 —
+  `Draw` 마다 같은 함수 안에서 바로 앞의 `SetTransform` 행렬을 넘긴다. `CUIObj::FontOutput` 은 함수 안에 `SetTransform` 이 없어
+  호출한 `CUIObj::Render` 가 설정한 `m_Info.matWorld` 를 쓴다(그 사이에 `matWorld` 는 바뀌지 않는다). 그래서 코드 커밋이 하나다.
+- 두 인터페이스(`IRenderer`·`IRenderTexture`)를 `Engine/Renderer.h` 한 파일에 두었고, D3D9 텍스처 감싸개는 `CRendererD3D9` 의 안쪽 클래스(`CTextureD3D9`)로 두었다.
+
+## 검증 결과 (2026-11-16)
+
+| spec | 결과 |
+|---|---|
+| R1~R6·R8 | ✅ `IRenderer`·`IRenderTexture`(`Renderer.h`), `CRenderer`(`RendererMgr.*`), `CRendererD3D9`(`Device.*` 를 `git mv`), `TEXINFO` = `IRenderTexture*` + `TEXSIZE ImgInfo`. 텍스처 클래스는 `CRenderer::CreateTexture`. Client·툴이 각자 `new CRendererD3D9` |
+| R3 | ✅ 크기를 읽는 Client·툴 코드는 수정 없음 |
+| R7 | ✅ Engine 밖에 `GetSprite()`·`GetDevice()`·`CDevice` 없음 |
+| R9 | ✅ 변경 전후 캡처 허용 오차 0 비교 — Win32 Debug 6/6, x64 Release 6/6 모두 다른 픽셀 0 |
+| R10 | ✅ 4개 구성 경고 0·오류 0, Client·툴 스모크 4개 구성 PASS, 일반 실행 Client·툴 살아 있음(창 제목 정상). ⏳ 툴 화면(타일·미니맵)은 자동 캡처가 안 돼(`PrintWindow` 는 D3D9 창 내용을 담지 못함) 사용자 확인 대기 |
+| R11 | ✅ CLAUDE.md·ARCHITECTURE.md |

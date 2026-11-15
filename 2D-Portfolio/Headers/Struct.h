@@ -315,12 +315,26 @@ typedef struct tagSkill
 
 
 
+class IRenderTexture;
+
+// 텍스처 이미지 크기(원본 픽셀). 필드 이름은 예전 D3DXIMAGE_INFO 와 같게 둔다 — 크기를 읽는 곳을 고치지 않게
+typedef struct tagTexSize
+{
+	UINT Width;
+	UINT Height;
+	tagTexSize()
+		: Width(0)
+		, Height(0)
+	{
+	}
+}TEXSIZE;
+
 typedef struct tagTexture
 {
-	// 텍스처를 담는 포인터
-	LPDIRECT3DTEXTURE9 pTexture;
-	// 비슷한 이미지의 그룹명을 담는 변수
-	D3DXIMAGE_INFO     ImgInfo;
+	// 텍스처 — 렌더러 백엔드가 만들고 지운다(intent/render-backend)
+	IRenderTexture* pTexture;
+	// 이미지 크기
+	TEXSIZE ImgInfo;
 	tagTexture()
 		: pTexture(nullptr)
 		, ImgInfo()
