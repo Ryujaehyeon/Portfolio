@@ -1,6 +1,6 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "SingleTexture.h"
-#include "Device.h"
+#include "RendererMgr.h"
 
 CSingleTexture::CSingleTexture(void)
 	:m_pTexInfo(0)
@@ -19,21 +19,9 @@ HRESULT CSingleTexture::InsertTexture(const TCHAR* pFileName,
 	if(m_pTexInfo != NULL)
 		return E_FAIL;
 	m_pTexInfo = new TEXINFO;
-	ZeroMemory(m_pTexInfo, sizeof(TEXINFO));
-	if(FAILED(D3DXGetImageInfoFromFile(pFileName
-		,&m_pTexInfo->ImgInfo)))
-	{
-		return E_FAIL;
-	}
-	if(FAILED(D3DXCreateTextureFromFileEx(
-		GET_SINGLE(CDevice)->GetDevice(),
-		pFileName, m_pTexInfo->ImgInfo.Width,
-		m_pTexInfo->ImgInfo.Height, m_pTexInfo->ImgInfo.MipLevels,
-		0, m_pTexInfo->ImgInfo.Format, D3DPOOL_MANAGED, 
-		D3DX_DEFAULT, D3DX_DEFAULT,
-		D3DCOLOR_ARGB(255, 255, 255, 255),
-		&m_pTexInfo->ImgInfo, NULL,
-		&m_pTexInfo->pTexture)))
+	// 단장 텍스처는 흰색을 투명하게 한다
+	if(FAILED(GET_SINGLE(CRenderer)->CreateTexture(pFileName,
+		D3DCOLOR_ARGB(255, 255, 255, 255), *m_pTexInfo)))
 	{
 		return E_FAIL;
 	}
@@ -43,6 +31,10 @@ HRESULT CSingleTexture::InsertTexture(const TCHAR* pFileName,
 
 void CSingleTexture::Release()
 {
-	m_pTexInfo->pTexture->Release();
+	if (m_pTexInfo == nullptr)
+	{
+		return;
+	}
+	SAFE_DELETE<IRenderTexture>(&m_pTexInfo->pTexture);
 	SAFE_DELETE<TEXINFO>(&m_pTexInfo);
 }

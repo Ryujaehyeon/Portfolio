@@ -193,9 +193,8 @@ void CPlayer::Render()
 		if(pTexInfo == NULL)
 			return;
 
-		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+			m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	else
 	{
@@ -205,15 +204,13 @@ void CPlayer::Render()
 		if(pTexInfo == NULL)
 			return;
 
-		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+			m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	//////////////////////////////////////////////////////////////////////////
 
-	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+		m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	if (IsSameKey(m_pMotion, CAST))
 	{
@@ -223,9 +220,8 @@ void CPlayer::Render()
 		if(pTexInfo == NULL)
 			return;
 
-		GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-		GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-			NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+		GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+			m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 }
 

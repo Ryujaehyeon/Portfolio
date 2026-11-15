@@ -1,17 +1,17 @@
 ﻿#include "StdAfx.h"
-#include "Device.h"
+#include "RendererD3D9.h"
 
 
-CDevice::CDevice(void)
+CRendererD3D9::CRendererD3D9(void)
 	: m_p3D(nullptr)
 	, m_pDevice(nullptr)
 	, m_pSprite(nullptr)
 {}
 
-CDevice::~CDevice(void)
+CRendererD3D9::~CRendererD3D9(void)
 { Release(); }
 
-HRESULT CDevice::InitDevice(const HWND hWnd, const WINMODE Mode)
+HRESULT CRendererD3D9::Initialize(const HWND hWnd, const WINMODE Mode)
 {
 	m_p3D = Direct3DCreate9(D3D_SDK_VERSION);
 
@@ -72,7 +72,7 @@ HRESULT CDevice::InitDevice(const HWND hWnd, const WINMODE Mode)
 	return S_OK;
 }
 
-void CDevice::Render_Begin(const D3DCOLOR ClearColor)
+void CRendererD3D9::BeginFrame(const D3DCOLOR ClearColor)
 {
 	m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET
 		| D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL
@@ -81,22 +81,56 @@ void CDevice::Render_Begin(const D3DCOLOR ClearColor)
 	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 }
 
-void CDevice::Render_End(HWND hWnd)
+void CRendererD3D9::EndFrame(void)
 {
 	m_pSprite->End();
 	m_pDevice->EndScene();
-	// 백버퍼 내용은 Present 뒤에는 보장되지 않으므로(SWAPEFFECT_DISCARD) 그 전에 저장한다
-	if (!m_strCapturePath.empty())
-	{
-		const bool bSaved = SaveBackBuffer(m_strCapturePath.c_str());
-		SmokeCheck(bSaved, L"capture %s", m_strCapturePath.c_str());
-		m_strCapturePath.clear();
-	}
+}
+
+void CRendererD3D9::Present(const HWND hWnd)
+{
 	m_pDevice->Present(NULL, NULL, hWnd, NULL);
 }
 
+// 원본 크기 그대로, 밉맵·형식은 파일 정보대로 만든다(기존 CSingleTexture·CMultiTexture 의 인자 그대로)
+HRESULT CRendererD3D9::CreateTexture(const TCHAR* pPath, const D3DCOLOR ColorKey, TEXINFO& rTexInfo)
+{
+	D3DXIMAGE_INFO tImgInfo = {};
+	if (FAILED(D3DXGetImageInfoFromFile(pPath, &tImgInfo)))
+	{
+		return E_FAIL;
+	}
+	LPDIRECT3DTEXTURE9 pTexture = nullptr;
+	if (FAILED(D3DXCreateTextureFromFileEx(m_pDevice,
+		pPath, tImgInfo.Width, tImgInfo.Height, tImgInfo.MipLevels,
+		0, tImgInfo.Format, D3DPOOL_MANAGED,
+		D3DX_DEFAULT, D3DX_DEFAULT,
+		ColorKey,
+		&tImgInfo, nullptr,
+		&pTexture)))
+	{
+		return E_FAIL;
+	}
+	rTexInfo.pTexture = new CTextureD3D9(pTexture);
+	rTexInfo.ImgInfo.Width = tImgInfo.Width;
+	rTexInfo.ImgInfo.Height = tImgInfo.Height;
+	return S_OK;
+}
+
+void CRendererD3D9::DrawSprite(const TEXINFO* pTexInfo, const RECT* pSrcRect,
+	const D3DXVECTOR3& vCenter, const D3DXMATRIX& matWorld, const D3DCOLOR Color)
+{
+	if (pTexInfo == nullptr || pTexInfo->pTexture == nullptr)
+	{
+		return;
+	}
+	m_pSprite->SetTransform(&matWorld);
+	m_pSprite->Draw(static_cast<const CTextureD3D9*>(pTexInfo->pTexture)->m_pTexture,
+		pSrcRect, &vCenter, nullptr, Color);
+}
+
 // 백버퍼 → 시스템 메모리 표면으로 복사 → PNG. 백버퍼는 직접 잠글 수 없어 복사본을 저장한다
-bool CDevice::SaveBackBuffer(const TCHAR* pPath)
+bool CRendererD3D9::SaveBackBuffer(const TCHAR* pPath)
 {
 	LPDIRECT3DSURFACE9 pBackBuffer = nullptr;
 	if (FAILED(m_pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer)))
@@ -119,9 +153,21 @@ bool CDevice::SaveBackBuffer(const TCHAR* pPath)
 	return bSaved;
 }
 
-void CDevice::Release()
+void CRendererD3D9::Release()
 {
-	m_pSprite->Release();
-	m_pDevice->Release();
-	m_p3D->Release();
+	if (m_pSprite != nullptr)
+	{
+		m_pSprite->Release();
+		m_pSprite = nullptr;
+	}
+	if (m_pDevice != nullptr)
+	{
+		m_pDevice->Release();
+		m_pDevice = nullptr;
+	}
+	if (m_p3D != nullptr)
+	{
+		m_p3D->Release();
+		m_p3D = nullptr;
+	}
 }

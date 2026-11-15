@@ -1,6 +1,7 @@
 ﻿#include "StdAfx.h"
 #include "MainGame.h"
 #include "Include.h"
+#include "RendererD3D9.h"
 
 CMainGame::CMainGame(void)
 {}
@@ -12,13 +13,12 @@ CMainGame::~CMainGame(void)
 
 HRESULT CMainGame::Initialize()
 {
-	if(FAILED(GET_SINGLE(CDevice)->InitDevice(g_hWnd, WINMODE_WIN)))
+	// 렌더러 백엔드는 앱이 골라 만든다 — Engine 은 어떤 백엔드가 있는지 모른다(intent/render-backend)
+	if(FAILED(GET_SINGLE(CRenderer)->Initialize(new CRendererD3D9, g_hWnd, WINMODE_WIN)))
 	{
 		ERR_MSG(g_hWnd, L"장치 초기화 실패");
 		return E_FAIL;
 	}
-	// 그리기 장치는 Client·툴 공용(Engine)이라 Client 의 렌더 상태는 여기서 켠다
-	GET_SINGLE(CDevice)->GetDevice()->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 	if(FAILED(GET_SINGLE(CSceneMgr)->InitScene(SCENEID_LOGO)))
 	{
@@ -44,9 +44,9 @@ SCENEID CMainGame::Progress()
 
 void CMainGame::Render()
 {
-	GET_SINGLE(CDevice)->Render_Begin(D3DCOLOR_ARGB(255, 0, 0, 0));
+	GET_SINGLE(CRenderer)->BeginFrame(D3DCOLOR_ARGB(255, 0, 0, 0));
 	GET_SINGLE(CSceneMgr)->Render();
-	GET_SINGLE(CDevice)->Render_End(g_hWnd);
+	GET_SINGLE(CRenderer)->EndFrame(g_hWnd);
 }
 
 void CMainGame::Release()
@@ -54,6 +54,6 @@ void CMainGame::Release()
 	GET_SINGLE(CTimeMgr)->DestroyInstance();
 	GET_SINGLE(CStateRecorder)->DestroyInstance();
 	GET_SINGLE(CSceneMgr)->DestroyInstance();
-	GET_SINGLE(CDevice)->DestroyInstance();
+	GET_SINGLE(CRenderer)->DestroyInstance();
 	DESTROY_SINGLE(CTextureMgr);
 }

@@ -153,9 +153,8 @@ void CBoneSpear::Render()
 	m_Info.vCenter = D3DXVECTOR3((pTexInfo->ImgInfo.Width * 0.5f)+CObj::g_tScroll.x,
 		static_cast<float>((pTexInfo->ImgInfo.Height * 0.5)+CObj::g_tScroll.y), 0);
 
-	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
-	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-		NULL, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, nullptr,
+		m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void CBoneSpear::FrameStatas()

@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "MFC_000.h"
 #include "MiniView.h"
-#include "Device.h"
+#include "RendererMgr.h"
 #include "TextureMgr.h"
 #include "MainFrm.h"
 #include "MFC_000View.h"
@@ -33,7 +33,7 @@ void CMiniView::OnDraw(CDC* pDC)
 {
 	CDocument* pDoc = GetDocument();
 	// TODO: 여기에 그리기 코드를 추가합니다.
-	GET_SINGLE(CDevice)->Render_Begin(D3DCOLOR_ARGB(255, 0, 0, 255));
+	GET_SINGLE(CRenderer)->BeginFrame(D3DCOLOR_ARGB(255, 0, 0, 255));
 
 	CMainFrame* pMainFrm = (CMainFrame*)AfxGetMainWnd();
 
@@ -70,11 +70,9 @@ void CMiniView::OnDraw(CDC* pDC)
 
 			matWorld = matScale * matWorld;
 
-			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
 			const D3DXVECTOR3 vCenter(TILESIZEX * 0.5f, TILESIZEY * 0.5f, 0);
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-				NULL, &vCenter, NULL,
-				D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTex, nullptr,
+				vCenter, matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
 
@@ -110,16 +108,13 @@ void CMiniView::OnDraw(CDC* pDC)
 
 			matWorld = matScale * matWorld;
 
-			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
 			const D3DXVECTOR3 vCenter(pTex->ImgInfo.Width * 0.5f
 				, static_cast<float>(pTex->ImgInfo.Height), 0);
-			GET_SINGLE(CDevice)->GetSprite()->Draw(
-				pTex->pTexture,	NULL
-				, &vCenter, NULL,
-				D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTex, nullptr,
+				vCenter, matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
-	GET_SINGLE(CDevice)->Render_End(m_hWnd);
+	GET_SINGLE(CRenderer)->EndFrame(m_hWnd);
 }
 
 

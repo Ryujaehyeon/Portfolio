@@ -110,12 +110,11 @@ void CMenuButton::Render()
 		m_Info.vCenter = D3DXVECTOR3(pTexInfo->ImgInfo.Width * 0.5f,
 			pTexInfo->ImgInfo.Height * 0.25f, 0);
 	}
-	GET_SINGLE(CDevice)->GetSprite()->SetTransform(&m_Info.matWorld);
 
 	// GetRect() 그리는 이미지의 좌표
 	const RECT rcDraw = GetRect();
-	GET_SINGLE(CDevice)->GetSprite()->Draw(pTexInfo->pTexture,
-		&rcDraw, &m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+	GET_SINGLE(CRenderer)->DrawSprite(pTexInfo, &rcDraw,
+		m_Info.vCenter, m_Info.matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void CMenuButton::Release()

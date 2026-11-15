@@ -12,6 +12,7 @@
 #include "MFC_000Doc.h"
 #include "MFC_000View.h"
 #include "Include.h"
+#include "RendererD3D9.h"
 #include "MainFrm.h"
 #include "MiniView.h"
 
@@ -71,7 +72,7 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
-	GET_SINGLE(CDevice)->Render_Begin(D3DCOLOR_ARGB(255, 0, 0, 255));
+	GET_SINGLE(CRenderer)->BeginFrame(D3DCOLOR_ARGB(255, 0, 0, 255));
 
 	D3DXMATRIX matWorld, matScale;
 	D3DXMatrixScaling(&matScale, 0.3f, 0.3f, 0.3f);
@@ -101,11 +102,9 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 				, m_vecTile[idx]->vPos.x - GetScrollPos(0)
 				, m_vecTile[idx]->vPos.y - GetScrollPos(1)
 				, m_vecTile[idx]->vPos.z);
-			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
 			const D3DXVECTOR3 vCenter(TILESIZEX *0.5f, TILESIZEY *0.5f, 0);
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-				NULL, &vCenter, NULL,
-				D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTex, nullptr,
+				vCenter, matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
 
@@ -136,11 +135,9 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 
 			if (m_vecTile[idx]->TileSelect == true)
 			{		
-				GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
 				const D3DXVECTOR3 vCenter(TILESIZEX *0.5f, TILESIZEY *0.5f, 0);
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-					NULL, &vCenter, NULL,
-					D3DCOLOR_ARGB(255, 255, 255, 255));
+				GET_SINGLE(CRenderer)->DrawSprite(pTex, nullptr,
+					vCenter, matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 			}
 		}
 	}
@@ -177,11 +174,9 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 			// 객체가 각각 지니고 있는 자신의 크기로 자신의 이미지 크기를 결정
 			matWorld = m_vecMonster[idx]->matScale * matWorld;
 
-			GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
 			const D3DXVECTOR3 vCenter(pTex->ImgInfo.Width*0.5f, static_cast<float>(pTex->ImgInfo.Height), 0);
-			GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-				NULL, &vCenter, NULL,
-				D3DCOLOR_ARGB(255, 255, 255, 255));
+			GET_SINGLE(CRenderer)->DrawSprite(pTex, nullptr,
+				vCenter, matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 		}
 	}
 
@@ -217,15 +212,13 @@ void CMFC_000View::OnDraw(CDC* /*pDC*/)
 
 			if (m_vecMonster[idx]->unitSelect == true)
 			{
-				GET_SINGLE(CDevice)->GetSprite()->SetTransform(&matWorld);
 				const D3DXVECTOR3 vCenter(pTex->ImgInfo.Width * 0.5f, pTex->ImgInfo.Height*0.9f, 0);
-				GET_SINGLE(CDevice)->GetSprite()->Draw(pTex->pTexture,
-					NULL, &vCenter, NULL,
-					D3DCOLOR_ARGB(255, 255, 255, 255));
+				GET_SINGLE(CRenderer)->DrawSprite(pTex, nullptr,
+					vCenter, matWorld, D3DCOLOR_ARGB(255, 255, 255, 255));
 			}
 		}
 	}
-	GET_SINGLE(CDevice)->Render_End(m_hWnd);
+	GET_SINGLE(CRenderer)->EndFrame(m_hWnd);
 
 	CMainFrame* pMainFrm = (CMainFrame*)AfxGetMainWnd();
 
@@ -241,7 +234,8 @@ void CMFC_000View::OnInitialUpdate()
 	sizeTotal.cy = static_cast<LONG>(TILESIZEY * TILECNTY * 0.5f);
 	// TODO: 이 뷰의 전체 크기를 계산합니다.
 	SetScrollSizes(MM_TEXT, sizeTotal);
-	if(FAILED(GET_SINGLE(CDevice)->InitDevice(m_hWnd, WINMODE_WIN)))
+	// 렌더러 백엔드는 앱이 골라 만든다(intent/render-backend). 미니맵 창도 이 장치로 그린다
+	if(FAILED(GET_SINGLE(CRenderer)->Initialize(new CRendererD3D9, m_hWnd, WINMODE_WIN)))
 		return;
 	// 툴의 여러 장 텍스처는 흰색을 투명하게 한다(Client 는 검정 — 공용 Engine 이라 앱이 정한다)
 	GET_SINGLE(CTextureMgr)->SetMultiColorKey(D3DCOLOR_ARGB(255, 255, 255, 255));
@@ -506,7 +500,7 @@ void CMFC_000View::OnDestroy()
 
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 	GET_SINGLE(CTextureMgr)->DestroyInstance();
-	GET_SINGLE(CDevice)->DestroyInstance();
+	GET_SINGLE(CRenderer)->DestroyInstance();
 	
 	for(int i = 0; i < static_cast<int>(m_vecTile.size()); ++i)
 	{
