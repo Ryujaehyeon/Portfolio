@@ -8,6 +8,8 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RendererMgr.h" />
     <ClInclude Include="RendererD3D9.h" />
+    <ClInclude Include="RendererD3D11Tk.h" />
+    <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureMgr.h" />
     <ClInclude Include="SingleTexture.h" />
@@ -17,6 +19,8 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="RendererMgr.cpp" />
     <ClCompile Include="RendererD3D9.cpp" />
+    <ClCompile Include="RendererD3D11Tk.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureMgr.cpp" />
     <ClCompile Include="SingleTexture.cpp" />
