@@ -77,7 +77,7 @@ flowchart TB
         ObjMgr["CObjMgr<br/>map&lt;키, list&lt;CObj*&gt;&gt;<br/>갱신 · 상호작용 · 충돌 · 삭제"]
         SortMgr["CSortMgr<br/>레이어별 렌더 큐<br/>TERRAIN → OBJECT → UI"]
         TexMgr["CTextureMgr (Engine)<br/>키 → CTexture"]
-        Device["CRenderer (Engine)<br/>→ IRenderer 백엔드<br/>(CRendererD3D9: D3D9 · ID3DXSprite)"]
+        Device["CRenderer (Engine)<br/>→ IRenderer 백엔드<br/>CRendererD3D9: D3D9 · ID3DXSprite (기본)<br/>CRendererD3D11Tk: D3D11 · SpriteBatch (-d3d11)"]
         TimeMgr["CTimeMgr<br/>프레임 시간"]
         KeyMgr["CKeyMgr<br/>GameAsyncKeyState 키·마우스 버튼"]
         AStar["CAStar<br/>타일 경로 탐색"]
