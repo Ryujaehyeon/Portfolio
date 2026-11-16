@@ -17,9 +17,9 @@
 
 | 순서 | 슬러그 | 하는 일 | 동작 변화 | 누가 |
 |---|---|---|---|---|
-| 1 | [`render-capture`](../intent/render-capture/intent.md) | 같은 장면을 매번 똑같이 재현하는 실행 모드와 화면 캡처·비교 도구 | 없음(새 실행 옵션만) | Claude |
-| 2 | [`render-backend`](../intent/render-backend/intent.md) | 렌더러 인터페이스를 만들고 지금의 D3D9 코드를 그 뒤로 옮긴다 | 없음(픽셀 단위로 같음) | Claude |
-| 3 | [`render-dxtk`](../intent/render-dxtk/intent.md) | D3D11 + DirectXTK 백엔드(B). `-d3d11` 로 선택 | 새 백엔드 추가 | Claude |
+| 1 | [`render-capture`](../intent/render-capture/intent.md) | 같은 장면을 매번 똑같이 재현하는 실행 모드와 화면 캡처·비교 도구 | 없음(새 실행 옵션만) | Claude — ✅ 완료(PR #61) |
+| 2 | [`render-backend`](../intent/render-backend/intent.md) | 렌더러 인터페이스를 만들고 지금의 D3D9 코드를 그 뒤로 옮긴다 | 없음(픽셀 단위로 같음) | Claude — ✅ 완료(PR #62) |
+| 3 | [`render-dxtk`](../intent/render-dxtk/intent.md) | D3D11 + DirectXTK 백엔드(B). `-d3d11` 로 선택 | 새 백엔드 추가 | Claude — ✅ 완료 |
 | 4 | [`render-guide`](../intent/render-guide/intent.md) | 직접 구현할 뼈대(A)와 단계별 가이드 문서, 검증된 정답 | 새 백엔드 뼈대 추가 | Claude → **사용자가 구현** |
 | 이후 | (미정) | 수학 라이브러리 교체, D3D9 제거 여부, 툴의 D3D11 전환 | — | 필요할 때 결정 |
 

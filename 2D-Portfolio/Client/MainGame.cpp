@@ -2,6 +2,23 @@
 #include "MainGame.h"
 #include "Include.h"
 #include "RendererD3D9.h"
+#include "RendererD3D11Tk.h"
+
+// 렌더러 백엔드는 앱이 골라 만든다 — Engine 은 어떤 백엔드가 있는지 모른다(intent/render-backend).
+// -d3d11 이면 D3D11 + DirectXTK(intent/render-dxtk), 아니면 D3D9
+static IRenderer* CreateRendererBackend()
+{
+	for (int i = 1; i < __argc; ++i)
+	{
+		if (wcscmp(__wargv[i], L"-d3d11") == 0)
+		{
+			SmokeLog(L"renderer D3D11 (DirectXTK)");
+			return new CRendererD3D11Tk;
+		}
+	}
+	SmokeLog(L"renderer D3D9");
+	return new CRendererD3D9;
+}
 
 CMainGame::CMainGame(void)
 {}
@@ -13,8 +30,7 @@ CMainGame::~CMainGame(void)
 
 HRESULT CMainGame::Initialize()
 {
-	// 렌더러 백엔드는 앱이 골라 만든다 — Engine 은 어떤 백엔드가 있는지 모른다(intent/render-backend)
-	if(FAILED(GET_SINGLE(CRenderer)->Initialize(new CRendererD3D9, g_hWnd, WINMODE_WIN)))
+	if(FAILED(GET_SINGLE(CRenderer)->Initialize(CreateRendererBackend(), g_hWnd, WINMODE_WIN)))
 	{
 		ERR_MSG(g_hWnd, L"장치 초기화 실패");
 		return E_FAIL;

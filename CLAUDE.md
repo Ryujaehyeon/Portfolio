@@ -135,7 +135,10 @@ DirectX 9 기반 2D 아이소메트릭 액션 RPG 포트폴리오(2016). 소스�
 - **사운드**: FMOD Ex(`Client/fmod/`, `GameSound.hpp`).
 - **공용 렌더링(`Engine/`)**: 그리기 장치·텍스처는 Engine 한 벌을 Client·툴이 함께 쓴다(경위 `intent/shared-render-lib/`).
   게임 코드는 그래픽 API 를 모른다 — `GET_SINGLE(CRenderer)` 의 `BeginFrame(지우는 색)`·`EndFrame(창)`·`DrawSprite(텍스처, 원본 사각형, 중심점, 월드 행렬, 색)` 만 부른다.
-  백엔드(`IRenderer` 구현, 지금은 `CRendererD3D9`)는 **앱이 만들어** `CRenderer::Initialize(new …, 창, 창 모드)` 로 넘긴다 — Engine 은 어떤 백엔드가 있는지 모른다(경위 `intent/render-backend/`).
+  백엔드(`IRenderer` 구현)는 **앱이 만들어** `CRenderer::Initialize(new …, 창, 창 모드)` 로 넘긴다 — Engine 은 어떤 백엔드가 있는지 모른다(경위 `intent/render-backend/`).
+  Client 는 기본 `CRendererD3D9`, `-d3d11` 이면 `CRendererD3D11Tk`(D3D11 + DirectXTK `SpriteBatch`, NuGet `directxtk_desktop_win10`, 경위 `intent/render-dxtk/`).
+  어느 백엔드로 돌았는지는 스모크 로그의 `INFO renderer …` 줄. 툴은 D3D9 만 쓰고 D3D11·DirectXTK 를 링크하지 않는다(쓰지 않는 Engine 오브젝트는 링크되지 않는다).
+  D3D11 쪽 텍스처는 `LoadImagePixels`(`Engine/ImageLoader`, WIC + 컬러키)로 읽는다 — DirectXTK 로더에는 컬러키가 없다.
   새 그리기 코드에서 `ID3DXSprite`·D3D 장치를 직접 쓰지 않는다. 앱마다 다른 값은 앱이 넘긴다 — 지우는 색(Client 검정·툴 파랑),
   `CTextureMgr::SetMultiColorKey`(여러 장 텍스처의 투명색, 기본 검정·툴 흰색). 전환 계획은 `docs/RENDER-ROADMAP.md`.
   Engine 에 앱 전용 코드(Client 의 `Include.h`·MFC·DirectInput)를 넣지 않는다. 입력은 Client 의 `CKeyMgr`·`GameAsyncKeyState`·`GameCursorPos` 한 경로(DirectInput 은 쓰지 않는다, 경위 `intent/input-unify/`).
