@@ -3,9 +3,10 @@
 #include "Include.h"
 #include "RendererD3D9.h"
 #include "RendererD3D11Tk.h"
+#include "RendererD3D11Custom.h"
 
 // 렌더러 백엔드는 앱이 골라 만든다 — Engine 은 어떤 백엔드가 있는지 모른다(intent/render-backend).
-// -d3d11 이면 D3D11 + DirectXTK(intent/render-dxtk), 아니면 D3D9
+// -d3d11 이면 D3D11 + DirectXTK(intent/render-dxtk), -d3d11custom 이면 직접 구현 판(intent/render-guide), 아니면 D3D9
 static IRenderer* CreateRendererBackend()
 {
 	for (int i = 1; i < __argc; ++i)
@@ -14,6 +15,11 @@ static IRenderer* CreateRendererBackend()
 		{
 			SmokeLog(L"renderer D3D11 (DirectXTK)");
 			return new CRendererD3D11Tk;
+		}
+		if (wcscmp(__wargv[i], L"-d3d11custom") == 0)
+		{
+			SmokeLog(L"renderer D3D11 (custom)");
+			return new CRendererD3D11Custom;
 		}
 	}
 	SmokeLog(L"renderer D3D9");

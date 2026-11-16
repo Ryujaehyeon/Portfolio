@@ -76,7 +76,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Headers;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -87,7 +87,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Headers;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -101,7 +101,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Headers;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -115,7 +115,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Headers;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -127,6 +127,7 @@
     <ClInclude Include="RendererMgr.h" />
     <ClInclude Include="RendererD3D9.h" />
     <ClInclude Include="RendererD3D11Tk.h" />
+    <ClInclude Include="RendererD3D11Custom.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureMgr.h" />
@@ -143,11 +144,30 @@
     <ClCompile Include="RendererMgr.cpp" />
     <ClCompile Include="RendererD3D9.cpp" />
     <ClCompile Include="RendererD3D11Tk.cpp" />
+    <ClCompile Include="RendererD3D11Custom.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureMgr.cpp" />
     <ClCompile Include="SingleTexture.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\SpriteVS.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>4.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+      <VariableName>g_SpriteVS</VariableName>
+      <HeaderFileOutput>$(IntDir)SpriteVS.h</HeaderFileOutput>
+      <ObjectFileOutput></ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Shaders\SpritePS.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>4.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+      <VariableName>g_SpritePS</VariableName>
+      <HeaderFileOutput>$(IntDir)SpritePS.h</HeaderFileOutput>
+      <ObjectFileOutput></ObjectFileOutput>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
